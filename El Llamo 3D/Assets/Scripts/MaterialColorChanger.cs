@@ -14,7 +14,12 @@ public class MaterialColorChanger : MonoBehaviour
     private Vector3 originalPos;
 
     private Renderer meshRenderer;
-    private Color originalColor;    
+    private Color[] originalColors;
+
+    private bool isTargetOn = false;
+    private bool isTargetOff = false;
+    
+    private float t = 0; // color lerp control variable
 
     private void Start()
     {
@@ -32,30 +37,70 @@ public class MaterialColorChanger : MonoBehaviour
 
         if (meshRenderer != null)
         {
-            originalColor = meshRenderer.material.color;
+            int materialsLength = meshRenderer.materials.Length;
+            originalColors = new Color[materialsLength];
+
+            for (int i = 0; i < materialsLength; i++)
+            {
+                originalColors[i] = meshRenderer.materials[i].color;
+            }            
         }
 
         originalPos = targetLock.transform.position;
     }
 
+    private void Update()
+    {
+        if (isTargetOn)
+        {
+            int i = 0;
+            foreach (var material in meshRenderer.materials)
+            {
+                material.SetColor("_BaseColor", Color.Lerp(originalColors[i], targetColor, t));
+                i++;
+            }
+            
+            if (t < 1)
+            {
+                t += Time.deltaTime / timeChange;
+            } else
+            {
+                t = 0;
+                isTargetOn = false;
+            }
+        }
+
+        if (isTargetOff)
+        {
+            int i = 0;
+            foreach (var material in meshRenderer.materials)
+            {
+                material.SetColor("_BaseColor", Color.Lerp(targetColor, originalColors[i], t));
+                i++;
+            }
+
+            if (t < 1)
+            {
+                t += Time.deltaTime / timeChange;
+            }
+            else
+            {
+                t = 0;
+                isTargetOff = false;
+            }
+        }
+    }
+
     public void TargetOn()
     {
         PrefabLockTarget();
-
-        foreach (var material in meshRenderer.materials)
-        {
-            material.DOColor(targetColor, timeChange);
-        }
+        isTargetOn = true;
     }
 
     public void TargetOff()
     {
         ResetPrefabLockTarget();
-
-        foreach (var material in meshRenderer.materials)
-        {
-            material.DOColor(originalColor, timeChange);
-        }
+        isTargetOff = true;
     }
 
     private void PrefabLockTarget()
