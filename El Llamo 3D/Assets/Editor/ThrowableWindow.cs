@@ -9,16 +9,20 @@ namespace BetoMaluje.ThrowableWindow
     {
         [SerializeField] private GameObject lockTargetPrefab;
 
-        [MenuItem("Tools/Make Throwable")]
+        [SerializeField] private TargetType type;
+
+        [MenuItem("Tools/Make Target")]
         public static void OpenWindow()
         {
-            GetWindow<ThrowableWindow>("Throwable");
+            GetWindow<ThrowableWindow>("Target");
         }
 
         private void OnGUI()
         {           
             GUILayout.Label("You need to select at least one Game Object");
             EditorGUILayout.Space();
+
+            type = (TargetType) EditorGUILayout.EnumPopup("Type of Target:", type);
 
             EditorGUILayout.BeginHorizontal();
 
@@ -29,7 +33,7 @@ namespace BetoMaluje.ThrowableWindow
 
             EditorGUILayout.Space();
 
-            if (GUILayout.Button("Make Throwable"))
+            if (GUILayout.Button("Make Target"))
             {
                 if (Selection.gameObjects.Length <= 0)
                 {
@@ -88,10 +92,20 @@ namespace BetoMaluje.ThrowableWindow
 
                 // step 4: add the throwable script 
 
-                if (selectedGO.GetComponent<ThrowableScript>() == null)
+                if (type.Equals(TargetType.Throwable))
                 {
-                    selectedGO.AddComponent<ThrowableScript>();                    
+                    if (selectedGO.GetComponent<ThrowableScript>() == null)
+                    {
+                        selectedGO.AddComponent<ThrowableScript>();                    
+                    }
+                } else if (type.Equals(TargetType.Shootable))
+                {
+                    if (selectedGO.GetComponent<Gun>() == null)
+                    {
+                        selectedGO.AddComponent<Gun>();
+                    }
                 }
+
 
                 // step 5: change the objects layer
                 if (target != null)
@@ -113,14 +127,14 @@ namespace BetoMaluje.ThrowableWindow
 
         private void ChangeGOLayers(GameObject parentGO, GameObject targetLock)
         {
-            parentGO.layer = LayerMask.NameToLayer("Throwable");
+            parentGO.layer = LayerMask.NameToLayer("Target");
 
             foreach (Transform child in parentGO.transform)
             {
                 if (child.gameObject != targetLock)
                 {
                     // we change the objects layer
-                    child.gameObject.layer = LayerMask.NameToLayer("Throwable");
+                    child.gameObject.layer = LayerMask.NameToLayer("Target");
                 }
             }
         }

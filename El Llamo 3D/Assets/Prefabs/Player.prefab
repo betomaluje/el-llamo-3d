@@ -148,12 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4b4451e461b824f99e155544f10116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 200
+  mouseSensitivity: 250
   playerBody: {fileID: 3280555177129506175}
   playerHand: {fileID: 1223030021}
+  zoomKey: 101
   oneTimePress: 0
   timeForLookout: 0.5
-  finalZoomPosition: {x: 1.28, y: 2.34, z: -5.4}
+  finalZoomPosition: {x: 2, y: 2.34, z: -5.4}
 --- !u!114 &802047715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,9 +356,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 3280555177129506160}
-  speed: 12
+  speed: 18
   gravityMultiplier: 2
-  jumpSpeed: 3
+  jumpSpeed: 4
   groundCheck: {fileID: 3280555176984108736}
   groundDistance: 0.4
   groundMask:

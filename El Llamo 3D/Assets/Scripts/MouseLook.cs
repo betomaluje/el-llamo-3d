@@ -9,6 +9,7 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private Transform playerHand;
 
     [Header("Zoom")]
+    [SerializeField] private KeyCode zoomKey;
     [SerializeField] private bool oneTimePress = true;
     [SerializeField] private float timeForLookout = 0.5f;
     [SerializeField] private Vector3 finalZoomPosition;
@@ -41,6 +42,8 @@ public class MouseLook : MonoBehaviour
         Quaternion cameraRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         transform.localRotation = cameraRotation;
+        playerHand.localRotation = cameraRotation;
+
         playerBody.Rotate(Vector3.up * mouseX);
 
         if (oneTimePress)
@@ -54,7 +57,7 @@ public class MouseLook : MonoBehaviour
 
     private void CheckOneTimePressZoom()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(zoomKey))
         {
             if (!isZoomedOut)
             {
@@ -69,12 +72,12 @@ public class MouseLook : MonoBehaviour
 
     private void CheckLongPressZoom()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isZoomedOut)
+        if (Input.GetKeyDown(zoomKey) && !isZoomedOut)
         {
             ZoomOut();  
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift) && isZoomedOut)
+        if (Input.GetKeyUp(zoomKey) && isZoomedOut)
         {
             RestoreZoom();
         }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGrab : MonoBehaviour
@@ -12,7 +11,7 @@ public class PlayerGrab : MonoBehaviour
 
     [Space]
     [Header("Weapon")]
-    public ThrowableScript weapon;
+    public ITarget weapon;
     [SerializeField] private Transform weaponHolder;
     [SerializeField] private LayerMask weaponLayer;
     [SerializeField] private float grabDistance = 10f;    
@@ -40,7 +39,7 @@ public class PlayerGrab : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && weapon == null)
             {
-                hit.transform.GetComponent<ThrowableScript>().Pickup(weaponHolder);
+                hit.transform.GetComponent<ITarget>().Pickup(weaponHolder);
             }
         } else
         {            
@@ -50,6 +49,11 @@ public class PlayerGrab : MonoBehaviour
                 lastObject.TargetOff();                
                 lastObject = null;
             }
+        }
+
+        if (Input.GetMouseButtonDown(0) && weaponHolder.childCount > 0 && weaponHolder.GetComponentInChildren<ITarget>().getType().Equals(TargetType.Shootable))
+        {
+            weaponHolder.GetComponentInChildren<ITarget>().Shoot();
         }
 
         if (Input.GetMouseButtonUp(0) && weapon != null)
