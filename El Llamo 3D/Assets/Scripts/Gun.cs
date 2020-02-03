@@ -41,7 +41,12 @@ public class Gun : MonoBehaviour, ITarget
 
     public void Throw(float throwForce)
     {
-        // not implemented here
+        Sequence s = DOTween.Sequence();
+        s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
+        s.AppendCallback(() => transform.parent = null);
+        s.AppendCallback(() => ChangeSettings());
+        s.AppendCallback(() => rb.AddForce(Camera.main.transform.forward * throwForce, ForceMode.Impulse));
+        s.AppendCallback(() => rb.AddTorque(transform.transform.right + transform.transform.up * throwForce, ForceMode.Impulse));
     }
 
     public void Shoot()

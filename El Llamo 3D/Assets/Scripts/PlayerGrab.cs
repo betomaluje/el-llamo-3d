@@ -51,17 +51,27 @@ public class PlayerGrab : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && weaponHolder.childCount > 0 && weaponHolder.GetComponentInChildren<ITarget>().getType().Equals(TargetType.Shootable))
+        if (Input.GetMouseButtonDown(0) && HasGun())
         {
             weaponHolder.GetComponentInChildren<ITarget>().Shoot();
         }
 
-        if (Input.GetMouseButtonUp(0) && weapon != null)
+        if (Input.GetMouseButtonDown(1) && HasGun())
+        {
+            weaponHolder.GetComponentInChildren<ITarget>().Throw(throwForce);
+        }
+
+        if (Input.GetMouseButtonUp(0) && weapon != null && !HasGun())
         {
             weapon.Throw(throwForce);
             weapon = null;
         }     
-    }    
+    }
+
+    private bool HasGun()
+    {
+        return weaponHolder.childCount > 0 && weaponHolder.GetComponentInChildren<ITarget>().getType().Equals(TargetType.Shootable);
+    }
 
     private IEnumerator MakeTargetAvailable()
     {
