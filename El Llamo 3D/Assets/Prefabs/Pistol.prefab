@@ -162,7 +162,7 @@ MonoBehaviour:
   shootingPosition: {fileID: 4422581084064617564}
   bulletPrefab: {fileID: 6111925643873329397, guid: 63e1089b0088e07478b584d070fd1dbf,
     type: 3}
-  shootingSpeed: 500
+  shootingSpeed: 700
 --- !u!114 &4422581082356254062
 MonoBehaviour:
   m_ObjectHideFlags: 0

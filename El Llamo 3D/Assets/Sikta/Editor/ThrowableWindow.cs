@@ -1,17 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace BetoMaluje.ThrowableWindow
+namespace BetoMaluje.Sikta
 {
     public class ThrowableWindow : EditorWindow
     {
         [SerializeField] private GameObject lockTargetPrefab;
 
+        [SerializeField] private LayerMask targetMask;
+
         [SerializeField] private TargetType type;
 
-        [MenuItem("Tools/Make Target")]
+        [MenuItem("Tools/Sikta/Make Target")]
         public static void OpenWindow()
         {
             GetWindow<ThrowableWindow>("Target");
@@ -23,6 +23,8 @@ namespace BetoMaluje.ThrowableWindow
             EditorGUILayout.Space();
 
             type = (TargetType) EditorGUILayout.EnumPopup("Type of Target:", type);
+
+            targetMask = EditorGUILayout.LayerField("Layer for Target:", targetMask);
 
             EditorGUILayout.BeginHorizontal();
 
@@ -42,8 +44,7 @@ namespace BetoMaluje.ThrowableWindow
                 {
                     MakeThrowable();                  
                 }               
-            }
-            
+            }            
         }
 
         private void MakeThrowable()
@@ -88,6 +89,8 @@ namespace BetoMaluje.ThrowableWindow
                     target.transform.localPosition = Vector3.zero;
 
                     AddTargetAsPrefab(selectedGO, target);
+
+                    target.SetActive(false);
                 }                
 
                 // step 4: add the throwable script 
@@ -98,15 +101,15 @@ namespace BetoMaluje.ThrowableWindow
                     {
                         selectedGO.AddComponent<ThrowableScript>();                    
                     }
-                } else if (type.Equals(TargetType.Shootable))
+                }
+                else if (type.Equals(TargetType.Shootable))
                 {
                     if (selectedGO.GetComponent<Gun>() == null)
                     {
                         selectedGO.AddComponent<Gun>();
                     }
                 }
-
-
+            
                 // step 5: change the objects layer
                 if (target != null)
                 {
@@ -127,16 +130,26 @@ namespace BetoMaluje.ThrowableWindow
 
         private void ChangeGOLayers(GameObject parentGO, GameObject targetLock)
         {
-            parentGO.layer = LayerMask.NameToLayer("Target");
+            parentGO.layer = targetMask;
 
             foreach (Transform child in parentGO.transform)
             {
                 if (child.gameObject != targetLock)
                 {
                     // we change the objects layer
-                    child.gameObject.layer = LayerMask.NameToLayer("Target");
+                    child.gameObject.layer = targetMask;
                 }
             }
+        }
+
+        private void DrawUILine(Color color, int thickness = 2, int padding = 10)
+        {
+            Rect r = EditorGUILayout.GetControlRect(GUILayout.Height(padding + thickness));
+            r.height = thickness;
+            r.y += padding / 2;
+            r.x -= 2;
+            r.width += 6;
+            EditorGUI.DrawRect(r, color);
         }
     }
 }
