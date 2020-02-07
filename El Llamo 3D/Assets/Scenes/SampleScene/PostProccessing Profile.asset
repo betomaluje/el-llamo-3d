@@ -88,11 +88,11 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 2
     min: 0
   maximumVelocity:
     m_OverrideState: 1
-    m_Value: 350
+    m_Value: 300
     min: 0
     max: 1500
   minimumVelocity:
@@ -137,8 +137,8 @@ MonoBehaviour:
     min: -100
     max: 100
   colorFilter:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 1.1486983, g: 1.1486983, b: 1.1486983, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
@@ -149,6 +149,6 @@ MonoBehaviour:
     max: 180
   saturation:
     m_OverrideState: 1
-    m_Value: 28
+    m_Value: 90
     min: -100
     max: 100

@@ -41,7 +41,8 @@ public class MouseLook : MonoBehaviour
 
         Quaternion cameraRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        transform.localRotation = cameraRotation;
+        // no need for this since we are using Conemachine owns stuff
+        //transform.localRotation = cameraRotation;
         playerHand.localRotation = cameraRotation;
 
         playerBody.Rotate(Vector3.up * mouseX);
