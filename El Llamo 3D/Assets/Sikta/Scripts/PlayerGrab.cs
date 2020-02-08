@@ -32,7 +32,7 @@ namespace BetoMaluje.Sikta
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grabDistance, weaponLayer))
             {
                 lastObject = hit.transform.GetComponent<MaterialColorChanger>();
-                if (lastObject != null && !hasPointedToObject)
+                if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
                 {
                     hasPointedToObject = true;
                     lastObject.TargetOn();

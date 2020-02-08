@@ -23,6 +23,17 @@ namespace BetoMaluje.Sikta
     
         private float t = 0; // color lerp control variable
 
+        public bool isEnabled = true;
+
+        private void Awake()
+        {
+            Health healthScript = GetComponent<Health>();
+            if (healthScript != null)
+            {
+                healthScript.OnHealthChanged += HandleHealth;
+            }
+        }
+
         private void Start()
         {
             meshRenderer = GetComponent<Renderer>();
@@ -53,6 +64,26 @@ namespace BetoMaluje.Sikta
 
         private void Update()
         {
+            // check if it's not enabled and reset color and prefab if it's on
+            if (!isEnabled)
+            {
+                int i = 0;
+                foreach (var material in meshRenderer.materials)
+                {
+                    material.SetColor("_BaseColor", Color.Lerp(material.color, originalColors[i], t));
+                    i++;
+                }
+
+                if (t < 1)
+                {
+                    t += Time.deltaTime / timeChange;
+                }
+
+                targetLock.SetActive(false);
+
+                return;
+            }
+
             if (isTargetOn)
             {
                 int i = 0;
@@ -90,6 +121,14 @@ namespace BetoMaluje.Sikta
                     t = 0;
                     isTargetOff = false;
                 }
+            }
+        }
+
+        private void HandleHealth(float healthPercentage)
+        {
+            if (healthPercentage <= 0)
+            {
+                isEnabled = false;
             }
         }
 

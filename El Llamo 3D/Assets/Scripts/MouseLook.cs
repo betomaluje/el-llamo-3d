@@ -37,13 +37,11 @@ public class MouseLook : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        Quaternion cameraRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);       
 
         // no need for this since we are using Conemachine owns stuff
         //transform.localRotation = cameraRotation;
-        playerHand.localRotation = cameraRotation;
+        playerHand.localEulerAngles = new Vector3(xRotation, 0f, 0f);
 
         playerBody.Rotate(Vector3.up * mouseX);
 
