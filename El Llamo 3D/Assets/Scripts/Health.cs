@@ -9,11 +9,6 @@ public class Health : MonoBehaviour
     [SerializeField] private float timeChange = 1f;
 
     private int currentHealth;
-    private Renderer meshRenderer;
-    private Color[] originalColors;
-    private float t = 0; // color lerp control variable
-
-    private bool isDying = false;
 
     public event Action<float> OnHealthChanged = delegate { };
 
@@ -27,59 +22,9 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
-        meshRenderer = GetComponent<Renderer>();
-
-        if (meshRenderer == null)
-        {
-            meshRenderer = GetComponentInChildren<Renderer>();
-        }
-
-        if (meshRenderer == null)
-        {
-            meshRenderer = GetComponentInParent<Renderer>();
-        }
-
-        if (meshRenderer != null)
-        {
-            int materialsLength = meshRenderer.materials.Length;
-            originalColors = new Color[materialsLength];
-
-            for (int i = 0; i < materialsLength; i++)
-            {
-                originalColors[i] = meshRenderer.materials[i].color;
-            }
-        }
-
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
-    }
-
-    private void Update()
-    {
-        if (isDying)
-        {
-            int i = 0;
-            foreach (var material in meshRenderer.materials)
-            {
-                Color color = originalColors[i];
-                Color alpha = color;
-                alpha.a = t;
-
-                material.SetColor("_BaseColor", Color.Lerp(color, alpha, t));
-                i++;
-            }
-
-            if (t < 1)
-            {
-                t += Time.deltaTime / timeChange;
-            }
-            else
-            {
-                t = 0;
-                isDying = false;
-            }
-        }
-    }
+    }    
 
     public void ModifyHealth(int amount)
     {
@@ -99,14 +44,19 @@ public class Health : MonoBehaviour
         Debug.Log(gameObject.name + " is dead!");
         Instantiate(dieBloodPrefab, transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
 
-        // fade out
-        isDying = true;
+        Vector3 currentPos = transform.position;
+        currentPos.z = UnityEngine.Random.Range(0, 2) == 0 ? -90 : 90;
+        currentPos.x = 0;
 
-        foreach (var material in meshRenderer.materials)
-        {
-            material.DOFade(0, timeChange);            
-        }
+        Sequence s = DOTween.Sequence();
+        s.Append(transform.DORotate(currentPos, 1f)).SetUpdate(true);
+        s.AppendCallback(() => MakeUntouchable());
 
+        
+    }
+
+    private void MakeUntouchable()
+    {
         rb.isKinematic = true;
         rb.interpolation = RigidbodyInterpolation.None;
         col.isTrigger = true;

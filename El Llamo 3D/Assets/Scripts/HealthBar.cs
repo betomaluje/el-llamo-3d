@@ -14,11 +14,14 @@ public class HealthBar : MonoBehaviour
 
     private Vector3 originalPosition;
     private bool isShown = false;
+    private Transform mainCameraPos;
     
     private void Awake()
     {
         GetComponentInParent<Health>().OnHealthChanged += HandleHealth;
         originalPosition = transform.position;
+
+        mainCameraPos = Camera.main.transform;
 
         Vector3 hidePos = originalPosition;
         hidePos.y -= yAmount;
@@ -60,8 +63,7 @@ public class HealthBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.LookAt(Camera.main.transform);
-        transform.Rotate(0, 180, 0);
+        transform.LookAt(transform.position + mainCameraPos.forward);        
 
         AlignTransform(transform);
     }
