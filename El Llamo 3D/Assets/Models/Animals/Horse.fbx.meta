@@ -21,7 +21,17 @@ ModelImporter:
   - first:
       74: -8757025533558806094
     second: Armature|WalkSlow
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: ad879b5148d083e40bdee3234aaa1a2e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: 58feea3c85027b74f86e3917b6e4cdcd, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

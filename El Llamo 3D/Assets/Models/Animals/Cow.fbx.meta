@@ -21,7 +21,22 @@ ModelImporter:
   - first:
       74: -8757025533558806094
     second: Armature|WalkSlow
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: 58feea3c85027b74f86e3917b6e4cdcd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pink
+    second: {fileID: 2100000, guid: d2b6bb8143d10ab43a485058d62e4551, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White
+    second: {fileID: 2100000, guid: 4913219edba5b7b48bc09ae2c3971447, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

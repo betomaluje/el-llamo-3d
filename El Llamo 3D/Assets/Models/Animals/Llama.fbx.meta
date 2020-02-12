@@ -9,7 +9,22 @@ ModelImporter:
   - first:
       74: 1079665108409675491
     second: Armature|Jump
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brown
+    second: {fileID: 2100000, guid: ad879b5148d083e40bdee3234aaa1a2e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grey
+    second: {fileID: 2100000, guid: 55edc1335f6764542b1135ce8354b543, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White
+    second: {fileID: 2100000, guid: 4913219edba5b7b48bc09ae2c3971447, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

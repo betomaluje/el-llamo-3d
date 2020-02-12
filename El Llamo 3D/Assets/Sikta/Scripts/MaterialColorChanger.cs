@@ -23,6 +23,7 @@ namespace BetoMaluje.Sikta
     
         private float t = 0; // color lerp control variable
 
+        [HideInInspector]
         public bool isEnabled = true;
 
         private void Awake()

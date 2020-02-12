@@ -6,7 +6,6 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private GameObject dieBloodPrefab;
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private float timeChange = 1f;
 
     private int currentHealth;
 
@@ -41,18 +40,19 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log(gameObject.name + " is dead!");
         Instantiate(dieBloodPrefab, transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
 
-        Vector3 currentPos = transform.position;
-        currentPos.z = UnityEngine.Random.Range(0, 2) == 0 ? -90 : 90;
-        currentPos.x = 0;
+        Vector3 currentRotation = transform.position;
+        currentRotation.z = UnityEngine.Random.Range(0, 2) == 0 ? -90 : 90;
+        currentRotation.x = 0;
+        
+        float deadY = 0.5f;
+
+        transform.DOMoveY(deadY, 1f);
 
         Sequence s = DOTween.Sequence();
-        s.Append(transform.DORotate(currentPos, 1f)).SetUpdate(true);
-        s.AppendCallback(() => MakeUntouchable());
-
-        
+        s.Append(transform.DORotate(currentRotation, 1f)).SetUpdate(true);
+        s.AppendCallback(() => MakeUntouchable());        
     }
 
     private void MakeUntouchable()
