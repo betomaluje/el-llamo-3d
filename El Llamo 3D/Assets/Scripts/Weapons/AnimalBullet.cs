@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 
-public class AnimalBullet : MonoBehaviour
+public class AnimalBullet : Bullet
 {
     [SerializeField] private LayerMask triggerLayer;
-    [SerializeField] private float speed = 1f;
     [SerializeField] private float animationDuration = 1.5f;
+    
+    [SerializeField] private float speed = 1f;
 
-    private bool startMoving = false;
+    private bool isActivated = false;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class AnimalBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (startMoving)
+        if (isActivated)
         {
             transform.position += transform.forward * speed * Time.deltaTime;
             transform.Rotate(0f, -1f, 0f);            
@@ -31,9 +32,13 @@ public class AnimalBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (CheckLayerMask(collision.gameObject) && !startMoving)
+        if (CheckLayerMask(collision.gameObject) && !isActivated)
         {
-            startMoving = true;
+            isActivated = true;
+        } else if (isActivated)
+        {
+            Instantiate(GetExplosionParticles(), transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
 

@@ -97,16 +97,16 @@ namespace BetoMaluje.Sikta
 
                 if (type.Equals(TargetType.Throwable))
                 {
-                    if (selectedGO.GetComponent<ThrowableScript>() == null)
+                    if (selectedGO.GetComponent<ThrowableTarget>() == null)
                     {
-                        selectedGO.AddComponent<ThrowableScript>();                    
+                        selectedGO.AddComponent<ThrowableTarget>();                    
                     }
                 }
                 else if (type.Equals(TargetType.Shootable))
                 {
-                    if (selectedGO.GetComponent<Gun>() == null)
+                    if (selectedGO.GetComponent<GunTarget>() == null)
                     {
-                        selectedGO.AddComponent<Gun>();
+                        selectedGO.AddComponent<GunTarget>();
                     }
                 }
             

@@ -513,8 +513,9 @@ MonoBehaviour:
   triggerLayer:
     serializedVersion: 2
     m_Bits: 256
-  speed: 1
+  bullet: {fileID: 11400000, guid: b6018749dbe2548e2a266ef42b204192, type: 2}
   animationDuration: 1
+  speed: 1
 --- !u!1 &3848070761845155559
 GameObject:
   m_ObjectHideFlags: 0

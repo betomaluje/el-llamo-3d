@@ -3,19 +3,25 @@ using DG.Tweening;
 
 namespace BetoMaluje.Sikta
 {
-    public class Gun : MonoBehaviour, ITarget
+    public class GunTarget : MonoBehaviour, ITarget
     {
         [SerializeField] private Transform shootingPosition;
-        [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private KeyCode bulletChangerKey;
+        [SerializeField] private GameObject[] bulletPrefabs;
         [SerializeField] private float shootingSpeed = 100;
 
         private Rigidbody rb;
         private Collider col;
 
+        private int currentBullet = 0;
+        private GameObject bulletPrefab;
+        private bool isAttachedToPlayer = false;
+
         void Start()
         {
             rb = GetComponent<Rigidbody>();
             col = GetComponent<Collider>();
+            bulletPrefab = bulletPrefabs[currentBullet];
         }
 
         void ChangeSettings()
@@ -43,7 +49,6 @@ namespace BetoMaluje.Sikta
 
         public void Throw(float throwForce)
         {
-            Debug.Log("throwing gun " + throwForce);
             Sequence s = DOTween.Sequence();
             s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
             s.AppendCallback(() => transform.parent = null);
@@ -64,6 +69,27 @@ namespace BetoMaluje.Sikta
         {
             return TargetType.Shootable;
         }
+
+        private void Update() 
+        {
+            isAttachedToPlayer = (PlayerGrab.instance.weapon == this);
+
+            if (isAttachedToPlayer && Input.GetKeyDown(bulletChangerKey)) 
+            {
+                ChangeBullet();
+            }    
+        }
+
+        private void ChangeBullet() 
+        {
+            currentBullet++;
+
+            if (currentBullet >= bulletPrefabs.Length) 
+            {
+                currentBullet = 0;
+            }
+
+            bulletPrefab = bulletPrefabs[currentBullet];
+        }
     }
 }
-

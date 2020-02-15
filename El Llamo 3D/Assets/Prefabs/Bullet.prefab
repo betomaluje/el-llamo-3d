@@ -123,6 +123,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9119f76e8a31cfc4b9013bfe5e009dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionParticles: {fileID: 6042133881555360809, guid: a36bb5f3415e43247a0b57b1e6a1e835,
-    type: 3}
-  maxDamage: 50
+  bullet: {fileID: 11400000, guid: 3016a3b02fb7549e29e9dac49431a9fd, type: 2}

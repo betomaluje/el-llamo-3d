@@ -3,7 +3,7 @@ using DG.Tweening;
 
 namespace BetoMaluje.Sikta
 {
-    public class ThrowableScript : MonoBehaviour, ITarget
+    public class ThrowableTarget : MonoBehaviour, ITarget
     {    
         private Rigidbody rb;
         private Collider col;

@@ -15,13 +15,12 @@ public class BulletTarget : MonoBehaviour
             {
                 PerformDamage(bullet, health);
             }
-
         }
     }
 
     private void PerformDamage(Bullet bullet, Health health)
     {
-        int damage = Random.Range(1, bullet.maxDamage);
+        int damage = bullet.GetDamage();
         health.ModifyHealth(-damage);
     }
 
