@@ -22,6 +22,9 @@ public class MouseLook : MonoBehaviour
 
     private NetworkID networkID;
 
+    private Vector2 aiming;
+    private bool isZoomPressed = false;
+
     private void Awake()
     {
         originalPos = Vector3.zero;
@@ -32,40 +35,51 @@ public class MouseLook : MonoBehaviour
     {
         networkID = GetComponentInParent<NetworkID>();
 
+        aiming = new Vector2();
+
         //Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;        
     }
     
     void Update()
     {
-        if (!networkID.IsMine)
+        if (networkID.IsMine)
         {
-            return;
-        }
+            aiming.x = Input.GetAxis("Mouse X");
+            aiming.y = Input.GetAxis("Mouse Y");
 
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            Aim(aiming);
+
+            isZoomPressed = Input.GetKeyDown(zoomKey);
+
+            if (oneTimePress)
+            {
+                CheckOneTimePressZoom(isZoomPressed);
+            }
+            else
+            {
+                CheckLongPressZoom(isZoomPressed);
+            }
+        }        
+    }
+
+    private void Aim(Vector2 aim)
+    {
+        float mouseX = aim.x * mouseSensitivity * Time.deltaTime;
+        float mouseY = aim.y * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // no need for this since we are using Conemachine owns stuff
-        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0 , 0);
+        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         playerBody.Rotate(Vector3.up * mouseX);
-
-        if (oneTimePress)
-        {
-            CheckOneTimePressZoom();
-        } else
-        {
-            CheckLongPressZoom();
-        }
     }
 
-    private void CheckOneTimePressZoom()
+    private void CheckOneTimePressZoom(bool isZoomPressed)
     {
-        if (Input.GetKeyDown(zoomKey))
+        if (isZoomPressed)
         {
             if (!isZoomedOut)
             {
@@ -78,14 +92,14 @@ public class MouseLook : MonoBehaviour
         }
     }
 
-    private void CheckLongPressZoom()
+    private void CheckLongPressZoom(bool isZoomPressed)
     {
-        if (Input.GetKeyDown(zoomKey) && !isZoomedOut)
+        if (isZoomPressed && !isZoomedOut)
         {
             ZoomOut();  
         }
 
-        if (Input.GetKeyUp(zoomKey) && isZoomedOut)
+        if (!isZoomPressed && isZoomedOut)
         {
             RestoreZoom();
         }

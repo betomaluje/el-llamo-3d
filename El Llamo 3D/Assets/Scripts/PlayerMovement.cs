@@ -18,39 +18,55 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
 
+    private Vector2 movement;
+    private bool isJumping = false;
+
     private void Start()
     {
-        networkID = GetComponent<NetworkID>();   
+        networkID = GetComponent<NetworkID>();
+
+        movement = new Vector2();
     }
 
     void Update()
     {
-        if (!networkID.IsMine)
+        if (networkID.IsMine)
         {
-            return;
-        }
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            if (isGrounded && velocity.y < 0)
+            {
+                velocity.y = -2f;
+            }
 
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+            movement.x = Input.GetAxis("Horizontal");
+            movement.y = Input.GetAxis("Vertical");
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+            Move(movement);
 
-        Vector3 move = transform.right * x + transform.forward * z;
+            isJumping = Input.GetButtonDown("Jump");
 
-        controller.Move(move * speed * Time.deltaTime);
+            Jump(isJumping);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+            // now we apply gravity
+            velocity.y += Physics.gravity.y * gravityMultiplier * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }        
+    }
+
+    private void Move(Vector2 move)
+    {
+        Vector3 move3d = transform.right * move.x + transform.forward * move.y;
+
+        controller.Move(move3d * speed * Time.deltaTime);
+    }
+
+    private void Jump(bool isJumping)
+    {
+        if (isJumping && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpSpeed * Physics.gravity.y * -gravityMultiplier);
         }
-
-        velocity.y += Physics.gravity.y * gravityMultiplier * Time.deltaTime;
-
-        controller.Move(velocity * Time.deltaTime);
     }
+
 }

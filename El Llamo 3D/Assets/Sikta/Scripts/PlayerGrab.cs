@@ -22,6 +22,9 @@ namespace BetoMaluje.Sikta
 
         private NetworkID networkID;
 
+        private bool isFirePressed = false;
+        private bool isThrowGunPressed = false;
+
         private void Start()
         {
             networkID = GetComponentInParent<NetworkID>();
@@ -29,54 +32,57 @@ namespace BetoMaluje.Sikta
 
         void Update()
         {
-            if (!networkID.IsMine)
+            if (networkID.IsMine)
             {
-                return;
-            }
+                isFirePressed = Input.GetMouseButtonDown(0);
 
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grabDistance, weaponLayer))
-            {
-                lastObject = hit.transform.GetComponent<MaterialColorChanger>();
-                if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grabDistance, weaponLayer))
                 {
-                    hasPointedToObject = true;
-                    lastObject.TargetOn();
+                    lastObject = hit.transform.GetComponent<MaterialColorChanger>();
+                    if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
+                    {
+                        hasPointedToObject = true;
+                        lastObject.TargetOn();
+                    }
+
+                    if (isFirePressed && weapon == null)
+                    {
+                        hit.transform.GetComponent<ITarget>().Pickup(this, weaponHolder);
+                    }
+                }
+                else
+                {
+                    if (lastObject != null && hasPointedToObject)
+                    {
+                        StartCoroutine(MakeTargetAvailable());
+                        lastObject.TargetOff();
+                        lastObject = null;
+                    }
                 }
 
-                if (Input.GetMouseButtonDown(0) && weapon == null)
+                if (HasGun())
                 {
-                    hit.transform.GetComponent<ITarget>().Pickup(this, weaponHolder);
-                }
-            }
-            else
-            {
-                if (lastObject != null && hasPointedToObject)
-                {
-                    StartCoroutine(MakeTargetAvailable());
-                    lastObject.TargetOff();
-                    lastObject = null;
-                }
-            }
+                    if (isFirePressed)
+                    {
+                        weaponHolder.GetComponentInChildren<ITarget>().Shoot();
+                    }
 
-            if (HasGun()) {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    weaponHolder.GetComponentInChildren<ITarget>().Shoot();
+                    isThrowGunPressed = Input.GetMouseButtonDown(1);
+
+                    if (isThrowGunPressed)
+                    {
+                        weaponHolder.GetComponentInChildren<ITarget>().Throw(throwForce);
+                        weapon = null;
+                    }
                 }
 
-                if (Input.GetMouseButtonDown(1))
+                if (!isFirePressed && weapon != null && !HasGun())
                 {
-                    weaponHolder.GetComponentInChildren<ITarget>().Throw(throwForce);
+                    weapon.Throw(throwForce);
                     weapon = null;
                 }
-            }
-
-            if (Input.GetMouseButtonUp(0) && weapon != null && !HasGun())
-            {
-                weapon.Throw(throwForce);
-                weapon = null;
-            }
+            }            
         }
 
         private bool HasGun()
