@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using SWNetwork;
 
 namespace BetoMaluje.Sikta
 {
@@ -16,7 +17,7 @@ namespace BetoMaluje.Sikta
         private int currentBullet = 0;
         private GameObject bulletPrefab;
         private bool isAttachedToPlayer = false;
-
+        
         void Start()
         {
             rb = GetComponent<Rigidbody>();
@@ -24,20 +25,17 @@ namespace BetoMaluje.Sikta
             bulletPrefab = bulletPrefabs[currentBullet];
         }
 
-        void ChangeSettings()
-        {
-            if (transform.parent != null)
-                return;
-
-            rb.isKinematic = (PlayerGrab.instance.weapon == this) ? true : false;
-            rb.interpolation = (PlayerGrab.instance.weapon == this) ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
-            col.isTrigger = (PlayerGrab.instance.weapon == this);
+        private void ChangeSettings(bool isTargetDead)
+        {         
+            rb.isKinematic = isTargetDead;
+            rb.interpolation = isTargetDead ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
+            col.isTrigger = isTargetDead;
         }
 
-        public void Pickup(Transform weaponHolder)
+        public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
         {
-            PlayerGrab.instance.weapon = this;
-            ChangeSettings();
+            playerGrab.weapon = this;
+            ChangeSettings(true);
 
             transform.parent = weaponHolder;
 
@@ -51,8 +49,8 @@ namespace BetoMaluje.Sikta
         {
             Sequence s = DOTween.Sequence();
             s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
-            s.AppendCallback(() => transform.parent = null);
-            s.AppendCallback(() => ChangeSettings());
+            s.AppendCallback(() => ChangeSettings(false));
+            s.AppendCallback(() => transform.parent = null);            
             s.AppendCallback(() => rb.AddForce(Camera.main.transform.forward * throwForce, ForceMode.Impulse));
             s.AppendCallback(() => rb.AddTorque(transform.transform.right + transform.transform.up * throwForce, ForceMode.Impulse));
         }
@@ -62,7 +60,8 @@ namespace BetoMaluje.Sikta
             // we can shoot here
             GameObject bullet = Instantiate(bulletPrefab, shootingPosition.position, Quaternion.identity);
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
-            rb.AddForce(shootingPosition.right * shootingSpeed, ForceMode.Impulse);
+            Bullet bulletScript = bullet.GetComponent<Bullet>();
+            rb.AddForce(shootingPosition.right * bulletScript.GetShootingSpeed(), ForceMode.Impulse);
         }
 
         public TargetType getType()
@@ -72,7 +71,7 @@ namespace BetoMaluje.Sikta
 
         private void Update() 
         {
-            isAttachedToPlayer = (PlayerGrab.instance.weapon == this);
+            isAttachedToPlayer = transform.parent != null;
 
             if (isAttachedToPlayer && Input.GetKeyDown(bulletChangerKey)) 
             {
@@ -89,7 +88,13 @@ namespace BetoMaluje.Sikta
                 currentBullet = 0;
             }
 
+            ChangeBulletByIndex(currentBullet);       
+        }
+
+        private void ChangeBulletByIndex(int index)
+        {
             bulletPrefab = bulletPrefabs[currentBullet];
+            Debug.Log("Change to bullet " + bulletPrefab.name);
         }
     }
 }

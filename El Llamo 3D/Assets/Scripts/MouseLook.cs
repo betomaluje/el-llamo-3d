@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using SWNetwork;
 
 public class MouseLook : MonoBehaviour
 {
+    [SerializeField] private Transform cameraTransform;
     [SerializeField] private float mouseSensitivity = 100f;
 
     [SerializeField] private Transform playerBody;
-    [SerializeField] private Transform playerHand;
 
     [Header("Zoom")]
     [SerializeField] private KeyCode zoomKey;
@@ -19,6 +20,8 @@ public class MouseLook : MonoBehaviour
     private bool isZoomedOut = false;
     private Vector3 originalPos;
 
+    private NetworkID networkID;
+
     private void Awake()
     {
         originalPos = Vector3.zero;
@@ -27,21 +30,27 @@ public class MouseLook : MonoBehaviour
 
     void Start()
     {
-        Cursor.visible = false;
+        networkID = GetComponentInParent<NetworkID>();
+
+        //Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;        
     }
     
     void Update()
     {
+        if (!networkID.IsMine)
+        {
+            return;
+        }
+
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);       
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // no need for this since we are using Conemachine owns stuff
-        //transform.localRotation = cameraRotation;
-        playerHand.localEulerAngles = new Vector3(xRotation, 0f, 0f);
+        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0 , 0);
 
         playerBody.Rotate(Vector3.up * mouseX);
 
@@ -85,13 +94,13 @@ public class MouseLook : MonoBehaviour
     private void ZoomOut()
     {
         isZoomedOut = true;
-        transform.DOLocalMove(finalZoomPosition, timeForLookout).SetEase(Ease.OutBack).SetUpdate(true);
+        cameraTransform.DOLocalMove(finalZoomPosition, timeForLookout).SetEase(Ease.OutBack).SetUpdate(true);
     }
 
     private void RestoreZoom()
     {
         Sequence s = DOTween.Sequence();
-        s.Append(transform.DOLocalMove(originalPos, timeForLookout).SetEase(Ease.OutBack)).SetUpdate(true);
+        s.Append(cameraTransform.DOLocalMove(originalPos, timeForLookout).SetEase(Ease.OutBack)).SetUpdate(true);
         s.AppendCallback(() => isZoomedOut = false);        
     }
 

@@ -19,9 +19,7 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         GetComponentInParent<Health>().OnHealthChanged += HandleHealth;
-        originalPosition = transform.position;
-
-        mainCameraPos = Camera.main.transform;
+        originalPosition = transform.position;        
 
         Vector3 hidePos = originalPosition;
         hidePos.y -= yAmount;
@@ -29,6 +27,11 @@ public class HealthBar : MonoBehaviour
 
         foregroundImage.DOFade(0, 0);
         backgroundImage.DOFade(0, 0);
+    }
+
+    private void OnEnable()
+    {
+        mainCameraPos = Camera.main.transform;
     }
 
     private void HandleHealth(float healthPercentage)
@@ -63,6 +66,11 @@ public class HealthBar : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (mainCameraPos == null)
+        {
+            return;
+        }
+
         transform.LookAt(transform.position + mainCameraPos.forward);        
 
         AlignTransform(transform);

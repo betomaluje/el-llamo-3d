@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
+using SWNetwork;
 
 namespace BetoMaluje.Sikta
 {
     public class PlayerGrab : MonoBehaviour
     {
-        public static PlayerGrab instance;
-
         [Header("Stats")]
         [SerializeField] private float throwForce = 20;
         [SerializeField] private float timeResetTarget = 1f;
@@ -21,13 +20,20 @@ namespace BetoMaluje.Sikta
         private MaterialColorChanger lastObject;
         private bool hasPointedToObject = false;
 
-        private void Awake()
+        private NetworkID networkID;
+
+        private void Start()
         {
-            instance = this;
+            networkID = GetComponentInParent<NetworkID>();
         }
 
         void Update()
         {
+            if (!networkID.IsMine)
+            {
+                return;
+            }
+
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grabDistance, weaponLayer))
             {
@@ -40,7 +46,7 @@ namespace BetoMaluje.Sikta
 
                 if (Input.GetMouseButtonDown(0) && weapon == null)
                 {
-                    hit.transform.GetComponent<ITarget>().Pickup(weaponHolder);
+                    hit.transform.GetComponent<ITarget>().Pickup(this, weaponHolder);
                 }
             }
             else
@@ -53,14 +59,17 @@ namespace BetoMaluje.Sikta
                 }
             }
 
-            if (Input.GetMouseButtonDown(0) && HasGun())
-            {
-                weaponHolder.GetComponentInChildren<ITarget>().Shoot();
-            }
+            if (HasGun()) {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    weaponHolder.GetComponentInChildren<ITarget>().Shoot();
+                }
 
-            if (Input.GetMouseButtonDown(1) && HasGun())
-            {
-                weaponHolder.GetComponentInChildren<ITarget>().Throw(throwForce);
+                if (Input.GetMouseButtonDown(1))
+                {
+                    weaponHolder.GetComponentInChildren<ITarget>().Throw(throwForce);
+                    weapon = null;
+                }
             }
 
             if (Input.GetMouseButtonUp(0) && weapon != null && !HasGun())

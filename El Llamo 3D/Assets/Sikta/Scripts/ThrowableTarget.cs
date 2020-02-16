@@ -14,20 +14,20 @@ namespace BetoMaluje.Sikta
             col = GetComponent<Collider>();
         }
 
-        void ChangeSettings()
+        private void ChangeSettings(bool isTargetDead)
         {
             if (transform.parent != null)
                 return;
 
-            rb.isKinematic = (PlayerGrab.instance.weapon == this) ? true : false;
-            rb.interpolation = (PlayerGrab.instance.weapon == this) ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
-            col.isTrigger = (PlayerGrab.instance.weapon == this);
+            rb.isKinematic = isTargetDead;
+            rb.interpolation = isTargetDead ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
+            col.isTrigger = isTargetDead;
         }
     
-        public void Pickup(Transform weaponHolder)
-        {        
-            PlayerGrab.instance.weapon = this;
-            ChangeSettings();
+        public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
+        {
+            playerGrab.weapon = this;
+            ChangeSettings(true);
 
             transform.parent = weaponHolder;
 
@@ -37,11 +37,10 @@ namespace BetoMaluje.Sikta
 
         public void Throw(float throwForce)
         {
-            Debug.Log("throwing target " + throwForce);
             Sequence s = DOTween.Sequence();
             s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
             s.AppendCallback(() => transform.parent = null);
-            s.AppendCallback(() => ChangeSettings());
+            s.AppendCallback(() => ChangeSettings(false));
             s.AppendCallback(() => rb.AddForce(Camera.main.transform.forward * throwForce, ForceMode.Impulse));
             s.AppendCallback(() => rb.AddTorque(transform.transform.right + transform.transform.up * throwForce, ForceMode.Impulse));
         }

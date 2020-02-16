@@ -15,3 +15,4 @@ MonoBehaviour:
   explosionParticles: {fileID: 6042133881555360809, guid: a36bb5f3415e43247a0b57b1e6a1e835,
     type: 3}
   maxDamage: 30
+  shootingSpeed: 350

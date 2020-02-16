@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using SWNetwork;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,11 +13,23 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
+    private NetworkID networkID;
+
     private Vector3 velocity;
     private bool isGrounded;
 
+    private void Start()
+    {
+        networkID = GetComponent<NetworkID>();   
+    }
+
     void Update()
     {
+        if (!networkID.IsMine)
+        {
+            return;
+        }
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)

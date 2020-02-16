@@ -4,7 +4,7 @@ namespace BetoMaluje.Sikta
 {
     public interface ITarget
     {
-        void Pickup(Transform weaponHolder);
+        void Pickup(PlayerGrab playerGrab, Transform weaponHolder);
 
         void Throw(float throwForce);
 

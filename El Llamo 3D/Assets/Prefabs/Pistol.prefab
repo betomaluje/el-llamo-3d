@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 378751389733484386}
   - component: {fileID: 6232156196547333019}
   - component: {fileID: 4422581082356254061}
-  - component: {fileID: 4422581082356254060}
-  - component: {fileID: 4422581082356254063}
+  - component: {fileID: 9221246813437098942}
   - component: {fileID: 4422581082356254062}
+  - component: {fileID: 1421573247}
   m_Layer: 9
   m_Name: Pistol
   m_TagString: Untagged
@@ -134,7 +134,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
---- !u!65 &4422581082356254060
+--- !u!65 &9221246813437098942
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,22 +147,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.018194009, y: 0.0032320977, z: 0.011615556}
   m_Center: {x: -0.0056096674, y: 5.2386895e-10, z: 0.0016831115}
---- !u!114 &4422581082356254063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5639007037605429063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78678f9276570e542b2a66b8bc5f9618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingPosition: {fileID: 4422581084064617564}
-  bulletPrefab: {fileID: 6111925643873329397, guid: 63e1089b0088e07478b584d070fd1dbf,
-    type: 3}
-  shootingSpeed: 700
 --- !u!114 &4422581082356254062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +164,24 @@ MonoBehaviour:
   targetLock: {fileID: 5718114386382216768}
   targetAnimationDuration: 0.2
   isEnabled: 1
+--- !u!114 &1421573247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639007037605429063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5865a11289c9549e98275387fac4430c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingPosition: {fileID: 4422581084064617564}
+  bulletChangerKey: 101
+  bulletPrefabs:
+  - {fileID: 6111925643873329397, guid: 63e1089b0088e07478b584d070fd1dbf, type: 3}
+  - {fileID: 3823592870078907192, guid: 9ec0360af92f57d4088074f297817132, type: 3}
+  shootingSpeed: 1000
 --- !u!1001 &4422581082706182632
 PrefabInstance:
   m_ObjectHideFlags: 0

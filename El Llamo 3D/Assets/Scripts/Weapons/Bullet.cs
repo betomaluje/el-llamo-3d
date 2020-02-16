@@ -11,4 +11,9 @@ public class Bullet : MonoBehaviour
     public GameObject GetExplosionParticles() {
         return bullet.explosionParticles;
     }
+
+    public float GetShootingSpeed()
+    {
+        return bullet.shootingSpeed;
+    }
 }
