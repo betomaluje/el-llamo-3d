@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!networkID.IsMine) return;
+
         if (networkID.IsMine)
         {
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);

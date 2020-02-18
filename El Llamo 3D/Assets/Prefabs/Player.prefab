@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 9158683583669780992}
   - component: {fileID: 8915490827300288987}
   - component: {fileID: 3337313840973512057}
-  - component: {fileID: 3153021283851068788}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -166,13 +165,13 @@ MonoBehaviour:
     smoothLevel: 2
     snapDistance: 10
     readFunction: 0
-    bandwidth: 7
-    padding: 2
+    bandwidth: 6
+    padding: 3
     pos_x_setting:
       enabled: 1
       min: -480
       max: 480
-      resolution: 3
+      resolution: 2
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -180,7 +179,7 @@ MonoBehaviour:
       enabled: 1
       min: 0.1
       max: 20
-      resolution: 3
+      resolution: 2
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -188,7 +187,7 @@ MonoBehaviour:
       enabled: 1
       min: -480
       max: 480
-      resolution: 3
+      resolution: 2
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -251,35 +250,6 @@ MonoBehaviour:
   syncTransFormFoldout: 1
   syncAnimatorFoldout: 0
   restoreState: 1
---- !u!114 &3153021283851068788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5836814044747114715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1872577316, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  properties_:
-  - Foldout: 1
-    name: CurrentWeapon
-    type: 2
-    conflictResolution: 0
-    data: 
-    onValueChange:
-      m_PersistentCalls:
-        m_Calls: []
-    onConflict:
-      m_PersistentCalls:
-        m_Calls: []
-    onReady:
-      m_PersistentCalls:
-        m_Calls: []
-  restoreState: 1
-  AutoInitialization: 1
 --- !u!1 &5836814044938356807
 GameObject:
   m_ObjectHideFlags: 0

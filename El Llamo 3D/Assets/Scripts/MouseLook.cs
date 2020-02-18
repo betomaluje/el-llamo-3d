@@ -24,6 +24,7 @@ public class MouseLook : MonoBehaviour
 
     private Vector2 aiming;
     private bool isZoomPressed = false;
+    private bool isZoomReleased = false;
 
     private void Awake()
     {
@@ -43,6 +44,8 @@ public class MouseLook : MonoBehaviour
     
     void Update()
     {
+        if (!networkID.IsMine) return;
+
         if (networkID.IsMine)
         {
             aiming.x = Input.GetAxis("Mouse X");
@@ -51,6 +54,7 @@ public class MouseLook : MonoBehaviour
             Aim(aiming);
 
             isZoomPressed = Input.GetKeyDown(zoomKey);
+            isZoomReleased = Input.GetKeyUp(zoomKey);
 
             if (oneTimePress)
             {
@@ -99,7 +103,7 @@ public class MouseLook : MonoBehaviour
             ZoomOut();  
         }
 
-        if (!isZoomPressed && isZoomedOut)
+        if (isZoomReleased && isZoomedOut)
         {
             RestoreZoom();
         }

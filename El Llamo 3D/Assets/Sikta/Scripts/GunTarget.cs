@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using DG.Tweening;
-using SWNetwork;
 
 namespace BetoMaluje.Sikta
 {

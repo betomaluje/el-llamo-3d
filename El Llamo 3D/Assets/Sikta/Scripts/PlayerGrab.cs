@@ -30,12 +30,20 @@ namespace BetoMaluje.Sikta
             networkID = GetComponentInParent<NetworkID>();
         }
 
-        void Update()
+        private void Update()
         {
+            if (!networkID.IsMine) return;
+
             if (networkID.IsMine)
             {
                 isFirePressed = Input.GetMouseButtonDown(0);
+            }
+        }
 
+        void FixedUpdate()
+        {
+            if (networkID.IsMine)
+            {
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grabDistance, weaponLayer))
                 {
