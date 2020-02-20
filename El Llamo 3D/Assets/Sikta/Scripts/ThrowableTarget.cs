@@ -26,7 +26,7 @@ namespace BetoMaluje.Sikta
     
         public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
         {
-            playerGrab.weapon = this;
+            playerGrab.target = this;
             ChangeSettings(true);
 
             transform.parent = weaponHolder;

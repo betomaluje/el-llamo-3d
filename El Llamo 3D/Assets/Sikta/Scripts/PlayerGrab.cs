@@ -12,8 +12,7 @@ namespace BetoMaluje.Sikta
 
         [Space]
         [Header("Weapon")]
-        public ITarget weapon;
-        [SerializeField] private Transform weaponHolder;
+        public ITarget target;
         [SerializeField] private LayerMask weaponLayer;
         [SerializeField] private float grabDistance = 10f;
 
@@ -25,27 +24,25 @@ namespace BetoMaluje.Sikta
         private bool isFirePressed = false;
         private bool isThrowGunPressed = false;
 
-        private void Start()
+        private Transform cameraTransform;
+
+        public void SetupPlayer() 
         {
             networkID = GetComponentInParent<NetworkID>();
+            cameraTransform = transform.parent.transform;
         }
 
         private void Update()
         {
-            if (!networkID.IsMine) return;
+            if (networkID == null) return;
 
             if (networkID.IsMine)
             {
                 isFirePressed = Input.GetMouseButtonDown(0);
-            }
-        }
+                isThrowGunPressed = Input.GetMouseButtonDown(1);
 
-        void FixedUpdate()
-        {
-            if (networkID.IsMine)
-            {
                 RaycastHit hit;
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grabDistance, weaponLayer))
+                if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, grabDistance, weaponLayer))
                 {
                     lastObject = hit.transform.GetComponent<MaterialColorChanger>();
                     if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
@@ -54,9 +51,9 @@ namespace BetoMaluje.Sikta
                         lastObject.TargetOn();
                     }
 
-                    if (isFirePressed && weapon == null)
+                    if (isFirePressed && target == null)
                     {
-                        hit.transform.GetComponent<ITarget>().Pickup(this, weaponHolder);
+                        hit.transform.GetComponent<ITarget>().Pickup(this, transform);
                     }
                 }
                 else
@@ -69,33 +66,22 @@ namespace BetoMaluje.Sikta
                     }
                 }
 
-                if (HasGun())
+                if (HasGun() && isFirePressed)
                 {
-                    if (isFirePressed)
-                    {
-                        weaponHolder.GetComponentInChildren<ITarget>().Shoot();
-                    }
-
-                    isThrowGunPressed = Input.GetMouseButtonDown(1);
-
-                    if (isThrowGunPressed)
-                    {
-                        weaponHolder.GetComponentInChildren<ITarget>().Throw(throwForce);
-                        weapon = null;
-                    }
+                    transform.GetComponentInChildren<ITarget>().Shoot();
                 }
-
-                if (!isFirePressed && weapon != null && !HasGun())
+                
+                if (isThrowGunPressed && target != null )
                 {
-                    weapon.Throw(throwForce);
-                    weapon = null;
-                }
-            }            
+                    target.Throw(throwForce);
+                    target = null;
+                }           
+            }
         }
 
         private bool HasGun()
         {
-            return weaponHolder.childCount > 0 && weaponHolder.GetComponentInChildren<ITarget>().getType().Equals(TargetType.Shootable);
+            return transform.childCount > 0 && transform.GetComponentInChildren<ITarget>().getType().Equals(TargetType.Shootable);
         }
 
         private IEnumerator MakeTargetAvailable()

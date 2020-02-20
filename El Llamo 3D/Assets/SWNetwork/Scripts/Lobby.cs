@@ -2,6 +2,7 @@
 using SWNetwork; 
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Basic lobby matchmaking implementation.
@@ -22,6 +23,8 @@ public class Lobby : MonoBehaviour
     /// Button for entering custom playerId
     /// </summary>
     public InputField customPlayerIdField;
+
+    public TextMeshProUGUI errorLogText;
 
     void Start()
     {
@@ -55,9 +58,14 @@ public class Lobby : MonoBehaviour
         ConnectToRoom();
     }
 
+    private void LogError(string error) {
+        errorLogText.text = error;
+    }
+
     void Lobby_OnFailedToStartRoomEvent(SWFailedToStartRoomEventData eventData)
     {
         Debug.Log("Failed to start room: " + eventData);
+        LogError("Failed to start room: " + eventData.roomId);
     }
 
     void Lobby_OnLobbyConncetedEvent()
@@ -82,6 +90,7 @@ public class Lobby : MonoBehaviour
                 if (!ok)
                 {
                     Debug.LogError("Check-in failed: " + error);
+                    LogError("Check-in failed: " + error);
                 }
             });
         }
@@ -93,6 +102,7 @@ public class Lobby : MonoBehaviour
                 if (!ok)
                 {
                     Debug.LogError("Check-in failed: " + error);
+                    LogError("Check-in failed: " + error);
                 }
             });
         }
@@ -104,7 +114,9 @@ public class Lobby : MonoBehaviour
     public void Play()
     {
         // Here we use the JoinOrCreateRoom method to get player into rooms quickly.
-        NetworkClient.Lobby.JoinOrCreateRoom(true, 2, 60, HandleJoinOrCreatedRoom);
+        int maxPlayers = 2;
+        int playerTimeToLive = 60;
+        NetworkClient.Lobby.JoinOrCreateRoom(true, maxPlayers, playerTimeToLive, HandleJoinOrCreatedRoom);
     }
 
     /* Lobby helper methods*/
@@ -135,6 +147,7 @@ public class Lobby : MonoBehaviour
             else
             {
                 Debug.Log("Failed to register " + error);
+                LogError("Failed to register ");
             }
         });
     }
@@ -166,6 +179,7 @@ public class Lobby : MonoBehaviour
         else
         {
             Debug.Log("Failed to join or create room " + error);
+            LogError("Failed to join or create room ");
         }
     }
 
@@ -186,6 +200,7 @@ public class Lobby : MonoBehaviour
             else
             {
                 Debug.Log("Failed to start room " + error);
+                LogError("Failed to start room ");
             }
         });
     }
@@ -212,6 +227,7 @@ public class Lobby : MonoBehaviour
         else
         {
             Debug.Log("Failed to connect to room");
+            LogError("Failed to connect to room");
         }
     }
 }

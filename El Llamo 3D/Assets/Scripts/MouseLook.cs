@@ -4,7 +4,6 @@ using SWNetwork;
 
 public class MouseLook : MonoBehaviour
 {
-    [SerializeField] private Transform cameraTransform;
     [SerializeField] private float mouseSensitivity = 100f;
 
     [SerializeField] private Transform playerBody;
@@ -21,7 +20,7 @@ public class MouseLook : MonoBehaviour
     private Vector3 originalPos;
 
     private NetworkID networkID;
-
+    private Transform cameraTransform;
     private Vector2 aiming;
     private bool isZoomPressed = false;
     private bool isZoomReleased = false;
@@ -34,18 +33,26 @@ public class MouseLook : MonoBehaviour
 
     void Start()
     {
-        networkID = GetComponentInParent<NetworkID>();
+        networkID = GetComponent<NetworkID>();
 
         aiming = new Vector2();
 
         //Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;        
     }
+
+    public void SetupPlayer() 
+    {
+        // set CameraFollow target
+        Camera mainCamera = Camera.main;
+        cameraTransform = mainCamera.transform;
+
+        cameraTransform.parent = transform;
+        cameraTransform.localPosition = originalPos;
+    }
     
     void Update()
     {
-        if (!networkID.IsMine) return;
-
         if (networkID.IsMine)
         {
             aiming.x = Input.GetAxis("Mouse X");

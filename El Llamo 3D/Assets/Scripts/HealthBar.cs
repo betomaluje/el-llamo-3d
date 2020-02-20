@@ -73,7 +73,7 @@ public class HealthBar : MonoBehaviour
 
         transform.LookAt(transform.position + mainCameraPos.forward);        
 
-        AlignTransform(transform);
+        //AlignTransform(transform);
     }
 
     private void Show()
@@ -94,7 +94,7 @@ public class HealthBar : MonoBehaviour
         }        
     }
 
-    public void AlignTransform(Transform transform)
+    private void AlignTransform(Transform transform)
     {
         Vector3 sample = SampleNormal(transform.position);
 
@@ -102,7 +102,7 @@ public class HealthBar : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(proj, sample);
     }
 
-    public Vector3 SampleNormal(Vector3 position)
+    private Vector3 SampleNormal(Vector3 position)
     {
         Terrain terrain = Terrain.activeTerrain;
         var terrainLocalPos = position - terrain.transform.position;
