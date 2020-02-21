@@ -13,8 +13,13 @@ namespace BetoMaluje.Sikta
         [Space]
         [Header("Weapon")]
         public ITarget target;
-        [SerializeField] private LayerMask weaponLayer;
+        [SerializeField] private LayerMask targetLayer;
         [SerializeField] private float grabDistance = 10f;
+
+        [Space]
+        [Header("Shooting")]
+        [SerializeField] private LayerMask shootingLayer;
+        [SerializeField] private float shootingDistance = 100f;
 
         private MaterialColorChanger lastObject;
         private bool hasPointedToObject = false;
@@ -42,7 +47,7 @@ namespace BetoMaluje.Sikta
                 isThrowGunPressed = Input.GetMouseButtonDown(1);
 
                 RaycastHit hit;
-                if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, grabDistance, weaponLayer))
+                if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, grabDistance, targetLayer))
                 {
                     lastObject = hit.transform.GetComponent<MaterialColorChanger>();
                     if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
@@ -68,7 +73,19 @@ namespace BetoMaluje.Sikta
 
                 if (HasGun() && isFirePressed)
                 {
-                    transform.GetComponentInChildren<ITarget>().Shoot();
+                    // check if we hit something with collider and in our shooting layer
+                    RaycastHit shootHit;
+                    if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out shootHit, shootingDistance, shootingLayer))
+                    {
+                        Debug.Log("hit: " + shootHit.transform.name);
+                        //transform.GetComponentInChildren<ITarget>().Shoot();
+                        BulletTarget bulletTarget = shootHit.transform.GetComponent<BulletTarget>();
+                        GunTarget gunTarget = transform.GetComponentInChildren<GunTarget>();
+                        if (gunTarget != null && bulletTarget != null)
+                        {
+                            bulletTarget.PerformDamage(gunTarget.GetDamage());
+                        }
+                    }                
                 }
                 
                 if (isThrowGunPressed && target != null )

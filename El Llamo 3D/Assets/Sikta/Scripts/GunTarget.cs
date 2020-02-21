@@ -10,6 +10,8 @@ namespace BetoMaluje.Sikta
         [SerializeField] private GameObject[] bulletPrefabs;
         [SerializeField] private float shootingSpeed = 100;
 
+        [SerializeField] private int maxDamage = 30;
+
         private Rigidbody rb;
         private Collider col;
 
@@ -66,6 +68,11 @@ namespace BetoMaluje.Sikta
         public TargetType getType()
         {
             return TargetType.Shootable;
+        }
+
+        public int GetDamage() 
+        {
+            return Random.Range(1, maxDamage);
         }
 
         private void Update() 

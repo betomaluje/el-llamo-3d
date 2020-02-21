@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5836814044622881642}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 644223966757249534}
   - component: {fileID: 8915490827300288987}
   - component: {fileID: 3337313840973512057}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 5836814044938356806}
   - component: {fileID: 5836814044938356800}
   - component: {fileID: 5836814044938356801}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,7 +386,7 @@ GameObject:
   - component: {fileID: 5836814045017652685}
   - component: {fileID: 5836814045017652690}
   - component: {fileID: 5836814045017652691}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,10 +474,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5836814044747114709}
     m_Modifications:
+    - target: {fileID: 3820138591182244384, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3820138591182244389, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}
       propertyPath: m_Name
       value: HealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 3820138591182244389, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}
@@ -542,7 +552,7 @@ PrefabInstance:
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}
@@ -584,6 +594,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3820138591840586615, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3820138592779437896, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0, type: 3}
 --- !u!224 &7227591154509228168 stripped
@@ -599,6 +619,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5836814044747114709}
     m_Modifications:
+    - target: {fileID: 8305349847092384487, guid: ddfc7cb07324b8e4bb8595db75742af1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8305349848024491497, guid: ddfc7cb07324b8e4bb8595db75742af1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -708,6 +733,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Crosshair
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305349848024491501, guid: ddfc7cb07324b8e4bb8595db75742af1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305349848024491501, guid: ddfc7cb07324b8e4bb8595db75742af1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8305349848024491502, guid: ddfc7cb07324b8e4bb8595db75742af1,
         type: 3}

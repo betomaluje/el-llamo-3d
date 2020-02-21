@@ -4,23 +4,15 @@ public class BulletTarget : MonoBehaviour
 {
     [SerializeField] private LayerMask targetLayerMask;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (CheckLayerMask(collision.gameObject))
-        {
-            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
-            Health health = GetComponent<Health>();
+    private Health health;
 
-            if (bullet != null && health != null)
-            {
-                PerformDamage(bullet, health);
-            }
-        }
+    void Start()
+    {
+        health = GetComponent<Health>();
     }
 
-    private void PerformDamage(Bullet bullet, Health health)
+    public void PerformDamage(int damage)
     {
-        int damage = bullet.GetDamage();
         health.ModifyHealth(-damage);
     }
 
