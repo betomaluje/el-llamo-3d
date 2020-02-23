@@ -27,7 +27,7 @@ namespace BetoMaluje.Sikta
         private NetworkID networkID;
 
         private bool isFirePressed = false;
-        private bool isThrowGunPressed = false;
+        private bool isThrowObjectPressed = false;
 
         private Transform cameraTransform;
 
@@ -44,7 +44,7 @@ namespace BetoMaluje.Sikta
             if (networkID.IsMine)
             {
                 isFirePressed = Input.GetMouseButtonDown(0);
-                isThrowGunPressed = Input.GetMouseButtonDown(1);
+                isThrowObjectPressed = Input.GetMouseButtonDown(1);
 
                 RaycastHit hit;
                 if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, grabDistance, targetLayer))
@@ -77,18 +77,24 @@ namespace BetoMaluje.Sikta
                     RaycastHit shootHit;
                     if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out shootHit, shootingDistance, shootingLayer))
                     {
-                        Debug.Log("hit: " + shootHit.transform.name);
-                        //transform.GetComponentInChildren<ITarget>().Shoot();
-                        BulletTarget bulletTarget = shootHit.transform.GetComponent<BulletTarget>();
+                        target.Shoot();
+                        Health healthTarget = shootHit.transform.GetComponent<Health>();
                         GunTarget gunTarget = transform.GetComponentInChildren<GunTarget>();
-                        if (gunTarget != null && bulletTarget != null)
+
+                        if (gunTarget != null && healthTarget != null)
                         {
-                            bulletTarget.PerformDamage(gunTarget.GetDamage());
+                            healthTarget.PerformDamage(gunTarget.GetDamage());
+
+                            if (shootHit.rigidbody != null) 
+                            {
+                                Debug.Log("impact force! " + gunTarget.impactForce);
+                                shootHit.rigidbody.AddForce(shootHit.normal * gunTarget.impactForce);
+                            }
                         }
                     }                
                 }
                 
-                if (isThrowGunPressed && target != null )
+                if (isThrowObjectPressed && target != null )
                 {
                     target.Throw(throwForce);
                     target = null;

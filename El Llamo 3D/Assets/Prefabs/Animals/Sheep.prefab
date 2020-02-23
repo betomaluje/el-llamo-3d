@@ -626,7 +626,6 @@ MonoBehaviour:
   dieBloodPrefab: {fileID: 6239080137120610381, guid: c64c6ec7bd591384a9cbb4d1b9141506,
     type: 3}
   maxHealth: 100
-  timeChange: 1
 --- !u!1 &3036516517233590621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1426,7 +1425,7 @@ PrefabInstance:
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}

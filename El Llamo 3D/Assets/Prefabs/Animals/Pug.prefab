@@ -446,11 +446,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1728999359625398591}
-  - component: {fileID: 5945902762414842411}
+  - component: {fileID: 1792247943772230319}
   - component: {fileID: 5945902762414842408}
   - component: {fileID: 5945902762414842409}
   - component: {fileID: 5945902762414842410}
-  - component: {fileID: 5945902762414842412}
   - component: {fileID: 5945902762414842413}
   m_Layer: 9
   m_Name: Pug
@@ -477,7 +476,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &5945902762414842411
+--- !u!54 &1792247943772230319
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -492,7 +491,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!65 &5945902762414842408
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -535,21 +534,6 @@ MonoBehaviour:
   targetLock: {fileID: 2359586734586970964}
   targetAnimationDuration: 0.2
   isEnabled: 1
---- !u!114 &5945902762414842412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2424618960374692652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa4327cbaefa8864595683c63a33a05f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayerMask:
-    serializedVersion: 2
-    m_Bits: 2048
 --- !u!114 &5945902762414842413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,7 +549,6 @@ MonoBehaviour:
   dieBloodPrefab: {fileID: 6239080137120610381, guid: c64c6ec7bd591384a9cbb4d1b9141506,
     type: 3}
   maxHealth: 100
-  timeChange: 1
 --- !u!1 &2482008775161549012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1517,7 +1500,7 @@ PrefabInstance:
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}

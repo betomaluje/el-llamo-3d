@@ -450,7 +450,6 @@ GameObject:
   - component: {fileID: 5961082871118887647}
   - component: {fileID: 5961082871118887644}
   - component: {fileID: 5961082871118887645}
-  - component: {fileID: 5961082871118887643}
   - component: {fileID: 5961082871118887640}
   m_Layer: 9
   m_Name: Pig
@@ -535,21 +534,6 @@ MonoBehaviour:
   targetLock: {fileID: 2342150965516122973}
   targetAnimationDuration: 0.2
   isEnabled: 1
---- !u!114 &5961082871118887643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2421784722309620521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa4327cbaefa8864595683c63a33a05f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayerMask:
-    serializedVersion: 2
-    m_Bits: 2048
 --- !u!114 &5961082871118887640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,7 +549,6 @@ MonoBehaviour:
   dieBloodPrefab: {fileID: 6239080137120610381, guid: c64c6ec7bd591384a9cbb4d1b9141506,
     type: 3}
   maxHealth: 100
-  timeChange: 1
 --- !u!1 &2472422947153561809
 GameObject:
   m_ObjectHideFlags: 0

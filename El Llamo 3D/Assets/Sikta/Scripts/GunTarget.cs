@@ -8,7 +8,11 @@ namespace BetoMaluje.Sikta
         [SerializeField] private Transform shootingPosition;
         [SerializeField] private KeyCode bulletChangerKey;
         [SerializeField] private GameObject[] bulletPrefabs;
-        [SerializeField] private float shootingSpeed = 100;
+        [SerializeField] private float shootingSpeed = 100f;
+
+        public float impactForce = 100f;
+
+        [SerializeField] private ParticleSystem shootingParticles;
 
         [SerializeField] private int maxDamage = 30;
 
@@ -59,10 +63,13 @@ namespace BetoMaluje.Sikta
         public void Shoot()
         {
             // we can shoot here
+            shootingParticles.Play();
+            /*
             GameObject bullet = Instantiate(bulletPrefab, shootingPosition.position, Quaternion.identity);
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             Bullet bulletScript = bullet.GetComponent<Bullet>();
             rb.AddForce(shootingPosition.right * bulletScript.GetShootingSpeed(), ForceMode.Impulse);
+            */
         }
 
         public TargetType getType()

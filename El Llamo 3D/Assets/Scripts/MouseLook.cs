@@ -27,8 +27,7 @@ public class MouseLook : MonoBehaviour
 
     private void Awake()
     {
-        originalPos = Vector3.zero;
-        originalPos.y = 1.63f;
+        originalPos = new Vector3(0.5f, 1.63f, 1f);
     }
 
     void Start()
@@ -37,7 +36,7 @@ public class MouseLook : MonoBehaviour
 
         aiming = new Vector2();
 
-        //Cursor.visible = false;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;        
     }
 

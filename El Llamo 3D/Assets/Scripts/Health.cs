@@ -25,7 +25,12 @@ public class Health : MonoBehaviour
         col = GetComponent<Collider>();
     }    
 
-    public void ModifyHealth(int amount)
+    public void PerformDamage(int damage)
+    {
+        ModifyHealth(-damage);
+    }
+
+    private void ModifyHealth(int amount)
     {
         currentHealth += amount;
 
