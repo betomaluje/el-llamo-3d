@@ -184,6 +184,8 @@ MonoBehaviour:
   - {fileID: 3823592870078907192, guid: 9ec0360af92f57d4088074f297817132, type: 3}
   shootingSpeed: 1000
   impactForce: 100
+  impactEffect: {fileID: 6042133881555360809, guid: a36bb5f3415e43247a0b57b1e6a1e835,
+    type: 3}
   shootingParticles: {fileID: 3863518378152215014}
   maxDamage: 30
 --- !u!1 &8365631113376885385
@@ -1539,7 +1541,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -1548,7 +1550,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}

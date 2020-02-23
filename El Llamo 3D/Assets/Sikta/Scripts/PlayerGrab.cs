@@ -73,11 +73,12 @@ namespace BetoMaluje.Sikta
 
                 if (HasGun() && isFirePressed)
                 {
+                    target.Shoot();
+
                     // check if we hit something with collider and in our shooting layer
                     RaycastHit shootHit;
                     if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out shootHit, shootingDistance, shootingLayer))
-                    {
-                        target.Shoot();
+                    {                       
                         Health healthTarget = shootHit.transform.GetComponent<Health>();
                         GunTarget gunTarget = transform.GetComponentInChildren<GunTarget>();
 
@@ -89,7 +90,13 @@ namespace BetoMaluje.Sikta
                             {
                                 Debug.Log("impact force! " + gunTarget.impactForce);
                                 shootHit.rigidbody.AddForce(shootHit.normal * gunTarget.impactForce);
-                            }
+                            }                            
+                        }
+
+                        // despite if it's a target or not, we try and instantiate an impact effect
+                        if (gunTarget != null)
+                        {
+                            Instantiate(gunTarget.impactEffect, shootHit.point, Quaternion.LookRotation(shootHit.normal));
                         }
                     }                
                 }

@@ -11,6 +11,7 @@ namespace BetoMaluje.Sikta
         [SerializeField] private float shootingSpeed = 100f;
 
         public float impactForce = 100f;
+        public GameObject impactEffect;
 
         [SerializeField] private ParticleSystem shootingParticles;
 

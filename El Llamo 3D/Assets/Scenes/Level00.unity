@@ -2088,7 +2088,7 @@ MonoBehaviour:
   grabDistance: 10
   shootingLayer:
     serializedVersion: 2
-    m_Bits: 4608
+    m_Bits: 4864
   shootingDistance: 100
 --- !u!1001 &4729337092801569629
 PrefabInstance:
