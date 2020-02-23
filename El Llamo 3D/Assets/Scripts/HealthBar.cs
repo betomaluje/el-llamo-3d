@@ -11,19 +11,13 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private float updateSpeedSeconds = 0.2f;
     [SerializeField] private float yAmount = 6f;
     [SerializeField] private float hideTime = 1f;
-
-    private Vector3 originalPosition;
+    
     private bool isShown = false;
     private Transform mainCameraPos;
     
     private void Awake()
     {
-        GetComponentInParent<Health>().OnHealthChanged += HandleHealth;
-        originalPosition = transform.position;        
-
-        Vector3 hidePos = originalPosition;
-        hidePos.y -= yAmount;
-        transform.position = hidePos;
+        GetComponentInParent<Health>().OnHealthChanged += HandleHealth;        
 
         foregroundImage.DOFade(0, 0);
         backgroundImage.DOFade(0, 0);
@@ -71,16 +65,14 @@ public class HealthBar : MonoBehaviour
             return;
         }
 
+        transform.rotation = Quaternion.identity;
         transform.LookAt(transform.position + mainCameraPos.forward);        
-
-        //AlignTransform(transform);
     }
 
     private void Show()
     {
         isShown = true;
-
-        transform.DOMove(originalPosition, hideTime);
+        
         foregroundImage.DOFade(1, 0.4f);
         backgroundImage.DOFade(1, 0.4f);       
     }
@@ -93,24 +85,5 @@ public class HealthBar : MonoBehaviour
             backgroundImage.DOFade(0, hideTime);          
         }        
     }
-
-    private void AlignTransform(Transform transform)
-    {
-        Vector3 sample = SampleNormal(transform.position);
-
-        Vector3 proj = transform.forward - (Vector3.Dot(transform.forward, sample)) * sample;
-        transform.rotation = Quaternion.LookRotation(proj, sample);
-    }
-
-    private Vector3 SampleNormal(Vector3 position)
-    {
-        Terrain terrain = Terrain.activeTerrain;
-        var terrainLocalPos = position - terrain.transform.position;
-        var normalizedPos = new Vector2(
-            Mathf.InverseLerp(0f, terrain.terrainData.size.x, terrainLocalPos.x),
-            Mathf.InverseLerp(0f, terrain.terrainData.size.z, terrainLocalPos.z)
-        );
-        var terrainNormal = terrain.terrainData.GetInterpolatedNormal(normalizedPos.x, normalizedPos.y);
-        return terrainNormal;
-    }
+   
 }

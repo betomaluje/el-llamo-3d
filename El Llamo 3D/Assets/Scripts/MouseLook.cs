@@ -27,7 +27,7 @@ public class MouseLook : MonoBehaviour
 
     private void Awake()
     {
-        originalPos = new Vector3(0.5f, 1.63f, 1f);
+        originalPos = new Vector3(0f, 2.7f, 1f);
     }
 
     void Start()

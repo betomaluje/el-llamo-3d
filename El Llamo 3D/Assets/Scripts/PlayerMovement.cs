@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
 
+    private PlayerAnimations playerAnimations;
+
     private Vector2 movement;
     private bool isJumping = false;
 
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     {
         networkID = GetComponent<NetworkID>();
 
+        playerAnimations = GetComponent<PlayerAnimations>();
         movement = new Vector2();
     }
 
@@ -43,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
             movement.y = Input.GetAxis("Vertical");
 
             Move(movement);
+
+            playerAnimations.WalkRunAnim(movement.magnitude);
 
             isJumping = Input.GetButtonDown("Jump");
 

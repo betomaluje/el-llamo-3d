@@ -24,6 +24,8 @@ namespace BetoMaluje.Sikta
         private MaterialColorChanger lastObject;
         private bool hasPointedToObject = false;
 
+        private PlayerAnimations playerAnimations;
+
         private NetworkID networkID;
 
         private bool isFirePressed = false;
@@ -31,15 +33,21 @@ namespace BetoMaluje.Sikta
 
         private Transform cameraTransform;
 
+        private bool isPlayerSetup = false;
+
         public void SetupPlayer() 
         {
             networkID = GetComponentInParent<NetworkID>();
             cameraTransform = transform.parent.transform;
+
+            playerAnimations = transform.parent.GetComponentInParent<PlayerAnimations>();
+
+            isPlayerSetup = true;
         }
 
         private void Update()
         {
-            if (networkID == null) return;
+            if (!isPlayerSetup) return;
 
             if (networkID.IsMine)
             {
@@ -71,6 +79,8 @@ namespace BetoMaluje.Sikta
                     }
                 }
 
+                playerAnimations.ShootAnim(HasGun() && isFirePressed);
+
                 if (HasGun() && isFirePressed)
                 {
                     target.Shoot();
@@ -89,7 +99,7 @@ namespace BetoMaluje.Sikta
                             if (shootHit.rigidbody != null) 
                             {
                                 Debug.Log("impact force! " + gunTarget.impactForce);
-                                shootHit.rigidbody.AddForce(shootHit.normal * gunTarget.impactForce);
+                                shootHit.rigidbody.AddForce(-shootHit.normal * gunTarget.impactForce);
                             }                            
                         }
 

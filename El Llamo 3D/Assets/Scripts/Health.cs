@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections;
+using System;
 using UnityEngine;
 using DG.Tweening;
 
@@ -57,7 +58,15 @@ public class Health : MonoBehaviour
 
         Sequence s = DOTween.Sequence();
         s.Append(transform.DORotate(currentRotation, 1f)).SetUpdate(true);
-        s.AppendCallback(() => MakeUntouchable());        
+        s.AppendCallback(() => MakeUntouchable());
+
+        PlayerAnimations playerAnimations = GetComponent<PlayerAnimations>();
+        if (playerAnimations != null)
+        {
+            playerAnimations.DieAnim();
+        }
+
+        StartCoroutine(Reset());
     }
 
     private void MakeUntouchable()
@@ -65,5 +74,33 @@ public class Health : MonoBehaviour
         rb.isKinematic = true;
         rb.interpolation = RigidbodyInterpolation.None;
         col.isTrigger = true;
+    }
+
+    private IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+        }
+        
+        if (col != null)
+        {
+            col.isTrigger = false;
+        }        
+
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        Vector3 currentPos = transform.position;
+
+        currentPos.y = 1;
+
+        transform.position = currentPos;
+
+        currentHealth = maxHealth;
+        ModifyHealth(currentHealth);
+
+        Debug.Log("Player reset!");
     }
 }
