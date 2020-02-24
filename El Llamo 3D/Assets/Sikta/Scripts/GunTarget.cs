@@ -10,10 +10,9 @@ namespace BetoMaluje.Sikta
         [SerializeField] private GameObject[] bulletPrefabs;
         [SerializeField] private float shootingSpeed = 100f;
 
-        public float impactForce = 100f;
-        public GameObject impactEffect;
+        public GunEffects gunEffects;
 
-        [SerializeField] private ParticleSystem shootingParticles;
+        public float impactForce = 100f;        
 
         [SerializeField] private int maxDamage = 30;
 
@@ -61,10 +60,10 @@ namespace BetoMaluje.Sikta
             s.AppendCallback(() => rb.AddTorque(transform.transform.right + transform.transform.up * throwForce, ForceMode.Impulse));
         }
 
-        public void Shoot()
+        public void Shoot(RaycastHit shootHit)
         {
             // we can shoot here
-            shootingParticles.Play();
+            gunEffects.PlayEffects(shootHit);            
             /*
             GameObject bullet = Instantiate(bulletPrefab, shootingPosition.position, Quaternion.identity);
             Rigidbody rb = bullet.GetComponent<Rigidbody>();

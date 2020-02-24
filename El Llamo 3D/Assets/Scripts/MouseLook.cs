@@ -21,7 +21,7 @@ public class MouseLook : MonoBehaviour
 
     private NetworkID networkID;
     private Transform cameraTransform;
-    private Vector2 aiming;
+    public Vector2 aiming;
     private bool isZoomPressed = false;
     private bool isZoomReleased = false;
 

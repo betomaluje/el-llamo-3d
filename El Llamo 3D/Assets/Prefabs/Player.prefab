@@ -93,7 +93,7 @@ Transform:
   - {fileID: 794059951775290129}
   - {fileID: 794059951775307573}
   m_Father: {fileID: 5836814044747114709}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &228813293802125200
 Animator:
@@ -837,6 +837,60 @@ Transform:
   m_Father: {fileID: 794059951775375635}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4683422715555976025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3876146945217145102}
+  - component: {fileID: 1210278644842606616}
+  m_Layer: 0
+  m_Name: Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3876146945217145102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683422715555976025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5836814044747114709}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1210278644842606616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683422715555976025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a95ef9b85d63b4bbb975c29266fa85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwForce: 1000
+  timeResetTarget: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  grabDistance: 10
+  shootingLayer:
+    serializedVersion: 2
+    m_Bits: 4864
+  shootingDistance: 100
+  aimPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &5836814044622881643
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,7 +919,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5836814044747114709}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5836814044747114715
 GameObject:
@@ -884,6 +938,7 @@ GameObject:
   - component: {fileID: 644223966757249534}
   - component: {fileID: 8915490827300288987}
   - component: {fileID: 3337313840973512057}
+  - component: {fileID: 509346110687189523}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -902,6 +957,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 3876146945217145102}
   - {fileID: 794059951775307625}
   - {fileID: 5836814044622881642}
   - {fileID: 7227591154509228168}
@@ -992,6 +1048,7 @@ MonoBehaviour:
   oneTimePress: 0
   timeForLookout: 0.5
   finalZoomPosition: {x: 2, y: 2.34, z: -5.4}
+  aiming: {x: 0, y: 0}
 --- !u!114 &644223966757249534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1038,14 +1095,58 @@ MonoBehaviour:
   m_Script: {fileID: -1480947390, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncedGenerics: []
+  syncedGenerics:
+  - syncTarget: {fileID: 1210278644842606616}
+    enabled: 1
+    foldout: 1
+    bandwidth: 5
+    padding: 3
+    editorName: PlayerAim
+    uncompressedSyncFields: []
+    syncFields: []
+    syncVector2Fields: []
+    syncVector3Fields:
+    - fieldInfoName: aimPoint
+      isProperty: 0
+      xSyncField:
+        enabled: 1
+        min: -480
+        max: 480
+        resolution: 2
+        valueType: 0
+        minInt: -300
+        maxInt: 300
+        fieldInfoName: 
+        isProperty: 0
+      ySyncField:
+        enabled: 1
+        min: 0.1
+        max: 50
+        resolution: 2
+        valueType: 0
+        minInt: -300
+        maxInt: 300
+        fieldInfoName: 
+        isProperty: 0
+      zSyncField:
+        enabled: 1
+        min: -480
+        max: 480
+        resolution: 2
+        valueType: 0
+        minInt: -300
+        maxInt: 300
+        fieldInfoName: 
+        isProperty: 0
+    syncQuaternionFields: []
+    syncVector4Fields: []
   syncedTransform:
     interpolate: 20
     smoothLevel: 2
     snapDistance: 10
     readFunction: 0
-    bandwidth: 7
-    padding: 2
+    bandwidth: 8
+    padding: 1
     pos_x_setting:
       enabled: 1
       min: -480
@@ -1087,10 +1188,10 @@ MonoBehaviour:
       minInt: -300
       maxInt: 300
     rot_z_setting:
-      enabled: 0
+      enabled: 1
       min: -300
       max: 300
-      resolution: 3
+      resolution: 1
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -1120,15 +1221,143 @@ MonoBehaviour:
       maxInt: 300
     externalFreeze: 0.2
   syncedAnimator:
-    animator: {fileID: 0}
-    syncParameters: []
-    bandwidth: 2
-    padding: 2
+    animator: {fileID: 228813293802125200}
+    syncParameters:
+    - enabled: 1
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 2
+      minInt: -300
+      maxInt: 300
+      fieldInfoName: Jump_b
+      isProperty: 0
+    - enabled: 1
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 2
+      minInt: -300
+      maxInt: 300
+      fieldInfoName: Shoot_b
+      isProperty: 0
+    - enabled: 1
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 2
+      minInt: -300
+      maxInt: 300
+      fieldInfoName: Death_b
+      isProperty: 0
+    - enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 2
+      minInt: -300
+      maxInt: 300
+      fieldInfoName: Crouch_b
+      isProperty: 0
+    - enabled: 1
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 2
+      minInt: -300
+      maxInt: 300
+      fieldInfoName: Grounded
+      isProperty: 0
+    - enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 2
+      minInt: -300
+      maxInt: 300
+      fieldInfoName: Reload_b
+      isProperty: 0
+    - enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 2
+      minInt: -300
+      maxInt: 300
+      fieldInfoName: Static_b
+      isProperty: 0
+    - enabled: 1
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 1
+      minInt: 0
+      maxInt: 1
+      fieldInfoName: WeaponType_int
+      isProperty: 0
+    - enabled: 1
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 1
+      minInt: 0
+      maxInt: 10
+      fieldInfoName: DeathType_int
+      isProperty: 0
+    - enabled: 1
+      min: 0
+      max: 30
+      resolution: 2
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+      fieldInfoName: Speed_f
+      isProperty: 0
+    - enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+      fieldInfoName: Blend(DontTouch)
+      isProperty: 0
+    bandwidth: 3
+    padding: 6
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
   syncTransFormFoldout: 1
-  syncAnimatorFoldout: 1
+  syncAnimatorFoldout: 0
   restoreState: 1
+--- !u!114 &509346110687189523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836814044747114715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1872577316, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  properties_:
+  - Foldout: 1
+    name: Shooting
+    type: 0
+    conflictResolution: 0
+    data: 
+    onValueChange:
+      m_PersistentCalls:
+        m_Calls: []
+    onConflict:
+      m_PersistentCalls:
+        m_Calls: []
+    onReady:
+      m_PersistentCalls:
+        m_Calls: []
+  restoreState: 1
+  AutoInitialization: 1
 --- !u!1001 &5858712608427401902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1179,7 +1408,7 @@ PrefabInstance:
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}

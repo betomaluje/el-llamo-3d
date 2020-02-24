@@ -21,11 +21,16 @@ namespace BetoMaluje.Sikta
         [SerializeField] private LayerMask shootingLayer;
         [SerializeField] private float shootingDistance = 100f;
 
+        public Vector3 aimPoint;
+
         private MaterialColorChanger lastObject;
         private bool hasPointedToObject = false;
 
+        private RaycastHit shootHit;
+
         private PlayerAnimations playerAnimations;
 
+        #region Network
         private NetworkID networkID;
 
         private bool isFirePressed = false;
@@ -35,10 +40,24 @@ namespace BetoMaluje.Sikta
 
         private bool isPlayerSetup = false;
 
+        // networ property syncing
+        private SyncPropertyAgent syncPropertyAgent;
+        const string SHOOTING = "Shooting";
+        bool lastShootingState = false;
+        #endregion
+
         public void SetupPlayer() 
         {
             networkID = GetComponentInParent<NetworkID>();
-            cameraTransform = transform.parent.transform;
+            syncPropertyAgent = GetComponentInParent<SyncPropertyAgent>();
+
+            Camera mainCamera = Camera.main;
+            cameraTransform = mainCamera.transform;
+
+            // we put the hand as a children of the camera
+            transform.parent = cameraTransform;
+
+            transform.localPosition = new Vector3(0.7f, -1.1f, 1.25f);
 
             playerAnimations = transform.parent.GetComponentInParent<PlayerAnimations>();
 
@@ -49,66 +68,28 @@ namespace BetoMaluje.Sikta
         {
             if (!isPlayerSetup) return;
 
+            if (syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue() && target!= null)
+            {
+                Debug.Log("synced shooting");
+                target.Shoot(shootHit);
+            }
+
             if (networkID.IsMine)
             {
                 isFirePressed = Input.GetMouseButtonDown(0);
                 isThrowObjectPressed = Input.GetMouseButtonDown(1);
 
-                RaycastHit hit;
-                if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, grabDistance, targetLayer))
+                bool isShooting = HasGun() && (isFirePressed != lastShootingState);
+
+                HandleGrabbing();
+
+                playerAnimations.ShootAnim(isShooting);
+
+                if (isShooting)
                 {
-                    lastObject = hit.transform.GetComponent<MaterialColorChanger>();
-                    if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
-                    {
-                        hasPointedToObject = true;
-                        lastObject.TargetOn();
-                    }
-
-                    if (isFirePressed && target == null)
-                    {
-                        hit.transform.GetComponent<ITarget>().Pickup(this, transform);
-                    }
-                }
-                else
-                {
-                    if (lastObject != null && hasPointedToObject)
-                    {
-                        StartCoroutine(MakeTargetAvailable());
-                        lastObject.TargetOff();
-                        lastObject = null;
-                    }
-                }
-
-                playerAnimations.ShootAnim(HasGun() && isFirePressed);
-
-                if (HasGun() && isFirePressed)
-                {
-                    target.Shoot();
-
-                    // check if we hit something with collider and in our shooting layer
-                    RaycastHit shootHit;
-                    if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out shootHit, shootingDistance, shootingLayer))
-                    {                       
-                        Health healthTarget = shootHit.transform.GetComponent<Health>();
-                        GunTarget gunTarget = transform.GetComponentInChildren<GunTarget>();
-
-                        if (gunTarget != null && healthTarget != null)
-                        {
-                            healthTarget.PerformDamage(gunTarget.GetDamage());
-
-                            if (shootHit.rigidbody != null) 
-                            {
-                                Debug.Log("impact force! " + gunTarget.impactForce);
-                                shootHit.rigidbody.AddForce(-shootHit.normal * gunTarget.impactForce);
-                            }                            
-                        }
-
-                        // despite if it's a target or not, we try and instantiate an impact effect
-                        if (gunTarget != null)
-                        {
-                            Instantiate(gunTarget.impactEffect, shootHit.point, Quaternion.LookRotation(shootHit.normal));
-                        }
-                    }                
+                    syncPropertyAgent.Modify(SHOOTING, isFirePressed);
+                    lastShootingState = isFirePressed;
+                    Shoot();               
                 }
                 
                 if (isThrowObjectPressed && target != null )
@@ -116,6 +97,57 @@ namespace BetoMaluje.Sikta
                     target.Throw(throwForce);
                     target = null;
                 }           
+            }
+        }
+
+        private void HandleGrabbing()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, grabDistance, targetLayer))
+            {
+                lastObject = hit.transform.GetComponent<MaterialColorChanger>();
+                if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
+                {
+                    hasPointedToObject = true;
+                    lastObject.TargetOn();
+                }
+
+                if (isFirePressed && target == null)
+                {
+                    hit.transform.GetComponent<ITarget>().Pickup(this, transform);
+                }
+            }
+            else
+            {
+                if (lastObject != null && hasPointedToObject)
+                {
+                    StartCoroutine(MakeTargetAvailable());
+                    lastObject.TargetOff();
+                    lastObject = null;
+                }
+            }
+        }
+
+        private void Shoot()
+        {            
+            // check if we hit something with collider and in our shooting layer            
+            if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out shootHit, shootingDistance, shootingLayer))
+            {
+                aimPoint = shootHit.point;
+
+                Health healthTarget = shootHit.transform.GetComponent<Health>();
+                GunTarget gunTarget = transform.GetComponentInChildren<GunTarget>();
+
+                if (gunTarget != null && healthTarget != null)
+                {
+                    healthTarget.PerformDamage(gunTarget.GetDamage());
+
+                    if (shootHit.rigidbody != null)
+                    {
+                        Debug.Log("impact force! " + gunTarget.impactForce);
+                        shootHit.rigidbody.AddForce(-shootHit.normal * gunTarget.impactForce);
+                    }
+                }                
             }
         }
 

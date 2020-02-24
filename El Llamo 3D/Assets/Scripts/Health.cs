@@ -91,7 +91,7 @@ public class Health : MonoBehaviour
             col.isTrigger = false;
         }        
 
-        transform.rotation = Quaternion.Euler(Vector3.zero);
+        transform.rotation = Quaternion.identity;
         Vector3 currentPos = transform.position;
 
         currentPos.y = 1;
