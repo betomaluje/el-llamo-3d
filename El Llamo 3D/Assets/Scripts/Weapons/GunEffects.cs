@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using DG.Tweening;
 
 public class GunEffects : MonoBehaviour
 {
@@ -22,12 +24,24 @@ public class GunEffects : MonoBehaviour
         {
             Instantiate(impactEffect, shootHit.point, Quaternion.LookRotation(shootHit.normal));
         }
+
+        //StartCoroutine(StartStoppingEffects());
+        //StopEffects();
     }
 
     public void StopEffects()
     {
         // Bullet line
         gunLine.enabled = false;
+        Color black = Color.black;
+        black.a = 0;
+        gunLine.material.DOColor(black, 2f);
+    }
+
+    private IEnumerator StartStoppingEffects()
+    {
+        yield return new WaitForSeconds(1f);
+        
     }
 
 }

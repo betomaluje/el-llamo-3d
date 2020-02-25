@@ -14,7 +14,8 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float timeForLookout = 0.5f;
     [SerializeField] private Vector3 finalZoomPosition;
 
-    private float xRotation = 0f;
+    private float verticleAngle = 0f;
+    private float horizontalAngle = 0f;
 
     private bool isZoomedOut = false;
     private Vector3 originalPos;
@@ -46,18 +47,16 @@ public class MouseLook : MonoBehaviour
         Camera mainCamera = Camera.main;
         cameraTransform = mainCamera.transform;
 
-        cameraTransform.parent = transform;
-        cameraTransform.localPosition = originalPos;
+        //cameraTransform.parent = transform;
+        //cameraTransform.localPosition = originalPos;
     }
     
     void Update()
     {
         if (networkID.IsMine)
         {
-            aiming.x = Input.GetAxis("Mouse X");
-            aiming.y = Input.GetAxis("Mouse Y");
-
-            Aim(aiming);
+            aiming.x = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            aiming.y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;           
 
             isZoomPressed = Input.GetKeyDown(zoomKey);
             isZoomReleased = Input.GetKeyUp(zoomKey);
@@ -73,18 +72,26 @@ public class MouseLook : MonoBehaviour
         }        
     }
 
+    private void LateUpdate()
+    {
+        if (networkID.IsMine)
+        {
+            Aim(aiming);
+        }            
+    }
+
     private void Aim(Vector2 aim)
     {
-        float mouseX = aim.x * mouseSensitivity * Time.deltaTime;
-        float mouseY = aim.y * mouseSensitivity * Time.deltaTime;
+        float mouseX = aim.x;
+        float mouseY = aim.y;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        verticleAngle += -mouseY;
+        verticleAngle = Mathf.Clamp(verticleAngle, -90f, 90f);
 
-        // no need for this since we are using Conemachine owns stuff
-        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        horizontalAngle += mouseX;
 
-        playerBody.Rotate(Vector3.up * mouseX);
+        cameraTransform.localRotation = Quaternion.Euler(verticleAngle, horizontalAngle, 0);
+        playerBody.Rotate(Vector3.up * mouseX);        
     }
 
     private void CheckOneTimePressZoom(bool isZoomPressed)

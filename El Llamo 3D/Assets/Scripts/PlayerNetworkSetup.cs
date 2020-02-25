@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using SWNetwork;
 using BetoMaluje.Sikta;
 
@@ -24,6 +22,9 @@ public class PlayerNetworkSetup : MonoBehaviour
     private void SetupPlayer() 
     {
         // set CameraFollow target
+        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        cameraFollow.target = transform;
+        
         mouseLook.SetupPlayer();
 
         PlayerGrab playerGrab = GetComponentInChildren<PlayerGrab>();

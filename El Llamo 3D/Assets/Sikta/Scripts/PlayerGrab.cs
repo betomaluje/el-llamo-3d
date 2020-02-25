@@ -55,9 +55,9 @@ namespace BetoMaluje.Sikta
             cameraTransform = mainCamera.transform;
 
             // we put the hand as a children of the camera
-            transform.parent = cameraTransform;
+            //transform.parent = cameraTransform;
 
-            transform.localPosition = new Vector3(0.7f, -1.1f, 1.25f);
+            //transform.localPosition = new Vector3(0.7f, -1.1f, 1.25f);
 
             playerAnimations = transform.parent.GetComponentInParent<PlayerAnimations>();
 
