@@ -25,7 +25,7 @@ public class PlayerNetworkSetup : MonoBehaviour
         CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
         cameraFollow.target = transform;
         
-        mouseLook.SetupPlayer();
+        mouseLook.SetupPlayer(cameraFollow);
 
         PlayerGrab playerGrab = GetComponentInChildren<PlayerGrab>();
         playerGrab.SetupPlayer();

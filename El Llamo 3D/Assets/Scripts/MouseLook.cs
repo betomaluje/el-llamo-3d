@@ -11,26 +11,15 @@ public class MouseLook : MonoBehaviour
 
     [Header("Zoom")]
     [SerializeField] private KeyCode zoomKey;
-    [SerializeField] private bool oneTimePress = true;
-    [SerializeField] private float timeForLookout = 0.5f;
-    [SerializeField] private Vector3 finalZoomPosition;
 
     private float verticleAngle = 0f;
-    private float horizontalAngle = 0f;
-
-    private bool isZoomedOut = false;
-    private Vector3 originalPos;
+    private float horizontalAngle = 0f;    
 
     private NetworkID networkID;
     private Transform cameraTransform;
     public Vector2 aiming;
     private bool isZoomPressed = false;
-    private bool isZoomReleased = false;
-
-    private void Awake()
-    {
-        originalPos = new Vector3(0f, 2.7f, 1f);
-    }
+    private CameraFollow cameraFollow;
 
     void Start()
     {
@@ -42,14 +31,13 @@ public class MouseLook : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;        
     }
 
-    public void SetupPlayer() 
+    public void SetupPlayer(CameraFollow camFollow) 
     {
         // set CameraFollow target
         Camera mainCamera = Camera.main;
         cameraTransform = mainCamera.transform;
 
-        //cameraTransform.parent = transform;
-        //cameraTransform.localPosition = originalPos;
+        cameraFollow = camFollow;
     }
     
     void Update()
@@ -60,15 +48,10 @@ public class MouseLook : MonoBehaviour
             aiming.y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;           
 
             isZoomPressed = Input.GetKeyDown(zoomKey);
-            isZoomReleased = Input.GetKeyUp(zoomKey);
 
-            if (oneTimePress)
+            if (isZoomPressed)
             {
-                CheckOneTimePressZoom(isZoomPressed);
-            }
-            else
-            {
-                CheckLongPressZoom(isZoomPressed);
+                CheckPressZoom();
             }
         }        
     }
@@ -96,45 +79,12 @@ public class MouseLook : MonoBehaviour
         playerBody.Rotate(Vector3.up * mouseX);
     }
 
-    private void CheckOneTimePressZoom(bool isZoomPressed)
+    private void CheckPressZoom()
     {
-        if (isZoomPressed)
+        if (cameraFollow != null)
         {
-            if (!isZoomedOut)
-            {
-                ZoomOut();
-            }
-            else
-            {
-                RestoreZoom();
-            }
-        }
-    }
-
-    private void CheckLongPressZoom(bool isZoomPressed)
-    {
-        if (isZoomPressed && !isZoomedOut)
-        {
-            ZoomOut();  
-        }
-
-        if (isZoomReleased && isZoomedOut)
-        {
-            RestoreZoom();
-        }
-    }
-
-    private void ZoomOut()
-    {
-        isZoomedOut = true;
-        cameraTransform.DOLocalMove(finalZoomPosition, timeForLookout).SetEase(Ease.OutBack).SetUpdate(true);
-    }
-
-    private void RestoreZoom()
-    {
-        Sequence s = DOTween.Sequence();
-        s.Append(cameraTransform.DOLocalMove(originalPos, timeForLookout).SetEase(Ease.OutBack)).SetUpdate(true);
-        s.AppendCallback(() => isZoomedOut = false);        
-    }
+            cameraFollow.ChangeCameraType();
+        }        
+    }    
 
 }

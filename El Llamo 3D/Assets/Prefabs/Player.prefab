@@ -1046,9 +1046,6 @@ MonoBehaviour:
   playerBody: {fileID: 5836814044747114709}
   playerHands: {fileID: 3876146945217145102}
   zoomKey: 304
-  oneTimePress: 0
-  timeForLookout: 0.5
-  finalZoomPosition: {x: 2, y: 2.34, z: -5.4}
   aiming: {x: 0, y: 0}
 --- !u!114 &644223966757249534
 MonoBehaviour:
@@ -1343,8 +1340,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties_:
-  - Foldout: 1
+  - Foldout: 0
     name: Shooting
+    type: 0
+    conflictResolution: 0
+    data: 
+    onValueChange:
+      m_PersistentCalls:
+        m_Calls: []
+    onConflict:
+      m_PersistentCalls:
+        m_Calls: []
+    onReady:
+      m_PersistentCalls:
+        m_Calls: []
+  - Foldout: 1
+    name: Throwing
     type: 0
     conflictResolution: 0
     data: 

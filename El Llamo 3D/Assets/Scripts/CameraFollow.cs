@@ -32,4 +32,16 @@ public class CameraFollow : MonoBehaviour
             transform.position = target.position + offset;
         }
     }
+
+    public void ChangeCameraType()
+    {
+        if (camMode == CameraMode.FirstPerson)
+        {
+            camMode = CameraMode.ThirdPerson;
+        } else
+        {
+            camMode = CameraMode.FirstPerson;
+        }
+    }
+
 }

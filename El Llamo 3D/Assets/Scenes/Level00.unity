@@ -911,7 +911,7 @@ MonoBehaviour:
   target: {fileID: 0}
   camMode: 0
   FirstPersonOffset: {x: 0, y: 2.7, z: 0}
-  ThirdPersonOffset: {x: 2, y: 2, z: -4}
+  ThirdPersonOffset: {x: 2, y: 2.7, z: -4}
 --- !u!1001 &841868063
 PrefabInstance:
   m_ObjectHideFlags: 0

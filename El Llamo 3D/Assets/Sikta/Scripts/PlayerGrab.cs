@@ -36,14 +36,17 @@ namespace BetoMaluje.Sikta
         private bool isFirePressed = false;
         private bool isThrowObjectPressed = false;
 
-        private Transform cameraTransform;
+        private Camera sceneCamera;
 
         private bool isPlayerSetup = false;
 
         // networ property syncing
         private SyncPropertyAgent syncPropertyAgent;
         const string SHOOTING = "Shooting";
+        const string THROWING = "Throwing";
+
         bool lastShootingState = false;
+        bool lastThrowingState = false;
         #endregion
 
         public void SetupPlayer() 
@@ -51,13 +54,7 @@ namespace BetoMaluje.Sikta
             networkID = GetComponentInParent<NetworkID>();
             syncPropertyAgent = GetComponentInParent<SyncPropertyAgent>();
 
-            Camera mainCamera = Camera.main;
-            cameraTransform = mainCamera.transform;
-
-            // we put the hand as a children of the camera
-            //transform.parent = cameraTransform;
-
-            //transform.localPosition = new Vector3(0.7f, -1.1f, 1.25f);
+            sceneCamera = Camera.main;
 
             playerAnimations = transform.parent.GetComponentInParent<PlayerAnimations>();
 
@@ -72,30 +69,38 @@ namespace BetoMaluje.Sikta
             {
                 Debug.Log("synced shooting");
                 target.Shoot(shootHit);
+                Shoot();
+            }
+
+            if (syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue() && target != null)
+            {
+                target.Throw(throwForce);
+                target = null;
             }
 
             if (networkID.IsMine)
             {
                 isFirePressed = Input.GetMouseButtonDown(0);
-                isThrowObjectPressed = Input.GetMouseButtonDown(1);
+                isThrowObjectPressed = Input.GetMouseButtonDown(1);                
 
-                bool isShooting = HasGun() && (isFirePressed != lastShootingState);
-
+                // first we check if we are trying to grab something
                 HandleGrabbing();
+
+                // now we check if we are shooting
+                bool isShooting = HasGun() && (isFirePressed != lastShootingState);
 
                 playerAnimations.ShootAnim(isShooting);
 
                 if (isShooting)
                 {
                     syncPropertyAgent.Modify(SHOOTING, isFirePressed);
-                    lastShootingState = isFirePressed;
-                    Shoot();               
+                    lastShootingState = isFirePressed;                                   
                 }
                 
-                if (isThrowObjectPressed && target != null )
+                if (isThrowObjectPressed != lastThrowingState)
                 {
-                    target.Throw(throwForce);
-                    target = null;
+                    syncPropertyAgent.Modify(THROWING, isThrowObjectPressed);
+                    lastThrowingState = isThrowObjectPressed;
                 }           
             }
         }
@@ -103,7 +108,7 @@ namespace BetoMaluje.Sikta
         private void HandleGrabbing()
         {
             RaycastHit hit;
-            if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, grabDistance, targetLayer))
+            if (Physics.Raycast(sceneCamera.transform.position, sceneCamera.transform.forward, out hit, grabDistance, targetLayer))
             {
                 lastObject = hit.transform.GetComponent<MaterialColorChanger>();
                 if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
@@ -131,7 +136,9 @@ namespace BetoMaluje.Sikta
         private void Shoot()
         {            
             // check if we hit something with collider and in our shooting layer            
-            if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out shootHit, shootingDistance, shootingLayer))
+            Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out shootHit, shootingDistance, shootingLayer, QueryTriggerInteraction.Ignore))
             {
                 aimPoint = shootHit.point;
 
@@ -147,8 +154,13 @@ namespace BetoMaluje.Sikta
                         Debug.Log("impact force! " + gunTarget.impactForce);
                         shootHit.rigidbody.AddForce(-shootHit.normal * gunTarget.impactForce);
                     }
-                }                
+                }
             }
+            else
+            {
+                aimPoint = ray.origin + ray.direction * shootingDistance;
+            }
+
         }
 
         private bool HasGun()
