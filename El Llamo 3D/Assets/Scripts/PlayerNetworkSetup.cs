@@ -6,7 +6,7 @@ public class PlayerNetworkSetup : MonoBehaviour
 {
     private NetworkID networkID;
 
-    [SerializeField] private MouseLook mouseLook;
+    [SerializeField] private MouseLook mouseLook;    
     
     // Start is called before the first frame update
     void Start()

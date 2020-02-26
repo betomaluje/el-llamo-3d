@@ -28,8 +28,7 @@ public class CameraFollow : MonoBehaviour
                     offset = ThirdPersonOffset;
                     break;
             }
-
-            //Vector3 newPosition = target.TransformPoint(offset);
+            
             transform.position = target.position + offset;
         }
     }

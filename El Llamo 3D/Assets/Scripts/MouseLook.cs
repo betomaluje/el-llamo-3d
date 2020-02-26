@@ -7,6 +7,7 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 100f;
 
     [SerializeField] private Transform playerBody;
+    [SerializeField] private Transform playerHands;
 
     [Header("Zoom")]
     [SerializeField] private KeyCode zoomKey;
@@ -89,9 +90,10 @@ public class MouseLook : MonoBehaviour
         verticleAngle = Mathf.Clamp(verticleAngle, -90f, 90f);
 
         horizontalAngle += mouseX;
-
+        
         cameraTransform.localRotation = Quaternion.Euler(verticleAngle, horizontalAngle, 0);
-        playerBody.Rotate(Vector3.up * mouseX);        
+        playerHands.localRotation = Quaternion.Euler(verticleAngle, 0, 0);
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 
     private void CheckOneTimePressZoom(bool isZoomPressed)

@@ -6,20 +6,21 @@ public class PlayerAnimations : MonoBehaviour
 
     private CharacterController controller;
     public Transform playerPosFix;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         controller = GetComponentInParent<CharacterController>();
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        playerPosFix.localPosition = Vector3.zero;
+    }
+
     void FixedUpdate()
     {        
         anim.SetBool("Jump_b", !controller.isGrounded);
-        anim.SetBool("Grounded", controller.isGrounded);
-
-        playerPosFix.localPosition = Vector3.zero;
+        anim.SetBool("Grounded", controller.isGrounded);        
     }
 
     public void WalkRunAnim(float speed)
