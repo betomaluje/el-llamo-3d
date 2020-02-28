@@ -10,10 +10,10 @@ public class Health : MonoBehaviour
 
     private int currentHealth;
 
-    public event Action<float> OnHealthChanged = delegate { };
-
     private Rigidbody rb;
     private Collider col;
+
+    public Action<float> OnHealthChanged = delegate {  };
 
     private void OnEnable()
     {

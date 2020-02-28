@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using SWNetwork;
 
@@ -6,6 +7,9 @@ namespace BetoMaluje.Sikta
 {
     public class PlayerGrab : MonoBehaviour
     {
+        [SerializeField] private InputHandler inputHandler;
+
+        [Space]
         [Header("Stats")]
         [SerializeField] private float throwForce = 20;
         [SerializeField] private float timeResetTarget = 1f;
@@ -20,6 +24,9 @@ namespace BetoMaluje.Sikta
         [Header("Shooting")]
         [SerializeField] private LayerMask shootingLayer;
         [SerializeField] private float shootingDistance = 100f;
+        [SerializeField] private float fireRate = 3f;
+
+        private float nextTimeToFire = 0f;
 
         public Vector3 aimPoint;
 
@@ -44,19 +51,39 @@ namespace BetoMaluje.Sikta
         private SyncPropertyAgent syncPropertyAgent;
         const string SHOOTING = "Shooting";
         const string THROWING = "Throwing";
-
         bool lastShootingState = false;
         bool lastThrowingState = false;
         #endregion
 
-        public void SetupPlayer() 
+        private void Start() 
         {
             networkID = GetComponentInParent<NetworkID>();
             syncPropertyAgent = GetComponentInParent<SyncPropertyAgent>();
 
+            playerAnimations = transform.parent.GetComponentInParent<PlayerAnimations>();
+        }
+
+        public void SetupPlayer() 
+        {
             sceneCamera = Camera.main;
 
-            playerAnimations = transform.parent.GetComponentInParent<PlayerAnimations>();
+            // handles when the player is shooting
+            inputHandler.fireClickCallback = () => {
+                isFirePressed = true;
+            };
+
+            inputHandler.fireReleaseCallback = () => {
+                isFirePressed = false;
+            };
+
+            // handles when the player is throwing
+            inputHandler.secondaryClickCallback = () => {
+                isThrowObjectPressed = true;
+            };
+
+            inputHandler.secondaryReleaseCallback = () => {
+                isThrowObjectPressed = false;
+            };
 
             isPlayerSetup = true;
         }
@@ -65,44 +92,55 @@ namespace BetoMaluje.Sikta
         {
             if (!isPlayerSetup) return;
 
-            if (syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue() && target!= null)
-            {
+            if (target!= null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
+            {                         
                 Debug.Log("synced shooting");
-                target.Shoot(shootHit);
+                isFirePressed = false;
                 Shoot();
+                target.Shoot(shootHit);
+
+                syncPropertyAgent.Modify(SHOOTING, false);
+                lastShootingState = false;
             }
 
-            if (syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue() && target != null)
+            if (target!= null && syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue())
             {
                 target.Throw(throwForce);
                 target = null;
+
+                syncPropertyAgent.Modify(THROWING, false);
+                lastThrowingState = false;
             }
 
             if (networkID.IsMine)
             {
-                isFirePressed = Input.GetMouseButtonDown(0);
-                isThrowObjectPressed = Input.GetMouseButtonDown(1);                
-
                 // first we check if we are trying to grab something
-                HandleGrabbing();
-
-                // now we check if we are shooting
-                bool isShooting = HasGun() && (isFirePressed != lastShootingState);
-
-                playerAnimations.ShootAnim(isShooting);
-
-                if (isShooting)
+                if (transform.childCount == 0) 
                 {
-                    syncPropertyAgent.Modify(SHOOTING, isFirePressed);
-                    lastShootingState = isFirePressed;                                   
-                }
-                
-                if (isThrowObjectPressed != lastThrowingState)
-                {
-                    syncPropertyAgent.Modify(THROWING, isThrowObjectPressed);
-                    lastThrowingState = isThrowObjectPressed;
-                }           
+                    HandleGrabbing();
+                }                
+
+                if (HasGun()) {
+                    // now we check if we are shooting                
+                    if (isFirePressed != lastShootingState && Time.time >= nextTimeToFire)
+                    {               
+                        Debug.Log("Should be shooting: ");                
+                        syncPropertyAgent.Modify(SHOOTING, isFirePressed);
+                        lastShootingState = isFirePressed;                                   
+                    }
+                    
+                    if (isThrowObjectPressed != lastThrowingState)
+                    {                    
+                        syncPropertyAgent.Modify(THROWING, isThrowObjectPressed);
+                        lastThrowingState = isThrowObjectPressed;
+                    }
+                }                  
             }
+        }
+
+        private void LateUpdate() {
+            // we handle the animation
+            playerAnimations.ShootAnim(isFirePressed);
         }
 
         private void HandleGrabbing()
@@ -161,6 +199,8 @@ namespace BetoMaluje.Sikta
                 aimPoint = ray.origin + ray.direction * shootingDistance;
             }
 
+            // we update the frequency of the shooting
+            nextTimeToFire = Time.time + 1f / fireRate;
         }
 
         private bool HasGun()

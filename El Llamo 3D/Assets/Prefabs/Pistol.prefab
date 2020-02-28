@@ -310,7 +310,7 @@ MonoBehaviour:
   - {fileID: 3823592870078907192, guid: 9ec0360af92f57d4088074f297817132, type: 3}
   shootingSpeed: 1000
   gunEffects: {fileID: 5261114529770976236}
-  impactForce: 100
+  impactForce: 300
   maxDamage: 30
 --- !u!114 &6363735178412045774
 MonoBehaviour:
