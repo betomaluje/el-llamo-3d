@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
             Move(movement);
 
+            // commented because animations move the position of player and makes it look weird
             //playerAnimations.WalkRunAnim(movement.magnitude);
 
             isJumping = Input.GetButtonDown("Jump");

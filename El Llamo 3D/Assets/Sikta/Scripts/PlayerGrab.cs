@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using SWNetwork;
 
@@ -16,26 +15,16 @@ namespace BetoMaluje.Sikta
 
         [Space]
         [Header("Weapon")]
-        public ITarget target;
-        [SerializeField] private LayerMask targetLayer;
-        [SerializeField] private float grabDistance = 10f;
-
-        [Space]
-        [Header("Shooting")]
-        [SerializeField] private LayerMask shootingLayer;
-        [SerializeField] private float shootingDistance = 100f;
-        [SerializeField] private float fireRate = 3f;
-
-        private float nextTimeToFire = 0f;
+        public ITarget target;        
 
         public Vector3 aimPoint;
 
         private MaterialColorChanger lastObject;
-        private bool hasPointedToObject = false;
-
-        private RaycastHit shootHit;
+        private bool hasPointedToObject = false;        
 
         private PlayerAnimations playerAnimations;
+
+        private RaycastHit shootHit;
 
         #region Network
         private NetworkID networkID;
@@ -67,88 +56,40 @@ namespace BetoMaluje.Sikta
         {
             sceneCamera = Camera.main;
 
-            // handles when the player is shooting
-            inputHandler.fireClickCallback = () => {
-                isFirePressed = true;
-            };
-
             inputHandler.fireReleaseCallback = () => {
-                isFirePressed = false;
+                isFirePressed = false;                
             };
 
             // handles when the player is throwing
             inputHandler.secondaryClickCallback = () => {
                 isThrowObjectPressed = true;
+
+                if (isThrowObjectPressed != lastThrowingState)
+                {
+                    Debug.Log("Should be throwing: ");
+                    syncPropertyAgent.Modify(THROWING, isThrowObjectPressed);
+                    lastThrowingState = isThrowObjectPressed;
+                }
             };
 
             inputHandler.secondaryReleaseCallback = () => {
                 isThrowObjectPressed = false;
             };
 
+            // handle target
+            inputHandler.targetAquired = HandleTargetAquired;
+
+            // handle shooting
+            inputHandler.shootingTarget = HandleShooting;
+
             isPlayerSetup = true;
         }
 
-        private void Update()
+        private void HandleTargetAquired(RaycastHit targetHit, bool onTarget)
         {
-            if (!isPlayerSetup) return;
-
-            if (target!= null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
-            {                         
-                Debug.Log("synced shooting");
-                isFirePressed = false;
-                Shoot();
-                target.Shoot(shootHit);
-
-                syncPropertyAgent.Modify(SHOOTING, false);
-                lastShootingState = false;
-            }
-
-            if (target!= null && syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue())
+            if (onTarget)
             {
-                target.Throw(throwForce);
-                target = null;
-
-                syncPropertyAgent.Modify(THROWING, false);
-                lastThrowingState = false;
-            }
-
-            if (networkID.IsMine)
-            {
-                // first we check if we are trying to grab something
-                if (transform.childCount == 0) 
-                {
-                    HandleGrabbing();
-                }                
-
-                if (HasGun()) {
-                    // now we check if we are shooting                
-                    if (isFirePressed != lastShootingState && Time.time >= nextTimeToFire)
-                    {               
-                        Debug.Log("Should be shooting: ");                
-                        syncPropertyAgent.Modify(SHOOTING, isFirePressed);
-                        lastShootingState = isFirePressed;                                   
-                    }
-                    
-                    if (isThrowObjectPressed != lastThrowingState)
-                    {                    
-                        syncPropertyAgent.Modify(THROWING, isThrowObjectPressed);
-                        lastThrowingState = isThrowObjectPressed;
-                    }
-                }                  
-            }
-        }
-
-        private void LateUpdate() {
-            // we handle the animation
-            playerAnimations.ShootAnim(isFirePressed);
-        }
-
-        private void HandleGrabbing()
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(sceneCamera.transform.position, sceneCamera.transform.forward, out hit, grabDistance, targetLayer))
-            {
-                lastObject = hit.transform.GetComponent<MaterialColorChanger>();
+                lastObject = targetHit.transform.GetComponent<MaterialColorChanger>();
                 if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
                 {
                     hasPointedToObject = true;
@@ -157,7 +98,7 @@ namespace BetoMaluje.Sikta
 
                 if (isFirePressed && target == null)
                 {
-                    hit.transform.GetComponent<ITarget>().Pickup(this, transform);
+                    targetHit.transform.GetComponent<ITarget>().Pickup(this, transform);
                 }
             }
             else
@@ -171,37 +112,73 @@ namespace BetoMaluje.Sikta
             }
         }
 
-        private void Shoot()
-        {            
-            // check if we hit something with collider and in our shooting layer            
-            Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+        private void HandleShooting(ShootingTarget shootingTarget)
+        {
+            isFirePressed = true;
 
-            if (Physics.Raycast(ray, out shootHit, shootingDistance, shootingLayer, QueryTriggerInteraction.Ignore))
+            if (HasGun() && isFirePressed != lastShootingState)
+            {
+                Debug.Log("Should be shooting: ");
+                syncPropertyAgent.Modify(SHOOTING, isFirePressed);
+                lastShootingState = isFirePressed;
+            }
+
+            // we mark the shooting point
+            shootHit = shootingTarget.shootingHit;
+
+            // if it was on target we take damage
+            if (shootingTarget.onTarget)
             {
                 aimPoint = shootHit.point;
 
-                Health healthTarget = shootHit.transform.GetComponent<Health>();
+                Health healthTarget = shootingTarget.shootingHit.transform.GetComponent<Health>();
                 GunTarget gunTarget = transform.GetComponentInChildren<GunTarget>();
 
                 if (gunTarget != null && healthTarget != null)
                 {
                     healthTarget.PerformDamage(gunTarget.GetDamage());
 
-                    if (shootHit.rigidbody != null)
+                    if (shootingTarget.shootingHit.rigidbody != null)
                     {
                         Debug.Log("impact force! " + gunTarget.impactForce);
-                        shootHit.rigidbody.AddForce(-shootHit.normal * gunTarget.impactForce);
+                        shootingTarget.shootingHit.rigidbody.AddForce(-shootingTarget.shootingHit.normal * gunTarget.impactForce);
                     }
                 }
             }
             else
             {
-                aimPoint = ray.origin + ray.direction * shootingDistance;
+                aimPoint = shootingTarget.ray.origin + shootingTarget.ray.direction * shootingTarget.shootingDistance;
+            }
+        }
+
+        private void Update()
+        {
+            if (!isPlayerSetup) return;
+
+            if (target!= null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
+            {                         
+                Debug.Log("synced shooting");
+                target.Shoot(shootHit);
+
+                syncPropertyAgent.Modify(SHOOTING, false);
+                lastShootingState = false;
             }
 
-            // we update the frequency of the shooting
-            nextTimeToFire = Time.time + 1f / fireRate;
+            if (target!= null && syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue())
+            {
+                Debug.Log("synced throwing");
+                target.Throw(throwForce);
+                target = null;
+
+                syncPropertyAgent.Modify(THROWING, false);
+                lastThrowingState = false;
+            }            
         }
+
+        private void LateUpdate() {
+            // we handle the animation
+            playerAnimations.ShootAnim(isFirePressed);
+        }        
 
         private bool HasGun()
         {

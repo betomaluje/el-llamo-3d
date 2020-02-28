@@ -883,14 +883,6 @@ MonoBehaviour:
   inputHandler: {fileID: 7569482408358960920}
   throwForce: 1000
   timeResetTarget: 1
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  grabDistance: 10
-  shootingLayer:
-    serializedVersion: 2
-    m_Bits: 4864
-  shootingDistance: 100
   fireRate: 3
   aimPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &5836814044622881643
@@ -997,6 +989,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ca5d573f7fa47f59f0ca377c98f9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  grabDistance: 10
+  shootingLayer:
+    serializedVersion: 2
+    m_Bits: 4608
+  shootingDistance: 100
 --- !u!114 &5836814044747114708
 MonoBehaviour:
   m_ObjectHideFlags: 0
