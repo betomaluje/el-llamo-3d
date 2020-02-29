@@ -12,8 +12,6 @@ public class InputHandler : MonoBehaviour
     [Header("Shooting")]
     [SerializeField] private LayerMask shootingLayer;
     [SerializeField] private float shootingDistance = 100f;    
-    [SerializeField] private float fireRate = 3f;
-    private float nextTimeToFire = 0f;
     
     [HideInInspector]
     public Action fireReleaseCallback;
@@ -48,7 +46,7 @@ public class InputHandler : MonoBehaviour
         if (!networkID.IsMine) return;
 
         // check if user is pressing the Fire button and if it was pointing to a target
-        if (Input.GetMouseButtonDown(0) && Time.time >= nextTimeToFire)
+        if (Input.GetMouseButtonDown(0))
         {
             // check if something has been clicked on
             RaycastHit shootHit;
@@ -60,10 +58,7 @@ public class InputHandler : MonoBehaviour
             else
             {
                 shootingTarget(new ShootingTarget(ray, shootHit, false, shootingDistance));
-            }
-
-            // we update the frequency of the shooting
-            nextTimeToFire = Time.time + 1f / fireRate;
+            }            
         }       
 
         if (Input.GetMouseButtonUp(0)) {

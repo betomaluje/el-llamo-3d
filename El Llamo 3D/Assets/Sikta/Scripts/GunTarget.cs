@@ -9,12 +9,14 @@ namespace BetoMaluje.Sikta
         [SerializeField] private KeyCode bulletChangerKey;
         [SerializeField] private GameObject[] bulletPrefabs;
         [SerializeField] private float shootingSpeed = 100f;
+        [SerializeField] private int maxDamage = 30;
+        [SerializeField] private float fireRate = 3f;
 
         public GunEffects gunEffects;
 
         public float impactForce = 100f;        
 
-        [SerializeField] private int maxDamage = 30;
+        private float nextTimeToFire = 0f;
 
         private Rigidbody rb;
         private Collider col;
@@ -62,14 +64,20 @@ namespace BetoMaluje.Sikta
 
         public void Shoot(RaycastHit shootHit)
         {
-            // we can shoot here
-            gunEffects.PlayEffects(shootHit);            
-            /*
-            GameObject bullet = Instantiate(bulletPrefab, shootingPosition.position, Quaternion.identity);
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-            Bullet bulletScript = bullet.GetComponent<Bullet>();
-            rb.AddForce(shootingPosition.right * bulletScript.GetShootingSpeed(), ForceMode.Impulse);
-            */
+            if (Time.time >= nextTimeToFire)
+            {
+                // we can shoot here
+                gunEffects.PlayEffects(shootHit);
+                /*
+                GameObject bullet = Instantiate(bulletPrefab, shootingPosition.position, Quaternion.identity);
+                Rigidbody rb = bullet.GetComponent<Rigidbody>();
+                Bullet bulletScript = bullet.GetComponent<Bullet>();
+                rb.AddForce(shootingPosition.right * bulletScript.GetShootingSpeed(), ForceMode.Impulse);
+                */
+
+                // we update the frequency of the shooting
+                nextTimeToFire = Time.time + 1f / fireRate;
+            }            
         }
 
         public TargetType getType()
