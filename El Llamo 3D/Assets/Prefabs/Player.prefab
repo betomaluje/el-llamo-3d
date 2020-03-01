@@ -1420,7 +1420,7 @@ MonoBehaviour:
         m_Calls: []
   - Foldout: 1
     name: hp
-    type: 1
+    type: 2
     conflictResolution: 0
     data: 
     onValueChange:
