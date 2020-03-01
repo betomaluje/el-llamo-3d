@@ -14,7 +14,7 @@ namespace BetoMaluje.Sikta
 
         public GunEffects gunEffects;
 
-        public float impactForce = 100f;        
+        public float impactForce = 100f;
 
         private float nextTimeToFire = 0f;
 
@@ -24,7 +24,7 @@ namespace BetoMaluje.Sikta
         private int currentBullet = 0;
         private GameObject bulletPrefab;
         private bool isAttachedToPlayer = false;
-        
+
         void Start()
         {
             rb = GetComponent<Rigidbody>();
@@ -33,7 +33,12 @@ namespace BetoMaluje.Sikta
         }
 
         private void ChangeSettings(bool isTargetDead)
-        {         
+        {
+            if (rb == null || col == null)
+            {
+                return;
+            }
+
             rb.isKinematic = isTargetDead;
             rb.interpolation = isTargetDead ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
             col.isTrigger = isTargetDead;
@@ -67,7 +72,10 @@ namespace BetoMaluje.Sikta
             if (Time.time >= nextTimeToFire)
             {
                 // we can shoot here
+                gunEffects.PlayParticles();
                 gunEffects.PlayEffects(shootHit);
+                gunEffects.PlaceBullet(shootHit);
+                
                 /*
                 GameObject bullet = Instantiate(bulletPrefab, shootingPosition.position, Quaternion.identity);
                 Rigidbody rb = bullet.GetComponent<Rigidbody>();

@@ -29,11 +29,15 @@ public class InputHandler : MonoBehaviour
 
     private Camera sceneCamera;
 
+    #region Network
+
     private NetworkID networkID;
+
+    #endregion
 
     private void Start()
     {
-        networkID = GetComponentInParent<NetworkID>();
+        networkID = GetComponent<NetworkID>();
     }
 
     private void OnEnable() 
@@ -43,22 +47,21 @@ public class InputHandler : MonoBehaviour
 
     void Update()
     {
+        // only the owner should be able to sync the aim and shooting of the mouse
         if (!networkID.IsMine) return;
 
-        // check if user is pressing the Fire button and if it was pointing to a target
+        // check if user is pressing the Fire button
         if (Input.GetMouseButtonDown(0))
         {
-            // check if something has been clicked on
+            // check if a target has been clicked on
             RaycastHit shootHit;
             Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out shootHit, shootingDistance, shootingLayer, QueryTriggerInteraction.Ignore))
-            {
-                shootingTarget(new ShootingTarget(ray, shootHit, true, shootingDistance));
-            }
-            else
-            {
-                shootingTarget(new ShootingTarget(ray, shootHit, false, shootingDistance));
-            }            
+
+            // this bool check if we hit something that is "shootable" according to the shootingLayer layer mask
+            bool onTarget = Physics.Raycast(ray, out shootHit, shootingDistance, shootingLayer, QueryTriggerInteraction.Ignore);
+
+            // now we send the Action to all listeners
+            shootingTarget(new ShootingTarget(ray, shootHit, onTarget, shootingDistance));                  
         }       
 
         if (Input.GetMouseButtonUp(0)) {

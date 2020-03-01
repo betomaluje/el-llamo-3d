@@ -15,7 +15,8 @@ namespace BetoMaluje.Sikta
 
         [Space]
         [Header("Weapon")]
-        public ITarget target;        
+        public ITarget target;
+        [SerializeField] private bool hasInitialWeapon;
 
         public Vector3 aimPoint;
 
@@ -27,7 +28,6 @@ namespace BetoMaluje.Sikta
         private RaycastHit shootHit;
 
         #region Network
-        private NetworkID networkID;
 
         private bool isFirePressed = false;
         private bool isThrowObjectPressed = false;
@@ -36,25 +36,28 @@ namespace BetoMaluje.Sikta
 
         private bool isPlayerSetup = false;
 
-        // networ property syncing
+        // network property syncing
         private SyncPropertyAgent syncPropertyAgent;
         const string SHOOTING = "Shooting";
         const string THROWING = "Throwing";
         bool lastShootingState = false;
         bool lastThrowingState = false;
+
         #endregion
 
         private void Start() 
         {
-            networkID = GetComponentInParent<NetworkID>();
             syncPropertyAgent = GetComponentInParent<SyncPropertyAgent>();
 
-            playerAnimations = transform.parent.GetComponentInParent<PlayerAnimations>();
+            playerAnimations = transform.parent.GetComponentInParent<PlayerAnimations>();            
         }
 
+        /**
+         * This method is called only for the owner of the network
+         */ 
         public void SetupPlayer() 
         {
-            sceneCamera = Camera.main;
+            sceneCamera = Camera.main;            
 
             inputHandler.fireReleaseCallback = () => {
                 isFirePressed = false;                
@@ -112,10 +115,14 @@ namespace BetoMaluje.Sikta
             }
         }
 
+        /**
+         * Handles the shooting state only for the owner of the network 
+         */
         private void HandleShooting(ShootingTarget shootingTarget)
         {
             isFirePressed = true;
 
+            // regardless if it is on target or not, we need to sync the shooting action
             if (HasGun() && isFirePressed != lastShootingState)
             {
                 Debug.Log("Should be shooting: ");
@@ -149,11 +156,13 @@ namespace BetoMaluje.Sikta
             {
                 aimPoint = shootingTarget.ray.origin + shootingTarget.ray.direction * shootingTarget.shootingDistance;
             }
+
+            Debug.Log("aimPoint " + aimPoint);
         }
 
         private void Update()
         {
-            if (!isPlayerSetup) return;
+            //if (!isPlayerSetup) return;
 
             if (target!= null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
             {                         
@@ -178,6 +187,12 @@ namespace BetoMaluje.Sikta
         private void LateUpdate() {
             // we handle the animation
             playerAnimations.ShootAnim(isFirePressed);
+
+            if (hasInitialWeapon && transform.childCount == 1)
+            {
+                hasInitialWeapon = false;
+                GetComponentInChildren<ITarget>().Pickup(this, transform);
+            }
         }        
 
         private bool HasGun()

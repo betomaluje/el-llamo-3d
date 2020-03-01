@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using DG.Tweening;
+using SWNetwork;
 
 public class Health : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class Health : MonoBehaviour
 
     private Rigidbody rb;
     private Collider col;
+
+    #region Network
+
+    private NetworkID networkID;
+    private SyncPropertyAgent syncPropertyAgent;
+
+    #endregion
 
     public Action<float> OnHealthChanged = delegate {  };
 
@@ -24,6 +32,9 @@ public class Health : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+
+        networkID = GetComponent<NetworkID>();
+        syncPropertyAgent = GetComponent<SyncPropertyAgent>();
     }    
 
     public void PerformDamage(int damage)
@@ -41,6 +52,43 @@ public class Health : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+        }
+    }
+
+    public void OnHPReady()
+    {
+        Debug.Log("OnHPPropertyReady");
+
+        // Get the current value of the "hp" SyncProperty.
+        currentHealth = syncPropertyAgent.GetPropertyWithName("hp").GetIntValue();
+
+        // Check if the local player has ownership of the GameObject. 
+        // Source GameObject can modify the "hp" SyncProperty.
+        // Remote duplicates should only be able to read the "hp" SyncProperty.
+        if (networkID.IsMine)
+        {
+            int version = syncPropertyAgent.GetPropertyWithName("hp").version;
+
+            if (version != 0)
+            {
+                // You can check the version of a SyncProperty to see if it has been initialized. 
+                // If version is not 0, it means the SyncProperty has been modified before. 
+                // Probably the player got disconnected from the game. 
+                // Set hpSlider's value to currentHP to restore player's hp.                
+                float healthPercentage = (float)currentHealth / (float)maxHealth;
+                OnHealthChanged(healthPercentage);
+            }
+            else
+            {
+                // If version is 0, you can call the Modify() method on the SyncPropertyAgent to initialize player's hp to maxHp.
+                syncPropertyAgent.Modify("hp", maxHealth);
+                OnHealthChanged(1);
+            }
+        }
+        else
+        {
+            float healthPercentage = (float)currentHealth / (float)maxHealth;
+            OnHealthChanged(healthPercentage);
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace BetoMaluje.Sikta
 {
+    [SerializeField]
     public interface ITarget
     {
         void Pickup(PlayerGrab playerGrab, Transform weaponHolder);
