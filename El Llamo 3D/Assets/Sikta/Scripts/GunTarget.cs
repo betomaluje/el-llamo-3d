@@ -67,7 +67,7 @@ namespace BetoMaluje.Sikta
             s.AppendCallback(() => rb.AddTorque(transform.transform.right + transform.transform.up * throwForce, ForceMode.Impulse));
         }
 
-        public void Shoot(RaycastHit shootHit)
+        public void Shoot(Vector3 shootHit)
         {
             if (Time.time >= nextTimeToFire)
             {

@@ -17,6 +17,7 @@ namespace BetoMaluje.Sikta
         [Header("Weapon")]
         public ITarget target;
         [SerializeField] private bool hasInitialWeapon;
+        [SerializeField] private Transform playerHand;
 
         public Vector3 aimPoint;
 
@@ -47,9 +48,9 @@ namespace BetoMaluje.Sikta
 
         private void Start() 
         {
-            syncPropertyAgent = GetComponentInParent<SyncPropertyAgent>();
+            syncPropertyAgent = GetComponent<SyncPropertyAgent>();
 
-            playerAnimations = transform.parent.GetComponentInParent<PlayerAnimations>();            
+            playerAnimations = GetComponent<PlayerAnimations>();            
         }
 
         /**
@@ -101,7 +102,7 @@ namespace BetoMaluje.Sikta
 
                 if (isFirePressed && target == null)
                 {
-                    targetHit.transform.GetComponent<ITarget>().Pickup(this, transform);
+                    targetHit.transform.GetComponent<ITarget>().Pickup(this, playerHand);
                 }
             }
             else
@@ -139,7 +140,7 @@ namespace BetoMaluje.Sikta
                 aimPoint = shootHit.point;
 
                 Health healthTarget = shootingTarget.shootingHit.transform.GetComponent<Health>();
-                GunTarget gunTarget = transform.GetComponentInChildren<GunTarget>();
+                GunTarget gunTarget = playerHand.GetComponentInChildren<GunTarget>();
 
                 if (gunTarget != null && healthTarget != null)
                 {
@@ -162,12 +163,10 @@ namespace BetoMaluje.Sikta
 
         private void Update()
         {
-            //if (!isPlayerSetup) return;
-
             if (target!= null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
             {                         
-                Debug.Log("synced shooting");
-                target.Shoot(shootHit);
+                Debug.Log("synced shooting: " + aimPoint);
+                target.Shoot(aimPoint);
 
                 syncPropertyAgent.Modify(SHOOTING, false);
                 lastShootingState = false;
@@ -188,16 +187,16 @@ namespace BetoMaluje.Sikta
             // we handle the animation
             playerAnimations.ShootAnim(isFirePressed);
 
-            if (hasInitialWeapon && transform.childCount == 1)
+            if (hasInitialWeapon && playerHand.childCount == 1)
             {
                 hasInitialWeapon = false;
-                GetComponentInChildren<ITarget>().Pickup(this, transform);
+                playerHand.GetComponentInChildren<ITarget>().Pickup(this, playerHand);
             }
         }        
 
         private bool HasGun()
         {
-            return transform.childCount > 0 && transform.GetComponentInChildren<ITarget>().getType().Equals(TargetType.Shootable);
+            return playerHand.childCount > 0 && playerHand.GetComponentInChildren<ITarget>().getType().Equals(TargetType.Shootable);
         }
 
         private IEnumerator MakeTargetAvailable()

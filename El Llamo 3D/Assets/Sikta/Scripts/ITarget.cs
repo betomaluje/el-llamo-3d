@@ -9,7 +9,7 @@ namespace BetoMaluje.Sikta
 
         void Throw(float throwForce);
 
-        void Shoot(RaycastHit shootHit);
+        void Shoot(Vector3 shootHit);
 
         TargetType getType();
     }

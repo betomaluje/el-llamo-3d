@@ -15,23 +15,23 @@ public class GunEffects : MonoBehaviour
         gunParticles.Play();
     }
 
-    public void PlayEffects(RaycastHit shootHit)
+    public void PlayEffects(Vector3 shootHit)
     {
         // Bullet line
         gunLine.enabled = true;
         gunLine.SetPosition(0, gunLine.transform.position);
-        gunLine.SetPosition(1, shootHit.point);            
+        gunLine.SetPosition(1, shootHit);            
 
         StartCoroutine(StartStoppingEffects());
         //StopEffects();
     }
 
-    public void PlaceBullet(RaycastHit shootHit)
+    public void PlaceBullet(Vector3 shootHit)
     {
         // despite if it's a target or not, we try and instantiate an impact effect
         if (impactEffect != null)
         {
-            Instantiate(impactEffect, shootHit.point, Quaternion.LookRotation(shootHit.normal));
+            Instantiate(impactEffect, shootHit, Quaternion.LookRotation(shootHit));
         }
     }
 
