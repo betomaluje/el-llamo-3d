@@ -1189,40 +1189,6 @@ MonoBehaviour:
         isProperty: 0
     syncQuaternionFields: []
     syncVector4Fields: []
-  - syncTarget: {fileID: 9158683583669780992}
-    enabled: 1
-    foldout: 0
-    bandwidth: 4
-    padding: 6
-    editorName: CameraAim
-    uncompressedSyncFields: []
-    syncFields: []
-    syncVector2Fields:
-    - fieldInfoName: aiming
-      isProperty: 0
-      xSyncField:
-        enabled: 1
-        min: -250
-        max: 250
-        resolution: 2
-        valueType: 0
-        minInt: -300
-        maxInt: 300
-        fieldInfoName: 
-        isProperty: 0
-      ySyncField:
-        enabled: 1
-        min: -250
-        max: 250
-        resolution: 2
-        valueType: 0
-        minInt: -300
-        maxInt: 300
-        fieldInfoName: 
-        isProperty: 0
-    syncVector3Fields: []
-    syncQuaternionFields: []
-    syncVector4Fields: []
   syncedTransform:
     interpolate: 20
     smoothLevel: 0
@@ -1409,7 +1375,7 @@ MonoBehaviour:
     padding: 6
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
-  syncTransFormFoldout: 1
+  syncTransFormFoldout: 0
   syncAnimatorFoldout: 0
   restoreState: 1
 --- !u!114 &1540597783966594581
@@ -1439,7 +1405,7 @@ MonoBehaviour:
     onReady:
       m_PersistentCalls:
         m_Calls: []
-  - Foldout: 1
+  - Foldout: 0
     name: Throwing
     type: 0
     conflictResolution: 0

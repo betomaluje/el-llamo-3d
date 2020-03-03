@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using SWNetwork;
 
@@ -20,6 +21,10 @@ namespace BetoMaluje.Sikta
         [SerializeField] private Transform playerHand;
 
         public Vector3 aimPoint;
+        [HideInInspector]
+        public Action<Vector3> aimPointUpdate;
+        [HideInInspector]
+        public Action<Vector3> networkAimPointUpdate;
 
         private MaterialColorChanger lastObject;
         private bool hasPointedToObject = false;        
@@ -156,17 +161,21 @@ namespace BetoMaluje.Sikta
             else
             {
                 aimPoint = shootingTarget.ray.origin + shootingTarget.ray.direction * shootingTarget.shootingDistance;
-            }
+            }            
 
-            Debug.Log("aimPoint " + aimPoint);
+            aimPointUpdate(aimPoint);
         }
 
         private void Update()
         {
             if (target!= null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
-            {                         
-                Debug.Log("synced shooting: " + aimPoint);
+            {                
                 target.Shoot(aimPoint);
+
+                if (networkAimPointUpdate != null)
+                {
+                    networkAimPointUpdate(aimPoint);
+                }                
 
                 syncPropertyAgent.Modify(SHOOTING, false);
                 lastShootingState = false;
