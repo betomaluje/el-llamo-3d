@@ -1391,14 +1391,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties_:
-  - Foldout: 0
+  - Foldout: 1
     name: Shooting
     type: 0
     conflictResolution: 0
     data: 
     onValueChange:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 4419335375198168097}
+          m_MethodName: OnShootingChanged
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onConflict:
       m_PersistentCalls:
         m_Calls: []

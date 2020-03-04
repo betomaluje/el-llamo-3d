@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunLine: {fileID: 2282539818667591821}
   gunParticles: {fileID: 3863518378152215014}
-  impactEffect: {fileID: 6111925643873329397, guid: 63e1089b0088e07478b584d070fd1dbf,
+  impactEffect: {fileID: 6042133881555360809, guid: a36bb5f3415e43247a0b57b1e6a1e835,
     type: 3}
 --- !u!1 &5639007037605429063
 GameObject:

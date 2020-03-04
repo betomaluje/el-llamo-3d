@@ -166,21 +166,24 @@ namespace BetoMaluje.Sikta
             aimPointUpdate(aimPoint);
         }
 
-        private void Update()
+        public void OnShootingChanged()
         {
-            if (target!= null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
-            {                
+            if (target != null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
+            {
                 target.Shoot(aimPoint);
 
                 if (networkAimPointUpdate != null)
                 {
                     networkAimPointUpdate(aimPoint);
-                }                
+                }
 
-                syncPropertyAgent.Modify(SHOOTING, false);
+                //syncPropertyAgent.Modify(SHOOTING, false);
                 lastShootingState = false;
             }
+        }
 
+        private void Update()
+        {            
             if (target!= null && syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue())
             {
                 Debug.Log("synced throwing");

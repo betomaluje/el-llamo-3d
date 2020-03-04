@@ -26,8 +26,8 @@ public class MouseLook : MonoBehaviour
 
         aiming = new Vector2();
 
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;        
     }
 
     public void SetupPlayer(CameraFollow camFollow) 
