@@ -3,34 +3,29 @@ using System;
 using UnityEngine;
 using DG.Tweening;
 using SWNetwork;
+using BetoMaluje.Sikta;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private GameObject dieBloodPrefab;
     [SerializeField] private int maxHealth = 100;
 
-    private int currentHealth;
+    public int currentHealth;
 
-    private Rigidbody rb;
     private Collider col;
 
     #region Network
 
     private NetworkID networkID;
     private SyncPropertyAgent syncPropertyAgent;
+    const string HEALTH = "Hp";
 
     #endregion
 
     public Action<float> OnHealthChanged = delegate {  };
 
-    private void OnEnable()
-    {
-        currentHealth = maxHealth;
-    }
-
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
 
         networkID = GetComponent<NetworkID>();
@@ -43,31 +38,56 @@ public class Health : MonoBehaviour
     }
 
     private void ModifyHealth(int amount)
-    {
-        currentHealth += amount;
+    {       
+        Debug.Log("Got hit: old currentHealth= " + currentHealth);
 
-        float healthPercentage = (float)currentHealth / (float)maxHealth;
-        OnHealthChanged(healthPercentage);
-
-        if (currentHealth <= 0)
+        if (currentHealth > 0)
         {
-            Die();
+            currentHealth += amount;                
+                
+            // if hp is lower than 0, set it to 0.
+            if (currentHealth < 0)
+            {
+                currentHealth = 0;
+                Die();
+            } 
+            else 
+            {
+                if (currentHealth > maxHealth) 
+                {
+                    currentHealth = maxHealth;
+                }
+            }
         }
+
+        Debug.Log("Got hit: new currentHealth= " + currentHealth);
+
+        // Apply damage and modify the "hp" SyncProperty.
+        syncPropertyAgent.Modify(HEALTH, currentHealth);
     }
 
-    public void OnHPReady()
+    public void OnHpChanged()
     {
-        Debug.Log("OnHPPropertyReady");
+        // Update the hpSlider when player hp changes
+        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+        Debug.Log("hp changed: " + currentHealth);
+        float healthPercentage = (float)currentHealth / (float)maxHealth;
+        OnHealthChanged(healthPercentage);
+    }
+
+    public void OnHpReady()
+    {
+        Debug.Log("OnHpPropertyReady");
 
         // Get the current value of the "hp" SyncProperty.
-        currentHealth = syncPropertyAgent.GetPropertyWithName("hp").GetIntValue();
+        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
 
         // Check if the local player has ownership of the GameObject. 
         // Source GameObject can modify the "hp" SyncProperty.
         // Remote duplicates should only be able to read the "hp" SyncProperty.
         if (networkID.IsMine)
         {
-            int version = syncPropertyAgent.GetPropertyWithName("hp").version;
+            int version = syncPropertyAgent.GetPropertyWithName(HEALTH).version;
 
             if (version != 0)
             {
@@ -75,26 +95,32 @@ public class Health : MonoBehaviour
                 // If version is not 0, it means the SyncProperty has been modified before. 
                 // Probably the player got disconnected from the game. 
                 // Set hpSlider's value to currentHP to restore player's hp.                
-                float healthPercentage = (float)currentHealth / (float)maxHealth;
-                OnHealthChanged(healthPercentage);
+                CalculatePercentage();
             }
             else
             {
                 // If version is 0, you can call the Modify() method on the SyncPropertyAgent to initialize player's hp to maxHp.
-                syncPropertyAgent.Modify("hp", maxHealth);
+                syncPropertyAgent.Modify(HEALTH, maxHealth);
                 OnHealthChanged(1);
             }
         }
         else
         {
-            float healthPercentage = (float)currentHealth / (float)maxHealth;
-            OnHealthChanged(healthPercentage);
+            CalculatePercentage();
         }
+    }
+
+    private void CalculatePercentage() 
+    {
+        float healthPercentage = (float)currentHealth / (float)maxHealth;
+        OnHealthChanged(healthPercentage);
     }
 
     private void Die()
     {
         Instantiate(dieBloodPrefab, transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
+
+        ThrowGun();
 
         Vector3 currentRotation = transform.position;
         currentRotation.z = UnityEngine.Random.Range(0, 2) == 0 ? -90 : 90;
@@ -117,27 +143,26 @@ public class Health : MonoBehaviour
         StartCoroutine(Reset());
     }
 
+    private void ThrowGun()
+    {
+        GunTarget gunTarget = transform.GetComponentInChildren<GunTarget>();
+        if (gunTarget != null) 
+        {
+            Debug.Log("Dead! Throwing gun");
+            gunTarget.Throw(400f);
+        }
+    }
+
     private void MakeUntouchable()
     {
-        rb.isKinematic = true;
-        rb.interpolation = RigidbodyInterpolation.None;
         col.isTrigger = true;
     }
 
     private IEnumerator Reset()
     {
         yield return new WaitForSeconds(1f);
-
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.interpolation = RigidbodyInterpolation.Interpolate;
-        }
         
-        if (col != null)
-        {
-            col.isTrigger = false;
-        }        
+        col.isTrigger = false;     
 
         transform.rotation = Quaternion.identity;
         Vector3 currentPos = transform.position;

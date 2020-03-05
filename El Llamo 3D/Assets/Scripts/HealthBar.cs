@@ -17,7 +17,7 @@ public class HealthBar : MonoBehaviour
     
     private void Awake()
     {
-        GetComponentInParent<Health>().OnHealthChanged += HandleHealth;        
+        GetComponentInParent<Health>().OnHealthChanged = HandleHealth;        
 
         foregroundImage.DOFade(0, 0);
         backgroundImage.DOFade(0, 0);
@@ -82,7 +82,8 @@ public class HealthBar : MonoBehaviour
         if (isShown)
         {           
             foregroundImage.DOFade(0, hideTime);
-            backgroundImage.DOFade(0, hideTime);          
+            backgroundImage.DOFade(0, hideTime);
+            isShown = false;
         }        
     }
    

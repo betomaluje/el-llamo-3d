@@ -846,7 +846,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3876146945217145102}
-  - component: {fileID: 1210278644842606616}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -869,24 +868,6 @@ Transform:
   m_Father: {fileID: 5836814044747114709}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1210278644842606616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4683422715555976025}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0a95ef9b85d63b4bbb975c29266fa85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputHandler: {fileID: 7569482408358960920}
-  throwForce: 1000
-  timeResetTarget: 1
-  hasInitialWeapon: 1
-  playerHand: {fileID: 0}
-  aimPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &5836814044622881643
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,6 +1080,7 @@ MonoBehaviour:
   dieBloodPrefab: {fileID: 6239080137120610381, guid: c64c6ec7bd591384a9cbb4d1b9141506,
     type: 3}
   maxHealth: 100
+  currentHealth: 0
 --- !u!114 &1985788838408029732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,7 +1093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e33351e73e3f06409fe8a838d427998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAim: {fileID: 1210278644842606616}
+  playerAim: {fileID: 0}
   chest: {fileID: 794059951775290129}
 --- !u!114 &8915490827300288987
 MonoBehaviour:
@@ -1147,9 +1129,9 @@ MonoBehaviour:
   syncedGenerics:
   - syncTarget: {fileID: 4419335375198168097}
     enabled: 1
-    foldout: 1
-    bandwidth: 5
-    padding: 5
+    foldout: 0
+    bandwidth: 6
+    padding: 3
     editorName: PlayerAim
     uncompressedSyncFields: []
     syncFields: []
@@ -1161,7 +1143,7 @@ MonoBehaviour:
         enabled: 1
         min: -250
         max: 250
-        resolution: 2
+        resolution: 3
         valueType: 0
         minInt: -300
         maxInt: 300
@@ -1171,7 +1153,7 @@ MonoBehaviour:
         enabled: 1
         min: 0.1
         max: 50
-        resolution: 2
+        resolution: 3
         valueType: 0
         minInt: -300
         maxInt: 300
@@ -1181,7 +1163,7 @@ MonoBehaviour:
         enabled: 1
         min: -250
         max: 250
-        resolution: 2
+        resolution: 3
         valueType: 0
         minInt: -300
         maxInt: 300
@@ -1391,7 +1373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties_:
-  - Foldout: 1
+  - Foldout: 0
     name: Shooting
     type: 0
     conflictResolution: 0
@@ -1430,6 +1412,42 @@ MonoBehaviour:
     onReady:
       m_PersistentCalls:
         m_Calls: []
+  - Foldout: 1
+    name: Hp
+    type: 2
+    conflictResolution: 0
+    data: 
+    onValueChange:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 644223966757249534}
+          m_MethodName: OnHpChanged
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onConflict:
+      m_PersistentCalls:
+        m_Calls: []
+    onReady:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 644223966757249534}
+          m_MethodName: OnHpReady
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   restoreState: 1
   AutoInitialization: 1
 --- !u!1001 &5858712608427401902

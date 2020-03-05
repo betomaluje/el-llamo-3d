@@ -131,7 +131,6 @@ namespace BetoMaluje.Sikta
             // regardless if it is on target or not, we need to sync the shooting action
             if (HasGun() && isFirePressed != lastShootingState)
             {
-                Debug.Log("Should be shooting: ");
                 syncPropertyAgent.Modify(SHOOTING, isFirePressed);
                 lastShootingState = isFirePressed;
             }
@@ -144,17 +143,17 @@ namespace BetoMaluje.Sikta
             {
                 aimPoint = shootHit.point;
 
-                Health healthTarget = shootingTarget.shootingHit.transform.GetComponent<Health>();
+                Health healthTarget = shootHit.transform.gameObject.GetComponent<Health>();
                 GunTarget gunTarget = playerHand.GetComponentInChildren<GunTarget>();
-
+                
                 if (gunTarget != null && healthTarget != null)
                 {
                     healthTarget.PerformDamage(gunTarget.GetDamage());
 
-                    if (shootingTarget.shootingHit.rigidbody != null)
+                    if (shootHit.rigidbody != null)
                     {
-                        Debug.Log("impact force! " + gunTarget.impactForce);
-                        shootingTarget.shootingHit.rigidbody.AddForce(-shootingTarget.shootingHit.normal * gunTarget.impactForce);
+                        Debug.Log(shootHit.transform.gameObject.name + " -> impact force! " + gunTarget.impactForce);
+                        shootHit.rigidbody.AddForce(-shootHit.normal * gunTarget.impactForce);
                     }
                 }
             }
@@ -163,7 +162,10 @@ namespace BetoMaluje.Sikta
                 aimPoint = shootingTarget.ray.origin + shootingTarget.ray.direction * shootingTarget.shootingDistance;
             }            
 
-            aimPointUpdate(aimPoint);
+            if (aimPointUpdate != null)
+            {
+                aimPointUpdate(aimPoint);
+            }            
         }
 
         public void OnShootingChanged()
@@ -177,7 +179,6 @@ namespace BetoMaluje.Sikta
                     networkAimPointUpdate(aimPoint);
                 }
 
-                //syncPropertyAgent.Modify(SHOOTING, false);
                 lastShootingState = false;
             }
         }

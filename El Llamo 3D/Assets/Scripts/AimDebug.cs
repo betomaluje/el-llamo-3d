@@ -13,14 +13,12 @@ public class AimDebug : MonoBehaviour
     {
         playerGrab.aimPointUpdate = (aimPoint) => {
             if (!isPaused) {
-                Debug.Log("local: " + aimPoint);
                 aimPointText.text = "local: " + aimPoint;
             }            
         };
 
         playerGrab.networkAimPointUpdate = (aimPoint) => {
             if (!isPaused) {
-                Debug.Log("network: " + aimPoint);
                 networkAimPointText.text = "network: " + aimPoint;
             }            
         };  

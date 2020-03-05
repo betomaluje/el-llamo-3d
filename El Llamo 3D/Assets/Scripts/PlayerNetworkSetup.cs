@@ -30,8 +30,8 @@ public class PlayerNetworkSetup : MonoBehaviour
         PlayerGrab playerGrab = GetComponentInChildren<PlayerGrab>();
         playerGrab.SetupPlayer();
 
-        AimDebug debugPanel = GameObject.FindWithTag("Debug").GetComponent<AimDebug>();
-        debugPanel.Setup(playerGrab);
+        //AimDebug debugPanel = GameObject.FindWithTag("Debug").GetComponent<AimDebug>();
+        //debugPanel.Setup(playerGrab);
 
     }
 }
