@@ -58,3 +58,24 @@ MonoBehaviour:
     spatialBlend: 1
     loop: 0
     source: {fileID: 0}
+  - name: Explosion
+    clip: {fileID: 8300000, guid: 594adfe596e929342813aa24c36d5699, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Throw
+    clip: {fileID: 8300000, guid: 0b79094ef773d0b478cc3667bfa12393, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Pickup
+    clip: {fileID: 8300000, guid: 40909ae62fc4451418e4f7fad6c7e46e, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    loop: 0
+    source: {fileID: 0}

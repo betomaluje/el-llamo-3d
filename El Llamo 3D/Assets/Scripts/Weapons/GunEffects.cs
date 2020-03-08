@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using UnityEngine;
-using DG.Tweening;
 
 public class GunEffects : MonoBehaviour
 {
@@ -20,10 +20,9 @@ public class GunEffects : MonoBehaviour
         // Bullet line
         gunLine.enabled = true;
         gunLine.SetPosition(0, gunLine.transform.position);
-        gunLine.SetPosition(1, shootHit);            
+        gunLine.SetPosition(1, shootHit);
 
         StartCoroutine(StartStoppingEffects());
-        //StopEffects();
     }
 
     public void PlaceBullet(Vector3 shootHit)

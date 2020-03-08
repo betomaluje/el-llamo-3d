@@ -1,5 +1,6 @@
 ﻿using BetoMaluje.Sikta;
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 public abstract class Gun : MonoBehaviour, ITarget
@@ -13,6 +14,8 @@ public abstract class Gun : MonoBehaviour, ITarget
     private float nextTimeToFire = 0f;
     private Rigidbody rb;
     private Collider col;
+
+    public Action OnPickedUp;
 
     public void Start()
     {
@@ -43,10 +46,13 @@ public abstract class Gun : MonoBehaviour, ITarget
 
         transform.DOLocalMove(Vector3.zero, .25f).SetEase(Ease.OutBack).SetUpdate(true);
         transform.DOLocalRotate(rotation, .25f).SetUpdate(true);
+
+        OnPickedUp?.Invoke();
     }
 
     public void Throw(float throwForce)
     {
+        SoundManager.instance.Play("Throw");
         Sequence s = DOTween.Sequence();
         s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
         s.AppendCallback(() => ChangeSettings(false));
@@ -75,6 +81,6 @@ public abstract class Gun : MonoBehaviour, ITarget
 
     public int GetDamage()
     {
-        return Random.Range(1, maxDamage);
+        return UnityEngine.Random.Range(1, maxDamage);
     }
 }

@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using DG.Tweening;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class AnimalBullet : Bullet
 {
     [SerializeField] private LayerMask triggerLayer;
     [SerializeField] private float animationDuration = 1.5f;
-    
+
     [SerializeField] private float speed = 1f;
 
     private bool isActivated = false;
@@ -26,7 +26,7 @@ public class AnimalBullet : Bullet
         if (isActivated)
         {
             transform.position += transform.forward * speed * Time.deltaTime;
-            transform.Rotate(0f, -1f, 0f);            
+            transform.Rotate(0f, -1f, 0f);
         }
     }
 
@@ -35,10 +35,12 @@ public class AnimalBullet : Bullet
         if (CheckLayerMask(collision.gameObject) && !isActivated)
         {
             isActivated = true;
-        } else if (isActivated)
+        }
+        else if (isActivated)
         {
             Instantiate(GetExplosionParticles(), transform.position, Quaternion.identity);
             Destroy(gameObject);
+            SoundManager.instance.Play("Explosion");
         }
     }
 

@@ -99,6 +99,12 @@ namespace BetoMaluje.Sikta
 
         private void HandleTargetAquired(RaycastHit targetHit, bool onTarget)
         {
+            // if we already have a gun
+            if (target != null)
+            {
+                return;
+            }
+
             if (onTarget)
             {
                 lastObject = targetHit.transform.GetComponent<MaterialColorChanger>();
@@ -113,6 +119,12 @@ namespace BetoMaluje.Sikta
                     ITarget itarget = targetHit.transform.GetComponent<ITarget>();
                     if (itarget != null)
                     {
+                        if (lastObject != null)
+                        {
+                            lastObject.TargetOff();
+                        }
+
+                        SoundManager.instance.Play("Pickup");
                         itarget.Pickup(this, playerHand);
                     }
                 }

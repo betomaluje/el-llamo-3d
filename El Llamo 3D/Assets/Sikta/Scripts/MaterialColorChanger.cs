@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using DG.Tweening;
+﻿using DG.Tweening;
+using UnityEngine;
 
 namespace BetoMaluje.Sikta
 {
@@ -20,7 +20,7 @@ namespace BetoMaluje.Sikta
 
         private bool isTargetOn = false;
         private bool isTargetOff = false;
-    
+
         private float t = 0; // color lerp control variable
 
         [HideInInspector]
@@ -32,6 +32,15 @@ namespace BetoMaluje.Sikta
             if (healthScript != null)
             {
                 healthScript.OnHealthChanged += HandleHealth;
+            }
+
+            Gun gunScript = GetComponent<Gun>();
+            if (gunScript != null)
+            {
+                gunScript.OnPickedUp = () =>
+                {
+                    this.enabled = false;
+                };
             }
         }
 
@@ -57,7 +66,7 @@ namespace BetoMaluje.Sikta
                 for (int i = 0; i < materialsLength; i++)
                 {
                     originalColors[i] = meshRenderer.materials[i].color;
-                }            
+                }
             }
 
             originalPos = targetLock.transform.position;
@@ -69,7 +78,7 @@ namespace BetoMaluje.Sikta
             if (!isEnabled)
             {
                 int i = 0;
-                foreach (var material in meshRenderer.materials)
+                foreach (Material material in meshRenderer.materials)
                 {
                     material.SetColor("_BaseColor", Color.Lerp(material.color, originalColors[i], t));
                     i++;
@@ -88,16 +97,17 @@ namespace BetoMaluje.Sikta
             if (isTargetOn)
             {
                 int i = 0;
-                foreach (var material in meshRenderer.materials)
+                foreach (Material material in meshRenderer.materials)
                 {
                     material.SetColor("_BaseColor", Color.Lerp(originalColors[i], targetColor, t));
                     i++;
                 }
-            
+
                 if (t < 1)
                 {
                     t += Time.deltaTime / timeChange;
-                } else
+                }
+                else
                 {
                     t = 0;
                     isTargetOn = false;
@@ -107,7 +117,7 @@ namespace BetoMaluje.Sikta
             if (isTargetOff)
             {
                 int i = 0;
-                foreach (var material in meshRenderer.materials)
+                foreach (Material material in meshRenderer.materials)
                 {
                     material.SetColor("_BaseColor", Color.Lerp(targetColor, originalColors[i], t));
                     i++;
@@ -147,7 +157,10 @@ namespace BetoMaluje.Sikta
 
         private void PrefabLockTarget()
         {
-            if (targetLock == null) return;
+            if (targetLock == null)
+            {
+                return;
+            }
 
             targetLock.SetActive(true);
             Vector3 rotation = Vector3.zero;
@@ -163,7 +176,10 @@ namespace BetoMaluje.Sikta
 
         private void ResetPrefabLockTarget()
         {
-            if (targetLock == null) return;
+            if (targetLock == null)
+            {
+                return;
+            }
 
             Vector3 rotation = Vector3.zero;
             rotation.x = 90;

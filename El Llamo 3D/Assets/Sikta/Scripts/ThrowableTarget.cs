@@ -39,6 +39,8 @@ namespace BetoMaluje.Sikta
 
         public void Throw(float throwForce)
         {
+            SoundManager.instance.Play("Throw");
+
             Sequence s = DOTween.Sequence();
             s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
             s.AppendCallback(() => transform.parent = null);
