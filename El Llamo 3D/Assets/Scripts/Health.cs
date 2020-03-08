@@ -10,9 +10,7 @@ public class Health : MonoBehaviour
     [SerializeField] private GameObject dieBloodPrefab;
     [SerializeField] private int maxHealth = 100;
 
-    public int currentHealth;
-
-    private Collider col;
+    public int currentHealth;   
 
     #region Network
 
@@ -26,8 +24,6 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
-        col = GetComponent<Collider>();
-
         networkID = GetComponent<NetworkID>();
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
     }    
@@ -101,7 +97,8 @@ public class Health : MonoBehaviour
             {
                 // If version is 0, you can call the Modify() method on the SyncPropertyAgent to initialize player's hp to maxHp.
                 syncPropertyAgent.Modify(HEALTH, maxHealth);
-                OnHealthChanged(1);
+                currentHealth = maxHealth;
+                CalculatePercentage();
             }
         }
         else
@@ -130,9 +127,7 @@ public class Health : MonoBehaviour
 
         transform.DOMoveY(deadY, 1f);
 
-        Sequence s = DOTween.Sequence();
-        s.Append(transform.DORotate(currentRotation, 1f)).SetUpdate(true);
-        s.AppendCallback(() => MakeUntouchable());
+        transform.DORotate(currentRotation, 1f).SetUpdate(true);
 
         PlayerAnimations playerAnimations = GetComponent<PlayerAnimations>();
         if (playerAnimations != null)
@@ -153,16 +148,9 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void MakeUntouchable()
-    {
-        col.isTrigger = true;
-    }
-
     private IEnumerator Reset()
     {
-        yield return new WaitForSeconds(1f);
-        
-        col.isTrigger = false;     
+        yield return new WaitForSeconds(1f);       
 
         transform.rotation = Quaternion.identity;
         Vector3 currentPos = transform.position;

@@ -161,11 +161,8 @@ namespace BetoMaluje.Sikta
             {
                 aimPoint = shootingTarget.ray.origin + shootingTarget.ray.direction * shootingTarget.shootingDistance;
             }            
-
-            if (aimPointUpdate != null)
-            {
-                aimPointUpdate(aimPoint);
-            }            
+      
+            aimPointUpdate?.Invoke(aimPoint);
         }
 
         public void OnShootingChanged()
@@ -174,10 +171,7 @@ namespace BetoMaluje.Sikta
             {
                 target.Shoot(aimPoint);
 
-                if (networkAimPointUpdate != null)
-                {
-                    networkAimPointUpdate(aimPoint);
-                }
+                networkAimPointUpdate?.Invoke(aimPoint);
 
                 lastShootingState = false;
             }
