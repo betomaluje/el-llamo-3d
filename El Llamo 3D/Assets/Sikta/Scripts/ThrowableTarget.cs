@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using DG.Tweening;
+﻿using DG.Tweening;
+using UnityEngine;
 
 namespace BetoMaluje.Sikta
 {
     public class ThrowableTarget : MonoBehaviour, ITarget
-    {    
+    {
         private Rigidbody rb;
         private Collider col;
 
@@ -17,13 +17,15 @@ namespace BetoMaluje.Sikta
         private void ChangeSettings(bool isTargetDead)
         {
             if (transform.parent != null)
+            {
                 return;
+            }
 
             rb.isKinematic = isTargetDead;
             rb.interpolation = isTargetDead ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
             col.isTrigger = isTargetDead;
         }
-    
+
         public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
         {
             playerGrab.target = this;
@@ -53,6 +55,11 @@ namespace BetoMaluje.Sikta
         public TargetType getType()
         {
             return TargetType.Throwable;
+        }
+
+        public int GetDamage()
+        {
+            return 0;
         }
 
     }

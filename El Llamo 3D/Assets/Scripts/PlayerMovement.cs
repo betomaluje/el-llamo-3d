@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using SWNetwork;
+﻿using SWNetwork;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
             // now we apply gravity
             velocity.y += Physics.gravity.y * gravityMultiplier * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
-        }        
+        }
     }
 
     private void Move(Vector2 move)
@@ -72,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         if (isJumping && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpSpeed * Physics.gravity.y * -gravityMultiplier);
+            SoundManager.instance.Play("Jump");
         }
     }
 

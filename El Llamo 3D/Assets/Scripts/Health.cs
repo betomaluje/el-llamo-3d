@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System;
-using UnityEngine;
-using DG.Tweening;
+﻿using DG.Tweening;
 using SWNetwork;
-using BetoMaluje.Sikta;
+using System;
+using System.Collections;
+using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private GameObject dieBloodPrefab;
     [SerializeField] private int maxHealth = 100;
 
-    public int currentHealth;   
+    public int currentHealth;
 
     #region Network
 
@@ -20,13 +19,13 @@ public class Health : MonoBehaviour
 
     #endregion
 
-    public Action<float> OnHealthChanged = delegate {  };
+    public Action<float> OnHealthChanged = delegate { };
 
     private void Start()
     {
         networkID = GetComponent<NetworkID>();
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
-    }    
+    }
 
     public void PerformDamage(int damage)
     {
@@ -34,22 +33,22 @@ public class Health : MonoBehaviour
     }
 
     private void ModifyHealth(int amount)
-    {       
+    {
         Debug.Log("Got hit: old currentHealth= " + currentHealth);
 
         if (currentHealth > 0)
         {
-            currentHealth += amount;                
-                
+            currentHealth += amount;
+
             // if hp is lower than 0, set it to 0.
             if (currentHealth < 0)
             {
                 currentHealth = 0;
                 Die();
-            } 
-            else 
+            }
+            else
             {
-                if (currentHealth > maxHealth) 
+                if (currentHealth > maxHealth)
                 {
                     currentHealth = maxHealth;
                 }
@@ -59,7 +58,7 @@ public class Health : MonoBehaviour
         Debug.Log("Got hit: new currentHealth= " + currentHealth);
 
         // Apply damage and modify the "hp" SyncProperty.
-        syncPropertyAgent.Modify(HEALTH, currentHealth);
+        syncPropertyAgent?.Modify(HEALTH, currentHealth);
     }
 
     public void OnHpChanged()
@@ -67,7 +66,7 @@ public class Health : MonoBehaviour
         // Update the hpSlider when player hp changes
         currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
         Debug.Log("hp changed: " + currentHealth);
-        float healthPercentage = (float)currentHealth / (float)maxHealth;
+        float healthPercentage = currentHealth / (float)maxHealth;
         OnHealthChanged(healthPercentage);
     }
 
@@ -107,9 +106,9 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void CalculatePercentage() 
+    private void CalculatePercentage()
     {
-        float healthPercentage = (float)currentHealth / (float)maxHealth;
+        float healthPercentage = currentHealth / (float)maxHealth;
         OnHealthChanged(healthPercentage);
     }
 
@@ -122,7 +121,7 @@ public class Health : MonoBehaviour
         Vector3 currentRotation = transform.position;
         currentRotation.z = UnityEngine.Random.Range(0, 2) == 0 ? -90 : 90;
         currentRotation.x = 0;
-        
+
         float deadY = 0.5f;
 
         transform.DOMoveY(deadY, 1f);
@@ -140,8 +139,8 @@ public class Health : MonoBehaviour
 
     private void ThrowGun()
     {
-        GunTarget gunTarget = transform.GetComponentInChildren<GunTarget>();
-        if (gunTarget != null) 
+        Gun gunTarget = transform.GetComponentInChildren<Gun>();
+        if (gunTarget != null)
         {
             Debug.Log("Dead! Throwing gun");
             gunTarget.Throw(400f);
@@ -150,7 +149,7 @@ public class Health : MonoBehaviour
 
     private IEnumerator Reset()
     {
-        yield return new WaitForSeconds(1f);       
+        yield return new WaitForSeconds(1f);
 
         transform.rotation = Quaternion.identity;
         Vector3 currentPos = transform.position;

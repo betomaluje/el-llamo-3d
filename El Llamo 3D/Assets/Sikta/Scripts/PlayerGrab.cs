@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SWNetwork;
+using System;
 using System.Collections;
 using UnityEngine;
-using SWNetwork;
 
 namespace BetoMaluje.Sikta
 {
@@ -27,7 +27,7 @@ namespace BetoMaluje.Sikta
         public Action<Vector3> networkAimPointUpdate;
 
         private MaterialColorChanger lastObject;
-        private bool hasPointedToObject = false;        
+        private bool hasPointedToObject = false;
 
         private PlayerAnimations playerAnimations;
 
@@ -51,26 +51,28 @@ namespace BetoMaluje.Sikta
 
         #endregion
 
-        private void Start() 
+        private void Start()
         {
             syncPropertyAgent = GetComponent<SyncPropertyAgent>();
 
-            playerAnimations = GetComponent<PlayerAnimations>();            
+            playerAnimations = GetComponent<PlayerAnimations>();
         }
 
         /**
          * This method is called only for the owner of the network
-         */ 
-        public void SetupPlayer() 
+         */
+        public void SetupPlayer()
         {
-            sceneCamera = Camera.main;            
+            sceneCamera = Camera.main;
 
-            inputHandler.fireReleaseCallback = () => {
-                isFirePressed = false;                
+            inputHandler.fireReleaseCallback = () =>
+            {
+                isFirePressed = false;
             };
 
             // handles when the player is throwing
-            inputHandler.secondaryClickCallback = () => {
+            inputHandler.secondaryClickCallback = () =>
+            {
                 isThrowObjectPressed = true;
 
                 if (isThrowObjectPressed != lastThrowingState)
@@ -81,7 +83,8 @@ namespace BetoMaluje.Sikta
                 }
             };
 
-            inputHandler.secondaryReleaseCallback = () => {
+            inputHandler.secondaryReleaseCallback = () =>
+            {
                 isThrowObjectPressed = false;
             };
 
@@ -107,7 +110,11 @@ namespace BetoMaluje.Sikta
 
                 if (isFirePressed && target == null)
                 {
-                    targetHit.transform.GetComponent<ITarget>().Pickup(this, playerHand);
+                    ITarget itarget = targetHit.transform.GetComponent<ITarget>();
+                    if (itarget != null)
+                    {
+                        itarget.Pickup(this, playerHand);
+                    }
                 }
             }
             else
@@ -144,8 +151,8 @@ namespace BetoMaluje.Sikta
                 aimPoint = shootHit.point;
 
                 Health healthTarget = shootHit.transform.gameObject.GetComponent<Health>();
-                GunTarget gunTarget = playerHand.GetComponentInChildren<GunTarget>();
-                
+                Gun gunTarget = playerHand.GetComponentInChildren<Gun>();
+
                 if (gunTarget != null && healthTarget != null)
                 {
                     healthTarget.PerformDamage(gunTarget.GetDamage());
@@ -160,8 +167,8 @@ namespace BetoMaluje.Sikta
             else
             {
                 aimPoint = shootingTarget.ray.origin + shootingTarget.ray.direction * shootingTarget.shootingDistance;
-            }            
-      
+            }
+
             aimPointUpdate?.Invoke(aimPoint);
         }
 
@@ -178,8 +185,8 @@ namespace BetoMaluje.Sikta
         }
 
         private void Update()
-        {            
-            if (target!= null && syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue())
+        {
+            if (target != null && syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue())
             {
                 Debug.Log("synced throwing");
                 target.Throw(throwForce);
@@ -187,10 +194,11 @@ namespace BetoMaluje.Sikta
 
                 syncPropertyAgent.Modify(THROWING, false);
                 lastThrowingState = false;
-            }            
+            }
         }
 
-        private void LateUpdate() {
+        private void LateUpdate()
+        {
             // we handle the animation
             playerAnimations.ShootAnim(isFirePressed);
 
@@ -199,7 +207,7 @@ namespace BetoMaluje.Sikta
                 hasInitialWeapon = false;
                 playerHand.GetComponentInChildren<ITarget>().Pickup(this, playerHand);
             }
-        }        
+        }
 
         private bool HasGun()
         {

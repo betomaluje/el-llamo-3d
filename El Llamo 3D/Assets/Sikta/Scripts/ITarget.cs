@@ -12,10 +12,13 @@ namespace BetoMaluje.Sikta
         void Shoot(Vector3 shootHit);
 
         TargetType getType();
+
+        int GetDamage();
     }
 
     [SerializeField]
-    public enum TargetType {
+    public enum TargetType
+    {
         Throwable, Shootable
     }
 }

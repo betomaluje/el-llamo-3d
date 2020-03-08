@@ -18,18 +18,18 @@ namespace BetoMaluje.Sikta
         }
 
         private void OnGUI()
-        {           
+        {
             GUILayout.Label("You need to select at least one Game Object");
             EditorGUILayout.Space();
 
-            type = (TargetType) EditorGUILayout.EnumPopup("Type of Target:", type);
+            type = (TargetType)EditorGUILayout.EnumPopup("Type of Target:", type);
 
             targetMask = EditorGUILayout.LayerField("Layer for Target:", targetMask);
 
             EditorGUILayout.BeginHorizontal();
 
             EditorGUILayout.PrefixLabel("Hover Prefab");
-            lockTargetPrefab = EditorGUILayout.ObjectField(lockTargetPrefab, typeof(GameObject), true) as GameObject;            
+            lockTargetPrefab = EditorGUILayout.ObjectField(lockTargetPrefab, typeof(GameObject), true) as GameObject;
 
             EditorGUILayout.EndHorizontal();
 
@@ -40,22 +40,23 @@ namespace BetoMaluje.Sikta
                 if (Selection.gameObjects.Length <= 0)
                 {
                     EditorGUILayout.HelpBox("You need to select at least one Game Object first", MessageType.Warning);
-                } else
+                }
+                else
                 {
-                    MakeThrowable();                  
-                }               
-            }            
+                    MakeThrowable();
+                }
+            }
         }
 
         private void MakeThrowable()
         {
             Vector3 rotation = Vector3.zero;
             rotation.x = 90;
-            rotation.z = 0;            
+            rotation.z = 0;
 
             GameObject target = null;
 
-            foreach (var selectedGO in Selection.gameObjects)
+            foreach (GameObject selectedGO in Selection.gameObjects)
             {
                 // step 0: check for any collider
                 if (selectedGO.GetComponent<Collider>() == null)
@@ -91,7 +92,7 @@ namespace BetoMaluje.Sikta
                     AddTargetAsPrefab(selectedGO, target);
 
                     target.SetActive(false);
-                }                
+                }
 
                 // step 4: add the throwable script 
 
@@ -99,22 +100,22 @@ namespace BetoMaluje.Sikta
                 {
                     if (selectedGO.GetComponent<ThrowableTarget>() == null)
                     {
-                        selectedGO.AddComponent<ThrowableTarget>();                    
+                        selectedGO.AddComponent<ThrowableTarget>();
                     }
                 }
                 else if (type.Equals(TargetType.Shootable))
                 {
-                    if (selectedGO.GetComponent<GunTarget>() == null)
+                    if (selectedGO.GetComponent<Gun>() == null)
                     {
-                        selectedGO.AddComponent<GunTarget>();
+                        selectedGO.AddComponent<Gun>();
                     }
                 }
-            
+
                 // step 5: change the objects layer
                 if (target != null)
                 {
                     ChangeGOLayers(selectedGO, target);
-                }                
+                }
             }
         }
 
