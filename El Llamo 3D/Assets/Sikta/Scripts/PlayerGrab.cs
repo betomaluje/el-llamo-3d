@@ -184,6 +184,9 @@ namespace BetoMaluje.Sikta
             aimPointUpdate?.Invoke(aimPoint);
         }
 
+        /**
+         * Called from the Sync Property Agent
+         */
         public void OnShootingChanged()
         {
             if (target != null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
@@ -196,7 +199,10 @@ namespace BetoMaluje.Sikta
             }
         }
 
-        private void Update()
+        /**
+         * Called from the Sync Property Agent
+         */
+        public void OnThrowingChanged()
         {
             if (target != null && syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue())
             {

@@ -916,6 +916,7 @@ GameObject:
   - component: {fileID: 9158683583669780992}
   - component: {fileID: 644223966757249534}
   - component: {fileID: 1985788838408029732}
+  - component: {fileID: -5393245930374640022}
   - component: {fileID: 8915490827300288987}
   - component: {fileID: 3337313840973512057}
   - component: {fileID: 1540597783966594581}
@@ -1095,6 +1096,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAim: {fileID: 0}
   chest: {fileID: 794059951775290129}
+--- !u!114 &-5393245930374640022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836814044747114715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb490c5c0a86de42908a4d99066af4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filterType: 1
+  Range: 5
 --- !u!114 &8915490827300288987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1357,7 +1372,7 @@ MonoBehaviour:
     padding: 6
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
-  syncTransFormFoldout: 0
+  syncTransFormFoldout: 1
   syncAnimatorFoldout: 0
   restoreState: 1
 --- !u!114 &1540597783966594581
@@ -1405,14 +1420,25 @@ MonoBehaviour:
     data: 
     onValueChange:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 4419335375198168097}
+          m_MethodName: OnThrowingChanged
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onConflict:
       m_PersistentCalls:
         m_Calls: []
     onReady:
       m_PersistentCalls:
         m_Calls: []
-  - Foldout: 1
+  - Foldout: 0
     name: Hp
     type: 2
     conflictResolution: 0

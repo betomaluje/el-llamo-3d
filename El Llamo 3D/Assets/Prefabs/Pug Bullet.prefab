@@ -446,6 +446,9 @@ GameObject:
   - component: {fileID: 1652413433202118757}
   - component: {fileID: 3475741182104501107}
   - component: {fileID: 2967039973889768424}
+  - component: {fileID: -858574860377490491}
+  - component: {fileID: 5904606359796246722}
+  - component: {fileID: -3995572830016793387}
   m_Layer: 11
   m_Name: Pug Bullet
   m_TagString: Bullet
@@ -510,12 +513,147 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6003d0a10d9ade849936f666d22f7f78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 11400000, guid: b6018749dbe2548e2a266ef42b204192, type: 2}
   triggerLayer:
     serializedVersion: 2
     m_Bits: 256
-  bullet: {fileID: 11400000, guid: b6018749dbe2548e2a266ef42b204192, type: 2}
   animationDuration: 1
   speed: 1
+--- !u!114 &-858574860377490491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823592870078907192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295c49620c76a4d408961fb3c566e918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoSize: 4
+--- !u!114 &5904606359796246722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823592870078907192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1355464049, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  dynamicallySpawned: 0
+  fixedNetworkObjectID: 6
+  showVisibleGizmo: 1
+  Filterable: 0
+  SendRealtimeData: 0
+  visibleSize: 1
+--- !u!114 &-3995572830016793387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823592870078907192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1480947390, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncedGenerics: []
+  syncedTransform:
+    interpolate: 20
+    smoothLevel: 0
+    snapDistance: 10
+    readFunction: 1
+    bandwidth: 8
+    padding: 3
+    pos_x_setting:
+      enabled: 1
+      min: -250
+      max: 250
+      resolution: 2
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    pos_y_setting:
+      enabled: 1
+      min: 0
+      max: 20
+      resolution: 2
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    pos_z_setting:
+      enabled: 1
+      min: -250
+      max: 250
+      resolution: 2
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    rot_x_setting:
+      enabled: 1
+      min: -300
+      max: 300
+      resolution: 1
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    rot_y_setting:
+      enabled: 1
+      min: -300
+      max: 300
+      resolution: 1
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    rot_z_setting:
+      enabled: 1
+      min: -300
+      max: 300
+      resolution: 1
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    scale_x_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    scale_y_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    scale_z_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    externalFreeze: 0.2
+  syncedAnimator:
+    animator: {fileID: 0}
+    syncParameters: []
+    bandwidth: 0
+    padding: 0
+  syncTransFormEnabled: 1
+  syncAnimatorEnabled: 0
+  syncTransFormFoldout: 0
+  syncAnimatorFoldout: 0
+  restoreState: 1
 --- !u!1 &3848070761845155559
 GameObject:
   m_ObjectHideFlags: 0

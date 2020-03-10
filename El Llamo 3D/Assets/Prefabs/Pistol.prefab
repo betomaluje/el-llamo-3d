@@ -169,6 +169,9 @@ GameObject:
   - component: {fileID: 9221246813437098942}
   - component: {fileID: 4422581082356254062}
   - component: {fileID: 1421573247}
+  - component: {fileID: 3606871273840184439}
+  - component: {fileID: -6538867331158238403}
+  - component: {fileID: 4241322128437742466}
   m_Layer: 9
   m_Name: Pistol
   m_TagString: Untagged
@@ -304,8 +307,145 @@ MonoBehaviour:
   shootingPosition: {fileID: 4422581084064617564}
   fireRate: 3
   maxDamage: 30
+  recoilAmount: 0.3
+  recoilDuration: 0.3
   impactForce: 300
   gunEffects: {fileID: 5261114529770976236}
+--- !u!114 &3606871273840184439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639007037605429063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295c49620c76a4d408961fb3c566e918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoSize: 4
+--- !u!114 &-6538867331158238403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639007037605429063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1355464049, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  dynamicallySpawned: 0
+  fixedNetworkObjectID: 1
+  showVisibleGizmo: 1
+  Filterable: 0
+  SendRealtimeData: 0
+  visibleSize: 1
+--- !u!114 &4241322128437742466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639007037605429063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1480947390, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncedGenerics: []
+  syncedTransform:
+    interpolate: 20
+    smoothLevel: 0
+    snapDistance: 10
+    readFunction: 1
+    bandwidth: 8
+    padding: 3
+    pos_x_setting:
+      enabled: 1
+      min: -250
+      max: 250
+      resolution: 2
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    pos_y_setting:
+      enabled: 1
+      min: 0
+      max: 20
+      resolution: 2
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    pos_z_setting:
+      enabled: 1
+      min: -250
+      max: 250
+      resolution: 2
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    rot_x_setting:
+      enabled: 1
+      min: -300
+      max: 300
+      resolution: 1
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    rot_y_setting:
+      enabled: 1
+      min: -300
+      max: 300
+      resolution: 1
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    rot_z_setting:
+      enabled: 1
+      min: -300
+      max: 300
+      resolution: 1
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    scale_x_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    scale_y_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    scale_z_setting:
+      enabled: 0
+      min: -300
+      max: 300
+      resolution: 3
+      valueType: 0
+      minInt: -300
+      maxInt: 300
+    externalFreeze: 0.2
+  syncedAnimator:
+    animator: {fileID: 0}
+    syncParameters: []
+    bandwidth: 0
+    padding: 0
+  syncTransFormEnabled: 1
+  syncAnimatorEnabled: 0
+  syncTransFormFoldout: 1
+  syncAnimatorFoldout: 0
+  restoreState: 1
 --- !u!1 &8365631113376885385
 GameObject:
   m_ObjectHideFlags: 0
