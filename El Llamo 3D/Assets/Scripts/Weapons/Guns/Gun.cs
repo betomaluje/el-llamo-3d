@@ -5,9 +5,15 @@ using UnityEngine;
 
 public abstract class Gun : MonoBehaviour, ITarget
 {
+    [Header("Stats")]
     public Transform shootingPosition;
     [SerializeField] private float fireRate = 3f;
     [SerializeField] private int maxDamage = 30;
+
+    [Space]
+    [Header("Recoil")]
+    [SerializeField] private float recoilAmount = 0.3f;
+    [SerializeField] private float recoilDuration = 0.3f;
 
     public float impactForce = 100f;
 
@@ -66,6 +72,8 @@ public abstract class Gun : MonoBehaviour, ITarget
         if (Time.time >= nextTimeToFire)
         {
             // we can shoot here
+            DoRecoil(shootHit);
+
             DoShooting(shootHit);
             // we update the frequency of the shooting
             nextTimeToFire = Time.time + 1f / fireRate;
@@ -73,6 +81,12 @@ public abstract class Gun : MonoBehaviour, ITarget
     }
 
     protected abstract void DoShooting(Vector3 shootHit);
+
+    public void DoRecoil(Vector3 shootHit)
+    {
+        Vector3 direction = -shootingPosition.right * recoilAmount;
+        transform.DOPunchPosition(direction, recoilDuration, 1, 0.05f);
+    }
 
     public TargetType getType()
     {
