@@ -122,7 +122,7 @@ public class Health : MonoBehaviour
             playerAnimations.Revive();
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
 
         Vector3 currentRotation = Vector3.zero;
 

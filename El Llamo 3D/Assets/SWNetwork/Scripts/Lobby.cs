@@ -1,14 +1,16 @@
-﻿using UnityEngine;
-using SWNetwork; 
+﻿using SWNetwork;
+using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
 
 /// <summary>
 /// Basic lobby matchmaking implementation.
 /// </summary>
 public class Lobby : MonoBehaviour
 {
+    [SerializeField] private int maxPlayers = 2;
+
     /// <summary>
     /// Button for checking into SocketWeaver services
     /// </summary>
@@ -25,6 +27,8 @@ public class Lobby : MonoBehaviour
     public InputField customPlayerIdField;
 
     public TextMeshProUGUI errorLogText;
+
+    public int selectedLevel = 1;
 
     void Start()
     {
@@ -58,7 +62,8 @@ public class Lobby : MonoBehaviour
         ConnectToRoom();
     }
 
-    private void LogError(string error) {
+    private void LogError(string error)
+    {
         errorLogText.text = error;
     }
 
@@ -82,17 +87,17 @@ public class Lobby : MonoBehaviour
     {
         string customPlayerId = customPlayerIdField.text;
 
-        if(customPlayerId != null && customPlayerId.Length > 0)
+        if (customPlayerId != null && customPlayerId.Length > 0)
         {
             // use the user entered playerId to check into SocketWeaver. Make sure the PlayerId is unique.
-            NetworkClient.Instance.CheckIn(customPlayerId,(bool ok, string error) =>
-            {
-                if (!ok)
-                {
-                    Debug.LogError("Check-in failed: " + error);
-                    LogError("Check-in failed: " + error);
-                }
-            });
+            NetworkClient.Instance.CheckIn(customPlayerId, (bool ok, string error) =>
+             {
+                 if (!ok)
+                 {
+                     Debug.LogError("Check-in failed: " + error);
+                     LogError("Check-in failed: " + error);
+                 }
+             });
         }
         else
         {
@@ -113,8 +118,7 @@ public class Lobby : MonoBehaviour
     /// </summary>
     public void Play()
     {
-        // Here we use the JoinOrCreateRoom method to get player into rooms quickly.
-        int maxPlayers = 2;
+        // Here we use the JoinOrCreateRoom method to get player into rooms quickly.        
         int playerTimeToLive = 60;
         NetworkClient.Lobby.JoinOrCreateRoom(true, maxPlayers, playerTimeToLive, HandleJoinOrCreatedRoom);
     }
@@ -222,12 +226,17 @@ public class Lobby : MonoBehaviour
         if (connected)
         {
             Debug.Log("Connected to room");
-            SceneManager.LoadScene(1);
+            OnEverythingReady();
         }
         else
         {
             Debug.Log("Failed to connect to room");
             LogError("Failed to connect to room");
         }
+    }
+
+    private void OnEverythingReady()
+    {
+        SceneManager.LoadScene(selectedLevel);
     }
 }
