@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filterType: 1
-  Range: 5
+  Range: 50
 --- !u!114 &8915490827300288987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1372,7 +1372,7 @@ MonoBehaviour:
     padding: 6
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
-  syncTransFormFoldout: 1
+  syncTransFormFoldout: 0
   syncAnimatorFoldout: 0
   restoreState: 1
 --- !u!114 &1540597783966594581

@@ -29,30 +29,17 @@ public class Health : MonoBehaviour
 
     public void PerformDamage(int damage)
     {
-        ModifyHealth(-damage);
-    }
+        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
 
-    private void ModifyHealth(int amount)
-    {
         Debug.Log("Got hit: old currentHealth= " + currentHealth);
 
-        if (currentHealth > 0)
-        {
-            currentHealth += amount;
+        currentHealth -= damage;
 
-            // if hp is lower than 0, set it to 0.
-            if (currentHealth < 0)
-            {
-                currentHealth = 0;
-                Die();
-            }
-            else
-            {
-                if (currentHealth > maxHealth)
-                {
-                    currentHealth = maxHealth;
-                }
-            }
+        // if hp is lower than 0, set it to 0.
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+            Die();
         }
 
         Debug.Log("Got hit: new currentHealth= " + currentHealth);
@@ -66,44 +53,24 @@ public class Health : MonoBehaviour
         // Update the hpSlider when player hp changes
         currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
         Debug.Log("hp changed: " + currentHealth);
-        float healthPercentage = currentHealth / (float)maxHealth;
-        OnHealthChanged(healthPercentage);
+        CalculatePercentage();
     }
 
     public void OnHpReady()
     {
         Debug.Log("OnHpPropertyReady");
 
-        // Get the current value of the "hp" SyncProperty.
         currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+        int version = syncPropertyAgent.GetPropertyWithName(HEALTH).version;
 
-        // Check if the local player has ownership of the GameObject. 
-        // Source GameObject can modify the "hp" SyncProperty.
-        // Remote duplicates should only be able to read the "hp" SyncProperty.
-        if (networkID.IsMine)
+        // If version is 0, you can call the Modify() method on the SyncPropertyAgent to initialize player's hp to maxHp.
+        if (version == 0)
         {
-            int version = syncPropertyAgent.GetPropertyWithName(HEALTH).version;
+            syncPropertyAgent.Modify(HEALTH, maxHealth);
+            currentHealth = maxHealth;
+        }
 
-            if (version != 0)
-            {
-                // You can check the version of a SyncProperty to see if it has been initialized. 
-                // If version is not 0, it means the SyncProperty has been modified before. 
-                // Probably the player got disconnected from the game. 
-                // Set hpSlider's value to currentHP to restore player's hp.                
-                CalculatePercentage();
-            }
-            else
-            {
-                // If version is 0, you can call the Modify() method on the SyncPropertyAgent to initialize player's hp to maxHp.
-                syncPropertyAgent.Modify(HEALTH, maxHealth);
-                currentHealth = maxHealth;
-                CalculatePercentage();
-            }
-        }
-        else
-        {
-            CalculatePercentage();
-        }
+        CalculatePercentage();
     }
 
     private void CalculatePercentage()
@@ -149,17 +116,24 @@ public class Health : MonoBehaviour
 
     private IEnumerator Reset()
     {
-        yield return new WaitForSeconds(1f);
+        PlayerAnimations playerAnimations = GetComponent<PlayerAnimations>();
+        if (playerAnimations != null)
+        {
+            playerAnimations.Revive();
+        }
 
-        transform.rotation = Quaternion.identity;
-        Vector3 currentPos = transform.position;
+        yield return new WaitForSeconds(3f);
 
-        currentPos.y = 1;
+        Vector3 currentRotation = Vector3.zero;
 
-        transform.position = currentPos;
+        float resetY = 8;
 
+        transform.DOMoveY(resetY, 1f);
+        transform.DORotate(currentRotation, 1f).SetUpdate(true);
+
+        syncPropertyAgent.Modify(HEALTH, maxHealth);
         currentHealth = maxHealth;
-        ModifyHealth(currentHealth);
+        CalculatePercentage();
 
         Debug.Log("Player reset!");
     }

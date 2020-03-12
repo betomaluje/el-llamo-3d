@@ -6,7 +6,7 @@ public class PlayerAnimations : MonoBehaviour
 
     private CharacterController controller;
     public Transform playerPosFix;
-    
+
     void Start()
     {
         controller = GetComponentInParent<CharacterController>();
@@ -18,9 +18,9 @@ public class PlayerAnimations : MonoBehaviour
     }
 
     void FixedUpdate()
-    {        
+    {
         anim.SetBool("Jump_b", !controller.isGrounded);
-        anim.SetBool("Grounded", controller.isGrounded);        
+        anim.SetBool("Grounded", controller.isGrounded);
     }
 
     public void WalkRunAnim(float speed)
@@ -37,6 +37,11 @@ public class PlayerAnimations : MonoBehaviour
     public void DieAnim()
     {
         anim.SetBool("Death_b", true);
+    }
+
+    public void Revive()
+    {
+        anim.SetBool("Death_b", false);
     }
 
 }
