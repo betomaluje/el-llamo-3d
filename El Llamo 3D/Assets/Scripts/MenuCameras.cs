@@ -6,21 +6,29 @@ public class MenuCameras : MonoBehaviour
     public CinemachineVirtualCamera[] cameras;
     public Lobby lobbyScript;
     public GameObject lobbyCanvas;
-    public GameObject mapCanvas;
+    public GameObject[] mapCanvas;
+
+    public GameObject uiCanvas;
 
     private int currentCamera = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
-        UpdateCameras();
+        UpdateUIElements();
+        UpdateCameras();        
     }
 
     public void ChangeCamera(int cameraIndex)
     {
         currentCamera = cameraIndex;
-        lobbyScript.selectedLevel = cameraIndex;
+        lobbyScript.selectedLevel = cameraIndex;    
         UpdateCameras();
+        UpdateUIElements();
+    }
+
+    private void UpdateUIElements() 
+    {
+        uiCanvas.SetActive(currentCamera != 0);
     }
 
     private void UpdateCameras()
@@ -44,7 +52,13 @@ public class MenuCameras : MonoBehaviour
     public void LobbyReady()
     {
         HideAllCameras();
+
+        uiCanvas.SetActive(false);
+
         lobbyCanvas.SetActive(true);
-        mapCanvas.SetActive(false);
+        foreach(var canvas in mapCanvas) 
+        {
+            canvas.SetActive(false);
+        }        
     }
 }
