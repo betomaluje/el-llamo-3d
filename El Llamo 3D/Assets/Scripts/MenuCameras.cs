@@ -45,7 +45,7 @@ public class MenuCameras : MonoBehaviour
     {
         foreach (CinemachineVirtualCamera camera in cameras)
         {
-            camera.enabled = false;
+            camera.gameObject.SetActive(false);
         }
     }
 
