@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class Lobby : MonoBehaviour
 {
     [SerializeField] private int maxPlayers = 2;
+    [SerializeField] private LevelLoader levelLoader;
 
     /// <summary>
     /// Button for checking into SocketWeaver services
@@ -28,7 +29,7 @@ public class Lobby : MonoBehaviour
 
     public TextMeshProUGUI errorLogText;
 
-    public int selectedLevel = 1;
+    public SceneNumbers selectedLevel = SceneNumbers.Menu;
 
     void Start()
     {
@@ -237,6 +238,6 @@ public class Lobby : MonoBehaviour
 
     private void OnEverythingReady()
     {
-        SceneManager.LoadScene(selectedLevel);
+        levelLoader.LoadLevel(selectedLevel);
     }
 }

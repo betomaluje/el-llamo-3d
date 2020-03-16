@@ -17014,12 +17014,12 @@ PrefabInstance:
     - target: {fileID: 8654404313720868180, guid: f526b5f28cfb39345bf3e164f7012c3c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.586318
+      value: -13.001212
       objectReference: {fileID: 0}
     - target: {fileID: 8654404313720868180, guid: f526b5f28cfb39345bf3e164f7012c3c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25937638
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8654404313720868180, guid: f526b5f28cfb39345bf3e164f7012c3c,
         type: 3}
@@ -17049,7 +17049,7 @@ PrefabInstance:
     - target: {fileID: 8654404313720868180, guid: f526b5f28cfb39345bf3e164f7012c3c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8654404313720868180, guid: f526b5f28cfb39345bf3e164f7012c3c,
         type: 3}
@@ -23629,7 +23629,7 @@ PrefabInstance:
     - target: {fileID: 8305349848024491497, guid: ddfc7cb07324b8e4bb8595db75742af1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8305349848024491497, guid: ddfc7cb07324b8e4bb8595db75742af1,
         type: 3}
@@ -26319,12 +26319,12 @@ PrefabInstance:
     - target: {fileID: 8654404313720868180, guid: f526b5f28cfb39345bf3e164f7012c3c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.585106
+      value: -13
       objectReference: {fileID: 0}
     - target: {fileID: 8654404313720868180, guid: f526b5f28cfb39345bf3e164f7012c3c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.26642
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8654404313720868180, guid: f526b5f28cfb39345bf3e164f7012c3c,
         type: 3}
@@ -36466,7 +36466,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -42735,7 +42735,7 @@ Transform:
   m_GameObject: {fileID: 1153832837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1297077303}
   - {fileID: 369154143}

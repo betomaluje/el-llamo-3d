@@ -21,7 +21,7 @@ public class MenuCameras : MonoBehaviour
     public void ChangeCamera(int cameraIndex)
     {
         currentCamera = cameraIndex;
-        lobbyScript.selectedLevel = cameraIndex;    
+        lobbyScript.selectedLevel = (SceneNumbers) cameraIndex;    
         UpdateCameras();
         UpdateUIElements();
     }
