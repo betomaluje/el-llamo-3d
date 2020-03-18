@@ -28,6 +28,7 @@ namespace BetoMaluje.Sikta
 
         public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
         {
+            Debug.Log("Picking up " + gameObject.name);
             playerGrab.target = this;
             ChangeSettings(true);
 

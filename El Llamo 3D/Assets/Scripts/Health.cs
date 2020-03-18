@@ -9,6 +9,8 @@ public class Health : MonoBehaviour
     [SerializeField] private GameObject dieBloodPrefab;
     [SerializeField] private int maxHealth = 100;
 
+    [SerializeField] private GameObject ragdollModel;
+
     public int currentHealth;
 
     #region Network
@@ -85,6 +87,18 @@ public class Health : MonoBehaviour
 
         ThrowGun();
 
+        CreateRagdoll();
+
+        RepositionPlayer();
+    }
+
+    private void CreateRagdoll() 
+    {
+        Instantiate(ragdollModel, transform.position, Quaternion.identity);
+    }
+
+    private void RepositionPlayer() 
+    {
         Vector3 currentRotation = transform.position;
         currentRotation.z = UnityEngine.Random.Range(0, 2) == 0 ? -90 : 90;
         currentRotation.x = 0;

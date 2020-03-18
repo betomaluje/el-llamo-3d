@@ -11,6 +11,8 @@ namespace BetoMaluje.Sikta
 
         [SerializeField] private TargetType type;
 
+        [SerializeField] private HoverType hoverType;
+
         [MenuItem("Tools/Sikta/Make Target")]
         public static void OpenWindow()
         {
@@ -23,6 +25,8 @@ namespace BetoMaluje.Sikta
             EditorGUILayout.Space();
 
             type = (TargetType)EditorGUILayout.EnumPopup("Type of Target:", type);
+
+            hoverType = (HoverType)EditorGUILayout.EnumPopup("Type of Hover:", hoverType);
 
             targetMask = EditorGUILayout.LayerField("Layer for Target:", targetMask);
 
@@ -59,7 +63,7 @@ namespace BetoMaluje.Sikta
             foreach (GameObject selectedGO in Selection.gameObjects)
             {
                 // step 0: check for any collider
-                if (selectedGO.GetComponent<Collider>() == null)
+                if (selectedGO.GetComponent<Collider>() == null && selectedGO.GetComponentInChildren<Collider>() == null)
                 {
                     ShowNotification(new GUIContent(selectedGO.name + " doesn't have a collider. Skipping"));
                     continue;
@@ -67,18 +71,20 @@ namespace BetoMaluje.Sikta
 
                 // step 1: add rigidbody
 
-                if (selectedGO.GetComponent<Rigidbody>() == null)
+                if (selectedGO.GetComponent<Rigidbody>() == null && selectedGO.GetComponentInChildren<Rigidbody>() == null)
                 {
                     selectedGO.AddComponent<Rigidbody>();
                 }
 
                 // step 2: add the change material script
-
-                if (selectedGO.GetComponent<MaterialColorChanger>() == null)
+                if (hoverType.Equals(HoverType.Color)) 
                 {
-                    selectedGO.AddComponent<MaterialColorChanger>();
+                    if (selectedGO.GetComponent<MaterialColorChanger>() == null)
+                    {
+                        selectedGO.AddComponent<MaterialColorChanger>();
+                    }
                 }
-
+                
                 // step 3: add the target lock script
 
                 if (lockTargetPrefab != null)
@@ -89,7 +95,11 @@ namespace BetoMaluje.Sikta
                     target.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
                     target.transform.localPosition = Vector3.zero;
 
-                    AddTargetAsPrefab(selectedGO, target);
+                    if (hoverType.Equals(HoverType.Color)) 
+                    {
+                        AddTargetAsPrefab(selectedGO, target);
+                    }
+                    
 
                     target.SetActive(false);
                 }

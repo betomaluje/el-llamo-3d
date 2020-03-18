@@ -21,5 +21,11 @@ namespace BetoMaluje.Sikta
     {
         Throwable, Shootable
     }
+
+    [SerializeField]
+    public enum HoverType 
+    {
+        None, Color
+    }
 }
 

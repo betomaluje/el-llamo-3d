@@ -115,15 +115,16 @@ namespace BetoMaluje.Sikta
                 }
 
                 if (isFirePressed && target == null)
-                {
+                {                    
                     ITarget itarget = targetHit.transform.GetComponent<ITarget>();
+                    Debug.Log("picking up " + targetHit.transform.gameObject.name + " target: " + itarget);
                     if (itarget != null)
                     {
                         if (lastObject != null)
                         {
                             lastObject.TargetOff();
                         }
-
+                        Debug.Log("picking up 2 " + targetHit.transform.gameObject.name); 
                         SoundManager.instance.Play("Pickup");
                         itarget.Pickup(this, playerHand);
                     }
@@ -133,6 +134,7 @@ namespace BetoMaluje.Sikta
             {
                 if (lastObject != null && hasPointedToObject)
                 {
+                    Debug.Log("target off " + lastObject.gameObject.name);
                     StartCoroutine(MakeTargetAvailable());
                     lastObject.TargetOff();
                     lastObject = null;
