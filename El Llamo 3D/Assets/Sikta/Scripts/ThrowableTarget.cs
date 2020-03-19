@@ -23,6 +23,7 @@ namespace BetoMaluje.Sikta
 
             rb.isKinematic = isTargetDead;
             rb.interpolation = isTargetDead ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
+            rb.useGravity = isTargetDead;
             col.isTrigger = isTargetDead;
         }
 

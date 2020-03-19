@@ -4,6 +4,7 @@ using BetoMaluje.Sikta;
 
 public class ThrowableRagdoll : MonoBehaviour, ITarget
     {
+        [SerializeField] private Vector3 handsOffset;
         private Rigidbody rb;
         private Collider col;
 
@@ -14,15 +15,14 @@ public class ThrowableRagdoll : MonoBehaviour, ITarget
         {
             rb = GetComponent<Rigidbody>();
             col = GetComponent<Collider>();
-            parentTransform = GetComponentInParents<Transform>(gameObject);
-            Debug.Log("parent is " + parentTransform.gameObject.name);
+            parentTransform = Utils.GetComponentInParents<Transform>(gameObject);            
         }
 
         private void LateUpdate()
         {
             if (isGrabbed) 
             {
-                parentTransform.localPosition = Vector3.zero;
+                parentTransform.localPosition = handsOffset;
             }
         }
 
@@ -35,13 +35,12 @@ public class ThrowableRagdoll : MonoBehaviour, ITarget
 
             rb.isKinematic = isTargetDead;
             rb.interpolation = isTargetDead ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
-            col.isTrigger = isTargetDead;
             rb.useGravity = isTargetDead;
+            col.isTrigger = isTargetDead;            
         }
 
         public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
-        {
-            Debug.Log("Picking up " + gameObject.name);
+        {        
             playerGrab.target = this;
             isGrabbed = true;
             ChangeSettings(true);
@@ -63,19 +62,6 @@ public class ThrowableRagdoll : MonoBehaviour, ITarget
             s.AppendCallback(() => ChangeSettings(false));
             s.AppendCallback(() => rb.AddForce(Camera.main.transform.forward * throwForce, ForceMode.Impulse));
             s.AppendCallback(() => rb.AddTorque(transform.transform.right + transform.transform.up * throwForce, ForceMode.Impulse));
-        }
-
-        public T GetComponentInParents<T>(GameObject startObject) where T : Component
-        {
-            T returnObject = null;
-            GameObject currentObject = startObject;
-            while(!returnObject)
-            {
-                if (currentObject == currentObject.transform.root) return null;
-                currentObject = (GameObject) currentObject.transform.parent.gameObject;
-                returnObject = currentObject.GetComponent<T>();
-            }
-            return returnObject;
         }
 
         public void Shoot(Vector3 shootHit)

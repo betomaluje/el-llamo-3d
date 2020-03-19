@@ -77,7 +77,6 @@ public class InputHandler : MonoBehaviour
         RaycastHit targetHit;
         if (Physics.Raycast(sceneCamera.transform.position, sceneCamera.transform.forward, out targetHit, grabDistance, targetLayer))
         {
-            Debug.Log("targetAquired " + targetHit.transform.gameObject.name);
             targetAquired(targetHit, true);
         } else
         {

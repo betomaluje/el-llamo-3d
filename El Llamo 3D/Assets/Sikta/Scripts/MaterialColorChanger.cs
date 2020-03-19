@@ -59,7 +59,7 @@ namespace BetoMaluje.Sikta
             }
 
             if (meshRenderer != null)
-            {
+            {                
                 int materialsLength = meshRenderer.materials.Length;
                 originalColors = new Color[materialsLength];
 

@@ -38,7 +38,8 @@ public abstract class Gun : MonoBehaviour, ITarget
 
         rb.isKinematic = isTargetDead;
         rb.interpolation = isTargetDead ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
-        col.isTrigger = isTargetDead;
+        rb.useGravity = isTargetDead;
+        col.isTrigger = isTargetDead;        
     }
 
     public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)

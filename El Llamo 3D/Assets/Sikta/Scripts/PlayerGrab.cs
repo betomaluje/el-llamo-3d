@@ -107,7 +107,14 @@ namespace BetoMaluje.Sikta
 
             if (onTarget)
             {
-                lastObject = targetHit.transform.GetComponent<MaterialColorChanger>();
+                lastObject = targetHit.transform.GetComponentInChildren<MaterialColorChanger>();
+
+                if (lastObject == null) 
+                {
+                    // we try in the parents game object
+                    lastObject = Utils.GetComponentInParents<MaterialColorChanger>(targetHit.transform.gameObject);
+                }
+
                 if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
                 {
                     hasPointedToObject = true;
@@ -116,15 +123,13 @@ namespace BetoMaluje.Sikta
 
                 if (isFirePressed && target == null)
                 {                    
-                    ITarget itarget = targetHit.transform.GetComponent<ITarget>();
-                    Debug.Log("picking up " + targetHit.transform.gameObject.name + " target: " + itarget);
+                    ITarget itarget = targetHit.transform.GetComponentInChildren<ITarget>();
                     if (itarget != null)
                     {
                         if (lastObject != null)
                         {
                             lastObject.TargetOff();
                         }
-                        Debug.Log("picking up 2 " + targetHit.transform.gameObject.name); 
                         SoundManager.instance.Play("Pickup");
                         itarget.Pickup(this, playerHand);
                     }
@@ -134,7 +139,6 @@ namespace BetoMaluje.Sikta
             {
                 if (lastObject != null && hasPointedToObject)
                 {
-                    Debug.Log("target off " + lastObject.gameObject.name);
                     StartCoroutine(MakeTargetAvailable());
                     lastObject.TargetOff();
                     lastObject = null;
