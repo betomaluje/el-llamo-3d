@@ -2,14 +2,23 @@
 
 public class PlayerAnimations : MonoBehaviour
 {
+    
+    [SerializeField] private PlayerAnimationTrigger playerAnimationsTrigger;
+
     public Animator anim;
+    public Transform playerPosFix;
 
     private CharacterController controller;
-    public Transform playerPosFix;
 
     void Start()
     {
         controller = GetComponentInParent<CharacterController>();
+
+        playerAnimationsTrigger.throwDoneCallback = () =>
+        {
+            ResetThrow();
+        };
+        
     }
 
     private void Update()
@@ -19,29 +28,39 @@ public class PlayerAnimations : MonoBehaviour
 
     void FixedUpdate()
     {
-        anim.SetBool("Jump_b", !controller.isGrounded);
-        anim.SetBool("Grounded", controller.isGrounded);
+        anim.SetBool("onGround", controller.isGrounded);
     }
 
     public void WalkRunAnim(float speed)
     {
-        anim.SetFloat("Speed_f", speed);
+        anim.SetFloat("Speed", speed);
     }
 
     public void ShootAnim(bool shooting)
     {
-        anim.SetInteger("WeaponType_int", shooting ? 1 : 0);
-        anim.SetBool("Shoot_b", shooting);
+        anim.SetBool("isShooting", shooting);
+    }
+
+    public void Throw() 
+    {
+        Debug.Log("animated throwing");
+        anim.SetBool("Throw", true);
+    }
+
+    public void ResetThrow() 
+    {
+        Debug.Log("animated reset throwing");
+        anim.SetBool("Throw", false);
     }
 
     public void DieAnim()
     {
-        anim.SetBool("Death_b", true);
+        anim.SetBool("Dead", true);
     }
 
     public void Revive()
     {
-        anim.SetBool("Death_b", false);
+        anim.SetBool("Dead", false);
     }
 
 }

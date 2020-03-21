@@ -8,6 +8,7 @@ namespace BetoMaluje.Sikta
     public class PlayerGrab : MonoBehaviour
     {
         [SerializeField] private InputHandler inputHandler;
+        [SerializeField] private PlayerAnimationTrigger playerAnimationsTrigger;
 
         [Space]
         [Header("Stats")]
@@ -73,19 +74,25 @@ namespace BetoMaluje.Sikta
             // handles when the player is throwing
             inputHandler.secondaryClickCallback = () =>
             {
-                isThrowObjectPressed = true;
-
-                if (isThrowObjectPressed != lastThrowingState)
-                {
-                    Debug.Log("Should be throwing: ");
-                    syncPropertyAgent.Modify(THROWING, isThrowObjectPressed);
-                    lastThrowingState = isThrowObjectPressed;
-                }
+                Debug.Log("Should be throwing: ");
+                playerAnimations.Throw();
             };
 
             inputHandler.secondaryReleaseCallback = () =>
             {
                 isThrowObjectPressed = false;
+            };
+
+            // handle actual object throwing
+            playerAnimationsTrigger.throwTriggeredCallback = () =>
+            {
+                isThrowObjectPressed = true;
+
+                if (isThrowObjectPressed != lastThrowingState)
+                {
+                    syncPropertyAgent.Modify(THROWING, isThrowObjectPressed);
+                    lastThrowingState = isThrowObjectPressed;
+                }
             };
 
             // handle target
@@ -129,7 +136,7 @@ namespace BetoMaluje.Sikta
                         if (lastObject != null)
                         {
                             lastObject.TargetOff();
-                        }
+                        }                    
                         SoundManager.instance.Play("Pickup");
                         itarget.Pickup(this, playerHand);
                     }
@@ -212,7 +219,6 @@ namespace BetoMaluje.Sikta
         {
             if (target != null && syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue())
             {
-                Debug.Log("synced throwing");
                 target.Throw(throwForce);
                 target = null;
 
