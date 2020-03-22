@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimationTrigger : MonoBehaviour
@@ -11,9 +9,9 @@ public class PlayerAnimationTrigger : MonoBehaviour
     [HideInInspector]
     public Action throwDoneCallback;
 
-    public void ThrowObject() 
+    public void ThrowObject()
     {
-        throwTriggeredCallback();        
+        throwTriggeredCallback();
     }
 
     public void ResetThrow()

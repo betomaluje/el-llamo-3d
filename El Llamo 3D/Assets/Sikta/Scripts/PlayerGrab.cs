@@ -116,7 +116,7 @@ namespace BetoMaluje.Sikta
             {
                 lastObject = targetHit.transform.GetComponentInChildren<MaterialColorChanger>();
 
-                if (lastObject == null) 
+                if (lastObject == null)
                 {
                     // we try in the parents game object
                     lastObject = Utils.GetComponentInParents<MaterialColorChanger>(targetHit.transform.gameObject);
@@ -129,14 +129,14 @@ namespace BetoMaluje.Sikta
                 }
 
                 if (isFirePressed && target == null)
-                {                    
+                {
                     ITarget itarget = targetHit.transform.GetComponentInChildren<ITarget>();
                     if (itarget != null)
                     {
                         if (lastObject != null)
                         {
                             lastObject.TargetOff();
-                        }                    
+                        }
                         SoundManager.instance.Play("Pickup");
                         itarget.Pickup(this, playerHand);
                     }
@@ -230,7 +230,7 @@ namespace BetoMaluje.Sikta
         private void LateUpdate()
         {
             // we handle the animation
-            playerAnimations.ShootAnim(isFirePressed);
+            playerAnimations.ShootAnim(isFirePressed && HasGun());
 
             if (hasInitialWeapon && playerHand.childCount == 1)
             {

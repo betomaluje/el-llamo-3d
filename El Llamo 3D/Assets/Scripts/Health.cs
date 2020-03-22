@@ -23,8 +23,11 @@ public class Health : MonoBehaviour
 
     public Action<float> OnHealthChanged = delegate { };
 
+    private CameraShake cameraShake;
+
     private void Start()
     {
+        cameraShake = Camera.main.GetComponent<CameraShake>();
         networkID = GetComponent<NetworkID>();
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
     }
@@ -56,6 +59,11 @@ public class Health : MonoBehaviour
         currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
         Debug.Log("hp changed: " + currentHealth);
         CalculatePercentage();
+
+        if (networkID.IsMine)
+        {
+            cameraShake.actionShakeCamera();
+        }
     }
 
     public void OnHpReady()
@@ -92,12 +100,12 @@ public class Health : MonoBehaviour
         RepositionPlayer();
     }
 
-    private void CreateRagdoll() 
+    private void CreateRagdoll()
     {
         Instantiate(ragdollModel, transform.position, Quaternion.identity);
     }
 
-    private void RepositionPlayer() 
+    private void RepositionPlayer()
     {
         Vector3 currentRotation = transform.position;
         currentRotation.z = UnityEngine.Random.Range(0, 2) == 0 ? -90 : 90;
