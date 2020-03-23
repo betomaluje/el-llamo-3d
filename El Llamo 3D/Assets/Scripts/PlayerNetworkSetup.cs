@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerNetworkSetup : MonoBehaviour
 {
     private NetworkID networkID;
+    private SyncPropertyAgent syncPropertyAgent;
 
     private MouseLook mouseLook;
 
@@ -12,6 +13,7 @@ public class PlayerNetworkSetup : MonoBehaviour
     void Start()
     {
         networkID = GetComponent<NetworkID>();
+        syncPropertyAgent = GetComponent<SyncPropertyAgent>();
 
         mouseLook = FindObjectOfType<MouseLook>();
 
@@ -31,6 +33,9 @@ public class PlayerNetworkSetup : MonoBehaviour
 
         PlayerGrab playerGrab = GetComponentInChildren<PlayerGrab>();
         playerGrab.SetupPlayer();
+
+        string name = NetworkClient.Instance.PlayerId.Split('-')[1];
+        syncPropertyAgent?.Modify(PlayerName.NICKNAME_PROPERTY, name);
 
         //AimDebug debugPanel = GameObject.FindWithTag("Debug").GetComponent<AimDebug>();
         //debugPanel.Setup(playerGrab);

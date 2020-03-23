@@ -100,11 +100,17 @@ public class Health : MonoBehaviour
 
     public void Die()
     {
+        StartCoroutine(PerformDie());
+    }
+
+    private IEnumerator PerformDie()
+    {
+        ThrowGun();
         Instantiate(dieBloodPrefab, transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
 
-        ThrowGun();
-
         CreateRagdoll();
+
+        yield return new WaitForSeconds(1f);
 
         RepositionPlayer();
 
@@ -156,7 +162,6 @@ public class Health : MonoBehaviour
         Gun gunTarget = transform.GetComponentInChildren<Gun>();
         if (gunTarget != null)
         {
-            Debug.Log("Dead! Throwing gun");
             gunTarget.Throw(400f);
         }
     }
