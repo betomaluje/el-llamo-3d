@@ -777,6 +777,7 @@ GameObject:
   - component: {fileID: 8915490827300288987}
   - component: {fileID: 3337313840973512057}
   - component: {fileID: 1540597783966594581}
+  - component: {fileID: 2078460035418354331}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -1180,7 +1181,7 @@ MonoBehaviour:
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
   syncTransFormFoldout: 0
-  syncAnimatorFoldout: 1
+  syncAnimatorFoldout: 0
   restoreState: 1
 --- !u!114 &1540597783966594581
 MonoBehaviour:
@@ -1220,7 +1221,7 @@ MonoBehaviour:
     onReady:
       m_PersistentCalls:
         m_Calls: []
-  - Foldout: 1
+  - Foldout: 0
     name: Throwing
     type: 0
     conflictResolution: 0
@@ -1245,7 +1246,7 @@ MonoBehaviour:
     onReady:
       m_PersistentCalls:
         m_Calls: []
-  - Foldout: 0
+  - Foldout: 1
     name: Hp
     type: 2
     conflictResolution: 0
@@ -1283,6 +1284,36 @@ MonoBehaviour:
           m_CallState: 2
   restoreState: 1
   AutoInitialization: 1
+--- !u!114 &2078460035418354331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836814044747114715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 202338497, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  remoteEvents_:
+  - eventName: killed
+    Foldout: 1
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 644223966757249534}
+          m_MethodName: Die
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &6291175019369747958
 GameObject:
   m_ObjectHideFlags: 0

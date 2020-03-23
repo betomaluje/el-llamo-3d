@@ -1,7 +1,6 @@
 ﻿using SWNetwork;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -87,6 +86,8 @@ public class Lobby : MonoBehaviour
     public void Register()
     {
         string customPlayerId = customPlayerIdField.text;
+
+        Debug.Log("Check-in player: " + customPlayerId);
 
         if (customPlayerId != null && customPlayerId.Length > 0)
         {

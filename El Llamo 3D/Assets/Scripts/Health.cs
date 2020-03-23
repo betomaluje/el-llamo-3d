@@ -17,7 +17,10 @@ public class Health : MonoBehaviour
 
     private NetworkID networkID;
     private SyncPropertyAgent syncPropertyAgent;
+    private RemoteEventAgent remoteEventAgent;
+
     const string HEALTH = "Hp";
+    const string KILLED_EVENT = "killed";
 
     #endregion
 
@@ -30,6 +33,7 @@ public class Health : MonoBehaviour
         cameraShake = Camera.main.GetComponent<CameraShake>();
         networkID = GetComponent<NetworkID>();
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
+        remoteEventAgent = GetComponent<RemoteEventAgent>();
     }
 
     public void PerformDamage(int damage)
@@ -44,7 +48,6 @@ public class Health : MonoBehaviour
         if (currentHealth < 0)
         {
             currentHealth = 0;
-            Die();
         }
 
         Debug.Log("Got hit: new currentHealth= " + currentHealth);
@@ -63,6 +66,12 @@ public class Health : MonoBehaviour
         if (networkID.IsMine)
         {
             cameraShake.actionShakeCamera();
+
+            if (currentHealth <= 0)
+            {
+                // invoke the "killed" remote event when hp is 0. 
+                remoteEventAgent.Invoke(KILLED_EVENT);
+            }
         }
     }
 
@@ -89,7 +98,7 @@ public class Health : MonoBehaviour
         OnHealthChanged(healthPercentage);
     }
 
-    private void Die()
+    public void Die()
     {
         Instantiate(dieBloodPrefab, transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
 
@@ -98,6 +107,22 @@ public class Health : MonoBehaviour
         CreateRagdoll();
 
         RepositionPlayer();
+
+        /*
+        // Only the source player GameObject should be respawned. 
+        // SceneSpawner will handle the remote duplicate creation for the respawned player.
+        if (networkID.IsMine)
+        {
+            GameSceneManager gameSceneManager = FindObjectOfType<GameSceneManager>();
+
+            // Call the DelayedRespawnPlayer() method you just added to the GameSceneManager.cs script. 
+            gameSceneManager.DelayedRespawnPlayer();
+
+            // Ask the SceneSpawner to destroy the gameObject. 
+            // SceneSpawner will destroy the local Player and its remote duplicates.
+            NetworkClient.Instance.LastSpawner.DestroyGameObject(gameObject);
+        }
+        */
     }
 
     private void CreateRagdoll()

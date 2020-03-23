@@ -1,17 +1,19 @@
-﻿using UnityEngine;
+﻿using BetoMaluje.Sikta;
 using SWNetwork;
-using BetoMaluje.Sikta;
+using UnityEngine;
 
 public class PlayerNetworkSetup : MonoBehaviour
 {
     private NetworkID networkID;
 
-    [SerializeField] private MouseLook mouseLook;    
-    
+    private MouseLook mouseLook;
+
     // Start is called before the first frame update
     void Start()
     {
         networkID = GetComponent<NetworkID>();
+
+        mouseLook = FindObjectOfType<MouseLook>();
 
         if (networkID.IsMine)
         {
@@ -19,12 +21,12 @@ public class PlayerNetworkSetup : MonoBehaviour
         }
     }
 
-    private void SetupPlayer() 
+    private void SetupPlayer()
     {
         // set CameraFollow target
         CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
         cameraFollow.target = transform;
-        
+
         mouseLook.SetupPlayer(cameraFollow);
 
         PlayerGrab playerGrab = GetComponentInChildren<PlayerGrab>();
