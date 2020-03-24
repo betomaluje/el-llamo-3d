@@ -21,6 +21,8 @@ public class Health : MonoBehaviour
 
     const string HEALTH = "Hp";
     const string KILLED_EVENT = "killed";
+    const string DIE_EVENT = "die";
+    const string THROW_GUN_EVENT = "throw_gun";
 
     #endregion
 
@@ -131,9 +133,36 @@ public class Health : MonoBehaviour
         */
     }
 
+    private void ThrowGun()
+    {
+        SWNetworkMessage msg = new SWNetworkMessage();
+        msg.Push(Camera.main.transform.forward);
+        remoteEventAgent.Invoke(THROW_GUN_EVENT, msg);
+    }
+
+    public void RemoteThrowGun(SWNetworkMessage msg)
+    {
+        Gun gunTarget = transform.GetComponentInChildren<Gun>();
+        if (gunTarget != null)
+        {
+            Debug.Log("remote throwing gun: ");
+            Vector3 direction = msg.PopVector3();
+            gunTarget.Throw(400f, direction);
+        }
+    }
+
     private void CreateRagdoll()
     {
-        Instantiate(ragdollModel, transform.position, Quaternion.identity);
+        SWNetworkMessage msg = new SWNetworkMessage();
+        msg.Push(transform.position);
+        remoteEventAgent.Invoke(DIE_EVENT, msg);
+    }
+
+    public void RemoteCreateRagdoll(SWNetworkMessage msg)
+    {
+        Debug.Log("remote ragdoll: ");
+        Vector3 position = msg.PopVector3();
+        Instantiate(ragdollModel, position, Quaternion.identity);
     }
 
     private void RepositionPlayer()
@@ -155,15 +184,6 @@ public class Health : MonoBehaviour
         }
 
         StartCoroutine(Reset());
-    }
-
-    private void ThrowGun()
-    {
-        Gun gunTarget = transform.GetComponentInChildren<Gun>();
-        if (gunTarget != null)
-        {
-            gunTarget.Throw(400f);
-        }
     }
 
     private IEnumerator Reset()

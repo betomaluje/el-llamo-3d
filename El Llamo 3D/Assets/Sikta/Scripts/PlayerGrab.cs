@@ -37,7 +37,6 @@ namespace BetoMaluje.Sikta
         #region Network
 
         private bool isFirePressed = false;
-        private bool isThrowObjectPressed = false;
 
         private Camera sceneCamera;
 
@@ -45,16 +44,17 @@ namespace BetoMaluje.Sikta
 
         // network property syncing
         private SyncPropertyAgent syncPropertyAgent;
+        private RemoteEventAgent remoteEventAgent;
         const string SHOOTING = "Shooting";
         const string THROWING = "Throwing";
         bool lastShootingState = false;
-        bool lastThrowingState = false;
 
         #endregion
 
         private void Start()
         {
             syncPropertyAgent = GetComponent<SyncPropertyAgent>();
+            remoteEventAgent = GetComponent<RemoteEventAgent>();
 
             playerAnimations = GetComponent<PlayerAnimations>();
         }
@@ -80,19 +80,13 @@ namespace BetoMaluje.Sikta
 
             inputHandler.secondaryReleaseCallback = () =>
             {
-                isThrowObjectPressed = false;
+
             };
 
             // handle actual object throwing
             playerAnimationsTrigger.throwTriggeredCallback = () =>
             {
-                isThrowObjectPressed = true;
-
-                if (isThrowObjectPressed != lastThrowingState)
-                {
-                    syncPropertyAgent.Modify(THROWING, isThrowObjectPressed);
-                    lastThrowingState = isThrowObjectPressed;
-                }
+                ThrowObject();
             };
 
             // handle target
@@ -212,18 +206,21 @@ namespace BetoMaluje.Sikta
             }
         }
 
-        /**
-         * Called from the Sync Property Agent
-         */
-        public void OnThrowingChanged()
+        private void ThrowObject()
         {
-            if (target != null && syncPropertyAgent.GetPropertyWithName(THROWING).GetBoolValue())
-            {
-                target.Throw(throwForce);
-                target = null;
+            SWNetworkMessage msg = new SWNetworkMessage();
+            msg.Push(sceneCamera.transform.forward);
+            remoteEventAgent.Invoke(THROWING, msg);
+        }
 
-                syncPropertyAgent.Modify(THROWING, false);
-                lastThrowingState = false;
+        public void RemoteThrow(SWNetworkMessage msg)
+        {
+            if (target != null)
+            {
+                Debug.Log("remote throwing: ");
+                Vector3 direction = msg.PopVector3();
+                target.Throw(throwForce, direction);
+                target = null;
             }
         }
 

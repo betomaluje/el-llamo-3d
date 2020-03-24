@@ -908,7 +908,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimationsTrigger: {fileID: 507657085110364343}
   anim: {fileID: 8487665588559767598}
-  playerPosFix: {fileID: 9004560328956049904}
 --- !u!114 &9158683583669780992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,31 +1221,6 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - Foldout: 0
-    name: Throwing
-    type: 0
-    conflictResolution: 0
-    data: 
-    onValueChange:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4419335375198168097}
-          m_MethodName: OnThrowingChanged
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    onConflict:
-      m_PersistentCalls:
-        m_Calls: []
-    onReady:
-      m_PersistentCalls:
-        m_Calls: []
-  - Foldout: 0
     name: Hp
     type: 2
     conflictResolution: 0
@@ -1282,7 +1256,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - Foldout: 1
+  - Foldout: 0
     name: Nickname
     type: 3
     conflictResolution: 0
@@ -1334,7 +1308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   remoteEvents_:
   - eventName: killed
-    Foldout: 1
+    Foldout: 0
     target: 0
     remoteEvent:
       m_PersistentCalls:
@@ -1342,6 +1316,57 @@ MonoBehaviour:
         - m_Target: {fileID: 644223966757249534}
           m_MethodName: Die
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Throwing
+    Foldout: 0
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4419335375198168097}
+          m_MethodName: RemoteThrow
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: throw_gun
+    Foldout: 0
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 644223966757249534}
+          m_MethodName: RemoteThrowGun
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: die
+    Foldout: 0
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 644223966757249534}
+          m_MethodName: RemoteCreateRagdoll
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

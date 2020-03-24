@@ -39,7 +39,7 @@ public abstract class Gun : MonoBehaviour, ITarget
         rb.isKinematic = isTargetDead;
         rb.interpolation = isTargetDead ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
         rb.useGravity = isTargetDead;
-        col.isTrigger = isTargetDead;        
+        col.isTrigger = isTargetDead;
     }
 
     public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
@@ -57,14 +57,14 @@ public abstract class Gun : MonoBehaviour, ITarget
         OnPickedUp?.Invoke();
     }
 
-    public void Throw(float throwForce)
+    public void Throw(float throwForce, Vector3 direction)
     {
         SoundManager.instance.Play("Throw");
         Sequence s = DOTween.Sequence();
         s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
         s.AppendCallback(() => ChangeSettings(false));
         s.AppendCallback(() => transform.parent = null);
-        s.AppendCallback(() => rb.AddForce(Camera.main.transform.forward * throwForce, ForceMode.Impulse));
+        s.AppendCallback(() => rb.AddForce(direction * throwForce, ForceMode.Impulse));
         s.AppendCallback(() => rb.AddTorque(transform.transform.right + transform.transform.up * throwForce, ForceMode.Impulse));
     }
 

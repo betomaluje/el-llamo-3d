@@ -4,10 +4,10 @@ using UnityEngine;
 public class PlayerAnimationTrigger : MonoBehaviour
 {
     [HideInInspector]
-    public Action throwTriggeredCallback;
+    public Action throwTriggeredCallback = delegate { };
 
     [HideInInspector]
-    public Action throwDoneCallback;
+    public Action throwDoneCallback = delegate { };
 
     public void ThrowObject()
     {

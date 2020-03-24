@@ -2,11 +2,10 @@
 
 public class PlayerAnimations : MonoBehaviour
 {
-    
+
     [SerializeField] private PlayerAnimationTrigger playerAnimationsTrigger;
 
     public Animator anim;
-    public Transform playerPosFix;
 
     private CharacterController controller;
 
@@ -18,12 +17,7 @@ public class PlayerAnimations : MonoBehaviour
         {
             ResetThrow();
         };
-        
-    }
 
-    private void Update()
-    {
-        playerPosFix.localPosition = Vector3.zero;
     }
 
     void FixedUpdate()
@@ -41,15 +35,13 @@ public class PlayerAnimations : MonoBehaviour
         anim.SetBool("isShooting", shooting);
     }
 
-    public void Throw() 
+    public void Throw()
     {
-        Debug.Log("animated throwing");
         anim.SetBool("Throw", true);
     }
 
-    public void ResetThrow() 
+    public void ResetThrow()
     {
-        Debug.Log("animated reset throwing");
         anim.SetBool("Throw", false);
     }
 

@@ -7,7 +7,7 @@ namespace BetoMaluje.Sikta
     {
         void Pickup(PlayerGrab playerGrab, Transform weaponHolder);
 
-        void Throw(float throwForce);
+        void Throw(float throwForce, Vector3 direction);
 
         void Shoot(Vector3 shootHit);
 
@@ -23,7 +23,7 @@ namespace BetoMaluje.Sikta
     }
 
     [SerializeField]
-    public enum HoverType 
+    public enum HoverType
     {
         None, Color
     }
