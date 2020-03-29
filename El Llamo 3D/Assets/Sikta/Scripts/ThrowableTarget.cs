@@ -27,13 +27,12 @@ namespace BetoMaluje.Sikta
             col.isTrigger = isTargetDead;
         }
 
-        public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
+        public void Pickup(Transform playerHand, Vector3 from, Vector3 to)
         {
             Debug.Log("Picking up " + gameObject.name);
-            playerGrab.target = this;
             ChangeSettings(true);
 
-            transform.parent = weaponHolder;
+            transform.parent = playerHand;
 
             transform.DOLocalMove(Vector3.zero, .25f).SetEase(Ease.OutBack).SetUpdate(true);
             transform.DOLocalRotate(Vector3.zero, .25f).SetUpdate(true);

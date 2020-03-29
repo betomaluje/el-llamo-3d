@@ -9,13 +9,16 @@ public abstract class Gun : MonoBehaviour, ITarget
     public Transform shootingPosition;
     [SerializeField] private float fireRate = 3f;
     [SerializeField] private int maxDamage = 30;
+    public float impactForce = 100f;
 
     [Space]
     [Header("Recoil")]
     [SerializeField] private float recoilAmount = 0.3f;
     [SerializeField] private float recoilDuration = 0.3f;
 
-    public float impactForce = 100f;
+    [Space]
+    [Header("Pickup")]
+    [SerializeField] private float speed = 0.5f;
 
     private float nextTimeToFire = 0f;
     private Rigidbody rb;
@@ -37,24 +40,39 @@ public abstract class Gun : MonoBehaviour, ITarget
         }
 
         rb.isKinematic = isTargetDead;
-        rb.interpolation = isTargetDead ? RigidbodyInterpolation.None : RigidbodyInterpolation.Interpolate;
-        rb.useGravity = isTargetDead;
+        rb.useGravity = !isTargetDead;
         col.isTrigger = isTargetDead;
     }
 
-    public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
+    private void FinishPickup(Transform playerHand)
     {
-        playerGrab.target = this;
-        ChangeSettings(true);
+        if (playerHand == null)
+        {
+            return;
+        }
 
-        transform.parent = weaponHolder;
+        Debug.Log("remote pickup 3: " + transform.position);
+
+        SoundManager.instance.Play("Pickup");
+
+        transform.parent = playerHand;
+
+        transform.localPosition = Vector3.zero;
+    }
+
+    public void Pickup(Transform playerHand, Vector3 from, Vector3 to)
+    {
+        Debug.Log("remote pickup 2: " + from + " -> " + to);
 
         Vector3 rotation = new Vector3(-90, 0, 90);
 
-        transform.DOLocalMove(Vector3.zero, .25f).SetEase(Ease.OutBack).SetUpdate(true);
-        transform.DOLocalRotate(rotation, .25f).SetUpdate(true);
+        transform.position = from;
 
-        OnPickedUp?.Invoke();
+        Sequence s = DOTween.Sequence();
+        s.AppendCallback(() => ChangeSettings(true));
+        s.AppendCallback(() => transform.DOMove(to, speed));
+        s.AppendCallback(() => transform.DOLocalRotate(rotation, speed));
+        s.AppendCallback(() => FinishPickup(playerHand));
     }
 
     public void Throw(float throwForce, Vector3 direction)

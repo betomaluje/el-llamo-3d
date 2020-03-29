@@ -39,13 +39,12 @@ public class ThrowableRagdoll : MonoBehaviour, ITarget
         col.isTrigger = isTargetDead;
     }
 
-    public void Pickup(PlayerGrab playerGrab, Transform weaponHolder)
+    public void Pickup(Transform playerHand, Vector3 from, Vector3 to)
     {
-        playerGrab.target = this;
         isGrabbed = true;
         ChangeSettings(true);
 
-        parentTransform.transform.parent = weaponHolder;
+        parentTransform.transform.parent = playerHand;
 
         transform.DOLocalMove(Vector3.zero, .25f).SetEase(Ease.OutBack).SetUpdate(true);
         transform.DOLocalRotate(Vector3.zero, .25f).SetUpdate(true);

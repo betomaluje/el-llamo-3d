@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class Lobby : MonoBehaviour
 {
     [SerializeField] private int maxPlayers = 2;
+    [SerializeField] private int playerTimeToLive = 60;
     [SerializeField] private LevelLoader levelLoader;
 
     /// <summary>
@@ -87,8 +88,6 @@ public class Lobby : MonoBehaviour
     {
         string customPlayerId = customPlayerIdField.text;
 
-        Debug.Log("Check-in player: " + customPlayerId);
-
         if (customPlayerId != null && customPlayerId.Length > 0)
         {
             // use the user entered playerId to check into SocketWeaver. Make sure the PlayerId is unique.
@@ -120,8 +119,7 @@ public class Lobby : MonoBehaviour
     /// </summary>
     public void Play()
     {
-        // Here we use the JoinOrCreateRoom method to get player into rooms quickly.        
-        int playerTimeToLive = 60;
+        // Here we use the JoinOrCreateRoom method to get player into rooms quickly.                
         NetworkClient.Lobby.JoinOrCreateRoom(true, maxPlayers, playerTimeToLive, HandleJoinOrCreatedRoom);
     }
 

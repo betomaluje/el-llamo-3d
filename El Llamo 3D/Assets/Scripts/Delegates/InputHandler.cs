@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SWNetwork;
+using System;
 using UnityEngine;
-using SWNetwork;
 
 public class InputHandler : MonoBehaviour
 {
@@ -11,8 +11,8 @@ public class InputHandler : MonoBehaviour
     [Space]
     [Header("Shooting")]
     [SerializeField] private LayerMask shootingLayer;
-    [SerializeField] private float shootingDistance = 100f;    
-    
+    [SerializeField] private float shootingDistance = 100f;
+
     [HideInInspector]
     public Action fireReleaseCallback;
 
@@ -40,7 +40,7 @@ public class InputHandler : MonoBehaviour
         networkID = GetComponent<NetworkID>();
     }
 
-    private void OnEnable() 
+    private void OnEnable()
     {
         sceneCamera = Camera.main;
     }
@@ -48,7 +48,10 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         // only the owner should be able to sync the aim and shooting of the mouse
-        if (!networkID.IsMine) return;
+        if (!networkID.IsMine)
+        {
+            return;
+        }
 
         // check if user is pressing the Fire button
         if (Input.GetMouseButtonDown(0))
@@ -61,16 +64,20 @@ public class InputHandler : MonoBehaviour
             bool onTarget = Physics.Raycast(ray, out shootHit, shootingDistance, shootingLayer, QueryTriggerInteraction.Ignore);
 
             // now we send the Action to all listeners
-            shootingTarget(new ShootingTarget(ray, shootHit, onTarget, shootingDistance));                  
-        }       
+            shootingTarget(new ShootingTarget(ray, shootHit, onTarget, shootingDistance));
+        }
 
-        if (Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0))
+        {
             fireReleaseCallback();
         }
 
-        if (Input.GetMouseButtonDown(1)) {
+        if (Input.GetMouseButtonDown(1))
+        {
             secondaryClickCallback();
-        } else if (Input.GetMouseButtonUp(1)) {
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
             secondaryReleaseCallback();
         }
 
@@ -78,9 +85,10 @@ public class InputHandler : MonoBehaviour
         if (Physics.Raycast(sceneCamera.transform.position, sceneCamera.transform.forward, out targetHit, grabDistance, targetLayer))
         {
             targetAquired(targetHit, true);
-        } else
+        }
+        else
         {
             targetAquired(targetHit, false);
-        }        
+        }
     }
 }

@@ -24,16 +24,12 @@ public class PlayerName : MonoBehaviour
     public void UpdateName()
     {
         string nickname = syncPropertyAgent.GetPropertyWithName(NICKNAME_PROPERTY).GetStringValue();
-        Debug.Log("nickname: " + nickname);
         nicknameText.text = nickname;
     }
 
     public void OnNicknameReady()
     {
-        Debug.Log("OnNicknamePropertyReady");
-
         string nickname = syncPropertyAgent.GetPropertyWithName(NICKNAME_PROPERTY).GetStringValue();
-        Debug.Log("ready nickname: " + nickname);
         nicknameText.text = nickname;
     }
 

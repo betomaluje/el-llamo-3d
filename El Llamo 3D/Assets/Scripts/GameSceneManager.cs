@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameSceneManager : MonoBehaviour
 {
+    [SerializeField] private int amountOfGuns = 4;
+
     private int totalSpawnPoints = 0;
 
     public void OnSpawnerReady(bool alreadySetup, SceneSpawner sceneSpawner)
@@ -27,9 +29,20 @@ public class GameSceneManager : MonoBehaviour
 
             sceneSpawner.SpawnForPlayer(0, spawnPointIndex);
 
+            SpawnGuns(sceneSpawner);
+
             // Tell the spawner that we have finished setting up the scene. 
             // alreadySetup will be true when SceneSpawn becomes ready next time.
             sceneSpawner.PlayerFinishedSceneSetup();
+        }
+    }
+
+    private void SpawnGuns(SceneSpawner sceneSpawner)
+    {
+        for (int i = 0; i < amountOfGuns; i++)
+        {
+            int gunSpawnPointIndex = GetSpawnPoint();
+            sceneSpawner.SpawnForNonPlayer(0, gunSpawnPointIndex);
         }
     }
 

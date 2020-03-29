@@ -22,13 +22,15 @@ public class Health : MonoBehaviour
     const string HEALTH = "Hp";
     const string KILLED_EVENT = "killed";
     const string DIE_EVENT = "die";
-    const string THROW_GUN_EVENT = "throw_gun";
+    const string THROW_GUN_EVENT = "dead_throw_gun";
 
     #endregion
 
     public Action<float> OnHealthChanged = delegate { };
 
     private CameraShake cameraShake;
+
+    private bool isPlayerInmune = false;
 
     private void Start()
     {
@@ -40,9 +42,12 @@ public class Health : MonoBehaviour
 
     public void PerformDamage(int damage)
     {
-        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+        if (isPlayerInmune)
+        {
+            return;
+        }
 
-        Debug.Log("Got hit: old currentHealth= " + currentHealth);
+        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
 
         currentHealth -= damage;
 
@@ -52,8 +57,6 @@ public class Health : MonoBehaviour
             currentHealth = 0;
         }
 
-        Debug.Log("Got hit: new currentHealth= " + currentHealth);
-
         // Apply damage and modify the "hp" SyncProperty.
         syncPropertyAgent?.Modify(HEALTH, currentHealth);
     }
@@ -62,7 +65,6 @@ public class Health : MonoBehaviour
     {
         // Update the hpSlider when player hp changes
         currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
-        Debug.Log("hp changed: " + currentHealth);
         CalculatePercentage();
 
         if (networkID.IsMine)
@@ -79,8 +81,6 @@ public class Health : MonoBehaviour
 
     public void OnHpReady()
     {
-        Debug.Log("OnHpPropertyReady");
-
         currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
         int version = syncPropertyAgent.GetPropertyWithName(HEALTH).version;
 
@@ -107,30 +107,35 @@ public class Health : MonoBehaviour
 
     private IEnumerator PerformDie()
     {
-        ThrowGun();
-        Instantiate(dieBloodPrefab, transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
-
-        CreateRagdoll();
-
-        yield return new WaitForSeconds(1f);
-
-        RepositionPlayer();
-
-        /*
-        // Only the source player GameObject should be respawned. 
-        // SceneSpawner will handle the remote duplicate creation for the respawned player.
-        if (networkID.IsMine)
+        if (!isPlayerInmune)
         {
-            GameSceneManager gameSceneManager = FindObjectOfType<GameSceneManager>();
+            isPlayerInmune = true;
 
-            // Call the DelayedRespawnPlayer() method you just added to the GameSceneManager.cs script. 
-            gameSceneManager.DelayedRespawnPlayer();
+            ThrowGun();
+            Instantiate(dieBloodPrefab, transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
 
-            // Ask the SceneSpawner to destroy the gameObject. 
-            // SceneSpawner will destroy the local Player and its remote duplicates.
-            NetworkClient.Instance.LastSpawner.DestroyGameObject(gameObject);
+            CreateRagdoll();
+
+            yield return new WaitForSeconds(1f);
+
+            RepositionPlayer();
+
+            /*
+            // Only the source player GameObject should be respawned. 
+            // SceneSpawner will handle the remote duplicate creation for the respawned player.
+            if (networkID.IsMine)
+            {
+                GameSceneManager gameSceneManager = FindObjectOfType<GameSceneManager>();
+
+                // Call the DelayedRespawnPlayer() method you just added to the GameSceneManager.cs script. 
+                gameSceneManager.DelayedRespawnPlayer();
+
+                // Ask the SceneSpawner to destroy the gameObject. 
+                // SceneSpawner will destroy the local Player and its remote duplicates.
+                NetworkClient.Instance.LastSpawner.DestroyGameObject(gameObject);
+            }
+            */
         }
-        */
     }
 
     private void ThrowGun()
@@ -153,9 +158,12 @@ public class Health : MonoBehaviour
 
     private void CreateRagdoll()
     {
+        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer(1, transform.position, Quaternion.identity);
+        /*
         SWNetworkMessage msg = new SWNetworkMessage();
         msg.Push(transform.position);
         remoteEventAgent.Invoke(DIE_EVENT, msg);
+        */
     }
 
     public void RemoteCreateRagdoll(SWNetworkMessage msg)
@@ -201,11 +209,13 @@ public class Health : MonoBehaviour
         float resetY = 8;
 
         transform.DOMoveY(resetY, 1f);
-        transform.DORotate(currentRotation, 1f).SetUpdate(true);
+        transform.DORotate(currentRotation, .25f).SetUpdate(true);
 
         syncPropertyAgent.Modify(HEALTH, maxHealth);
         currentHealth = maxHealth;
         CalculatePercentage();
+
+        isPlayerInmune = false;
 
         Debug.Log("Player reset!");
     }

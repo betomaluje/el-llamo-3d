@@ -1047,6 +1047,30 @@ MonoBehaviour:
         isProperty: 0
     syncQuaternionFields: []
     syncVector4Fields: []
+  - syncTarget: {fileID: 0}
+    enabled: 0
+    foldout: 0
+    bandwidth: 0
+    padding: 0
+    editorName: Generic
+    uncompressedSyncFields: []
+    syncFields: []
+    syncVector2Fields: []
+    syncVector3Fields: []
+    syncQuaternionFields: []
+    syncVector4Fields: []
+  - syncTarget: {fileID: 0}
+    enabled: 0
+    foldout: 0
+    bandwidth: 0
+    padding: 0
+    editorName: Generic
+    uncompressedSyncFields: []
+    syncFields: []
+    syncVector2Fields: []
+    syncVector3Fields: []
+    syncQuaternionFields: []
+    syncVector4Fields: []
   syncedTransform:
     interpolate: 20
     smoothLevel: 0
@@ -1179,7 +1203,7 @@ MonoBehaviour:
     padding: 5
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
-  syncTransFormFoldout: 0
+  syncTransFormFoldout: 1
   syncAnimatorFoldout: 0
   restoreState: 1
 --- !u!114 &1540597783966594581
@@ -1341,7 +1365,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - eventName: throw_gun
+  - eventName: dead_throw_gun
     Foldout: 0
     target: 0
     remoteEvent:
@@ -1366,6 +1390,40 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 644223966757249534}
           m_MethodName: RemoteCreateRagdoll
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Pickup
+    Foldout: 0
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4419335375198168097}
+          m_MethodName: RemotePickupObject
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: PickupGun
+    Foldout: 0
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4419335375198168097}
+          m_MethodName: RemotePickupGun
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1874,6 +1932,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639007037605429063, guid: f526b5f28cfb39345bf3e164f7012c3c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8654404313720868180, guid: f526b5f28cfb39345bf3e164f7012c3c,
         type: 3}
