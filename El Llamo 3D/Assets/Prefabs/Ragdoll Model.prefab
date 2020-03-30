@@ -1448,6 +1448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 655316715927778445}
   - component: {fileID: 5354376531232493506}
+  - component: {fileID: 3891758373595314619}
   - component: {fileID: 4888801054194898802}
   - component: {fileID: 4188284907184831828}
   m_Layer: 9
@@ -1470,7 +1471,7 @@ Transform:
   m_Children:
   - {fileID: 655316715927793909}
   - {fileID: 655316715927778513}
-  - {fileID: 264391209}
+  - {fileID: 8231164691012785444}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1488,9 +1489,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetColor: {r: 0.9622642, g: 0, b: 0, a: 1}
   timeChange: 0.25
-  targetLock: {fileID: 264391401}
+  targetLock: {fileID: 8231164691012785442}
   targetAnimationDuration: 0.2
   isEnabled: 1
+--- !u!114 &3891758373595314619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655316715928266925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295c49620c76a4d408961fb3c566e918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoSize: 8
 --- !u!114 &4888801054194898802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1526,7 +1540,7 @@ MonoBehaviour:
   syncedTransform:
     interpolate: 20
     smoothLevel: 0
-    snapDistance: 10
+    snapDistance: 2
     readFunction: 0
     bandwidth: 8
     padding: 2
@@ -1862,13 +1876,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 341eff88b72806b4785b10fe851a413e, type: 3}
---- !u!1 &264391401 stripped
+--- !u!1 &8231164691012785442 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8231164691025256360, guid: 341eff88b72806b4785b10fe851a413e,
     type: 3}
   m_PrefabInstance: {fileID: 264391306}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &264391209 stripped
+--- !u!4 &8231164691012785444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8231164691025256366, guid: 341eff88b72806b4785b10fe851a413e,
     type: 3}

@@ -1072,9 +1072,9 @@ MonoBehaviour:
     syncQuaternionFields: []
     syncVector4Fields: []
   syncedTransform:
-    interpolate: 20
-    smoothLevel: 0
-    snapDistance: 10
+    interpolate: 25
+    smoothLevel: 1
+    snapDistance: 20
     readFunction: 0
     bandwidth: 8
     padding: 3
@@ -1088,7 +1088,7 @@ MonoBehaviour:
       maxInt: 300
     pos_y_setting:
       enabled: 1
-      min: 0
+      min: 0.1
       max: 20
       resolution: 2
       valueType: 0

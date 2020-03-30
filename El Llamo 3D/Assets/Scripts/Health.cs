@@ -175,6 +175,7 @@ public class Health : MonoBehaviour
 
     private void RepositionPlayer()
     {
+        Quaternion originalRotation = transform.rotation;
         Vector3 currentRotation = transform.position;
         currentRotation.z = UnityEngine.Random.Range(0, 2) == 0 ? -90 : 90;
         currentRotation.x = 0;
@@ -191,10 +192,10 @@ public class Health : MonoBehaviour
             playerAnimations.DieAnim();
         }
 
-        StartCoroutine(Reset());
+        StartCoroutine(Reset(originalRotation));
     }
 
-    private IEnumerator Reset()
+    private IEnumerator Reset(Quaternion originalRotation)
     {
         PlayerAnimations playerAnimations = GetComponent<PlayerAnimations>();
         if (playerAnimations != null)
@@ -204,7 +205,7 @@ public class Health : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        Vector3 currentRotation = Vector3.zero;
+        Vector3 currentRotation = originalRotation.eulerAngles;
 
         float resetY = 8;
 
