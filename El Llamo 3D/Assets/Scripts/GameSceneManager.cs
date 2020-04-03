@@ -5,8 +5,10 @@ using UnityEngine;
 public class GameSceneManager : MonoBehaviour
 {
     [SerializeField] private int amountOfGuns = 4;
+    [SerializeField] private Transform[] nonPlayerPositions;
 
-    private int totalSpawnPoints = 0;
+    private int totaPlayerSpawnPoints = 0;
+    private int totaNonPlayerSpawnPoints = 0;
 
     public void OnSpawnerReady(bool alreadySetup, SceneSpawner sceneSpawner)
     {
@@ -21,13 +23,12 @@ public class GameSceneManager : MonoBehaviour
             // We randomly select a SpawnPoint and ask the SceneSpawner to spawn a Player GameObject. 
             // we have 1 playerPrefabs so playerPrefabIndex is 0.
             // We have 2 spawnPoints so we generated a random int between 0 to 1.
-            totalSpawnPoints = sceneSpawner.NumberOfSpawnPoints;
+            totaPlayerSpawnPoints = sceneSpawner.NumberOfSpawnPoints;
 
             int spawnPointIndex = GetSpawnPoint();
+            sceneSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
 
-            Debug.Log("spawnPointIndex: " + spawnPointIndex);
-
-            sceneSpawner.SpawnForPlayer(0, spawnPointIndex);
+            totaNonPlayerSpawnPoints = nonPlayerPositions.Length;
 
             SpawnGuns(sceneSpawner);
 
@@ -41,18 +42,27 @@ public class GameSceneManager : MonoBehaviour
     {
         for (int i = 0; i < amountOfGuns; i++)
         {
-            int gunSpawnPointIndex = GetSpawnPoint();
-            sceneSpawner.SpawnForNonPlayer(0, gunSpawnPointIndex);
+            int gunSpawnPointIndex = GetNonPlayerSpawnPoint();
+            sceneSpawner.SpawnForNonPlayer(NonPlayerIndexes.Gun, gunSpawnPointIndex);
         }
     }
 
     private int GetSpawnPoint()
     {
-        if (totalSpawnPoints <= 0)
+        if (totaPlayerSpawnPoints <= 0)
         {
-            totalSpawnPoints = 2;
+            totaPlayerSpawnPoints = 2;
         }
-        return Random.Range(0, totalSpawnPoints - 1); ;
+        return Random.Range(0, totaPlayerSpawnPoints - 1);
+    }
+
+    private int GetNonPlayerSpawnPoint()
+    {
+        if (totaNonPlayerSpawnPoints <= 0)
+        {
+            totaNonPlayerSpawnPoints = 2;
+        }
+        return Random.Range(0, totaNonPlayerSpawnPoints - 1);
     }
 
     /**
@@ -69,6 +79,6 @@ public class GameSceneManager : MonoBehaviour
 
         // Respawn the player at a random SpawnPoint
         int spawnPointIndex = GetSpawnPoint();
-        NetworkClient.Instance.LastSpawner.SpawnForPlayer(0, spawnPointIndex);
+        NetworkClient.Instance.LastSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
     }
 }

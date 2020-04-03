@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System;
-
-[System.Serializable]
+﻿[System.Serializable]
 public enum SceneNumbers
 {
     Menu,
