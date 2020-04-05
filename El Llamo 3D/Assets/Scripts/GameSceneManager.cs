@@ -43,7 +43,8 @@ public class GameSceneManager : MonoBehaviour
         for (int i = 0; i < amountOfGuns; i++)
         {
             int gunSpawnPointIndex = GetNonPlayerSpawnPoint();
-            sceneSpawner.SpawnForNonPlayer(NonPlayerIndexes.Gun, gunSpawnPointIndex);
+            Vector3 position = nonPlayerPositions[gunSpawnPointIndex].position;
+            sceneSpawner.SpawnForNonPlayer(NonPlayerIndexes.Gun, position, Quaternion.identity);
         }
     }
 

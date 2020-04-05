@@ -922,7 +922,7 @@ MonoBehaviour:
   mouseSensitivity: 350
   playerBody: {fileID: 5836814044747114709}
   playerHands: {fileID: 3876146945217145102}
-  zoomKey: 304
+  zoomKey: 113
   aiming: {x: 0, y: 0}
 --- !u!114 &644223966757249534
 MonoBehaviour:
@@ -1044,30 +1044,6 @@ MonoBehaviour:
         maxInt: 300
         fieldInfoName: 
         isProperty: 0
-    syncQuaternionFields: []
-    syncVector4Fields: []
-  - syncTarget: {fileID: 0}
-    enabled: 0
-    foldout: 0
-    bandwidth: 0
-    padding: 0
-    editorName: Generic
-    uncompressedSyncFields: []
-    syncFields: []
-    syncVector2Fields: []
-    syncVector3Fields: []
-    syncQuaternionFields: []
-    syncVector4Fields: []
-  - syncTarget: {fileID: 0}
-    enabled: 0
-    foldout: 0
-    bandwidth: 0
-    padding: 0
-    editorName: Generic
-    uncompressedSyncFields: []
-    syncFields: []
-    syncVector2Fields: []
-    syncVector3Fields: []
     syncQuaternionFields: []
     syncVector4Fields: []
   syncedTransform:
@@ -1399,7 +1375,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - eventName: Pickup
-    Foldout: 0
+    Foldout: 1
     target: 0
     remoteEvent:
       m_PersistentCalls:

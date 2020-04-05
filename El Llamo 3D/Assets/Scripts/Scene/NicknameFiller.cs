@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class NicknameFiller : MonoBehaviour
 {
-    [SerializeField] NicknameGenerator nicknameGenerator;
-    [SerializeField] InputField nicknameText;
+    [SerializeField] private NicknameGenerator nicknameGenerator;
+    [SerializeField] private InputField nicknameText;
 
     private void OnEnable()
     {

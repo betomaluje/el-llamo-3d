@@ -13,6 +13,11 @@ public class CameraFollow : MonoBehaviour
     public Vector3 FirstPersonOffset;
     public Vector3 ThirdPersonOffset;
 
+    public void SetupPlayer(Transform theTarget)
+    {
+        target = theTarget;
+    }
+
     void LateUpdate()
     {
         if (target != null)
@@ -28,7 +33,7 @@ public class CameraFollow : MonoBehaviour
                     offset = ThirdPersonOffset;
                     break;
             }
-            
+
             transform.position = target.position + offset;
         }
     }
@@ -38,7 +43,8 @@ public class CameraFollow : MonoBehaviour
         if (camMode == CameraMode.FirstPerson)
         {
             camMode = CameraMode.ThirdPerson;
-        } else
+        }
+        else
         {
             camMode = CameraMode.FirstPerson;
         }

@@ -18,7 +18,7 @@ public abstract class Gun : MonoBehaviour, ITarget
 
     [Space]
     [Header("Pickup")]
-    [SerializeField] private float speed = 0.5f;
+    [SerializeField] private float speed = 0.25f;
 
     private float nextTimeToFire = 0f;
     private Rigidbody rb;
@@ -51,8 +51,6 @@ public abstract class Gun : MonoBehaviour, ITarget
             return;
         }
 
-        Debug.Log("remote pickup 3: " + transform.position);
-
         SoundManager.instance.Play("Pickup");
 
         transform.parent = playerHand;
@@ -62,8 +60,6 @@ public abstract class Gun : MonoBehaviour, ITarget
 
     public void Pickup(Transform playerHand, Vector3 from, Vector3 to)
     {
-        Debug.Log("remote pickup 2: " + from + " -> " + to);
-
         Vector3 rotation = new Vector3(-90, 0, 90);
 
         transform.position = from;

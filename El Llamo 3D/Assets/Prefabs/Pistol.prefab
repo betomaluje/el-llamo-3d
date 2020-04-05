@@ -310,7 +310,7 @@ MonoBehaviour:
   impactForce: 300
   recoilAmount: 0.3
   recoilDuration: 0.3
-  speed: 1
+  speed: 0.5
   gunEffects: {fileID: 5261114529770976236}
 --- !u!114 &3606871273840184439
 MonoBehaviour:
@@ -359,7 +359,7 @@ MonoBehaviour:
   syncedGenerics: []
   syncedTransform:
     interpolate: 20
-    smoothLevel: 0
+    smoothLevel: 1
     snapDistance: 2
     readFunction: 0
     bandwidth: 8

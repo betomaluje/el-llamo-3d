@@ -1538,9 +1538,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncedGenerics: []
   syncedTransform:
-    interpolate: 20
-    smoothLevel: 0
-    snapDistance: 2
+    interpolate: 25
+    smoothLevel: 1
+    snapDistance: 20
     readFunction: 0
     bandwidth: 8
     padding: 2
