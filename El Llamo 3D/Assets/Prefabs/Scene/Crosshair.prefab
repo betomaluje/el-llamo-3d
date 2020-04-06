@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8352144506322037690}
   - component: {fileID: 6345777104344494541}
   - component: {fileID: 371222919214821794}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,10 +32,10 @@ RectTransform:
   m_Father: {fileID: 8305349848024491497}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 30, y: 30}
+  m_SizeDelta: {x: 76, y: 76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6345777104344494541
 CanvasRenderer:
@@ -63,9 +63,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 35931cd6cf556884e9a42d5268920409, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5e6d589c21f4545a7b619dac297ada0c, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -85,7 +85,8 @@ GameObject:
   - component: {fileID: 8305349848024491502}
   - component: {fileID: 8305349848024491503}
   - component: {fileID: 8305349848024491500}
-  m_Layer: 5
+  - component: {fileID: 395716934}
+  m_Layer: 0
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +102,7 @@ RectTransform:
   m_GameObject: {fileID: 8305349848024491501}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 8352144506322037690}
   m_Father: {fileID: 0}
@@ -121,7 +122,7 @@ Canvas:
   m_GameObject: {fileID: 8305349848024491501}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -171,4 +172,25 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
+--- !u!114 &395716934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8305349848024491501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff40b1b6bf26b47eebe1a4c94f86eae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshair: {fileID: 8352144506322037690}
+  distanceFromCamera: 5
+  lerpDuration: 0.2
+  animated: 0
+  distanceForAnimation: 6
+  zoomDuration: 0.5
+  zoomedCrosshair: {fileID: 8352144506322037690}
+  zoomAmount: 2
+  rotationAngle: 180

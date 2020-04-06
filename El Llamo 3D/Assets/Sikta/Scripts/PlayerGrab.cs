@@ -90,12 +90,16 @@ namespace BetoMaluje.Sikta
             };
 
             // handle target
-            inputHandler.targetAquired = HandleTargetAquired;
+            inputHandler.targetAquired += HandleTargetAquired;
 
             // handle shooting
             inputHandler.shootingTarget = HandleShooting;
 
             isPlayerSetup = true;
+        }
+
+        private void OnDisable() {
+            inputHandler.targetAquired -= HandleTargetAquired;    
         }
 
         private void HandleTargetAquired(RaycastHit targetHit, bool onTarget)

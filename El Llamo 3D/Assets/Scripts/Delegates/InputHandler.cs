@@ -82,13 +82,10 @@ public class InputHandler : MonoBehaviour
         }
 
         RaycastHit targetHit;
-        if (Physics.Raycast(sceneCamera.transform.position, sceneCamera.transform.forward, out targetHit, grabDistance, targetLayer))
-        {
-            targetAquired(targetHit, true);
-        }
-        else
-        {
-            targetAquired(targetHit, false);
-        }
+        Ray targetRay = sceneCamera.ScreenPointToRay(Input.mousePosition);
+
+        // this bool check if we hit something that is "target" according to the targetLayer layer mask
+        bool onTargetTarget = Physics.Raycast(targetRay, out targetHit, grabDistance, targetLayer, QueryTriggerInteraction.Ignore);
+        targetAquired(targetHit, onTargetTarget);
     }
 }

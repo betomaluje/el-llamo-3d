@@ -9,6 +9,8 @@ public class PlayerNetworkSetup : MonoBehaviour
 
     private MouseLook mouseLook;
 
+    private Crosshair crosshair;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,7 @@ public class PlayerNetworkSetup : MonoBehaviour
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
 
         mouseLook = FindObjectOfType<MouseLook>();
+        crosshair = FindObjectOfType<Crosshair>();
 
         if (networkID.IsMine)
         {
@@ -33,6 +36,8 @@ public class PlayerNetworkSetup : MonoBehaviour
 
         PlayerGrab playerGrab = GetComponentInChildren<PlayerGrab>();
         playerGrab.SetupPlayer();
+
+        crosshair.SetupPlayer(GetComponent<InputHandler>());
 
         string name = NetworkClient.Instance.PlayerId.Split('-')[1];
         syncPropertyAgent?.Modify(PlayerName.NICKNAME_PROPERTY, name);
