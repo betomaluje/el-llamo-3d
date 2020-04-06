@@ -66,7 +66,7 @@ public class HealthBar : MonoBehaviour
         }
 
         transform.rotation = Quaternion.identity;
-        transform.LookAt(transform.position + mainCameraPos.forward);        
+        transform.LookAt(transform.position + mainCameraPos.forward);
     }
 
     private void Show()

@@ -8,10 +8,13 @@ using UnityEngine.UI;
 /// </summary>
 public class Lobby : MonoBehaviour
 {
+    [Header("Main Network")]
     [SerializeField] private int maxPlayers = 2;
     [SerializeField] private int playerTimeToLive = 60;
     [SerializeField] private LevelLoader levelLoader;
 
+    [Space]
+    [Header("Other Settings")]
     /// <summary>
     /// Button for checking into SocketWeaver services
     /// </summary>
