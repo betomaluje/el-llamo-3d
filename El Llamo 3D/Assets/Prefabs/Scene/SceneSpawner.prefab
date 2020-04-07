@@ -418,7 +418,7 @@ MonoBehaviour:
   - {fileID: 2200215497074802527}
   spawnPointsFoldout: 0
   playerPrefabsFoldout: 0
-  nonPlayerPrefabsFoldout: 0
+  nonPlayerPrefabsFoldout: 1
   spawnerId: 1
   AutoInitialization: 1
   OnReady:

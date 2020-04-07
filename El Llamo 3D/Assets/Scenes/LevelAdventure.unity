@@ -69020,11 +69020,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayersAvatars
       objectReference: {fileID: 0}
-    - target: {fileID: 4495572800670078285, guid: 710ee2d508556c3429acc4795ba3eff9,
-        type: 3}
-      propertyPath: properties_.Array.data[0].name
-      value: Nickname
-      objectReference: {fileID: 0}
     - target: {fileID: 4495572800670078286, guid: 710ee2d508556c3429acc4795ba3eff9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -69128,11 +69123,6 @@ PrefabInstance:
     - target: {fileID: 4495572800670078286, guid: 710ee2d508556c3429acc4795ba3eff9,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6638079913142630676, guid: 710ee2d508556c3429acc4795ba3eff9,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
