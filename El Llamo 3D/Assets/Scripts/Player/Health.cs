@@ -68,7 +68,10 @@ public class Health : MonoBehaviour
         currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
         CalculatePercentage();
 
-        Instantiate(bloodDamagePrefab, transform.position, transform.rotation);
+        if (currentHealth != maxHealth) 
+        {
+            Instantiate(bloodDamagePrefab, transform.position, transform.rotation);
+        }        
 
         if (networkID.IsMine)
         {

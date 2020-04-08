@@ -3,31 +3,16 @@ using DG.Tweening;
 
 public class Crosshair : MonoBehaviour
 {
-    [SerializeField] private Transform crosshair;
-
-    [SerializeField] private float distanceFromCamera = 5f;
-    [SerializeField] private float lerpDuration = 0.2f;
-
-    [SerializeField] private bool animated = false;
-
-    [Space]
     [Header("Zoom Effect")]
     [SerializeField] private float distanceForAnimation = 5f;
     [SerializeField] private float zoomDuration = 0.2f;
     [SerializeField] private Transform zoomedCrosshair;
     [SerializeField] private float zoomAmount = 2f;
     [SerializeField] private float rotationAngle = 180f;
-
-    private Camera mainCam;
     private InputHandler inputHandler;
 
     private bool isZoomedIn = false;
     
-    void Start()
-    {
-        mainCam = Camera.main;
-    }
-
     public void SetupPlayer(InputHandler handler) 
     {
         inputHandler = handler;
@@ -40,39 +25,23 @@ public class Crosshair : MonoBehaviour
     }
 
     private void HandleTargetAquired(RaycastHit targetHit, bool onTarget)
-        {
-            if (onTarget)
-            {
-                if (targetHit.distance <= distanceForAnimation && !isZoomedIn)
-                {
-                    MakeBig();
-                    isZoomedIn = true;   
-                }                
-            }
-            else
-            {
-                if (isZoomedIn) 
-                {
-                    MakeNNormal();
-                    isZoomedIn = false;
-                }            
-            }
-        }
-
-    // Update is called once per frame
-    void LateUpdate()
     {
-        Vector3 resultingPosition = mainCam.transform.position + mainCam.transform.forward * distanceFromCamera;
-        if (animated) 
+        if (onTarget)
         {
-            transform.DOMove(resultingPosition, lerpDuration);
-        } else 
+            if (targetHit.distance <= distanceForAnimation && !isZoomedIn)
+            {
+                MakeBig();
+                isZoomedIn = true;   
+            }                
+        }
+        else
         {
-            transform.position = resultingPosition;
-        }    
-
-        transform.rotation = Quaternion.identity;
-        transform.LookAt(transform.position + mainCam.transform.forward);       
+            if (isZoomedIn) 
+            {
+                MakeNNormal();
+                isZoomedIn = false;
+            }            
+        }
     }
 
     public void MakeBig() 

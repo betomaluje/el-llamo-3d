@@ -44,20 +44,6 @@ public abstract class Gun : MonoBehaviour, ITarget
         col.isTrigger = isTargetDead;
     }
 
-    private void FinishPickup(Transform playerHand)
-    {
-        if (playerHand == null)
-        {
-            return;
-        }
-
-        SoundManager.instance.Play("Pickup");
-
-        transform.parent = playerHand;
-
-        transform.localPosition = Vector3.zero;
-    }
-
     public void Pickup(Transform playerHand, Vector3 from, Vector3 to)
     {
         Vector3 rotation = new Vector3(-90, 0, 90);
@@ -68,7 +54,14 @@ public abstract class Gun : MonoBehaviour, ITarget
         s.AppendCallback(() => ChangeSettings(true));
         s.AppendCallback(() => transform.DOMove(to, speed));
         s.AppendCallback(() => transform.DOLocalRotate(rotation, speed));
-        s.AppendCallback(() => FinishPickup(playerHand));
+        s.AppendCallback(() => {
+            SoundManager.instance.Play("Pickup");
+
+            transform.parent = playerHand;
+
+            transform.localPosition = Vector3.zero;
+            transform.rotation = Quaternion.Euler(rotation);
+        });
     }
 
     public void Throw(float throwForce, Vector3 direction)
