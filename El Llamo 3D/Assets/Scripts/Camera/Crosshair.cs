@@ -84,6 +84,9 @@ public class Crosshair : MonoBehaviour
     public void MakeNNormal() 
     {
         zoomedCrosshair.DOScale(1, zoomDuration);
-        zoomedCrosshair.DOPunchRotation(new Vector3(0, 0, -rotationAngle), zoomDuration, 1, 0.2f);
+
+        Sequence s = DOTween.Sequence();
+        s.Append(zoomedCrosshair.DOPunchRotation(new Vector3(0, 0, -rotationAngle), zoomDuration, 1, 0.2f)).SetUpdate(true);
+        s.AppendCallback(() => zoomedCrosshair.rotation = Quaternion.Euler(0, 0, 0));
     }
 }

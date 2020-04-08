@@ -58,10 +58,12 @@ public class InputHandler : MonoBehaviour
         {
             // check if a target has been clicked on
             RaycastHit shootHit;
-            Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);            
 
             // this bool check if we hit something that is "shootable" according to the shootingLayer layer mask
-            bool onTarget = Physics.Raycast(ray, out shootHit, shootingDistance, shootingLayer, QueryTriggerInteraction.Ignore);
+            bool onTarget = Physics.Raycast(ray, out shootHit, shootingDistance, shootingLayer);    
+
+            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.yellow);
 
             // now we send the Action to all listeners
             shootingTarget(new ShootingTarget(ray, shootHit, onTarget, shootingDistance));
@@ -85,7 +87,10 @@ public class InputHandler : MonoBehaviour
         Ray targetRay = sceneCamera.ScreenPointToRay(Input.mousePosition);
 
         // this bool check if we hit something that is "target" according to the targetLayer layer mask
-        bool onTargetTarget = Physics.Raycast(targetRay, out targetHit, grabDistance, targetLayer, QueryTriggerInteraction.Ignore);
+        bool onTargetTarget = Physics.Raycast(targetRay, out targetHit, grabDistance, targetLayer);
+
+        Debug.DrawRay(targetRay.origin, targetRay.direction * grabDistance, Color.red);
+
         targetAquired(targetHit, onTargetTarget);
     }
 }

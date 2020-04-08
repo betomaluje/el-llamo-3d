@@ -7,6 +7,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private GameObject dieBloodPrefab;
+    [SerializeField] private GameObject bloodDamagePrefab;
     [SerializeField] private int maxHealth = 100;
 
     [SerializeField] private GameObject ragdollModel;
@@ -66,6 +67,8 @@ public class Health : MonoBehaviour
         // Update the hpSlider when player hp changes
         currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
         CalculatePercentage();
+
+        Instantiate(bloodDamagePrefab, transform.position, transform.rotation);
 
         if (networkID.IsMine)
         {
