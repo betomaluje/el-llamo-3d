@@ -46,8 +46,6 @@ namespace BetoMaluje.Sikta
         private SyncPropertyAgent syncPropertyAgent;
         private RemoteEventAgent remoteEventAgent;
         private const string SHOOTING = "Shooting";
-        private const string THROWING = "Throwing";
-        private const string PICKUP = "Pickup";
         bool lastShootingState = false;
 
         #endregion
@@ -75,7 +73,10 @@ namespace BetoMaluje.Sikta
             // handles when the player is throwing
             inputHandler.secondaryClickCallback = () =>
             {
-                playerAnimations.Throw();
+                if (playerHand.childCount > 0)
+                {
+                    playerAnimations.Throw();
+                }
             };
 
             inputHandler.secondaryReleaseCallback = () =>
@@ -98,8 +99,9 @@ namespace BetoMaluje.Sikta
             isPlayerSetup = true;
         }
 
-        private void OnDisable() {
-            inputHandler.targetAquired -= HandleTargetAquired;    
+        private void OnDisable()
+        {
+            inputHandler.targetAquired -= HandleTargetAquired;
         }
 
         private void HandleTargetAquired(RaycastHit targetHit, bool onTarget)
@@ -129,7 +131,7 @@ namespace BetoMaluje.Sikta
                 if (isFirePressed && target == null)
                 {
                     ITarget itarget = targetHit.transform.GetComponentInChildren<ITarget>();
-                    if (itarget != null)
+                    if (itarget != null && !itarget.isGrabbed())
                     {
                         if (lastObject != null)
                         {
@@ -137,6 +139,7 @@ namespace BetoMaluje.Sikta
                         }
 
                         PickupObject(itarget, targetHit.transform);
+                        lastObject = null;
                     }
 
                 }
@@ -147,8 +150,9 @@ namespace BetoMaluje.Sikta
                 {
                     StartCoroutine(MakeTargetAvailable());
                     lastObject.TargetOff();
-                    lastObject = null;
                 }
+
+                lastObject = null;
             }
         }
 
@@ -159,25 +163,7 @@ namespace BetoMaluje.Sikta
                 return;
             }
 
-            target = itarget;
-
-            SWNetworkMessage msg = new SWNetworkMessage();
-            // from
-            msg.Push(targetTransform.position);
-            // to
-            msg.Push(playerHand.transform.position);
-            remoteEventAgent.Invoke(PICKUP, msg);
-        }
-
-        public void RemotePickupObject(SWNetworkMessage msg)
-        {
-            if (target != null)
-            {
-                Debug.Log("remote pickup object");
-                Vector3 from = msg.PopVector3();
-                Vector3 to = msg.PopVector3();
-                target.Pickup(playerHand, from, to);
-            }
+            itarget.StartPickup(playerHand, this, targetTransform.position);
         }
 
         /**
@@ -241,18 +227,9 @@ namespace BetoMaluje.Sikta
 
         private void ThrowObject()
         {
-            SWNetworkMessage msg = new SWNetworkMessage();
-            msg.Push(sceneCamera.transform.forward);
-            remoteEventAgent.Invoke(THROWING, msg);
-        }
-
-        public void RemoteThrow(SWNetworkMessage msg)
-        {
             if (target != null)
             {
-                Vector3 direction = msg.PopVector3();
-                target.Throw(throwForce, direction);
-                target = null;
+                target.Throw(throwForce, sceneCamera.transform.forward);
             }
         }
 

@@ -354,7 +354,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.8894341, y: -0.56523216, z: -0.0000000018626451}
+  m_ConnectedAnchor: {x: -0.889434, y: -0.56523216, z: -0.0000000018626451}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -723,7 +723,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.12891714, y: -0.22158806, z: -0.017863873}
+  m_ConnectedAnchor: {x: 0.12891713, y: -0.22158808, z: -0.017863873}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1142,7 +1142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655316715928266897}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 3.6272008e-16, y: 1.0449876, z: -6.2692085e-18}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 655316715927778559}
@@ -1150,7 +1150,7 @@ Transform:
   - {fileID: 655316715927778547}
   m_Father: {fileID: 655316715927778445}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &620065100434372760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,7 +1163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1addfc5272e40f1854b7bd8b429d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handsOffset: {x: 0, y: 1.35, z: 1.5}
+  handsOffset: {x: -1, y: 1, z: 2.5}
+  parentTransform: {fileID: 655316715927778445}
 --- !u!65 &5866242576774526777
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1267,7 +1268,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.019048693, y: 0, z: 6.2692085e-18}
+  m_ConnectedAnchor: {x: -0.019048665, y: 0, z: 6.2692085e-18}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1451,6 +1452,7 @@ GameObject:
   - component: {fileID: 3891758373595314619}
   - component: {fileID: 4888801054194898802}
   - component: {fileID: 4188284907184831828}
+  - component: {fileID: 4586592014715311604}
   m_Layer: 9
   m_Name: Ragdoll Model
   m_TagString: Untagged
@@ -1538,9 +1540,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncedGenerics: []
   syncedTransform:
-    interpolate: 25
-    smoothLevel: 1
-    snapDistance: 20
+    interpolate: 42.18
+    smoothLevel: 3
+    snapDistance: 1
     readFunction: 0
     bandwidth: 8
     padding: 2
@@ -1627,6 +1629,53 @@ MonoBehaviour:
   syncTransFormFoldout: 1
   syncAnimatorFoldout: 0
   restoreState: 1
+--- !u!114 &4586592014715311604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655316715928266925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 202338497, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  remoteEvents_:
+  - eventName: Pickup
+    Foldout: 1
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 620065100434372760}
+          m_MethodName: RemotePickupObject
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Throwing
+    Foldout: 1
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 620065100434372760}
+          m_MethodName: RemoteThrow
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &655316715928266993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1763,7 +1812,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.889434, y: 0.56523216, z: 0.0000000018626451}
+  m_ConnectedAnchor: {x: -0.88943386, y: 0.5652321, z: 0.0000000018626451}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:

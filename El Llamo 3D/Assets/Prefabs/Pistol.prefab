@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 3606871273840184439}
   - component: {fileID: 4972513490003804687}
   - component: {fileID: 9207958514334499808}
+  - component: {fileID: 7872112886917653143}
   m_Layer: 9
   m_Name: Pistol
   m_TagString: Untagged
@@ -358,9 +359,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncedGenerics: []
   syncedTransform:
-    interpolate: 20
-    smoothLevel: 1
-    snapDistance: 2
+    interpolate: 30
+    smoothLevel: 3
+    snapDistance: 1
     readFunction: 0
     bandwidth: 8
     padding: 2
@@ -444,9 +445,56 @@ MonoBehaviour:
     padding: 0
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 0
-  syncTransFormFoldout: 1
+  syncTransFormFoldout: 0
   syncAnimatorFoldout: 0
   restoreState: 1
+--- !u!114 &7872112886917653143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639007037605429063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 202338497, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  remoteEvents_:
+  - eventName: Pickup
+    Foldout: 1
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1421573247}
+          m_MethodName: RemotePickupObject
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Throwing
+    Foldout: 1
+    target: 0
+    remoteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1421573247}
+          m_MethodName: RemoteThrow
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8365631113376885385
 GameObject:
   m_ObjectHideFlags: 0

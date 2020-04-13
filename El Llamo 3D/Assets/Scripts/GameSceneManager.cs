@@ -7,8 +7,27 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private int amountOfGuns = 4;
     [SerializeField] private Transform[] nonPlayerPositions;
 
+    [Header("Ragdoll Debug")]
+    [SerializeField] private KeyCode ragdoll;
+    [SerializeField] private Transform ragdollPosition;
+
     private int totaPlayerSpawnPoints = 0;
     private int totaNonPlayerSpawnPoints = 0;
+
+    private bool spawningRagdoll = false;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(ragdoll))
+        {
+            spawningRagdoll = !spawningRagdoll;
+
+            if (spawningRagdoll)
+            {
+                NetworkClient.Instance.LastSpawner.SpawnForNonPlayer(NonPlayerIndexes.Ragdoll_Corpse, ragdollPosition.position, Quaternion.identity);
+            }
+        }
+    }
 
     public void OnSpawnerReady(bool alreadySetup, SceneSpawner sceneSpawner)
     {

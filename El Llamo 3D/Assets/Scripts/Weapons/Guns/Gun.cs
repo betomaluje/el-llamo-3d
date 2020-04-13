@@ -1,5 +1,6 @@
 ﻿using BetoMaluje.Sikta;
 using DG.Tweening;
+using SWNetwork;
 using System;
 using UnityEngine;
 
@@ -26,8 +27,19 @@ public abstract class Gun : MonoBehaviour, ITarget
 
     public Action OnPickedUp;
 
+    private bool grabbed = false;
+
+    #region Networking
+    private RemoteEventAgent remoteEventAgent;
+
+    public const string THROWING = "Throwing";
+    public const string PICKUP = "Pickup";
+    #endregion
+
     public void Start()
     {
+        remoteEventAgent = GetComponent<RemoteEventAgent>();
+
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
     }
@@ -44,28 +56,71 @@ public abstract class Gun : MonoBehaviour, ITarget
         col.isTrigger = isTargetDead;
     }
 
-    public void Pickup(Transform playerHand, Vector3 from, Vector3 to)
+    public void StartPickup(Transform playerHand, PlayerGrab playerGrab, Vector3 from)
+    {
+        playerGrab.target = this;
+        transform.parent = playerHand;
+
+        SWNetworkMessage msg = new SWNetworkMessage();
+        // from
+        msg.Push(from);
+        // to
+        msg.Push(playerHand.transform.position);
+        remoteEventAgent.Invoke(PICKUP, msg);
+    }
+
+    public void RemotePickupObject(SWNetworkMessage msg)
+    {
+        Debug.Log("remote pickup object");
+        Vector3 from = msg.PopVector3();
+        Vector3 to = msg.PopVector3();
+        Pickup(from, to);
+    }
+
+    public void Pickup(Vector3 from, Vector3 to)
     {
         Vector3 rotation = new Vector3(-90, 0, 90);
 
         transform.position = from;
+        grabbed = true;
 
         Sequence s = DOTween.Sequence();
         s.AppendCallback(() => ChangeSettings(true));
         s.AppendCallback(() => transform.DOMove(to, speed));
         s.AppendCallback(() => transform.DOLocalRotate(rotation, speed));
-        s.AppendCallback(() => {
+        s.AppendCallback(() =>
+        {
             SoundManager.instance.Play("Pickup");
-
-            transform.parent = playerHand;
 
             transform.localPosition = Vector3.zero;
             transform.rotation = Quaternion.Euler(rotation);
+
+            Debug.Log("finish pickup " + gameObject.name);
         });
     }
 
     public void Throw(float throwForce, Vector3 direction)
     {
+        SWNetworkMessage msg = new SWNetworkMessage();
+        msg.Push(direction);
+        msg.Push(throwForce);
+        remoteEventAgent.Invoke(THROWING, msg);
+    }
+
+    public void RemoteThrow(SWNetworkMessage msg)
+    {
+        Vector3 direction = msg.PopVector3();
+        float throwForce = msg.PopFloat();
+
+        grabbed = false;
+
+        PlayerGrab playerGrab = transform.parent.GetComponentInParent<PlayerGrab>();
+        if (playerGrab != null)
+        {
+            Debug.Log("PlayerGrab null target");
+            playerGrab.target = null;
+        }
+
         SoundManager.instance.Play("Throw");
         Sequence s = DOTween.Sequence();
         s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
@@ -73,6 +128,8 @@ public abstract class Gun : MonoBehaviour, ITarget
         s.AppendCallback(() => transform.parent = null);
         s.AppendCallback(() => rb.AddForce(direction * throwForce, ForceMode.Impulse));
         s.AppendCallback(() => rb.AddTorque(transform.transform.right + transform.transform.up * throwForce, ForceMode.Impulse));
+
+        Debug.Log("finish throwing " + gameObject.name);
     }
 
     public void Shoot(Vector3 shootHit)
@@ -104,5 +161,10 @@ public abstract class Gun : MonoBehaviour, ITarget
     public int GetDamage()
     {
         return UnityEngine.Random.Range(1, maxDamage);
+    }
+
+    public bool isGrabbed()
+    {
+        return grabbed;
     }
 }
