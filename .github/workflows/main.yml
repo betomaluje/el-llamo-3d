@@ -23,22 +23,26 @@ jobs:
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
           - WebGL # WebGL.
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           lfs: true
-      - uses: actions/cache@v1.1.0
+      - name: Getting cache
+        uses: actions/cache@v1.1.0
         with:
           path: ${{ matrix.projectPath }}/Library
           key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}
           restore-keys: |
             Library-${{ matrix.projectPath }}-
             Library-   
-      - uses: webbertakken/unity-builder@v0.11
+      - name: Build project
+        uses: webbertakken/unity-builder@v0.11
         with:
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
-      - uses: actions/upload-artifact@v1
+      - name: Uploading artifacts
+        uses: actions/upload-artifact@v1
         with:
           name: Build
           path: build
