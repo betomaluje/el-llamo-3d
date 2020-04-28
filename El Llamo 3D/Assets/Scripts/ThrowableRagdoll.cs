@@ -8,10 +8,17 @@ public class ThrowableRagdoll : MonoBehaviour, ITarget
     [SerializeField] private Vector3 handsOffset;
     [SerializeField] private Transform parentTransform;
 
+    [Space]
+    [Header("Pickup")]
+    [SerializeField] private float pickupSpeed = 1f;
+
     private Rigidbody rb;
     private Collider col;
 
+    #region Grabbing
+    private SphereCollider sphereCollider;
     private bool grabbed = false;
+    #endregion
 
     #region Networking
     private RemoteEventAgent remoteEventAgent;
@@ -24,30 +31,60 @@ public class ThrowableRagdoll : MonoBehaviour, ITarget
     {
         remoteEventAgent = GetComponentInParent<RemoteEventAgent>();
 
+        sphereCollider = GetComponent<SphereCollider>();
+
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
     }
 
-    private void ChangeSettings(bool isTargetDead)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (grabbed && other.gameObject.CompareTag("Player"))
+        {
+            PlayerGrab playerGrab = other.gameObject.GetComponent<PlayerGrab>();
+            if (playerGrab != null)
+            {
+                playerGrab.target = this;
+                Transform playerHand = other.gameObject.GetComponentInChildren<Hand>().transform;
+                parentTransform.transform.parent = playerHand;
+            }
+        }
+    }
+
+    private void ChangeSettings(bool isTargetGrabbed)
     {
         if (rb == null || col == null)
         {
             return;
         }
 
-        rb.isKinematic = isTargetDead;
-        rb.useGravity = !isTargetDead;
-        col.isTrigger = isTargetDead;
+        rb.isKinematic = isTargetGrabbed;
+        rb.useGravity = !isTargetGrabbed;
+        col.isTrigger = isTargetGrabbed;
+
+        if (isTargetGrabbed)
+        {
+            // freeze all positions and rotations except the X rotation
+            rb.constraints = RigidbodyConstraints.FreezeRotationY |
+                RigidbodyConstraints.FreezeRotationZ |
+                RigidbodyConstraints.FreezeRotationX |
+                RigidbodyConstraints.FreezePositionY |
+                RigidbodyConstraints.FreezePositionZ;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints.None;
+        }
     }
 
-    public void StartPickup(Transform playerHand, PlayerGrab playerGrab, Vector3 from)
+    public void StartPickup(Transform playerHand)
     {
-        playerGrab.target = this;
-        parentTransform.transform.parent = playerHand;
+        if (grabbed)
+        {
+            return;
+        }
 
         SWNetworkMessage msg = new SWNetworkMessage();
-        // from
-        msg.Push(from);
         // to
         msg.Push(playerHand.transform.position);
         remoteEventAgent.Invoke(PICKUP, msg);
@@ -55,33 +92,45 @@ public class ThrowableRagdoll : MonoBehaviour, ITarget
 
     public void RemotePickupObject(SWNetworkMessage msg)
     {
-        Debug.Log("remote pickup ragdoll");
-        Vector3 from = msg.PopVector3();
         Vector3 to = msg.PopVector3();
-        Pickup(from, to);
+        Debug.Log("remote pickup ragdoll: " + to);
+        Pickup(to);
     }
 
-    public void Pickup(Vector3 from, Vector3 to)
+    public void Pickup(Vector3 to)
     {
+        // we enabled the player collision handler
+        sphereCollider.enabled = true;
+
         grabbed = true;
+
+        ChangeSettings(true);
 
         transform.localPosition = Vector3.zero;
 
         Sequence s = DOTween.Sequence();
-        s.AppendCallback(() => ChangeSettings(true));
-        s.AppendCallback(() => parentTransform.DOMove(to, 0.25f));
-        s.AppendCallback(() => parentTransform.DOLocalMove(handsOffset, .25f));
-        s.AppendCallback(() => transform.DOLocalRotate(Vector3.zero, .25f));
+        s.Append(parentTransform.DOMove(to, pickupSpeed));
+        s.AppendCallback(() => parentTransform.DOLocalMove(handsOffset, pickupSpeed));
+        s.AppendCallback(() => transform.DOLocalRotate(Vector3.zero, pickupSpeed));
         s.AppendCallback(() =>
         {
             SoundManager.instance.Play("Pickup");
 
-            Debug.Log("finish pickup ragdoll " + parentTransform.gameObject.name);
+            parentTransform.localPosition = handsOffset;
+
+            sphereCollider.enabled = false;
+
+            Debug.Log("finish pickup " + parentTransform.gameObject.name);
         });
     }
 
     public void Throw(float throwForce, Vector3 direction)
     {
+        if (!grabbed)
+        {
+            return;
+        }
+
         SWNetworkMessage msg = new SWNetworkMessage();
         msg.Push(direction);
         msg.Push(throwForce);
@@ -93,15 +142,19 @@ public class ThrowableRagdoll : MonoBehaviour, ITarget
         Vector3 direction = msg.PopVector3();
         float throwForce = msg.PopFloat();
 
-        PlayerGrab playerGrab = parentTransform.parent.GetComponentInParent<PlayerGrab>();
-        if (playerGrab != null)
+        grabbed = false;
+
+        if (transform.parent != null)
         {
-            Debug.Log("PlayerGrab null target");
-            playerGrab.target = null;
+            PlayerGrab playerGrab = parentTransform.GetComponentInParent<PlayerGrab>();
+            if (playerGrab != null)
+            {
+                Debug.Log("PlayerGrab null target");
+                playerGrab.target = null;
+            }
         }
 
         SoundManager.instance.Play("Throw");
-        grabbed = false;
 
         Sequence s = DOTween.Sequence();
         s.Append(transform.DOMove(parentTransform.position - parentTransform.forward, .01f));

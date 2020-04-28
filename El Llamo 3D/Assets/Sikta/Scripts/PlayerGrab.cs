@@ -138,10 +138,9 @@ namespace BetoMaluje.Sikta
                             lastObject.TargetOff();
                         }
 
-                        PickupObject(itarget, targetHit.transform);
+                        PickupObject(itarget);
                         lastObject = null;
                     }
-
                 }
             }
             else
@@ -156,14 +155,14 @@ namespace BetoMaluje.Sikta
             }
         }
 
-        private void PickupObject(ITarget itarget, Transform targetTransform)
+        private void PickupObject(ITarget itarget)
         {
             if (target != null)
             {
                 return;
             }
 
-            itarget.StartPickup(playerHand, this, targetTransform.position);
+            itarget.StartPickup(playerHand);
         }
 
         /**
@@ -233,18 +232,10 @@ namespace BetoMaluje.Sikta
             }
         }
 
-        private void LateUpdate()
+        private void Update()
         {
             // we handle the animation
             playerAnimations.ShootAnim(isFirePressed && HasGun());
-
-            if (hasInitialWeapon && playerHand.childCount == 1)
-            {
-                hasInitialWeapon = false;
-                ITarget itarget = playerHand.GetComponentInChildren<ITarget>();
-
-                PickupObject(itarget, playerHand.transform.GetChild(0));
-            }
         }
 
         private bool HasGun()

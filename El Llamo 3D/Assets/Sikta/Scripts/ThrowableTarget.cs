@@ -29,20 +29,20 @@ namespace BetoMaluje.Sikta
             col.isTrigger = isTargetDead;
         }
 
-        public void StartPickup(Transform playerHand, PlayerGrab playerGrab, Vector3 from)
+        public void StartPickup(Transform playerHand)
         {
             transform.parent = playerHand;
         }
 
-        public void Pickup(Vector3 from, Vector3 to)
+        public void Pickup(Vector3 to)
         {
             grabbed = true;
 
             Debug.Log("Picking up " + gameObject.name);
             ChangeSettings(true);
 
-            transform.DOLocalMove(Vector3.zero, .25f).SetEase(Ease.OutBack).SetUpdate(true);
-            transform.DOLocalRotate(Vector3.zero, .25f).SetUpdate(true);
+            transform.DOLocalMove(Vector3.zero, .25f).SetEase(Ease.OutBack);
+            transform.DOLocalRotate(Vector3.zero, .25f); ;
         }
 
         public void Throw(float throwForce, Vector3 direction)
@@ -52,7 +52,7 @@ namespace BetoMaluje.Sikta
             grabbed = false;
 
             Sequence s = DOTween.Sequence();
-            s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
+            s.Append(transform.DOMove(transform.position - transform.forward, .01f));
             s.AppendCallback(() => transform.parent = null);
             s.AppendCallback(() => ChangeSettings(false));
             s.AppendCallback(() => rb.AddForce(direction * throwForce, ForceMode.Impulse));

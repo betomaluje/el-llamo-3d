@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using DG.Tweening;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class Crosshair : MonoBehaviour
 {
@@ -12,15 +12,16 @@ public class Crosshair : MonoBehaviour
     private InputHandler inputHandler;
 
     private bool isZoomedIn = false;
-    
-    public void SetupPlayer(InputHandler handler) 
+
+    public void SetupPlayer(InputHandler handler)
     {
         inputHandler = handler;
-         // handle target
+        // handle target
         inputHandler.targetAquired += HandleTargetAquired;
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         inputHandler.targetAquired -= HandleTargetAquired;
     }
 
@@ -31,31 +32,31 @@ public class Crosshair : MonoBehaviour
             if (targetHit.distance <= distanceForAnimation && !isZoomedIn)
             {
                 MakeBig();
-                isZoomedIn = true;   
-            }                
+                isZoomedIn = true;
+            }
         }
         else
         {
-            if (isZoomedIn) 
+            if (isZoomedIn)
             {
                 MakeNNormal();
                 isZoomedIn = false;
-            }            
+            }
         }
     }
 
-    public void MakeBig() 
+    public void MakeBig()
     {
         zoomedCrosshair.DOScale(zoomAmount, zoomDuration);
         zoomedCrosshair.DOPunchRotation(new Vector3(0, 0, rotationAngle), zoomDuration, 1, 0.2f);
     }
 
-    public void MakeNNormal() 
+    public void MakeNNormal()
     {
         zoomedCrosshair.DOScale(1, zoomDuration);
 
         Sequence s = DOTween.Sequence();
-        s.Append(zoomedCrosshair.DOPunchRotation(new Vector3(0, 0, -rotationAngle), zoomDuration, 1, 0.2f)).SetUpdate(true);
+        s.Append(zoomedCrosshair.DOPunchRotation(new Vector3(0, 0, -rotationAngle), zoomDuration, 1, 0.2f));
         s.AppendCallback(() => zoomedCrosshair.rotation = Quaternion.Euler(0, 0, 0));
     }
 }

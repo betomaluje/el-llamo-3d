@@ -1127,8 +1127,9 @@ GameObject:
   - component: {fileID: 620065100434372760}
   - component: {fileID: 5866242576774526777}
   - component: {fileID: 8282288603359594557}
+  - component: {fileID: 7202087720915295243}
   m_Layer: 9
-  m_Name: Hips_jnt
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1165,6 +1166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handsOffset: {x: -1, y: 1, z: 2.5}
   parentTransform: {fileID: 655316715927778445}
+  pickupSpeed: 0.25
 --- !u!65 &5866242576774526777
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1194,6 +1196,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!135 &7202087720915295243
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655316715928266897}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: -0.5, y: 0, z: 0}
 --- !u!1 &655316715928266901
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,9 +1464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 655316715927778445}
   - component: {fileID: 5354376531232493506}
-  - component: {fileID: 3891758373595314619}
   - component: {fileID: 4888801054194898802}
-  - component: {fileID: 4188284907184831828}
   - component: {fileID: 4586592014715311604}
   m_Layer: 9
   m_Name: Ragdoll Model
@@ -1494,19 +1507,6 @@ MonoBehaviour:
   targetLock: {fileID: 8231164691012785442}
   targetAnimationDuration: 0.2
   isEnabled: 1
---- !u!114 &3891758373595314619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 655316715928266925}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295c49620c76a4d408961fb3c566e918, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gizmoSize: 8
 --- !u!114 &4888801054194898802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1526,109 +1526,6 @@ MonoBehaviour:
   Filterable: 0
   SendRealtimeData: 1
   visibleSize: 1
---- !u!114 &4188284907184831828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 655316715928266925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1480947390, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncedGenerics: []
-  syncedTransform:
-    interpolate: 42.18
-    smoothLevel: 3
-    snapDistance: 1
-    readFunction: 0
-    bandwidth: 8
-    padding: 2
-    pos_x_setting:
-      enabled: 1
-      min: -250
-      max: 250
-      resolution: 2
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    pos_y_setting:
-      enabled: 1
-      min: 0.1
-      max: 50
-      resolution: 2
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    pos_z_setting:
-      enabled: 1
-      min: -250
-      max: 250
-      resolution: 2
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    rot_x_setting:
-      enabled: 1
-      min: -300
-      max: 300
-      resolution: 1
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    rot_y_setting:
-      enabled: 1
-      min: -300
-      max: 300
-      resolution: 1
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    rot_z_setting:
-      enabled: 1
-      min: -300
-      max: 300
-      resolution: 1
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    scale_x_setting:
-      enabled: 0
-      min: -300
-      max: 300
-      resolution: 3
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    scale_y_setting:
-      enabled: 0
-      min: -300
-      max: 300
-      resolution: 3
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    scale_z_setting:
-      enabled: 0
-      min: -300
-      max: 300
-      resolution: 3
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    externalFreeze: 0.2
-  syncedAnimator:
-    animator: {fileID: 0}
-    syncParameters: []
-    bandwidth: 0
-    padding: 0
-  syncTransFormEnabled: 1
-  syncAnimatorEnabled: 0
-  syncTransFormFoldout: 1
-  syncAnimatorFoldout: 0
-  restoreState: 1
 --- !u!114 &4586592014715311604
 MonoBehaviour:
   m_ObjectHideFlags: 0

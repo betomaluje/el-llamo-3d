@@ -68,10 +68,10 @@ public class Health : MonoBehaviour
         currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
         CalculatePercentage();
 
-        if (currentHealth != maxHealth) 
+        if (currentHealth != maxHealth)
         {
             Instantiate(bloodDamagePrefab, transform.position, transform.rotation);
-        }        
+        }
 
         if (networkID.IsMine)
         {
@@ -190,7 +190,7 @@ public class Health : MonoBehaviour
 
         transform.DOMoveY(deadY, 1f);
 
-        transform.DORotate(currentRotation, 1f).SetUpdate(true);
+        transform.DORotate(currentRotation, 1f);
 
         PlayerAnimations playerAnimations = GetComponent<PlayerAnimations>();
         if (playerAnimations != null)
@@ -216,7 +216,7 @@ public class Health : MonoBehaviour
         float resetY = 8;
 
         transform.DOMoveY(resetY, 1f);
-        transform.DORotate(currentRotation, .25f).SetUpdate(true);
+        transform.DORotate(currentRotation, .25f);
 
         syncPropertyAgent.Modify(HEALTH, maxHealth);
         currentHealth = maxHealth;

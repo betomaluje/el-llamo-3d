@@ -24,6 +24,7 @@ public abstract class Gun : MonoBehaviour, ITarget
     private float nextTimeToFire = 0f;
     private Rigidbody rb;
     private Collider col;
+    private SphereCollider sphereCollider;
 
     public Action OnPickedUp;
 
@@ -40,30 +41,55 @@ public abstract class Gun : MonoBehaviour, ITarget
     {
         remoteEventAgent = GetComponent<RemoteEventAgent>();
 
+        sphereCollider = GetComponent<SphereCollider>();
+
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
     }
 
-    protected void ChangeSettings(bool isTargetDead)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (grabbed && other.gameObject.CompareTag("Player"))
+        {
+            PlayerGrab playerGrab = other.gameObject.GetComponent<PlayerGrab>();
+            if (playerGrab != null)
+            {
+                playerGrab.target = this;
+                Transform playerHand = other.gameObject.GetComponentInChildren<Hand>().transform;
+                transform.parent = playerHand;
+            }
+        }
+    }
+
+    protected void ChangeSettings(bool isTargetGrabbed)
     {
         if (rb == null || col == null)
         {
             return;
         }
 
-        rb.isKinematic = isTargetDead;
-        rb.useGravity = !isTargetDead;
-        col.isTrigger = isTargetDead;
+        rb.isKinematic = isTargetGrabbed;
+        rb.useGravity = !isTargetGrabbed;
+        col.isTrigger = isTargetGrabbed;
+
+        if (isTargetGrabbed)
+        {
+            // freeze all positions and rotations except the X rotation
+            rb.constraints = RigidbodyConstraints.FreezeRotationY |
+                RigidbodyConstraints.FreezeRotationZ |
+                RigidbodyConstraints.FreezeRotationX |
+                RigidbodyConstraints.FreezePositionY |
+                RigidbodyConstraints.FreezePositionZ;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints.None;
+        }
     }
 
-    public void StartPickup(Transform playerHand, PlayerGrab playerGrab, Vector3 from)
+    public void StartPickup(Transform playerHand)
     {
-        playerGrab.target = this;
-        transform.parent = playerHand;
-
         SWNetworkMessage msg = new SWNetworkMessage();
-        // from
-        msg.Push(from);
         // to
         msg.Push(playerHand.transform.position);
         remoteEventAgent.Invoke(PICKUP, msg);
@@ -71,22 +97,26 @@ public abstract class Gun : MonoBehaviour, ITarget
 
     public void RemotePickupObject(SWNetworkMessage msg)
     {
-        Debug.Log("remote pickup object");
-        Vector3 from = msg.PopVector3();
         Vector3 to = msg.PopVector3();
-        Pickup(from, to);
+
+        Debug.Log("remote pickup object: " + to);
+
+        Pickup(to);
     }
 
-    public void Pickup(Vector3 from, Vector3 to)
+    public void Pickup(Vector3 to)
     {
         Vector3 rotation = new Vector3(-90, 0, 90);
 
-        transform.position = from;
+        // we enabled the player collision handler
+        sphereCollider.enabled = true;
+
         grabbed = true;
 
+        ChangeSettings(true);
+
         Sequence s = DOTween.Sequence();
-        s.AppendCallback(() => ChangeSettings(true));
-        s.AppendCallback(() => transform.DOMove(to, speed));
+        s.Append(transform.DOMove(to, speed));
         s.AppendCallback(() => transform.DOLocalRotate(rotation, speed));
         s.AppendCallback(() =>
         {
@@ -94,6 +124,8 @@ public abstract class Gun : MonoBehaviour, ITarget
 
             transform.localPosition = Vector3.zero;
             transform.rotation = Quaternion.Euler(rotation);
+
+            sphereCollider.enabled = false;
 
             Debug.Log("finish pickup " + gameObject.name);
         });
@@ -114,16 +146,20 @@ public abstract class Gun : MonoBehaviour, ITarget
 
         grabbed = false;
 
-        PlayerGrab playerGrab = transform.parent.GetComponentInParent<PlayerGrab>();
-        if (playerGrab != null)
+        if (transform.parent != null)
         {
-            Debug.Log("PlayerGrab null target");
-            playerGrab.target = null;
+            PlayerGrab playerGrab = transform.parent.GetComponentInParent<PlayerGrab>();
+            if (playerGrab != null)
+            {
+                Debug.Log("PlayerGrab null target");
+                playerGrab.target = null;
+            }
         }
 
         SoundManager.instance.Play("Throw");
+
         Sequence s = DOTween.Sequence();
-        s.Append(transform.DOMove(transform.position - transform.forward, .01f)).SetUpdate(true);
+        s.Append(transform.DOMove(transform.position - transform.forward, .01f));
         s.AppendCallback(() => ChangeSettings(false));
         s.AppendCallback(() => transform.parent = null);
         s.AppendCallback(() => rb.AddForce(direction * throwForce, ForceMode.Impulse));

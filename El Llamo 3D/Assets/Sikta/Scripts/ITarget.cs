@@ -5,9 +5,9 @@ namespace BetoMaluje.Sikta
     [SerializeField]
     public interface ITarget
     {
-        void StartPickup(Transform playerHand, PlayerGrab playerGrab, Vector3 from);
+        void StartPickup(Transform playerHand);
 
-        void Pickup(Vector3 from, Vector3 to);
+        void Pickup(Vector3 to);
 
         void Throw(float throwForce, Vector3 direction);
 

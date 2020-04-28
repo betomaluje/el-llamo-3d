@@ -167,11 +167,10 @@ GameObject:
   - component: {fileID: 6232156196547333019}
   - component: {fileID: 4422581082356254061}
   - component: {fileID: 9221246813437098942}
+  - component: {fileID: 2590497203851349476}
   - component: {fileID: 4422581082356254062}
   - component: {fileID: 1421573247}
-  - component: {fileID: 3606871273840184439}
   - component: {fileID: 4972513490003804687}
-  - component: {fileID: 9207958514334499808}
   - component: {fileID: 7872112886917653143}
   m_Layer: 9
   m_Name: Pistol
@@ -276,6 +275,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.018194009, y: 0.0032320977, z: 0.011615556}
   m_Center: {x: -0.0056096674, y: 5.2386895e-10, z: 0.0016831115}
+--- !u!135 &2590497203851349476
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639007037605429063}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.015
+  m_Center: {x: -0.0056096674, y: 0, z: 0}
 --- !u!114 &4422581082356254062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,21 +323,8 @@ MonoBehaviour:
   impactForce: 300
   recoilAmount: 0.3
   recoilDuration: 0.3
-  speed: 0.5
+  speed: 0.25
   gunEffects: {fileID: 5261114529770976236}
---- !u!114 &3606871273840184439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5639007037605429063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295c49620c76a4d408961fb3c566e918, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gizmoSize: 4
 --- !u!114 &4972513490003804687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,109 +344,6 @@ MonoBehaviour:
   Filterable: 0
   SendRealtimeData: 1
   visibleSize: 1
---- !u!114 &9207958514334499808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5639007037605429063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1480947390, guid: 6a67afbfe15ab9c4696e982c25d07a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncedGenerics: []
-  syncedTransform:
-    interpolate: 30
-    smoothLevel: 3
-    snapDistance: 1
-    readFunction: 0
-    bandwidth: 8
-    padding: 2
-    pos_x_setting:
-      enabled: 1
-      min: -250
-      max: 250
-      resolution: 2
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    pos_y_setting:
-      enabled: 1
-      min: 0.1
-      max: 50
-      resolution: 2
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    pos_z_setting:
-      enabled: 1
-      min: -250
-      max: 250
-      resolution: 2
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    rot_x_setting:
-      enabled: 1
-      min: -300
-      max: 300
-      resolution: 1
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    rot_y_setting:
-      enabled: 1
-      min: -300
-      max: 300
-      resolution: 1
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    rot_z_setting:
-      enabled: 1
-      min: -300
-      max: 300
-      resolution: 1
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    scale_x_setting:
-      enabled: 0
-      min: -300
-      max: 300
-      resolution: 3
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    scale_y_setting:
-      enabled: 0
-      min: -300
-      max: 300
-      resolution: 3
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    scale_z_setting:
-      enabled: 0
-      min: -300
-      max: 300
-      resolution: 3
-      valueType: 0
-      minInt: -300
-      maxInt: 300
-    externalFreeze: 0.2
-  syncedAnimator:
-    animator: {fileID: 0}
-    syncParameters: []
-    bandwidth: 0
-    padding: 0
-  syncTransFormEnabled: 1
-  syncAnimatorEnabled: 0
-  syncTransFormFoldout: 0
-  syncAnimatorFoldout: 0
-  restoreState: 1
 --- !u!114 &7872112886917653143
 MonoBehaviour:
   m_ObjectHideFlags: 0

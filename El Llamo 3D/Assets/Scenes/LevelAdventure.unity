@@ -42809,6 +42809,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
         type: 3}
+      propertyPath: nonPlayerPositions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
+        type: 3}
       propertyPath: nonPlayerPositions.Array.data[0]
       value: 
       objectReference: {fileID: 370960757}
@@ -42841,6 +42846,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ragdoll
       value: 111
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
+        type: 3}
+      propertyPath: amountOfGuns
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8585499597034534582, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
         type: 3}
