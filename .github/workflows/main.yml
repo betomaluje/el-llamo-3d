@@ -52,3 +52,4 @@ jobs:
           ITCH_GAME: llamo-3d
           ITCH_USER: betomaluje
           PACKAGE: build/${{ matrix.targetPlatform }}
+          VERSION: 0.1.0
