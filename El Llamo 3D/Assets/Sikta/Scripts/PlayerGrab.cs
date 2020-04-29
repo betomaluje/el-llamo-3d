@@ -17,7 +17,7 @@ namespace BetoMaluje.Sikta
 
         [Space]
         [Header("Weapon")]
-        public ITarget target;
+        public Grabable target;
         [SerializeField] private bool hasInitialWeapon;
         [SerializeField] private Transform playerHand;
 
@@ -130,15 +130,15 @@ namespace BetoMaluje.Sikta
 
                 if (isFirePressed && target == null)
                 {
-                    ITarget itarget = targetHit.transform.GetComponentInChildren<ITarget>();
-                    if (itarget != null && !itarget.isGrabbed())
+                    Grabable grabable = targetHit.transform.GetComponentInChildren<Grabable>();
+                    if (grabable != null && !grabable.isGrabbed())
                     {
                         if (lastObject != null)
                         {
                             lastObject.TargetOff();
                         }
 
-                        PickupObject(itarget);
+                        PickupObject(grabable);
                         lastObject = null;
                     }
                 }
@@ -155,14 +155,14 @@ namespace BetoMaluje.Sikta
             }
         }
 
-        private void PickupObject(ITarget itarget)
+        private void PickupObject(Grabable grabable)
         {
             if (target != null)
             {
                 return;
             }
 
-            itarget.StartPickup(playerHand);
+            grabable.StartPickup(playerHand);
         }
 
         /**
@@ -172,8 +172,14 @@ namespace BetoMaluje.Sikta
         {
             isFirePressed = true;
 
+            // if it doesn't have a gun, we return quickly
+            if (!HasGun())
+            {
+                return;
+            }
+
             // regardless if it is on target or not, we need to sync the shooting action
-            if (HasGun() && isFirePressed != lastShootingState)
+            if (isFirePressed != lastShootingState)
             {
                 syncPropertyAgent.Modify(SHOOTING, isFirePressed);
                 lastShootingState = isFirePressed;
@@ -214,9 +220,12 @@ namespace BetoMaluje.Sikta
          */
         public void OnShootingChanged()
         {
-            if (target != null && syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue())
+            if (target != null &&
+                syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue() &&
+                target.GetComponent<ITarget>() != null)
             {
-                target.Shoot(aimPoint);
+                ITarget shootableObject = target.GetComponent<ITarget>();
+                shootableObject.Shoot(aimPoint);
 
                 networkAimPointUpdate?.Invoke(aimPoint);
 
@@ -228,7 +237,7 @@ namespace BetoMaluje.Sikta
         {
             if (target != null)
             {
-                target.Throw(throwForce, sceneCamera.transform.forward);
+                target.StartThrow(throwForce, sceneCamera.transform.forward);
             }
         }
 
@@ -240,8 +249,8 @@ namespace BetoMaluje.Sikta
 
         private bool HasGun()
         {
-            ITarget weaponTarget = playerHand.GetComponentInChildren<ITarget>();
-            return playerHand.childCount > 0 && weaponTarget != null && weaponTarget.getType().Equals(TargetType.Shootable);
+            Grabable weaponTarget = playerHand.GetComponentInChildren<Grabable>();
+            return playerHand.childCount > 0 && weaponTarget != null && weaponTarget.getTargetType().Equals(TargetType.Shootable);
         }
 
         private IEnumerator MakeTargetAvailable()

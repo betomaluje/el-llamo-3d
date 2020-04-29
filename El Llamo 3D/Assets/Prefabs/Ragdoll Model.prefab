@@ -1164,9 +1164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1addfc5272e40f1854b7bd8b429d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSpeed: 0.25
   handsOffset: {x: -1, y: 1, z: 2.5}
   parentTransform: {fileID: 655316715927778445}
-  pickupSpeed: 0.25
 --- !u!65 &5866242576774526777
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1563,7 +1563,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 620065100434372760}
-          m_MethodName: RemoteThrow
+          m_MethodName: RemoteThrowObject
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

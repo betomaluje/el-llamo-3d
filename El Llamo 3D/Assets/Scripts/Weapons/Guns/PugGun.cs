@@ -14,7 +14,6 @@ public class PugGun : Gun
 
     private void Start()
     {
-        base.Start();
         bulletPrefab = bulletPrefabs[currentBullet];
     }
 
