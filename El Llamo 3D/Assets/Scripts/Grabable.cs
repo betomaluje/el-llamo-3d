@@ -42,7 +42,7 @@ public abstract class Grabable : MonoBehaviour, IGrab
             PlayerGrab playerGrab = other.gameObject.GetComponent<PlayerGrab>();
             if (playerGrab != null)
             {
-                playerGrab.target = this;
+                playerGrab.AddGrabable(this);
                 Transform playerHand = other.gameObject.GetComponentInChildren<Hand>().transform;
                 getParentTransform().parent = playerHand;
             }
@@ -79,7 +79,7 @@ public abstract class Grabable : MonoBehaviour, IGrab
         }
     }
 
-    public void StartPickup(Transform playerHand)
+    public void StartPickup(Vector3 playerHand, Vector3 localPosition)
     {
         if (grabState.Equals(GrabState.Grabbing))
         {
@@ -90,7 +90,9 @@ public abstract class Grabable : MonoBehaviour, IGrab
 
         SWNetworkMessage msg = new SWNetworkMessage();
         // to
-        msg.Push(playerHand.transform.position);
+        msg.Push(playerHand);
+        // player hand local position
+        msg.Push(localPosition);
         remoteEventAgent.Invoke(PICKUP, msg);
     }
 
@@ -104,6 +106,7 @@ public abstract class Grabable : MonoBehaviour, IGrab
         grabState = GrabState.Grabbed;
 
         Vector3 to = msg.PopVector3();
+        Vector3 localPosition = msg.PopVector3();
 
         // we enabled the player collision handler
         sphereCollider.enabled = true;
@@ -114,10 +117,10 @@ public abstract class Grabable : MonoBehaviour, IGrab
 
         Debug.Log("remote pickup " + gameObject.name + ": " + to);
 
-        Pickup(to);
+        Pickup(to, localPosition);
     }
 
-    public abstract void Pickup(Vector3 to);
+    public abstract void Pickup(Vector3 to, Vector3 localPosition);
 
     public void StartThrow(float throwForce, Vector3 direction)
     {
@@ -153,7 +156,7 @@ public abstract class Grabable : MonoBehaviour, IGrab
             PlayerGrab playerGrab = getParentTransform().GetComponentInParent<PlayerGrab>();
             if (playerGrab != null)
             {
-                playerGrab.target = null;
+                playerGrab.RemoveGrabable(this);
             }
         }
 
@@ -179,9 +182,9 @@ public interface IGrab
 {
     TargetType getTargetType();
 
-    void StartPickup(Transform playerHand);
+    void StartPickup(Vector3 playerHand, Vector3 localPosition);
 
-    void Pickup(Vector3 to);
+    void Pickup(Vector3 to, Vector3 localPosition);
 
     void StartThrow(float throwForce, Vector3 direction);
 

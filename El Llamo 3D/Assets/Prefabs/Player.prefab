@@ -1105,10 +1105,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 7569482408358960920}
   playerAnimationsTrigger: {fileID: 507657085110364343}
+  handsOffset: {x: -1, y: 0, z: 0}
   throwForce: 1000
   timeResetTarget: 1
+  grabbables: []
   hasInitialWeapon: 1
   playerHand: {fileID: 3876146945217145102}
+  maxGrabbables: 2
+  weaponChanger: 101
   aimPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &3472993563486668078
 MonoBehaviour:

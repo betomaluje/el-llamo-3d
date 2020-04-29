@@ -1,6 +1,7 @@
 ﻿using SWNetwork;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BetoMaluje.Sikta
@@ -9,6 +10,7 @@ namespace BetoMaluje.Sikta
     {
         [SerializeField] private InputHandler inputHandler;
         [SerializeField] private PlayerAnimationTrigger playerAnimationsTrigger;
+        [SerializeField] private Vector3 handsOffset;
 
         [Space]
         [Header("Stats")]
@@ -17,10 +19,13 @@ namespace BetoMaluje.Sikta
 
         [Space]
         [Header("Weapon")]
-        public Grabable target;
+        public List<Grabable> grabbables;
         [SerializeField] private bool hasInitialWeapon;
         [SerializeField] private Transform playerHand;
+        [SerializeField] private int maxGrabbables = 2;
+        [SerializeField] private KeyCode weaponChanger = KeyCode.E;
 
+        [HideInInspector]
         public Vector3 aimPoint;
         [HideInInspector]
         public Action<Vector3> aimPointUpdate;
@@ -30,9 +35,10 @@ namespace BetoMaluje.Sikta
         private MaterialColorChanger lastObject;
         private bool hasPointedToObject = false;
 
-        private PlayerAnimations playerAnimations;
+        // 0: right, 1 left
+        int selectedGrabbable = 0;
 
-        private RaycastHit shootHit;
+        private PlayerAnimations playerAnimations;
 
         #region Network
 
@@ -56,6 +62,8 @@ namespace BetoMaluje.Sikta
             remoteEventAgent = GetComponent<RemoteEventAgent>();
 
             playerAnimations = GetComponent<PlayerAnimations>();
+
+            grabbables = new List<Grabable>();
         }
 
         /**
@@ -87,7 +95,7 @@ namespace BetoMaluje.Sikta
             // handle actual object throwing
             playerAnimationsTrigger.throwTriggeredCallback = () =>
             {
-                ThrowObject();
+                ThrowObject(selectedGrabbable);
             };
 
             // handle target
@@ -107,7 +115,7 @@ namespace BetoMaluje.Sikta
         private void HandleTargetAquired(RaycastHit targetHit, bool onTarget)
         {
             // if we already have a gun
-            if (target != null)
+            if (grabbables.Count > maxGrabbables)
             {
                 return;
             }
@@ -128,7 +136,7 @@ namespace BetoMaluje.Sikta
                     lastObject.TargetOn();
                 }
 
-                if (isFirePressed && target == null)
+                if (isFirePressed)
                 {
                     Grabable grabable = targetHit.transform.GetComponentInChildren<Grabable>();
                     if (grabable != null && !grabable.isGrabbed())
@@ -157,12 +165,15 @@ namespace BetoMaluje.Sikta
 
         private void PickupObject(Grabable grabable)
         {
-            if (target != null)
+            Vector3 localPosition = Vector3.zero;
+
+            if (selectedGrabbable == 1)
             {
-                return;
+                Debug.Log("pickup changing hands");
+                localPosition = handsOffset;
             }
 
-            grabable.StartPickup(playerHand);
+            grabable.StartPickup(playerHand.position, localPosition);
         }
 
         /**
@@ -186,7 +197,7 @@ namespace BetoMaluje.Sikta
             }
 
             // we mark the shooting point
-            shootHit = shootingTarget.shootingHit;
+            RaycastHit shootHit = shootingTarget.shootingHit;
 
             // if it was on target we take damage
             if (shootingTarget.onTarget)
@@ -220,12 +231,13 @@ namespace BetoMaluje.Sikta
          */
         public void OnShootingChanged()
         {
-            if (target != null &&
+            ITarget gun = GetGunFromHands();
+
+            if (grabbables != null &&
                 syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue() &&
-                target.GetComponent<ITarget>() != null)
+                gun != null)
             {
-                ITarget shootableObject = target.GetComponent<ITarget>();
-                shootableObject.Shoot(aimPoint);
+                gun.Shoot(aimPoint);
 
                 networkAimPointUpdate?.Invoke(aimPoint);
 
@@ -233,18 +245,30 @@ namespace BetoMaluje.Sikta
             }
         }
 
-        private void ThrowObject()
+        private void ThrowObject(int selectedGrabbable)
         {
-            if (target != null)
+            if (grabbables[selectedGrabbable] != null)
             {
-                target.StartThrow(throwForce, sceneCamera.transform.forward);
+                grabbables[selectedGrabbable].StartThrow(throwForce, sceneCamera.transform.forward);
             }
+        }
+
+        private ITarget GetGunFromHands()
+        {
+            ITarget searched = grabbables.Find(obj => obj.GetComponent<ITarget>() != null).GetComponent<ITarget>();
+
+            return searched;
         }
 
         private void Update()
         {
             // we handle the animation
             playerAnimations.ShootAnim(isFirePressed && HasGun());
+
+            if (Input.GetKeyDown(weaponChanger))
+            {
+                ChangeHand();
+            }
         }
 
         private bool HasGun()
@@ -257,6 +281,60 @@ namespace BetoMaluje.Sikta
         {
             yield return new WaitForSeconds(timeResetTarget);
             hasPointedToObject = false;
+        }
+
+        /**
+         * Find the first available hand
+         */
+        private int FindAvailableHand()
+        {
+            return 0;
+        }
+
+        private void ChangeHand()
+        {
+            if (selectedGrabbable == 0)
+            {
+                // left hand
+                selectedGrabbable = 1;
+            }
+            else
+            {
+                // right hand
+                selectedGrabbable = 0;
+            }
+
+            Debug.Log("hand selected: " + selectedGrabbable);
+        }
+
+        public void AddGrabable(Grabable grabable)
+        {
+            // search if we already have it
+            Grabable searched = grabbables.Find(obj => obj == grabable);
+            if (searched != null)
+            {
+                return;
+            }
+
+            // if we have more than we can have, we pop the last one
+            if (grabbables.Count >= maxGrabbables)
+            {
+                ThrowObject(selectedGrabbable);
+            }
+
+            grabbables.Add(grabable);
+            ChangeHand();
+        }
+
+        public void RemoveGrabable(Grabable grabable)
+        {
+            Grabable searched = grabbables.Find(obj => obj == grabable);
+            if (searched != null)
+            {
+                Debug.Log("thrown remove: " + selectedGrabbable);
+                grabbables.Remove(searched);
+                ChangeHand();
+            }
         }
 
     }

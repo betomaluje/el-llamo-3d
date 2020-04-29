@@ -12,20 +12,21 @@ public class ThrowableRagdoll : Grabable
         return TargetType.Throwable;
     }
 
-    public override void Pickup(Vector3 to)
+    public override void Pickup(Vector3 to, Vector3 localPosition)
     {
+        Vector3 rotation = new Vector3(0, 0, -90);
         transform.localPosition = Vector3.zero;
 
         Sequence s = DOTween.Sequence();
         s.Append(parentTransform.DOMove(to, pickupSpeed));
-        s.AppendCallback(() => parentTransform.DOLocalMove(handsOffset, pickupSpeed));
-        s.AppendCallback(() => transform.DOLocalRotate(Vector3.zero, pickupSpeed));
+        s.AppendCallback(() => parentTransform.DOLocalMove(localPosition, pickupSpeed));
+        s.AppendCallback(() => parentTransform.DOLocalRotate(rotation, pickupSpeed));
         s.AppendCallback(() =>
         {
             SoundManager.instance.Play("Pickup");
 
-            parentTransform.localPosition = handsOffset;
-            transform.rotation = Quaternion.Euler(Vector3.zero);
+            //parentTransform.localPosition = handsOffset;
+            transform.rotation = Quaternion.Euler(rotation);
 
             sphereCollider.enabled = false;
 
