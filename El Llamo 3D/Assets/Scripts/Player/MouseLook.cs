@@ -1,12 +1,13 @@
 ﻿using SWNetwork;
 using UnityEngine;
+using BetoMaluje.Sikta;
 
 public class MouseLook : MonoBehaviour
 {
     [SerializeField] private float mouseSensitivity = 100f;
 
     [SerializeField] private Transform playerBody;
-    [SerializeField] private Transform playerHands;
+    [SerializeField] private PlayerGrab playerGrab;
 
     [Header("Zoom")]
     [SerializeField] private KeyCode zoomKey;
@@ -28,8 +29,8 @@ public class MouseLook : MonoBehaviour
     }
 
     void Update()
-    {
-        if (networkID.IsMine)
+    {        
+        if (networkID.IsMine || !GameSettings.instance.usingNetwork)
         {
             aiming.x = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             aiming.y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -45,7 +46,7 @@ public class MouseLook : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (networkID.IsMine)
+        if (networkID.IsMine || !GameSettings.instance.usingNetwork)
         {
             Aim(aiming);
         }
@@ -59,7 +60,7 @@ public class MouseLook : MonoBehaviour
         verticleAngle += -mouseY;
         verticleAngle = Mathf.Clamp(verticleAngle, -90f, 90f);
 
-        playerHands.localRotation = Quaternion.Euler(verticleAngle, 0, 0);
+        playerGrab.GetActiveHand().localRotation = Quaternion.Euler(verticleAngle, 0, 0);
         playerBody.Rotate(Vector3.up * mouseX);
     }
 

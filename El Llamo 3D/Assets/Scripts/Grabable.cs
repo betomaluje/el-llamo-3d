@@ -43,8 +43,14 @@ public abstract class Grabable : MonoBehaviour, IGrab
             if (playerGrab != null)
             {
                 playerGrab.AddGrabable(this);
-                Transform playerHand = other.gameObject.GetComponentInChildren<Hand>().transform;
-                getParentTransform().parent = playerHand;
+                Transform playerHand = playerGrab.GetActiveHand();
+                if (playerHand != null) 
+                {
+                    getParentTransform().parent = playerHand;
+                    //playerGrab.ChangeHand();
+                }
+
+                sphereCollider.enabled = false;
             }
         }
     }
@@ -79,7 +85,7 @@ public abstract class Grabable : MonoBehaviour, IGrab
         }
     }
 
-    public void StartPickup(Vector3 playerHand, Vector3 localPosition)
+    public void StartPickup(Vector3 playerHand)
     {
         if (grabState.Equals(GrabState.Grabbing))
         {
@@ -88,16 +94,22 @@ public abstract class Grabable : MonoBehaviour, IGrab
 
         grabState = GrabState.Grabbing;
 
-        SWNetworkMessage msg = new SWNetworkMessage();
-        // to
-        msg.Push(playerHand);
-        // player hand local position
-        msg.Push(localPosition);
-        remoteEventAgent.Invoke(PICKUP, msg);
+        if (GameSettings.instance.usingNetwork)
+        {
+            SWNetworkMessage msg = new SWNetworkMessage();
+            // to
+            msg.Push(playerHand);
+            remoteEventAgent.Invoke(PICKUP, msg);
+        } 
+        else 
+        {
+            Debug.Log("local pickup " + gameObject.name + ": " + playerHand);
+            LocalPickUp(playerHand);
+        }       
     }
 
-    public void RemotePickupObject(SWNetworkMessage msg)
-    {
+    private void LocalPickUp(Vector3 to) 
+    {    
         if (grabState.Equals(GrabState.Grabbed))
         {
             return;
@@ -105,22 +117,26 @@ public abstract class Grabable : MonoBehaviour, IGrab
 
         grabState = GrabState.Grabbed;
 
-        Vector3 to = msg.PopVector3();
-        Vector3 localPosition = msg.PopVector3();
-
         // we enabled the player collision handler
         sphereCollider.enabled = true;
 
         grabbed = true;
 
-        ChangeSettings(true);
+        ChangeSettings(true);        
+
+        Pickup(to);
+    }
+
+    public void RemotePickupObject(SWNetworkMessage msg)
+    {    
+        Vector3 to = msg.PopVector3();
 
         Debug.Log("remote pickup " + gameObject.name + ": " + to);
 
-        Pickup(to, localPosition);
+        LocalPickUp(to);
     }
 
-    public abstract void Pickup(Vector3 to, Vector3 localPosition);
+    public abstract void Pickup(Vector3 to);
 
     public void StartThrow(float throwForce, Vector3 direction)
     {
@@ -131,24 +147,22 @@ public abstract class Grabable : MonoBehaviour, IGrab
 
         grabState = GrabState.Throwing;
 
-        SWNetworkMessage msg = new SWNetworkMessage();
-        msg.Push(direction);
-        msg.Push(throwForce);
-        remoteEventAgent.Invoke(THROWING, msg);
+        if (GameSettings.instance.usingNetwork)
+        {
+            SWNetworkMessage msg = new SWNetworkMessage();
+            msg.Push(direction);
+            msg.Push(throwForce);
+            remoteEventAgent.Invoke(THROWING, msg);
+        } 
+        else 
+        {
+            Debug.Log("local throw " + gameObject.name + ": " + direction + " force: " + throwForce);
+            LocalThrowObject(direction, throwForce);
+        }
     }
 
-    public void RemoteThrowObject(SWNetworkMessage msg)
+    private void LocalThrowObject(Vector3 direction, float throwForce) 
     {
-        if (grabState.Equals(GrabState.Idle))
-        {
-            return;
-        }
-
-        Vector3 direction = msg.PopVector3();
-        float throwForce = msg.PopFloat();
-
-        Debug.Log("remote throw " + gameObject.name + ": " + direction + " force: " + throwForce);
-
         grabbed = false;
 
         if (transform.parent != null)
@@ -167,6 +181,21 @@ public abstract class Grabable : MonoBehaviour, IGrab
         grabState = GrabState.Idle;
     }
 
+    public void RemoteThrowObject(SWNetworkMessage msg)
+    {
+        if (grabState.Equals(GrabState.Idle))
+        {
+            return;
+        }
+
+        Vector3 direction = msg.PopVector3();
+        float throwForce = msg.PopFloat();
+
+        Debug.Log("remote throw " + gameObject.name + ": " + direction + " force: " + throwForce);
+
+        LocalThrowObject(direction, throwForce);
+    }
+
     public abstract void Throw(float throwForce, Vector3 direction);
 
     public bool isGrabbed()
@@ -182,9 +211,9 @@ public interface IGrab
 {
     TargetType getTargetType();
 
-    void StartPickup(Vector3 playerHand, Vector3 localPosition);
+    void StartPickup(Vector3 playerHand);
 
-    void Pickup(Vector3 to, Vector3 localPosition);
+    void Pickup(Vector3 to);
 
     void StartThrow(float throwForce, Vector3 direction);
 

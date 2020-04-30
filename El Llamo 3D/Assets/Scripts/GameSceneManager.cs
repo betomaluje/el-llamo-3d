@@ -10,6 +10,7 @@ public class GameSceneManager : MonoBehaviour
     [Header("Ragdoll Debug")]
     [SerializeField] private KeyCode ragdoll;
     [SerializeField] private Transform ragdollPosition;
+    [SerializeField] private GameObject ragdollCorpse;
 
     private int totaPlayerSpawnPoints = 0;
     private int totaNonPlayerSpawnPoints = 0;
@@ -24,7 +25,14 @@ public class GameSceneManager : MonoBehaviour
 
             if (spawningRagdoll)
             {
-                NetworkClient.Instance.LastSpawner.SpawnForNonPlayer(NonPlayerIndexes.Ragdoll_Corpse, ragdollPosition.position, Quaternion.identity);
+                if (GameSettings.instance.usingNetwork)
+                {
+                    NetworkClient.Instance.LastSpawner.SpawnForNonPlayer(NonPlayerIndexes.Ragdoll_Corpse, ragdollPosition.position, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(ragdollCorpse, ragdollPosition.position, Quaternion.identity);
+                }
             }
         }
     }

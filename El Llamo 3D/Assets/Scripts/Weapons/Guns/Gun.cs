@@ -21,6 +21,14 @@ public abstract class Gun : Grabable, ITarget
 
     public Action OnPickedUp;
 
+    private void FixedUpdate()
+    {
+        if (getParentTransform().parent != null)
+        {        
+            transform.localPosition = Vector3.zero;
+        }
+    }
+
     public void Shoot(Vector3 shootHit)
     {
         if (Time.time >= nextTimeToFire)
@@ -52,13 +60,12 @@ public abstract class Gun : Grabable, ITarget
         return transform;
     }
 
-    public override void Pickup(Vector3 to, Vector3 localPosition)
+    public override void Pickup(Vector3 to)
     {
         Vector3 rotation = new Vector3(-90, 0, 90);
 
         Sequence s = DOTween.Sequence();
         s.Append(transform.DOMove(to, pickupSpeed));
-        s.AppendCallback(() => transform.DOLocalMove(localPosition, pickupSpeed));
         s.AppendCallback(() => transform.DOLocalRotate(rotation, pickupSpeed));
         s.AppendCallback(() =>
         {
