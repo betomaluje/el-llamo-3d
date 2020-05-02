@@ -47,7 +47,6 @@ public abstract class Grabable : MonoBehaviour, IGrab
                 if (playerHand != null)
                 {
                     getParentTransform().parent = playerHand;
-                    //playerGrab.ChangeHand();
                 }
 
                 sphereCollider.enabled = false;

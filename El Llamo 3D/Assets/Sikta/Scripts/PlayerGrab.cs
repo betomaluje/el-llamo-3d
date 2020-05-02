@@ -51,8 +51,6 @@ namespace BetoMaluje.Sikta
 
         private Camera sceneCamera;
 
-        private bool isPlayerSetup = false;
-
         // network property syncing
         private SyncPropertyAgent syncPropertyAgent;
         private RemoteEventAgent remoteEventAgent;
@@ -111,8 +109,6 @@ namespace BetoMaluje.Sikta
 
             // handle shooting
             inputHandler.shootingTarget = HandleShooting;
-
-            isPlayerSetup = true;
         }
 
         private void OnDisable()
@@ -187,7 +183,7 @@ namespace BetoMaluje.Sikta
         {
             isFirePressed = true;
 
-            ITarget gun = GetActiveHand().GetComponentInChildren<ITarget>();
+            ITarget gun = GetGunInActiveHand();
             bool playerHasGun = gun != null;
 
             // if it doesn't have a gun, we return quickly
@@ -245,7 +241,7 @@ namespace BetoMaluje.Sikta
          */
         public void OnShootingChanged()
         {
-            ITarget gun = GetActiveHand().GetComponentInChildren<ITarget>();
+            ITarget gun = GetGunInActiveHand();
 
             bool remoteShootingPressed = syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue();
             bool playerHasGun = gun != null;
@@ -260,6 +256,9 @@ namespace BetoMaluje.Sikta
             }
         }
 
+        /**
+         * Throws the current [Grabable]
+         */
         private void ThrowObject(int selectedGrabbable)
         {
             Debug.Log("trying to throw: " + selectedGrabbable);
@@ -268,31 +267,6 @@ namespace BetoMaluje.Sikta
             {
                 gun.StartThrow(throwForce, sceneCamera.transform.forward);
             }
-        }
-        private T GetObjectFromHands<T>()
-        {
-            foreach (Transform playerHand in playerHands)
-            {
-                T searched = playerHand.GetComponent<T>();
-                if (searched != null)
-                {
-                    return searched;
-                }
-
-                T searched2 = playerHand.GetComponentInChildren<T>();
-                if (searched2 != null)
-                {
-                    return searched2;
-                }
-
-                T searched3 = playerHand.GetComponentInParent<T>();
-                if (searched3 != null)
-                {
-                    return searched3;
-                }
-            }
-
-            return default(T);
         }
 
         private void Update()
@@ -306,6 +280,17 @@ namespace BetoMaluje.Sikta
             }
         }
 
+        /**
+         * Gets the current [ITarget] on the active player's hand
+         */
+        private ITarget GetGunInActiveHand()
+        {
+            return GetActiveHand().GetComponentInChildren<ITarget>();
+        }
+
+        /**
+         * Checks if there's any [Grabbable] that is of type [TargetType.Shootable]
+         */
         private bool HasGun()
         {
             foreach (Transform playerHand in playerHands)
@@ -336,22 +321,6 @@ namespace BetoMaluje.Sikta
         {
             yield return new WaitForSeconds(timeResetTarget);
             hasPointedToObject = false;
-        }
-
-        /**
-         * Find the first available hand
-         */
-        public Transform FindAvailableHand()
-        {
-            foreach (Transform playerHand in playerHands)
-            {
-                if (playerHand.childCount == 0)
-                {
-                    return playerHand;
-                }
-            }
-
-            return null;
         }
 
         private void ChangeHandsUI(int selectedGrabbable)
@@ -422,11 +391,6 @@ namespace BetoMaluje.Sikta
                     ChangeHand();
                 }
             }
-        }
-
-        private bool PlayerReachedMaxItems()
-        {
-            return grabbables.Count >= maxGrabbables;
         }
 
     }
