@@ -219,7 +219,7 @@ namespace BetoMaluje.Sikta
                 aimPoint = shootHit.point;
 
                 Health healthTarget = shootHit.transform.gameObject.GetComponent<Health>();
-                Gun gunTarget = GetActiveHand().GetComponent<Gun>();
+                Gun gunTarget = GetActiveHand().GetComponentInChildren<Gun>();
 
                 if (gunTarget != null && healthTarget != null)
                 {

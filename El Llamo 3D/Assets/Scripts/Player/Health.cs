@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using BetoMaluje.Sikta;
+using DG.Tweening;
 using SWNetwork;
 using System;
 using System.Collections;
@@ -146,9 +147,13 @@ public class Health : MonoBehaviour
 
     private void ThrowGun()
     {
-        SWNetworkMessage msg = new SWNetworkMessage();
-        msg.Push(Camera.main.transform.forward);
-        remoteEventAgent.Invoke(THROW_GUN_EVENT, msg);
+        Debug.Log("die throw gun");
+        PlayerGrab playerGrab = GetComponent<PlayerGrab>();
+        Grabable gun = playerGrab.GetActiveHand().GetComponentInChildren<Grabable>();
+        if (gun != null)
+        {
+            gun.StartThrow(10f, Camera.main.transform.forward);
+        }
     }
 
     public void RemoteThrowGun(SWNetworkMessage msg)
