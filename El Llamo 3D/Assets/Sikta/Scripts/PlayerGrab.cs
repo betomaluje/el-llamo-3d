@@ -1,4 +1,5 @@
-﻿using SWNetwork;
+﻿using DG.Tweening;
+using SWNetwork;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace BetoMaluje.Sikta
         [HideInInspector]
         public Action<Vector3> aimPointUpdate;
         [HideInInspector]
-        public Action<Vector3> networkAimPointUpdate;        
+        public Action<Vector3> networkAimPointUpdate;
 
         private MaterialColorChanger lastObject;
         private bool hasPointedToObject = false;
@@ -70,6 +71,7 @@ namespace BetoMaluje.Sikta
             grabbables = new List<Grabable>();
             maxGrabbables = playerHands.Length;
             playerHand = playerHands[selectedGrabbable];
+            ChangeHandsUI(selectedGrabbable);
         }
 
         /**
@@ -119,7 +121,7 @@ namespace BetoMaluje.Sikta
         }
 
         private void HandleTargetAquired(RaycastHit targetHit, bool onTarget)
-        {            
+        {
             if (onTarget)
             {
                 lastObject = targetHit.transform.GetComponentInChildren<MaterialColorChanger>();
@@ -146,8 +148,8 @@ namespace BetoMaluje.Sikta
 
                     Grabable grabable = targetHit.transform.GetComponentInChildren<Grabable>();
                     if (grabable != null && !grabable.isGrabbed())
-                    {                    
-                        PickupObject(grabable);                        
+                    {
+                        PickupObject(grabable);
                     }
                 }
             }
@@ -166,12 +168,11 @@ namespace BetoMaluje.Sikta
         private void PickupObject(Grabable grabable)
         {
             Transform hand = GetActiveHand();
-            Debug.Log("trying to pickup: " + hand);
-            if (hand != null && hand.childCount == 0) 
-            {                                
+            if (hand != null && hand.childCount == 0)
+            {
                 grabable.StartPickup(hand.position);
-            } 
-            else 
+            }
+            else
             {
                 // maybe throw one?
                 Debug.Log("can't pickup! hands full!: " + selectedGrabbable);
@@ -186,8 +187,11 @@ namespace BetoMaluje.Sikta
         {
             isFirePressed = true;
 
+            ITarget gun = GetActiveHand().GetComponentInChildren<ITarget>();
+            bool playerHasGun = gun != null;
+
             // if it doesn't have a gun, we return quickly
-            if (!HasGun())
+            if (!playerHasGun)
             {
                 return;
             }
@@ -200,15 +204,10 @@ namespace BetoMaluje.Sikta
             }
 
             if (!GameSettings.instance.usingNetwork)
-            {                
-                ITarget gun = playerHand.GetComponentInChildren<ITarget>();
+            {
+                gun.Shoot(aimPoint);
 
-                if (gun != null)
-                {
-                    gun.Shoot(aimPoint);
-
-                    lastShootingState = false;
-                }
+                lastShootingState = false;
             }
 
             // we mark the shooting point
@@ -220,7 +219,7 @@ namespace BetoMaluje.Sikta
                 aimPoint = shootHit.point;
 
                 Health healthTarget = shootHit.transform.gameObject.GetComponent<Health>();
-                Gun gunTarget = GetObjectFromHands<Gun>();
+                Gun gunTarget = GetActiveHand().GetComponent<Gun>();
 
                 if (gunTarget != null && healthTarget != null)
                 {
@@ -246,10 +245,12 @@ namespace BetoMaluje.Sikta
          */
         public void OnShootingChanged()
         {
-            ITarget gun = playerHand.GetComponentInChildren<ITarget>();
+            ITarget gun = GetActiveHand().GetComponentInChildren<ITarget>();
 
-            if (syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue() &&
-                gun != null)
+            bool remoteShootingPressed = syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue();
+            bool playerHasGun = gun != null;
+
+            if (remoteShootingPressed && playerHasGun)
             {
                 gun.Shoot(aimPoint);
 
@@ -262,30 +263,30 @@ namespace BetoMaluje.Sikta
         private void ThrowObject(int selectedGrabbable)
         {
             Debug.Log("trying to throw: " + selectedGrabbable);
-            Grabable gun = playerHand.GetComponentInChildren<Grabable>();
+            Grabable gun = GetActiveHand().GetComponentInChildren<Grabable>();
             if (gun != null)
             {
                 gun.StartThrow(throwForce, sceneCamera.transform.forward);
             }
         }
-        private T GetObjectFromHands<T>() 
+        private T GetObjectFromHands<T>()
         {
             foreach (Transform playerHand in playerHands)
             {
-                T searched = playerHand.GetComponent<T>();            
-                if (searched != null) 
-                {                    
+                T searched = playerHand.GetComponent<T>();
+                if (searched != null)
+                {
                     return searched;
                 }
 
                 T searched2 = playerHand.GetComponentInChildren<T>();
-                if (searched2 != null) 
+                if (searched2 != null)
                 {
                     return searched2;
                 }
 
                 T searched3 = playerHand.GetComponentInParent<T>();
-                if (searched3 != null) 
+                if (searched3 != null)
                 {
                     return searched3;
                 }
@@ -305,19 +306,28 @@ namespace BetoMaluje.Sikta
             }
         }
 
-        private void LateUpdate()
-        {
-            ChangeHandsUI(selectedGrabbable);
-        }
-
         private bool HasGun()
         {
-            Grabable weaponTarget = GetObjectFromHands<Grabable>();
+            foreach (Transform playerHand in playerHands)
+            {
+                Grabable searched = playerHand.GetComponent<Grabable>();
+                if (searched != null && searched.getTargetType().Equals(TargetType.Shootable))
+                {
+                    return true;
+                }
 
-            if (weaponTarget != null) 
-            {                    
-                return weaponTarget.getTargetType().Equals(TargetType.Shootable);
-            }            
+                Grabable searched2 = playerHand.GetComponentInChildren<Grabable>();
+                if (searched2 != null && searched2.getTargetType().Equals(TargetType.Shootable))
+                {
+                    return true;
+                }
+
+                Grabable searched3 = playerHand.GetComponentInParent<Grabable>();
+                if (searched3 != null && searched3.getTargetType().Equals(TargetType.Shootable))
+                {
+                    return true;
+                }
+            }
 
             return false;
         }
@@ -334,9 +344,9 @@ namespace BetoMaluje.Sikta
         public Transform FindAvailableHand()
         {
             foreach (Transform playerHand in playerHands)
-            {                
-                if (playerHand.childCount == 0) 
-                {                    
+            {
+                if (playerHand.childCount == 0)
+                {
                     return playerHand;
                 }
             }
@@ -352,17 +362,19 @@ namespace BetoMaluje.Sikta
                 if (i == selectedGrabbable)
                 {
                     hand.color = playerHandUIColor;
+                    hand.gameObject.transform.DOScale(1.3f, 0.25f);
                 }
                 else
                 {
                     hand.color = Color.white;
+                    hand.gameObject.transform.localScale = new Vector3(1, 1, 1);
                 }
-                i++;                
+                i++;
             }
         }
 
         public void ChangeHand()
-        {            
+        {
             if (selectedGrabbable == 0)
             {
                 // left hand
@@ -375,6 +387,7 @@ namespace BetoMaluje.Sikta
             }
 
             playerHand = playerHands[selectedGrabbable];
+            ChangeHandsUI(selectedGrabbable);
 
             Debug.Log("manual hand selected: " + selectedGrabbable);
         }
@@ -392,8 +405,8 @@ namespace BetoMaluje.Sikta
             {
                 return;
             }
-       
-            grabbables.Add(grabable);        
+
+            grabbables.Add(grabable);
         }
 
         public void RemoveGrabable(Grabable grabable)
@@ -404,14 +417,15 @@ namespace BetoMaluje.Sikta
                 Debug.Log("thrown remove: " + selectedGrabbable);
                 grabbables.Remove(searched);
                 // only if we are not in the first hand, we change it
-                if (selectedGrabbable == 1) 
+                if (selectedGrabbable == 1)
                 {
                     ChangeHand();
                 }
             }
         }
 
-        private bool PlayerReachedMaxItems() {
+        private bool PlayerReachedMaxItems()
+        {
             return grabbables.Count >= maxGrabbables;
         }
 

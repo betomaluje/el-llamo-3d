@@ -24,7 +24,7 @@ public abstract class Gun : Grabable, ITarget
     private void FixedUpdate()
     {
         if (getParentTransform().parent != null)
-        {        
+        {
             transform.localPosition = Vector3.zero;
         }
     }

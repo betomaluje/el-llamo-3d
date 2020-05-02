@@ -9,7 +9,7 @@ public class ThrowableRagdoll : Grabable
     private void FixedUpdate()
     {
         if (getParentTransform().parent != null)
-        {        
+        {
             parentTransform.localPosition = Vector3.zero;
         }
     }
