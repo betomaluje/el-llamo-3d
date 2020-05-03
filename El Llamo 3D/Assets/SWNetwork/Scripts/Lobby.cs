@@ -32,7 +32,7 @@ public class Lobby : MonoBehaviour
 
     public TextMeshProUGUI errorLogText;
 
-    public SceneNumbers selectedLevel = SceneNumbers.Menu;
+    public SceneNumbers selectedLevel = SceneNumbers.Lobby;
 
     void Start()
     {

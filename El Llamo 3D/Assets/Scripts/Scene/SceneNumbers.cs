@@ -1,7 +1,7 @@
 ﻿[System.Serializable]
 public enum SceneNumbers
 {
-    Menu,
+    Lobby,
     Adventure,
     Viking
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -59,7 +60,7 @@ public class SoundManager : MonoBehaviour
         s.source.Play();
     }
 
-    public void Stop(string name) 
+    public void Stop(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
@@ -70,11 +71,40 @@ public class SoundManager : MonoBehaviour
         s.source.Stop();
     }
 
-    public void StopAll() 
+    public void StopAll()
     {
         foreach (Sound s in sounds)
         {
             s.source.Stop();
         }
+    }
+
+    public void SetVolumeForType(SoundType soundType, float volume)
+    {
+        Sound[] soundsOfType = Array.FindAll(sounds, sound => sound.soundType == soundType && sound.source != null);
+        if (soundsOfType == null || soundsOfType.Length <= 0)
+        {
+            Debug.LogWarning("Sounds of type " + soundType.ToString() + " not found");
+            return;
+        }
+
+        foreach (Sound s in soundsOfType)
+        {
+            s.source.volume = volume;
+        }
+    }
+
+    public float GetVolumeForType(SoundType soundType)
+    {
+        Sound[] soundsOfType = Array.FindAll(sounds, sound => sound.soundType == soundType && sound.source != null);
+        if (soundsOfType == null || soundsOfType.Length <= 0)
+        {
+            Debug.LogWarning("Sounds of type " + soundType.ToString() + " not found");
+            return 0.4f;
+        }
+
+        soundsOfType = soundsOfType.OrderBy(x => x.volume).ToArray();
+
+        return soundsOfType[0].volume;
     }
 }

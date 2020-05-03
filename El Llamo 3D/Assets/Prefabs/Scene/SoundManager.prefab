@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Shoot
+    soundType: 0
     clip: {fileID: 8300000, guid: 2e686eaacc1f2a14cab472dc7dc9030c, type: 3}
     volume: 0.5
     pitch: 1
@@ -52,6 +53,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Jump
+    soundType: 0
     clip: {fileID: 8300000, guid: 0b60434a932031547b6ad29c5bf00441, type: 3}
     volume: 0.5
     pitch: 1
@@ -59,6 +61,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Explosion
+    soundType: 0
     clip: {fileID: 8300000, guid: 594adfe596e929342813aa24c36d5699, type: 3}
     volume: 0.5
     pitch: 1
@@ -66,6 +69,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Throw
+    soundType: 0
     clip: {fileID: 8300000, guid: 0b79094ef773d0b478cc3667bfa12393, type: 3}
     volume: 0.5
     pitch: 1
@@ -73,6 +77,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Pickup
+    soundType: 0
     clip: {fileID: 8300000, guid: 40909ae62fc4451418e4f7fad6c7e46e, type: 3}
     volume: 0.5
     pitch: 1
@@ -80,6 +85,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Theme_Menu
+    soundType: 1
     clip: {fileID: 8300000, guid: 4c49560e24851434c80f05df924778ba, type: 3}
     volume: 0.4
     pitch: 1
@@ -87,6 +93,7 @@ MonoBehaviour:
     loop: 1
     source: {fileID: 0}
   - name: Theme_Adventure
+    soundType: 1
     clip: {fileID: 8300000, guid: 77d214b9f97df40babb729c2a059b05c, type: 3}
     volume: 0.4
     pitch: 1
@@ -94,6 +101,7 @@ MonoBehaviour:
     loop: 1
     source: {fileID: 0}
   - name: Theme_Viking
+    soundType: 1
     clip: {fileID: 8300000, guid: 7ec6a28ae08244083806cda345f57a53, type: 3}
     volume: 0.4
     pitch: 1
