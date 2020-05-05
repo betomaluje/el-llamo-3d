@@ -17,7 +17,7 @@ jobs:
         projectPath:
           - el-llamo-3d
         unityVersion:
-          - 2019.3.3f1
+          - 2019.3.12f1
         targetPlatform:
           - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
           - StandaloneWindows # Build a Windows standalone.
