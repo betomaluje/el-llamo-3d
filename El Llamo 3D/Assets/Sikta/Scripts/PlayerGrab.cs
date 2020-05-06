@@ -184,9 +184,11 @@ namespace BetoMaluje.Sikta
             isFirePressed = true;
 
             ITarget gun = GetGunInActiveHand();
-            bool playerHasGun = gun != null;
-
-
+            // if it doesn't have a gun, we return quickly
+            if (gun == null)
+            {
+                return;
+            }
 
             // regardless if it is on target or not, we need to sync the shooting action
             if (isFirePressed != lastShootingState)
@@ -197,10 +199,7 @@ namespace BetoMaluje.Sikta
 
             if (!GameSettings.instance.usingNetwork)
             {
-                if (gun != null)
-                {
-                    gun.Shoot(aimPoint);
-                }
+                gun.Shoot(aimPoint);
 
                 lastShootingState = false;
             }
@@ -212,7 +211,6 @@ namespace BetoMaluje.Sikta
             if (shootingTarget.onTarget)
             {
                 aimPoint = shootHit.point;
-
 
                 Gun gunTarget = GetActiveHand().GetComponentInChildren<Gun>();
 
@@ -227,12 +225,12 @@ namespace BetoMaluje.Sikta
                         healthTarget.PerformDamage(damage);
                     }
 
-                    CorpseHealth corpseHealth = shootHit.transform.gameObject.GetComponent<CorpseHealth>();
+                    CorpseHealth corpseHealth = shootHit.transform.gameObject.GetComponentInParent<CorpseHealth>();
 
                     if (corpseHealth != null)
                     {
                         Debug.Log("Impact on corpse");
-                        corpseHealth.PerformDamage(damage);
+                        corpseHealth.PerformDamage(damage, shootHit.point);
                     }
 
                     if (shootHit.rigidbody != null)

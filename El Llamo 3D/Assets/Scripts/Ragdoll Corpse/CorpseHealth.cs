@@ -4,14 +4,14 @@ using UnityEngine;
 public class CorpseHealth : MonoBehaviour
 {
     [SerializeField] private GameObject bloodDamagePrefab;
-    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private GameObject explodingCorpsePrefab;
+    [SerializeField] private int maxHealth = 30;
 
     private int currentHealth;
 
     #region Network
 
     private NetworkID networkID;
-    private SyncPropertyAgent syncPropertyAgent;
     private RemoteEventAgent remoteEventAgent;
 
     const string HEALTH = "Hp";
@@ -23,14 +23,13 @@ public class CorpseHealth : MonoBehaviour
     void Start()
     {
         networkID = GetComponent<NetworkID>();
-        syncPropertyAgent = GetComponent<SyncPropertyAgent>();
         remoteEventAgent = GetComponent<RemoteEventAgent>();
+
+        currentHealth = maxHealth;
     }
 
-    public void PerformDamage(int damage)
+    public void PerformDamage(int damage, Vector3 impactPosition)
     {
-        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
-
         currentHealth -= damage;
 
         // if hp is lower than 0, set it to 0.
@@ -40,19 +39,26 @@ public class CorpseHealth : MonoBehaviour
         }
 
         // Apply damage and modify the "hp" SyncProperty.
-        syncPropertyAgent?.Modify(HEALTH, currentHealth);
+        SWNetworkMessage msg = new SWNetworkMessage();
+        // current health
+        msg.Push((float)currentHealth);
+        // blood position
+        msg.Push(impactPosition);
+        remoteEventAgent.Invoke(HEALTH, msg);
     }
 
-    public void OnHpChanged()
+    /**
+     * Called from the SyncPropertyAgent on the editor
+     */
+    public void OnHPChanged(SWNetworkMessage msg)
     {
-        // Update the hpSlider when player hp changes
-        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
-
-        Debug.Log("remote hp: " + currentHealth);
+        currentHealth = (int)msg.PopFloat();
 
         if (currentHealth != maxHealth)
         {
-            Instantiate(bloodDamagePrefab, transform.position, transform.rotation);
+            Vector3 impactPosition = msg.PopVector3();
+
+            Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
         }
 
         if (networkID.IsMine && currentHealth <= 0)
@@ -65,9 +71,9 @@ public class CorpseHealth : MonoBehaviour
     public void Die()
     {
         // destroy corpse
-        Debug.Log("corpse dead");
-
         transform.parent = null;
+
+        ExplodeCorpse explodeScript = Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
         Destroy(gameObject);
     }
 }

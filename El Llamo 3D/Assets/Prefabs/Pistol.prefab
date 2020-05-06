@@ -321,7 +321,7 @@ MonoBehaviour:
   shootingPosition: {fileID: 4422581084064617564}
   fireRate: 3
   maxDamage: 30
-  impactForce: 300
+  impactForce: 600
   recoilAmount: 0.3
   recoilDuration: 0.3
   gunEffects: {fileID: 5261114529770976236}
