@@ -142,7 +142,7 @@ namespace BetoMaluje.Sikta
                     }
                     lastObject = null;
 
-                    Grabable grabable = targetHit.transform.GetComponentInChildren<Grabable>();
+                    Grabable grabable = targetHit.transform.root.GetComponentInChildren<Grabable>();
                     if (grabable != null && !grabable.isGrabbed())
                     {
                         PickupObject(grabable);

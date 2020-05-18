@@ -1,19 +1,28 @@
 ﻿using SWNetwork;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameSceneManager : MonoBehaviour
 {
+    [Header("Guns")]
     [SerializeField] private int amountOfGuns = 4;
-    [SerializeField] private Transform[] nonPlayerPositions;
+    [SerializeField] private Transform[] gunsPositions;
 
+    [Space]
+    [Header("Enemies")]
+    [SerializeField] private int amountOfEnemies = 4;
+    [SerializeField] private Transform[] enemiesPositions;
+
+    [Space]
     [Header("Ragdoll Debug")]
     [SerializeField] private KeyCode ragdoll;
     [SerializeField] private Transform ragdollPosition;
     [SerializeField] private GameObject ragdollCorpse;
 
-    private int totaPlayerSpawnPoints = 0;
-    private int totaNonPlayerSpawnPoints = 0;
+    private int totalPlayerSpawnPoints = 0;
+    private int totalGunsSpawnPoints = 0;
+    private int totalEnemiesSpawnPoints = 0;
 
     private bool spawningRagdoll = false;
 
@@ -50,14 +59,20 @@ public class GameSceneManager : MonoBehaviour
             // We randomly select a SpawnPoint and ask the SceneSpawner to spawn a Player GameObject. 
             // we have 1 playerPrefabs so playerPrefabIndex is 0.
             // We have 2 spawnPoints so we generated a random int between 0 to 1.
-            totaPlayerSpawnPoints = sceneSpawner.NumberOfSpawnPoints;
+            totalPlayerSpawnPoints = sceneSpawner.NumberOfSpawnPoints;
 
-            int spawnPointIndex = GetSpawnPoint();
+            int spawnPointIndex = GetRandomSpawnPoint(totalPlayerSpawnPoints);
             sceneSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
 
-            totaNonPlayerSpawnPoints = nonPlayerPositions.Length;
+            // we get the possible total guns to spawn
+            totalGunsSpawnPoints = gunsPositions.Length;
 
             SpawnGuns(sceneSpawner);
+
+            // we get the possible total enemies to spawn
+            totalEnemiesSpawnPoints = enemiesPositions.Length;
+
+            SpawnEnemies(sceneSpawner);
 
             // Tell the spawner that we have finished setting up the scene. 
             // alreadySetup will be true when SceneSpawn becomes ready next time.
@@ -65,32 +80,38 @@ public class GameSceneManager : MonoBehaviour
         }
     }
 
+    private void SpawnEnemies(SceneSpawner sceneSpawner)
+    {
+        for (int i = 0; i < amountOfEnemies; i++)
+        {
+            int enemySpawnPointIndex = GetRandomSpawnPoint(totalEnemiesSpawnPoints);
+            Vector3 position = enemiesPositions[enemySpawnPointIndex].position;
+            sceneSpawner.SpawnForNonPlayer(NonPlayerIndexes.Enemy_Business, position, Quaternion.identity);
+        }
+    }
+
     private void SpawnGuns(SceneSpawner sceneSpawner)
     {
         for (int i = 0; i < amountOfGuns; i++)
         {
-            int gunSpawnPointIndex = GetNonPlayerSpawnPoint();
-            Vector3 position = nonPlayerPositions[gunSpawnPointIndex].position;
+            int gunSpawnPointIndex = GetRandomSpawnPoint(totalGunsSpawnPoints);
+            Vector3 position = gunsPositions[gunSpawnPointIndex].position;
             sceneSpawner.SpawnForNonPlayer(NonPlayerIndexes.Gun, position, Quaternion.identity);
         }
     }
 
-    private int GetSpawnPoint()
+    private int GetRandomSpawnPoint(int totalPoints)
     {
-        if (totaPlayerSpawnPoints <= 0)
+        if (totalPoints == 0)
         {
-            totaPlayerSpawnPoints = 2;
+            return 0;
         }
-        return Random.Range(0, totaPlayerSpawnPoints - 1);
-    }
 
-    private int GetNonPlayerSpawnPoint()
-    {
-        if (totaNonPlayerSpawnPoints <= 0)
+        if (totalPoints <= 0)
         {
-            totaNonPlayerSpawnPoints = 2;
+            totalPoints = 2;
         }
-        return Random.Range(0, totaNonPlayerSpawnPoints - 1);
+        return Random.Range(0, totalPoints - 1);
     }
 
     /**
@@ -106,7 +127,7 @@ public class GameSceneManager : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
 
         // Respawn the player at a random SpawnPoint
-        int spawnPointIndex = GetSpawnPoint();
+        int spawnPointIndex = GetRandomSpawnPoint(totalPlayerSpawnPoints);
         NetworkClient.Instance.LastSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
     }
 }

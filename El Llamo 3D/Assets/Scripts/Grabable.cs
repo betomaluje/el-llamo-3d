@@ -4,7 +4,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-[RequireComponent(typeof(RemoteEventAgent))]
 public abstract class Grabable : MonoBehaviour, IGrab
 {
     [Space]
@@ -63,6 +62,12 @@ public abstract class Grabable : MonoBehaviour, IGrab
         if (rb == null || col == null)
         {
             return;
+        }
+
+        EnemyGrab enemyGrab = getParentTransform().GetComponent<EnemyGrab>();
+        if (enemyGrab != null)
+        {
+            enemyGrab.DoRagdoll(isTargetGrabbed);
         }
 
         rb.isKinematic = isTargetGrabbed;

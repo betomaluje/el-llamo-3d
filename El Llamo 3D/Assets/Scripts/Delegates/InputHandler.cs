@@ -56,17 +56,7 @@ public class InputHandler : MonoBehaviour
         // check if user is pressing the Fire button
         if (Input.GetMouseButtonDown(0))
         {
-            // check if a target has been clicked on
-            RaycastHit shootHit;
-            Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);            
-
-            // this bool check if we hit something that is "shootable" according to the shootingLayer layer mask
-            bool onTarget = Physics.Raycast(ray, out shootHit, shootingDistance, shootingLayer);    
-
-            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.yellow);
-
-            // now we send the Action to all listeners
-            shootingTarget(new ShootingTarget(ray, shootHit, onTarget, shootingDistance));
+            HandleShootingPointer();
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -83,14 +73,49 @@ public class InputHandler : MonoBehaviour
             secondaryReleaseCallback();
         }
 
-        RaycastHit targetHit;
-        Ray targetRay = sceneCamera.ScreenPointToRay(Input.mousePosition);
+        HandleTargetPointer();
+    }
+
+    private void HandleShootingPointer()
+    {
+        // check if a target has been clicked on
+        RaycastHit hit;
+        Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+
+        // this bool check if we hit something that is "shootable" according to the shootingLayer layer mask
+        bool onTarget = Physics.Raycast(ray, out hit, shootingDistance, shootingLayer);
+
+        if (onTarget)
+        {
+            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.red);
+        }
+        else
+        {
+            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.grey);
+        }
+
+        // now we send the Action to all listeners
+        shootingTarget(new ShootingTarget(ray, hit, onTarget, shootingDistance));
+    }
+
+    private void HandleTargetPointer()
+    {
+        RaycastHit hit;
+        Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 
         // this bool check if we hit something that is "target" according to the targetLayer layer mask
-        bool onTargetTarget = Physics.Raycast(targetRay, out targetHit, grabDistance, targetLayer);
+        bool onTarget = Physics.Raycast(ray, out hit, grabDistance, targetLayer);
 
-        Debug.DrawRay(targetRay.origin, targetRay.direction * grabDistance, Color.red);
+        if (onTarget)
+        {
+            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.yellow);
+        }
+        else
+        {
+            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.grey);
+        }
 
-        targetAquired(targetHit, onTargetTarget);
+        targetAquired(hit, onTarget);
     }
+
 }

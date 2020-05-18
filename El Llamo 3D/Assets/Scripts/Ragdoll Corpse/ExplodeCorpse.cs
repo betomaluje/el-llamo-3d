@@ -12,16 +12,12 @@ public class ExplodeCorpse : MonoBehaviour
 
     private void Explode()
     {
-        Transform[] childs = GetComponentsInChildren<Transform>();
+        Rigidbody[] childs = GetComponentsInChildren<Rigidbody>(true);
 
-        foreach (Transform t in childs)
+        foreach (Rigidbody rb in childs)
         {
-            Rigidbody rb = t.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                Vector3 direction = -t.forward;
-                rb.AddExplosionForce(force, direction, radius);
-            }
+            Vector3 direction = -rb.transform.forward;
+            rb.AddExplosionForce(force, direction, radius);
         }
     }
 }
