@@ -21,10 +21,10 @@ public class Health : MonoBehaviour
     private SyncPropertyAgent syncPropertyAgent;
     private RemoteEventAgent remoteEventAgent;
 
-    const string HEALTH = "Hp";
-    const string KILLED_EVENT = "killed";
-    const string DIE_EVENT = "die";
-    const string THROW_GUN_EVENT = "dead_throw_gun";
+    private const string HEALTH_CHANGED = "health_changed";
+    private const string KILLED_EVENT = "killed";
+    private const string DIE_EVENT = "die";
+    private const string THROW_GUN_EVENT = "dead_throw_gun";
 
     #endregion
 
@@ -42,6 +42,19 @@ public class Health : MonoBehaviour
         remoteEventAgent = GetComponent<RemoteEventAgent>();
     }
 
+    public void GiveHealth(int amount)
+    {
+        int newHealth = currentHealth + amount;
+
+        if (newHealth > maxHealth)
+        {
+            newHealth = maxHealth;
+        }
+
+        // Apply damage and modify the "heal" SyncProperty.
+        syncPropertyAgent?.Modify(HEALTH_CHANGED, newHealth);
+    }
+
     public void PerformDamage(int damage)
     {
         if (isPlayerInmune)
@@ -49,36 +62,43 @@ public class Health : MonoBehaviour
             return;
         }
 
-        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
-
-        currentHealth -= damage;
+        //currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).GetIntValue();
+        int newHealth = currentHealth - damage;
 
         // if hp is lower than 0, set it to 0.
-        if (currentHealth < 0)
+        if (newHealth < 0)
         {
-            currentHealth = 0;
+            newHealth = 0;
         }
 
-        // Apply damage and modify the "hp" SyncProperty.
-        syncPropertyAgent?.Modify(HEALTH, currentHealth);
+        // Apply damage and modify the "damage" SyncProperty.
+        syncPropertyAgent?.Modify(HEALTH_CHANGED, newHealth);
     }
 
-    public void OnHpChanged()
+    public void RemoteHealthChanged()
     {
         // Update the hpSlider when player hp changes
-        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
+        int newHealth = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).GetIntValue();
+
+        bool wasPlayerDamaged = newHealth < currentHealth;
+        currentHealth = newHealth;
         CalculatePercentage();
 
-        if (currentHealth != maxHealth)
+        if (wasPlayerDamaged)
         {
+            // damaged performed
             Instantiate(bloodDamagePrefab, transform.position, transform.rotation);
         }
+        else
+        {
+            // healing. Do nothing for now
+        }
 
-        if (networkID.IsMine)
+        if (networkID.IsMine && wasPlayerDamaged)
         {
             cameraShake.actionShakeCamera();
 
-            if (currentHealth <= 0)
+            if (newHealth <= 0)
             {
                 // invoke the "killed" remote event when hp is 0. 
                 remoteEventAgent.Invoke(KILLED_EVENT);
@@ -88,13 +108,13 @@ public class Health : MonoBehaviour
 
     public void OnHpReady()
     {
-        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH).GetIntValue();
-        int version = syncPropertyAgent.GetPropertyWithName(HEALTH).version;
+        currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).GetIntValue();
+        int version = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).version;
 
         // If version is 0, you can call the Modify() method on the SyncPropertyAgent to initialize player's hp to maxHp.
         if (version == 0)
         {
-            syncPropertyAgent.Modify(HEALTH, maxHealth);
+            syncPropertyAgent.Modify(HEALTH_CHANGED, maxHealth);
             currentHealth = maxHealth;
         }
 
@@ -223,7 +243,7 @@ public class Health : MonoBehaviour
         transform.DOMoveY(resetY, 1f);
         transform.DORotate(currentRotation, .25f);
 
-        syncPropertyAgent.Modify(HEALTH, maxHealth);
+        syncPropertyAgent.Modify(HEALTH_CHANGED, maxHealth);
         currentHealth = maxHealth;
         CalculatePercentage();
 

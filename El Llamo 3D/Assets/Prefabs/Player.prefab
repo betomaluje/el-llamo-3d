@@ -1119,13 +1119,13 @@ MonoBehaviour:
   m_ApplyBeforeBody: 0
   m_RecenterTarget: 0
   m_VerticalAxis:
-    Value: 0
+    Value: -13.915263
     m_SpeedMode: 0
     m_MaxSpeed: 250
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
-    m_InputAxisValue: 0
+    m_InputAxisValue: -0.1
     m_InvertInput: 1
     m_MinValue: -70
     m_MaxValue: 70
@@ -1149,7 +1149,7 @@ MonoBehaviour:
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
-    m_InputAxisValue: 0
+    m_InputAxisValue: -0.05
     m_InvertInput: 0
     m_MinValue: 0
     m_MaxValue: 0
@@ -1657,7 +1657,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - Foldout: 1
-    name: Hp
+    name: health_changed
     type: 2
     conflictResolution: 0
     data: 
@@ -1665,7 +1665,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 644223966757249534}
-          m_MethodName: OnHpChanged
+          m_MethodName: RemoteHealthChanged
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
