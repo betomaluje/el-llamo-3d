@@ -108,3 +108,11 @@ MonoBehaviour:
     spatialBlend: 0
     loop: 1
     source: {fileID: 0}
+  - name: Heal
+    soundType: 0
+    clip: {fileID: 8300000, guid: b2e11458a34507449aad836f078ecf72, type: 3}
+    volume: 0.4
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}

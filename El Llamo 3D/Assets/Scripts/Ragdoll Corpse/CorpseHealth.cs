@@ -75,6 +75,7 @@ public class CorpseHealth : MonoBehaviour
 
         ExplodeCorpse explodeScript = Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
         Destroy(gameObject);
+        networkID.Destroy();
     }
 }
 

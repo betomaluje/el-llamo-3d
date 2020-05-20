@@ -4,7 +4,8 @@ public class HealthPotion : MonoBehaviour
 {
     [SerializeField] private LayerMask healingLayer;
     [SerializeField] private int healthAmount = 10;
-    [SerializeField] private GameObject healParticles;
+    [SerializeField] private GameObject[] healParticles;
+    [SerializeField] private bool instantiateNew = true;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,7 +23,20 @@ public class HealthPotion : MonoBehaviour
             health.GiveHealth(healthAmount);
         }
 
-        Instantiate(healParticles, transform.position, Quaternion.identity);
+        SoundManager.instance.Play("Heal");
+
+        foreach (GameObject particle in healParticles)
+        {
+            if (instantiateNew)
+            {
+                Instantiate(particle, Camera.main.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                particle.SetActive(true);
+            }
+        }
+
         Destroy(gameObject);
     }
 }

@@ -189,7 +189,7 @@ public class Health : MonoBehaviour
 
     private void CreateRagdoll()
     {
-        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer(NonPlayerIndexes.Ragdoll_Corpse, transform.position, Quaternion.identity);
+        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, transform.position, Quaternion.identity);
         /*
         SWNetworkMessage msg = new SWNetworkMessage();
         msg.Push(transform.position);

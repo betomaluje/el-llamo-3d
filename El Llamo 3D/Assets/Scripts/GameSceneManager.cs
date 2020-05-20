@@ -5,14 +5,19 @@ using Random = UnityEngine.Random;
 
 public class GameSceneManager : MonoBehaviour
 {
-    [Header("Guns")]
-    [SerializeField] private int amountOfGuns = 4;
-    [SerializeField] private Transform[] gunsPositions;
+    [System.Serializable]
+    public class SpawnObject
+    {
+        public NonPlayerIndexes type;
+        public int amountToSpawn = 4;
+        public Transform[] positions;
+    }
 
-    [Space]
-    [Header("Enemies")]
-    [SerializeField] private int amountOfEnemies = 4;
-    [SerializeField] private Transform[] enemiesPositions;
+    [SerializeField] private SpawnObject guns;
+
+    [SerializeField] private SpawnObject enemies;
+
+    [SerializeField] private SpawnObject healthItems;
 
     [Space]
     [Header("Ragdoll Debug")]
@@ -20,11 +25,9 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private Transform ragdollPosition;
     [SerializeField] private GameObject ragdollCorpse;
 
-    private int totalPlayerSpawnPoints = 0;
-    private int totalGunsSpawnPoints = 0;
-    private int totalEnemiesSpawnPoints = 0;
-
     private bool spawningRagdoll = false;
+
+    private int totalPlayerSpawnPoints;
 
     private void Update()
     {
@@ -36,7 +39,7 @@ public class GameSceneManager : MonoBehaviour
             {
                 if (GameSettings.instance.usingNetwork)
                 {
-                    NetworkClient.Instance.LastSpawner.SpawnForNonPlayer(NonPlayerIndexes.Ragdoll_Corpse, ragdollPosition.position, Quaternion.identity);
+                    NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, ragdollPosition.position, Quaternion.identity);
                 }
                 else
                 {
@@ -64,15 +67,14 @@ public class GameSceneManager : MonoBehaviour
             int spawnPointIndex = GetRandomSpawnPoint(totalPlayerSpawnPoints);
             sceneSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
 
-            // we get the possible total guns to spawn
-            totalGunsSpawnPoints = gunsPositions.Length;
+            // we spawn guns
+            PutObject(sceneSpawner, guns);
 
-            SpawnGuns(sceneSpawner);
+            // we spawn enemies
+            PutObject(sceneSpawner, enemies);
 
-            // we get the possible total enemies to spawn
-            totalEnemiesSpawnPoints = enemiesPositions.Length;
-
-            SpawnEnemies(sceneSpawner);
+            // we spawn health items
+            PutObject(sceneSpawner, healthItems);
 
             // Tell the spawner that we have finished setting up the scene. 
             // alreadySetup will be true when SceneSpawn becomes ready next time.
@@ -80,23 +82,18 @@ public class GameSceneManager : MonoBehaviour
         }
     }
 
-    private void SpawnEnemies(SceneSpawner sceneSpawner)
+    private void PutObject(SceneSpawner sceneSpawner, SpawnObject spawnObject)
     {
-        for (int i = 0; i < amountOfEnemies; i++)
+        int totalAmount = spawnObject.amountToSpawn;
+        Debug.Log("spawning " + spawnObject.type.ToString());
+        for (int i = 0; i < totalAmount; i++)
         {
-            int enemySpawnPointIndex = GetRandomSpawnPoint(totalEnemiesSpawnPoints);
-            Vector3 position = enemiesPositions[enemySpawnPointIndex].position;
-            sceneSpawner.SpawnForNonPlayer(NonPlayerIndexes.Enemy_Business, position, Quaternion.identity);
-        }
-    }
-
-    private void SpawnGuns(SceneSpawner sceneSpawner)
-    {
-        for (int i = 0; i < amountOfGuns; i++)
-        {
-            int gunSpawnPointIndex = GetRandomSpawnPoint(totalGunsSpawnPoints);
-            Vector3 position = gunsPositions[gunSpawnPointIndex].position;
-            sceneSpawner.SpawnForNonPlayer(NonPlayerIndexes.Gun, position, Quaternion.identity);
+            // we get a random position index to use
+            int index = GetRandomSpawnPoint(totalAmount);
+            // we use that index to get a random position from the array
+            Vector3 position = spawnObject.positions[index].position;
+            // we spawn the object using the Type of object to use
+            sceneSpawner.SpawnForNonPlayer((int)spawnObject.type, position, Quaternion.identity);
         }
     }
 

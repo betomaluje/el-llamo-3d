@@ -1,6 +1,8 @@
-﻿using SWNetwork;
+﻿using BetoMaluje.Sikta;
+using Cinemachine;
+using SWNetwork;
+using System.Collections;
 using UnityEngine;
-using BetoMaluje.Sikta;
 
 public class MouseLook : MonoBehaviour
 {
@@ -11,16 +13,22 @@ public class MouseLook : MonoBehaviour
 
     [Header("Zoom")]
     [SerializeField] private KeyCode zoomKey;
+    [SerializeField] private float finalZoom = 10f;
 
     private float verticleAngle = 0f;
 
+    private CinemachineVirtualCamera vcam;
+
     private NetworkID networkID;
     public Vector2 aiming;
-    private bool isZoomPressed = false;
+    private float originalZoom;
 
     void Start()
     {
         networkID = GetComponent<NetworkID>();
+        vcam = GetComponentInChildren<CinemachineVirtualCamera>(true);
+
+        originalZoom = vcam.m_Lens.FieldOfView;
 
         aiming = new Vector2();
 
@@ -29,17 +37,19 @@ public class MouseLook : MonoBehaviour
     }
 
     void Update()
-    {        
+    {
         if (networkID.IsMine || !GameSettings.instance.usingNetwork)
         {
             aiming.x = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             aiming.y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-            isZoomPressed = Input.GetKeyDown(zoomKey);
-
-            if (isZoomPressed)
+            if (Input.GetKeyDown(zoomKey))
             {
-                CheckPressZoom();
+                StartCoroutine(CheckPressZoom(true));
+            }
+            else if (Input.GetKeyUp(zoomKey))
+            {
+                StartCoroutine(CheckPressZoom(false));
             }
         }
     }
@@ -64,9 +74,29 @@ public class MouseLook : MonoBehaviour
         playerBody.Rotate(Vector3.up * mouseX);
     }
 
-    private void CheckPressZoom()
+    private IEnumerator CheckPressZoom(bool isZoomPressed)
     {
-        Debug.Log("Changing camera zoom");
+        float targetZoom;
+
+        if (isZoomPressed)
+        {
+            targetZoom = finalZoom;
+        }
+        else
+        {
+            targetZoom = originalZoom;
+        }
+
+        float updateSpeedSeconds = 0.2f;
+        float elapsed = 0f;
+        float currentZoom = vcam.m_Lens.FieldOfView;
+
+        while (elapsed < updateSpeedSeconds)
+        {
+            elapsed += Time.deltaTime;
+            vcam.m_Lens.FieldOfView = Mathf.Lerp(currentZoom, targetZoom, elapsed / updateSpeedSeconds);
+            yield return null;
+        }
     }
 
 }

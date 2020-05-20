@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SWNetwork;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyFollow : MonoBehaviour
@@ -11,27 +12,35 @@ public class EnemyFollow : MonoBehaviour
 
     private NavMeshAgent agent;
 
+    private NetworkID networkID;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        networkID = GetComponent<NetworkID>();
     }
 
     private void Update()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, radius, attackLayer);
-        if (colliders != null && colliders.Length > 0)
-        {
-            transformToFollow = colliders[0].transform.root;
-        }
-        else
-        {
-            transformToFollow = null;
-        }
+        agent.enabled = networkID.IsMine;
 
-        if (transformToFollow != null)
+        if (networkID.IsMine)
         {
-            // follow the player
-            agent.destination = transformToFollow.position;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, radius, attackLayer);
+            if (colliders != null && colliders.Length > 0)
+            {
+                transformToFollow = colliders[0].transform.root;
+            }
+            else
+            {
+                transformToFollow = null;
+            }
+
+            if (transformToFollow != null)
+            {
+                // follow the player
+                agent.destination = transformToFollow.position;
+            }
         }
     }
 
