@@ -1372,6 +1372,7 @@ MonoBehaviour:
   playerBody: {fileID: 5836814044747114709}
   playerGrab: {fileID: 4419335375198168097}
   zoomKey: 113
+  finalZoom: 10
   aiming: {x: 0, y: 0}
 --- !u!114 &644223966757249534
 MonoBehaviour:
@@ -1488,8 +1489,8 @@ MonoBehaviour:
     smoothLevel: 1
     snapDistance: 20
     readFunction: 0
-    bandwidth: 8
-    padding: 3
+    bandwidth: 6
+    padding: 5
     pos_x_setting:
       enabled: 1
       min: -250
@@ -1515,7 +1516,7 @@ MonoBehaviour:
       minInt: -300
       maxInt: 300
     rot_x_setting:
-      enabled: 1
+      enabled: 0
       min: -300
       max: 300
       resolution: 1
@@ -1531,7 +1532,7 @@ MonoBehaviour:
       minInt: -300
       maxInt: 300
     rot_z_setting:
-      enabled: 1
+      enabled: 0
       min: -300
       max: 300
       resolution: 1
@@ -1616,7 +1617,7 @@ MonoBehaviour:
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
   syncTransFormFoldout: 1
-  syncAnimatorFoldout: 0
+  syncAnimatorFoldout: 1
   restoreState: 1
 --- !u!114 &1540597783966594581
 MonoBehaviour:

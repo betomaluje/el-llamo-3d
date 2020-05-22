@@ -1421,7 +1421,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: -0.18
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 3
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &8319172693054377092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1457,15 +1457,15 @@ MonoBehaviour:
   syncedTransform:
     interpolate: 25
     smoothLevel: 1
-    snapDistance: 20
+    snapDistance: 2
     readFunction: 0
-    bandwidth: 8
-    padding: 3
+    bandwidth: 7
+    padding: 4
     pos_x_setting:
       enabled: 1
       min: -250
       max: 250
-      resolution: 2
+      resolution: 3
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -1473,7 +1473,7 @@ MonoBehaviour:
       enabled: 1
       min: 0
       max: 20
-      resolution: 2
+      resolution: 3
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -1481,12 +1481,12 @@ MonoBehaviour:
       enabled: 1
       min: -250
       max: 250
-      resolution: 2
+      resolution: 3
       valueType: 0
       minInt: -300
       maxInt: 300
     rot_x_setting:
-      enabled: 1
+      enabled: 0
       min: -300
       max: 300
       resolution: 1
@@ -1502,7 +1502,7 @@ MonoBehaviour:
       minInt: -300
       maxInt: 300
     rot_z_setting:
-      enabled: 1
+      enabled: 0
       min: -300
       max: 300
       resolution: 1
@@ -1551,7 +1551,7 @@ MonoBehaviour:
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
   syncTransFormFoldout: 1
-  syncAnimatorFoldout: 1
+  syncAnimatorFoldout: 0
   restoreState: 1
 --- !u!114 &8319172693054377095
 MonoBehaviour:

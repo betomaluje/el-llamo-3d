@@ -24,8 +24,10 @@ public class SoundMenu : MonoBehaviour
     [SerializeField] private Slider soundsSlider;
     [SerializeField] private TextMeshProUGUI songsValue;
 
-    private const string PREFS_SFX = "sound_sfx";
-    private const string PREFS_SONG = "sound_song";
+    [HideInInspector]
+    public const string PREFS_SFX = "sound_sfx";
+    [HideInInspector]
+    public const string PREFS_SONG = "sound_song";
 
     private bool isPanelActive;
     private int currentScene = 0;

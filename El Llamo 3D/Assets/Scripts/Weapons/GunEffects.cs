@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class GunEffects : MonoBehaviour
 {
-    public LineRenderer gunLine;
-    public ParticleSystem gunParticles;
-    public GameObject impactEffect;
+    [SerializeField] private float lineDuration = 0.25f;
+    [SerializeField] private LineRenderer gunLine;
+    [SerializeField] private ParticleSystem gunParticles;
+    [SerializeField] private GameObject impactEffect;
 
     public void PlayParticles()
     {
@@ -45,7 +46,7 @@ public class GunEffects : MonoBehaviour
 
     private IEnumerator StartStoppingEffects()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(lineDuration);
         StopEffects();
     }
 

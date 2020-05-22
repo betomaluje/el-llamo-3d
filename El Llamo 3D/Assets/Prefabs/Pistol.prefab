@@ -90,8 +90,8 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1
-        value: 0.5149231
+        time: 0.4967041
+        value: 0.2697296
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7a1985fbe3f7a499f476c14454c922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineDuration: 0.25
   gunLine: {fileID: 2282539818667591821}
   gunParticles: {fileID: 3863518378152215014}
   impactEffect: {fileID: 6042133881555360809, guid: a36bb5f3415e43247a0b57b1e6a1e835,

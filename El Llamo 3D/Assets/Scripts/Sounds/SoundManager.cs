@@ -32,6 +32,17 @@ public class SoundManager : MonoBehaviour
             s.source.spatialBlend = s.spatialBlend;
             s.source.loop = s.loop;
         }
+
+        RestoreVolumes();
+    }
+
+    private void RestoreVolumes()
+    {
+        float sfxSavedPrefs = PlayerPrefs.GetFloat(SoundMenu.PREFS_SFX, SoundManager.instance.GetVolumeForType(SoundType.SFX));
+        float songSavedPrefs = PlayerPrefs.GetFloat(SoundMenu.PREFS_SONG, SoundManager.instance.GetVolumeForType(SoundType.SONG));
+
+        SetVolumeForType(SoundType.SFX, sfxSavedPrefs);
+        SetVolumeForType(SoundType.SONG, songSavedPrefs);
     }
 
     public void Play(string name)
