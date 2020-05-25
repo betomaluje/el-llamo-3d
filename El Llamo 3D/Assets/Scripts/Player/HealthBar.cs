@@ -16,12 +16,12 @@ public class HealthBar : MonoBehaviour
 
     private void Awake()
     {
+        mainCameraPos = Camera.main.transform;
         healthScript = GetComponentInParent<Health>();
     }
 
     private void OnEnable()
     {
-        mainCameraPos = Camera.main.transform;
         healthScript.OnHealthChanged += HandleHealth;
     }
 
@@ -48,16 +48,5 @@ public class HealthBar : MonoBehaviour
         }
 
         foregroundImage.fillAmount = healthPercentage;
-    }
-
-    private void LateUpdate()
-    {
-        if (mainCameraPos == null || !alwaysFaceCamera)
-        {
-            return;
-        }
-
-        transform.rotation = Quaternion.identity;
-        transform.LookAt(transform.position + mainCameraPos.forward);
     }
 }

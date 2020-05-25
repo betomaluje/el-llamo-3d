@@ -1418,7 +1418,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 2.8
   m_BaseOffset: -0.18
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -1455,17 +1455,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncedGenerics: []
   syncedTransform:
-    interpolate: 25
+    interpolate: 20
     smoothLevel: 1
-    snapDistance: 2
+    snapDistance: 30
     readFunction: 0
-    bandwidth: 7
-    padding: 4
+    bandwidth: 4
+    padding: 0
     pos_x_setting:
       enabled: 1
       min: -250
       max: 250
-      resolution: 3
+      resolution: 1
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -1473,7 +1473,7 @@ MonoBehaviour:
       enabled: 1
       min: 0
       max: 20
-      resolution: 3
+      resolution: 1
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -1481,7 +1481,7 @@ MonoBehaviour:
       enabled: 1
       min: -250
       max: 250
-      resolution: 3
+      resolution: 1
       valueType: 0
       minInt: -300
       maxInt: 300

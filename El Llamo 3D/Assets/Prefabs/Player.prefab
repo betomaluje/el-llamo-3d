@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 5
-    NearClipPlane: 0.1
+    NearClipPlane: 0.5
     FarClipPlane: 1000
     Dutch: 0
     LensShift: {x: 0, y: 0}
@@ -1214,6 +1214,7 @@ GameObject:
   - component: {fileID: 9158683583669780992}
   - component: {fileID: 644223966757249534}
   - component: {fileID: 1985788838408029732}
+  - component: {fileID: 3069559720017572393}
   - component: {fileID: 8915490827300288987}
   - component: {fileID: 3337313840973512057}
   - component: {fileID: 1540597783966594581}
@@ -1408,6 +1409,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAim: {fileID: 0}
   chest: {fileID: 0}
+--- !u!114 &3069559720017572393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836814044747114715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ab60106ac0f8d4bbc751a6c8fa44cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjects:
+  - {fileID: 7530510307089449166}
+  networkID: {fileID: 8915490827300288987}
 --- !u!114 &8915490827300288987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1489,13 +1505,13 @@ MonoBehaviour:
     smoothLevel: 1
     snapDistance: 20
     readFunction: 0
-    bandwidth: 6
-    padding: 5
+    bandwidth: 4
+    padding: 0
     pos_x_setting:
       enabled: 1
       min: -250
       max: 250
-      resolution: 2
+      resolution: 1
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -1503,7 +1519,7 @@ MonoBehaviour:
       enabled: 1
       min: 0.1
       max: 20
-      resolution: 2
+      resolution: 1
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -1511,7 +1527,7 @@ MonoBehaviour:
       enabled: 1
       min: -250
       max: 250
-      resolution: 2
+      resolution: 1
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -1660,7 +1676,7 @@ MonoBehaviour:
   - Foldout: 1
     name: health_changed
     type: 2
-    conflictResolution: 0
+    conflictResolution: 2
     data: 
     onValueChange:
       m_PersistentCalls:
@@ -1678,7 +1694,18 @@ MonoBehaviour:
           m_CallState: 2
     onConflict:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 644223966757249534}
+          m_MethodName: OnDamageConflict
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onReady:
       m_PersistentCalls:
         m_Calls:
@@ -1753,40 +1780,6 @@ MonoBehaviour:
         - m_Target: {fileID: 644223966757249534}
           m_MethodName: Die
           m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventName: dead_throw_gun
-    Foldout: 0
-    target: 0
-    remoteEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 644223966757249534}
-          m_MethodName: RemoteThrowGun
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventName: die
-    Foldout: 0
-    target: 0
-    remoteEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 644223966757249534}
-          m_MethodName: RemoteCreateRagdoll
-          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2113,7 +2106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 261c03f680c9b364e876581edefe2868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alwaysFaceCamera: 0
+  alwaysFaceCamera: 1
   foregroundImage: {fileID: 7530510306564427169}
   backgroundImage: {fileID: 7530510307504587162}
   updateSpeedSeconds: 0.2
@@ -2433,11 +2426,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3820138592779437898, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0, type: 3}
 --- !u!224 &7227591154509228168 stripped
@@ -2453,70 +2441,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4332467229373018174}
     m_Modifications:
-    - target: {fileID: 353925442589300226, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 353925442589300226, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 353925442589300226, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 353925442589300226, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 353925442589300226, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 353925442589300226, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 353925442589300226, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 353925442589300226, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 353925442589300226, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1069660099740806474, guid: 5b824dd072bfd1f48b7c007fb50204b3,
         type: 3}
       propertyPath: m_Name
       value: PlayerName
-      objectReference: {fileID: 0}
-    - target: {fileID: 1069660099740806474, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7275219269051016759, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7275219269051016759, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Background
       objectReference: {fileID: 0}
     - target: {fileID: 8385747263598548460, guid: 5b824dd072bfd1f48b7c007fb50204b3,
         type: 3}

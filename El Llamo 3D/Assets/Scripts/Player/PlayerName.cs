@@ -6,19 +6,12 @@ public class PlayerName : MonoBehaviour
 {
     [SerializeField] private TextMeshPro nicknameText;
 
-    private Transform mainCameraPos;
-
     private SyncPropertyAgent syncPropertyAgent;
     public static string NICKNAME_PROPERTY = "Nickname";
 
     private void Start()
     {
         syncPropertyAgent = GetComponentInParent<SyncPropertyAgent>();
-    }
-
-    private void OnEnable()
-    {
-        mainCameraPos = Camera.main.transform;
     }
 
     public void UpdateName()
@@ -32,16 +25,4 @@ public class PlayerName : MonoBehaviour
         string nickname = syncPropertyAgent.GetPropertyWithName(NICKNAME_PROPERTY).GetStringValue();
         nicknameText.text = nickname;
     }
-
-    private void LateUpdate()
-    {
-        if (mainCameraPos == null)
-        {
-            return;
-        }
-
-        transform.rotation = Quaternion.identity;
-        transform.LookAt(transform.position + mainCameraPos.forward);
-    }
-
 }

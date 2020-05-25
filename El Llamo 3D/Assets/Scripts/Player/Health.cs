@@ -16,25 +16,21 @@ public class Health : MonoBehaviour
     public int currentHealth;
 
     #region Network
-
     private NetworkID networkID;
     private SyncPropertyAgent syncPropertyAgent;
     private RemoteEventAgent remoteEventAgent;
 
     private const string HEALTH_CHANGED = "health_changed";
     private const string KILLED_EVENT = "killed";
-    private const string DIE_EVENT = "die";
-    private const string THROW_GUN_EVENT = "dead_throw_gun";
-
-    #endregion
 
     public Action<float> OnHealthChanged = delegate { };
+    #endregion    
 
     private CameraShake cameraShake;
 
     private bool isPlayerInmune = false;
 
-    private void Start()
+    private void Awake()
     {
         cameraShake = Camera.main.GetComponent<CameraShake>();
         networkID = GetComponent<NetworkID>();
@@ -84,14 +80,11 @@ public class Health : MonoBehaviour
         currentHealth = newHealth;
         CalculatePercentage();
 
+        // we only instantiate blood when it's damaged, not healing
         if (wasPlayerDamaged)
         {
             // damaged performed
             Instantiate(bloodDamagePrefab, transform.position, transform.rotation);
-        }
-        else
-        {
-            // healing. Do nothing for now
         }
 
         if (networkID.IsMine && wasPlayerDamaged)
@@ -119,6 +112,32 @@ public class Health : MonoBehaviour
         }
 
         CalculatePercentage();
+    }
+
+    public void OnDamageConflict(SWSyncConflict conflict, SWSyncedProperty property)
+    {
+        // 1
+        int newLocalHP = (int)conflict.newLocalValue;
+        int oldLocalHP = (int)conflict.oldLocalValue;
+        int remoteHP = (int)conflict.remoteValue;
+
+        // 2
+        // check if player is already killed
+        if (remoteHP == 0)
+        {
+            property.Resolve(0);
+            return;
+        }
+
+        // 3
+        // should use remoteHP instead of oldLocalHP to apply damage
+        int damage = oldLocalHP - newLocalHP;
+        int resolvedHP = remoteHP - damage;
+        if (resolvedHP < 0)
+        {
+            resolvedHP = 0;
+        }
+        property.Resolve(resolvedHP);
     }
 
     private void CalculatePercentage()
@@ -195,13 +214,6 @@ public class Health : MonoBehaviour
         msg.Push(transform.position);
         remoteEventAgent.Invoke(DIE_EVENT, msg);
         */
-    }
-
-    public void RemoteCreateRagdoll(SWNetworkMessage msg)
-    {
-        Debug.Log("remote ragdoll: ");
-        Vector3 position = msg.PopVector3();
-        Instantiate(ragdollModel, position, Quaternion.identity);
     }
 
     private void RepositionPlayer()
