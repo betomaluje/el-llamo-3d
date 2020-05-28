@@ -1,34 +1,21 @@
 ﻿using SWNetwork;
 using UnityEngine;
 
-public class CorpseHealth : MonoBehaviour
+public class CorpseHealth : LocalCorpseHealth
 {
-    [SerializeField] private GameObject bloodDamagePrefab;
-    [SerializeField] private GameObject explodingCorpsePrefab;
-    [SerializeField] private int maxHealth = 30;
-
-    private int currentHealth;
-
-    #region Network
-
     private NetworkID networkID;
     private RemoteEventAgent remoteEventAgent;
 
     const string HEALTH = "Hp";
     const string KILLED_EVENT = "killed";
 
-    #endregion
-
-    // Start is called before the first frame update
-    void Start()
+    protected override void Start() 
     {
         networkID = GetComponent<NetworkID>();
         remoteEventAgent = GetComponent<RemoteEventAgent>();
-
-        currentHealth = maxHealth;
     }
 
-    public void PerformDamage(int damage, Vector3 impactPosition)
+    public override void PerformDamage(int damage, Vector3 impactPosition)
     {
         currentHealth -= damage;
 
@@ -54,11 +41,11 @@ public class CorpseHealth : MonoBehaviour
     {
         currentHealth = (int)msg.PopFloat();
 
-        if (currentHealth != maxHealth)
+        if (currentHealth != GetMaxHealth())
         {
             Vector3 impactPosition = msg.PopVector3();
 
-            Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
+            MakeBlood(impactPosition);
         }
 
         if (networkID.IsMine && currentHealth <= 0)
@@ -68,13 +55,9 @@ public class CorpseHealth : MonoBehaviour
         }
     }
 
-    public void Die()
+    public override void Die()
     {
-        // destroy corpse
-        transform.parent = null;
-
-        ExplodeCorpse explodeScript = Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
-        Destroy(gameObject);
+        base.Die();
         networkID.Destroy();
     }
 }

@@ -1,5 +1,4 @@
-﻿using BetoMaluje.Sikta;
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -120,8 +119,8 @@ public class LocalHealth : MonoBehaviour
     private void ThrowGun()
     {
         Debug.Log("die throw gun");
-        PlayerGrab playerGrab = GetComponent<PlayerGrab>();
-        Grabable gun = playerGrab.GetActiveHand().GetComponentInChildren<Grabable>();
+        LocalPlayerGrab playerGrab = GetComponent<LocalPlayerGrab>();
+        LocalGrabable gun = playerGrab.GetActiveHand().GetComponentInChildren<LocalGrabable>();
         if (gun != null)
         {
             gun.StartThrow(10f, Camera.main.transform.forward);

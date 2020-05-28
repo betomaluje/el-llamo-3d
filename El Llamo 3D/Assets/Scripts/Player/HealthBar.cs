@@ -12,12 +12,12 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private float updateSpeedSeconds = 0.2f;
 
     private Transform mainCameraPos;
-    private Health healthScript;
+    private LocalHealth healthScript;
 
     private void Awake()
     {
         mainCameraPos = Camera.main.transform;
-        healthScript = GetComponentInParent<Health>();
+        healthScript = GetComponentInParent<LocalHealth>();
     }
 
     private void OnEnable()

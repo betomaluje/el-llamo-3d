@@ -86,7 +86,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849069219562901142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.4, z: 1}
+  m_LocalPosition: {x: 0.000002861023, y: 2.4, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8688735077116937374}
@@ -1212,7 +1212,7 @@ GameObject:
   - component: {fileID: 6126442387018458569}
   - component: {fileID: 3472993563486668078}
   - component: {fileID: 2616619627286967258}
-  - component: {fileID: 644223966757249534}
+  - component: {fileID: 8144690778494832452}
   - component: {fileID: 1985788838408029732}
   m_Layer: 12
   m_Name: Player Local
@@ -1330,8 +1330,8 @@ MonoBehaviour:
   timeResetTarget: 1
   grabbables: []
   playerHands:
-  - {fileID: 8046268901017405572}
   - {fileID: 3876146945217145102}
+  - {fileID: 8046268901017405572}
   playerHandsUI:
   - {fileID: 2984699707968819260}
   - {fileID: 7849789723291703089}
@@ -1370,7 +1370,7 @@ MonoBehaviour:
   zoomKey: 113
   finalZoom: 10
   aiming: {x: 0, y: 0}
---- !u!114 &644223966757249534
+--- !u!114 &8144690778494832452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1379,7 +1379,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5836814044747114715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c93df21b7c8cef4b96d2b99be367bec, type: 3}
+  m_Script: {fileID: 11500000, guid: e0d2c49569b54d243a8dfd5f836644a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dieBloodPrefab: {fileID: 6239080137120610381, guid: c64c6ec7bd591384a9cbb4d1b9141506,

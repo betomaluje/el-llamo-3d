@@ -18,7 +18,7 @@ public class LocalPlayerGrab : MonoBehaviour
 
     [Space]
     [Header("Weapon")]
-    public List<Grabable> grabbables;
+    public List<LocalGrabable> grabbables;
     [SerializeField] private Transform[] playerHands;
     [SerializeField] private Image[] playerHandsUI;
     [SerializeField] private Color playerHandUIColor;
@@ -51,7 +51,7 @@ public class LocalPlayerGrab : MonoBehaviour
     {
         playerAnimations = GetComponent<PlayerAnimations>();
 
-        grabbables = new List<Grabable>();
+        grabbables = new List<LocalGrabable>();
         maxGrabbables = playerHands.Length;
         playerHand = playerHands[selectedGrabbable];
         ChangeHandsUI(selectedGrabbable);
@@ -121,7 +121,7 @@ public class LocalPlayerGrab : MonoBehaviour
                 }
                 lastObject = null;
 
-                Grabable grabable = targetHit.transform.root.GetComponentInChildren<Grabable>();
+                LocalGrabable grabable = targetHit.transform.root.GetComponentInChildren<LocalGrabable>();
                 if (grabable != null && !grabable.isGrabbed())
                 {
                     PickupObject(grabable);
@@ -140,7 +140,7 @@ public class LocalPlayerGrab : MonoBehaviour
         }
     }
 
-    private void PickupObject(Grabable grabable)
+    private void PickupObject(LocalGrabable grabable)
     {
         Transform hand = GetActiveHand();
         if (hand != null && hand.childCount == 0)
@@ -158,7 +158,7 @@ public class LocalPlayerGrab : MonoBehaviour
     /**
      * Handles the shooting state only for the owner of the network 
      */
-    private void HandleShooting(ShootingTarget shootingTarget)
+    protected virtual void HandleShooting(ShootingTarget shootingTarget)
     {
         isFirePressed = true;
 
@@ -180,20 +180,20 @@ public class LocalPlayerGrab : MonoBehaviour
         {
             aimPoint = shootHit.point;
 
-            Gun gunTarget = GetActiveHand().GetComponentInChildren<Gun>();
+            LocalGun gunTarget = GetActiveHand().GetComponentInChildren<LocalGun>();
 
             if (gunTarget != null)
             {
                 int damage = gunTarget.GetDamage();
 
-                Health healthTarget = shootHit.transform.gameObject.GetComponent<Health>();
+                LocalHealth healthTarget = shootHit.transform.gameObject.GetComponent<LocalHealth>();
 
                 if (healthTarget != null)
                 {
                     healthTarget.PerformDamage(damage);
                 }
 
-                CorpseHealth corpseHealth = shootHit.transform.gameObject.GetComponentInParent<CorpseHealth>();
+                LocalCorpseHealth corpseHealth = shootHit.transform.gameObject.GetComponentInParent<LocalCorpseHealth>();
 
                 if (corpseHealth != null)
                 {
@@ -217,12 +217,12 @@ public class LocalPlayerGrab : MonoBehaviour
     }
 
     /**
-     * Throws the current [Grabable]
+     * Throws the current [LocalGrabable]
      */
     private void ThrowObject(int selectedGrabbable)
     {
         Debug.Log("trying to throw: " + selectedGrabbable);
-        Grabable gun = GetActiveHand().GetComponentInChildren<Grabable>();
+        LocalGrabable gun = GetActiveHand().GetComponentInChildren<LocalGrabable>();
         if (gun != null)
         {
             gun.StartThrow(throwForce, sceneCamera.transform.forward);
@@ -243,7 +243,7 @@ public class LocalPlayerGrab : MonoBehaviour
     /**
      * Gets the current [ITarget] on the active player's hand
      */
-    private ITarget GetGunInActiveHand()
+    protected ITarget GetGunInActiveHand()
     {
         return GetActiveHand().GetComponentInChildren<ITarget>();
     }
@@ -255,19 +255,19 @@ public class LocalPlayerGrab : MonoBehaviour
     {
         foreach (Transform playerHand in playerHands)
         {
-            Grabable searched = playerHand.GetComponent<Grabable>();
+            LocalGrabable searched = playerHand.GetComponent<LocalGrabable>();
             if (searched != null && searched.getTargetType().Equals(TargetType.Shootable))
             {
                 return true;
             }
 
-            Grabable searched2 = playerHand.GetComponentInChildren<Grabable>();
+            LocalGrabable searched2 = playerHand.GetComponentInChildren<LocalGrabable>();
             if (searched2 != null && searched2.getTargetType().Equals(TargetType.Shootable))
             {
                 return true;
             }
 
-            Grabable searched3 = playerHand.GetComponentInParent<Grabable>();
+            LocalGrabable searched3 = playerHand.GetComponentInParent<LocalGrabable>();
             if (searched3 != null && searched3.getTargetType().Equals(TargetType.Shootable))
             {
                 return true;
@@ -326,10 +326,10 @@ public class LocalPlayerGrab : MonoBehaviour
         return playerHand;
     }
 
-    public void AddGrabable(Grabable grabable)
+    public void AddGrabable(LocalGrabable grabable)
     {
         // search if we already have it
-        Grabable searched = grabbables.Find(obj => obj == grabable);
+        LocalGrabable searched = grabbables.Find(obj => obj == grabable);
         if (searched != null)
         {
             return;
@@ -338,9 +338,9 @@ public class LocalPlayerGrab : MonoBehaviour
         grabbables.Add(grabable);
     }
 
-    public void RemoveGrabable(Grabable grabable)
+    public void RemoveGrabable(LocalGrabable grabable)
     {
-        Grabable searched = grabbables.Find(obj => obj == grabable);
+        LocalGrabable searched = grabbables.Find(obj => obj == grabable);
         if (searched != null)
         {
             Debug.Log("thrown remove: " + selectedGrabbable);

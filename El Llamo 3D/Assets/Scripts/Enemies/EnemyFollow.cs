@@ -1,53 +1,22 @@
 ﻿using SWNetwork;
-using UnityEngine;
-using UnityEngine.AI;
 
-public class EnemyFollow : MonoBehaviour
+public class EnemyFollow : LocalEnemyFollow
 {
-    [SerializeField] private LayerMask attackLayer;
-    [SerializeField] private float radius = 20f;
-
-    //Transform that NPC has to follow
-    private Transform transformToFollow;
-
-    private NavMeshAgent agent;
-
     private NetworkID networkID;
 
-    private void Start()
+    protected override void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        base.Start();
         networkID = GetComponent<NetworkID>();
     }
 
-    private void Update()
+    protected override void Update()
     {
         agent.enabled = networkID.IsMine;
 
         if (networkID.IsMine)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, radius, attackLayer);
-            if (colliders != null && colliders.Length > 0)
-            {
-                transformToFollow = colliders[0].transform.root;
-            }
-            else
-            {
-                transformToFollow = null;
-            }
-
-            if (transformToFollow != null)
-            {
-                // follow the player
-                agent.destination = transformToFollow.position;
-            }
+            base.Update();
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.gray;
-        Gizmos.DrawSphere(transform.position, radius);
     }
 }

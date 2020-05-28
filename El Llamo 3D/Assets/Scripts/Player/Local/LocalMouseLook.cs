@@ -35,28 +35,22 @@ public class LocalMouseLook : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!GameSettings.instance.usingNetwork)
-        {
-            aiming.x = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            aiming.y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        aiming.x = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        aiming.y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-            if (Input.GetKeyDown(zoomKey))
-            {
-                StartCoroutine(CheckPressZoom(true));
-            }
-            else if (Input.GetKeyUp(zoomKey))
-            {
-                StartCoroutine(CheckPressZoom(false));
-            }
+        if (Input.GetKeyDown(zoomKey))
+        {
+            StartCoroutine(CheckPressZoom(true));
+        }
+        else if (Input.GetKeyUp(zoomKey))
+        {
+            StartCoroutine(CheckPressZoom(false));
         }
     }
 
     protected virtual void LateUpdate()
     {
-        if (!GameSettings.instance.usingNetwork)
-        {
-            Aim(aiming);
-        }
+        Aim(aiming);
     }
 
     private void Aim(Vector2 aim)
