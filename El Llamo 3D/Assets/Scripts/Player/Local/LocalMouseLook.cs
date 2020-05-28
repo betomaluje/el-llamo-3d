@@ -8,7 +8,7 @@ public class LocalMouseLook : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 100f;
 
     [SerializeField] private Transform playerBody;
-    [SerializeField] private PlayerGrab playerGrab;
+    [SerializeField] private LocalPlayerGrab playerGrab;
 
     [Header("Zoom")]
     [SerializeField] private KeyCode zoomKey;

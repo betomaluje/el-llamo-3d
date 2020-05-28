@@ -9,11 +9,11 @@ public class Crosshair : MonoBehaviour
     [SerializeField] private Transform zoomedCrosshair;
     [SerializeField] private float zoomAmount = 2f;
     [SerializeField] private float rotationAngle = 180f;
-    private InputHandler inputHandler;
+    private LocalInputHandler inputHandler;
 
     private bool isZoomedIn = false;
 
-    public void SetupPlayer(InputHandler handler)
+    public void SetupPlayer(LocalInputHandler handler)
     {
         inputHandler = handler;
         // handle target

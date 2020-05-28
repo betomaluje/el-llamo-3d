@@ -47,9 +47,6 @@ public class LocalPlayerGrab : MonoBehaviour
 
     private Camera sceneCamera;
 
-    // network property syncing
-    bool lastShootingState = false;
-
     protected virtual void Start()
     {
         playerAnimations = GetComponent<PlayerAnimations>();
@@ -172,18 +169,8 @@ public class LocalPlayerGrab : MonoBehaviour
             return;
         }
 
-        // regardless if it is on target or not, we need to sync the shooting action
-        if (isFirePressed != lastShootingState)
-        {
-            lastShootingState = isFirePressed;
-        }
-
-        if (!GameSettings.instance.usingNetwork)
-        {
-            gun.Shoot(aimPoint);
-
-            lastShootingState = false;
-        }
+        // regardless if it is on target or not, we need to trigger the shooting action
+        gun.Shoot(aimPoint);
 
         // we mark the shooting point
         RaycastHit shootHit = shootingTarget.shootingHit;

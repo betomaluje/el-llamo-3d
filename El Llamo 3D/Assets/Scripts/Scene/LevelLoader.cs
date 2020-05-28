@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    public void LoadLevel(SceneNumbers sceneNumber)
+    public void LoadLevel(Level.LevelNumber levelNumber)
     {
-        StartCoroutine(LoadScene((int)sceneNumber));
+        StartCoroutine(LoadScene((int)levelNumber));
     }
 
     private IEnumerator LoadScene(int sceneIndex)

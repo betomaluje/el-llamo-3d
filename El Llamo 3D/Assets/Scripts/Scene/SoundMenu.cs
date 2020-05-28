@@ -163,7 +163,7 @@ public class SoundMenu : MonoBehaviour
                 {
                     Debug.Log("Left room");
                     LevelLoader levelLoader = GetComponent<LevelLoader>();
-                    levelLoader.LoadLevel(SceneNumbers.Lobby);
+                    levelLoader.LoadLevel(Level.LevelNumber.Lobby);
                 }
                 else
                 {
@@ -175,7 +175,7 @@ public class SoundMenu : MonoBehaviour
         {
             Debug.Log("Left room");
             LevelLoader levelLoader = GetComponent<LevelLoader>();
-            levelLoader.LoadLevel(SceneNumbers.Lobby);
+            levelLoader.LoadLevel(Level.LevelNumber.Lobby);
         }
     }
 

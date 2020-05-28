@@ -1,21 +1,15 @@
-﻿using BetoMaluje.Sikta;
-using Cinemachine;
-using SWNetwork;
-using UnityEngine;
+﻿using SWNetwork;
 
-public class PlayerNetworkSetup : MonoBehaviour
+public class PlayerNetworkSetup : PlayerSetup
 {
     private NetworkID networkID;
     private SyncPropertyAgent syncPropertyAgent;
 
-    private Crosshair crosshair;
-
-    void Start()
+    protected override void Start() 
     {
+        base.Start();
         networkID = GetComponent<NetworkID>();
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
-
-        crosshair = FindObjectOfType<Crosshair>();
 
         if (networkID.IsMine)
         {
@@ -26,24 +20,10 @@ public class PlayerNetworkSetup : MonoBehaviour
             RemoveUnnecessaryContent();
         }
     }
-
-    private void SetupPlayer()
+    protected override void SetupPlayer()
     {
-        PlayerGrab playerGrab = GetComponentInChildren<PlayerGrab>();
-        playerGrab.SetupPlayer();
-
-        crosshair.SetupPlayer(GetComponent<InputHandler>());
-
+        base.SetupPlayer();
         string name = NetworkClient.Instance.PlayerId.Split('-')[1];
-        syncPropertyAgent?.Modify(PlayerName.NICKNAME_PROPERTY, name);
-
-        //AimDebug debugPanel = GameObject.FindWithTag("Debug").GetComponent<AimDebug>();
-        //debugPanel.Setup(playerGrab);
-    }
-
-    private void RemoveUnnecessaryContent()
-    {
-        CinemachineVirtualCamera vcam = FindObjectOfType<CinemachineVirtualCamera>();
-        Destroy(vcam.transform.gameObject);
+        syncPropertyAgent?.Modify(PlayerName.NICKNAME_PROPERTY, name);    
     }
 }
