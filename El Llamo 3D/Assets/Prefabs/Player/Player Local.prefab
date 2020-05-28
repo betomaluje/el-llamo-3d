@@ -1206,12 +1206,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5836814044747114709}
   - component: {fileID: 5836814044747114714}
-  - component: {fileID: 7569482408358960920}
-  - component: {fileID: 5836814044747114708}
-  - component: {fileID: 5112022199166895065}
-  - component: {fileID: 4419335375198168097}
+  - component: {fileID: 6006514389275516703}
+  - component: {fileID: 2918319333506141162}
+  - component: {fileID: 6126442387018458569}
   - component: {fileID: 3472993563486668078}
-  - component: {fileID: 9158683583669780992}
+  - component: {fileID: 2616619627286967258}
   - component: {fileID: 644223966757249534}
   - component: {fileID: 1985788838408029732}
   m_Layer: 12
@@ -1259,7 +1258,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &7569482408358960920
+--- !u!114 &6006514389275516703
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1268,7 +1267,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5836814044747114715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ca5d573f7fa47f59f0ca377c98f9d7, type: 3}
+  m_Script: {fileID: 11500000, guid: ea4a9363a4e907c439a8861d07d907a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetLayer:
@@ -1279,7 +1278,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4608
   shootingDistance: 100
---- !u!114 &5836814044747114708
+--- !u!114 &2918319333506141162
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1288,7 +1287,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5836814044747114715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 794e23d6f5b2f874484621ffa24bdee2, type: 3}
+  m_Script: {fileID: 11500000, guid: 92bee30c30d5edd4cae37702c7bc4030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5836814044747114714}
@@ -1300,7 +1299,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
---- !u!114 &5112022199166895065
+--- !u!114 &6126442387018458569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1309,33 +1308,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5836814044747114715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03fa8b2ffa6f94cf1a8b3cfc81cc2808, type: 3}
+  m_Script: {fileID: 11500000, guid: f6ef3fbcbfc9e9947b2700cdc157672c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4419335375198168097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5836814044747114715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0a95ef9b85d63b4bbb975c29266fa85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputHandler: {fileID: 7569482408358960920}
+  inputHandler: {fileID: 6006514389275516703}
   playerAnimationsTrigger: {fileID: 507657085110364343}
   throwForce: 1000
   timeResetTarget: 1
   grabbables: []
   playerHands:
-  - {fileID: 3876146945217145102}
   - {fileID: 8046268901017405572}
+  - {fileID: 3876146945217145102}
   playerHandsUI:
   - {fileID: 2984699707968819260}
   - {fileID: 7849789723291703089}
-  playerHandUIColor: {r: 1, g: 0.53020316, b: 0, a: 1}
+  playerHandUIColor: {r: 1, g: 0.5294118, b: 0, a: 1}
   weaponChanger: 101
   aimPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &3472993563486668078
@@ -1352,7 +1339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimationsTrigger: {fileID: 507657085110364343}
   anim: {fileID: 8487665588559767598}
---- !u!114 &9158683583669780992
+--- !u!114 &2616619627286967258
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1361,12 +1348,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5836814044747114715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a4b4451e461b824f99e155544f10116, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd305f85d6a07643b1f3b78df91f57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 350
   playerBody: {fileID: 5836814044747114709}
-  playerGrab: {fileID: 4419335375198168097}
+  playerGrab: {fileID: 0}
   zoomKey: 113
   finalZoom: 10
   aiming: {x: 0, y: 0}
