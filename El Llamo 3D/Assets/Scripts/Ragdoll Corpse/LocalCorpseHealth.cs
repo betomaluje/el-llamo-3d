@@ -2,7 +2,9 @@
 
 public class LocalCorpseHealth : MonoBehaviour
 {
+    [Header("FX")]
     [SerializeField] private GameObject bloodDamagePrefab;
+    [SerializeField] private GameObject diePrefab;
     [SerializeField] private GameObject explodingCorpsePrefab;
     [SerializeField] private GameObject corpsePrefab;
     [SerializeField] private int maxHealth = 30;
@@ -64,6 +66,8 @@ public class LocalCorpseHealth : MonoBehaviour
         {
             Instantiate(corpsePrefab, transform.position, transform.rotation);
         }
+
+        Instantiate(diePrefab, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }
