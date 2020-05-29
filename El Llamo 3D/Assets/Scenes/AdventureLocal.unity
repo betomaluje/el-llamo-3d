@@ -74239,6 +74239,12 @@ PrefabInstance:
       propertyPath: healthItems.amountToSpawn
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1453315138436696691, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: guns.spawnPrefab
+      value: 
+      objectReference: {fileID: 3382172991157653014, guid: 053eaf7b197f640039461fe45fdb1825,
+        type: 3}
     - target: {fileID: 1453315138436696692, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
         type: 3}
       propertyPath: m_LocalPosition.x

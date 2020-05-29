@@ -37,7 +37,6 @@ public class LocalPlayerGrab : MonoBehaviour
 
     // 0: right, 1 left
     private int selectedGrabbable = 0;
-    private int maxGrabbables;
 
     private Transform playerHand;
 
@@ -52,7 +51,6 @@ public class LocalPlayerGrab : MonoBehaviour
         playerAnimations = GetComponent<PlayerAnimations>();
 
         grabbables = new List<LocalGrabable>();
-        maxGrabbables = playerHands.Length;
         playerHand = playerHands[selectedGrabbable];
         ChangeHandsUI(selectedGrabbable);
     }

@@ -10,6 +10,6 @@ public class LocalGunTarget : LocalGun
 
         gunEffects.PlayParticles();
         gunEffects.PlayEffects(shootHit);
-        gunEffects.PlaceBullet(shootHit);
+        gunEffects.PlaceImpactEffect(shootHit);
     }
 }

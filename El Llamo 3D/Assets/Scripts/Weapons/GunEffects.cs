@@ -26,7 +26,7 @@ public class GunEffects : MonoBehaviour
         StartCoroutine(StartStoppingEffects());
     }
 
-    public void PlaceBullet(Vector3 shootHit)
+    public void PlaceImpactEffect(Vector3 shootHit)
     {
         // despite if it's a target or not, we try and instantiate an impact effect
         if (impactEffect != null)

@@ -7,20 +7,16 @@ public class PlayerGrab : LocalPlayerGrab
     #region Network
     private bool isFirePressed = false;
 
-    private Camera sceneCamera;
-
     // network property syncing
     private SyncPropertyAgent syncPropertyAgent;
-    private RemoteEventAgent remoteEventAgent;
     private const string SHOOTING = "Shooting";
-    bool lastShootingState = false;
+    private bool lastShootingState = false;
 
     #endregion
 
     protected override void Start()
     {
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
-        remoteEventAgent = GetComponent<RemoteEventAgent>();
         base.Start();
     }
 
@@ -68,7 +64,7 @@ public class PlayerGrab : LocalPlayerGrab
 
                 if (corpseHealth != null)
                 {
-                    Debug.Log("Impact on corpse");
+                    Debug.Log("Impact on corpse: " + damage);
                     corpseHealth.PerformDamage(damage, shootHit.point);
                 }
 

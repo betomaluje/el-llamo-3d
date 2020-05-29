@@ -9,10 +9,11 @@ public class CorpseHealth : LocalCorpseHealth
     const string HEALTH = "Hp";
     const string KILLED_EVENT = "killed";
 
-    protected override void Start() 
+    protected override void Start()
     {
         networkID = GetComponent<NetworkID>();
         remoteEventAgent = GetComponent<RemoteEventAgent>();
+        base.Start();
     }
 
     public override void PerformDamage(int damage, Vector3 impactPosition)
