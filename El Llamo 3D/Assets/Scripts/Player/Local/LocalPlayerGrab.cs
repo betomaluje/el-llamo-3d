@@ -93,7 +93,11 @@ public class LocalPlayerGrab : MonoBehaviour
         inputHandler.targetAquired += HandleTargetAquired;
 
         // handle shooting
-        inputHandler.shootingTarget = HandleShooting;
+        inputHandler.shootingTarget = (shootingTarget) =>
+        {
+            isFirePressed = true;
+            HandleShooting(shootingTarget);
+        };
     }
 
     private void OnDisable()
@@ -120,6 +124,13 @@ public class LocalPlayerGrab : MonoBehaviour
                     lastObject.TargetOff();
                 }
                 lastObject = null;
+
+                // if we already have something in the hand, we do nothing
+                ITarget handObject = GetGunInActiveHand();
+                if (handObject != null)
+                {
+                    return;
+                }
 
                 LocalGrabable grabable = targetHit.transform.root.GetComponentInChildren<LocalGrabable>();
                 if (grabable != null && !grabable.isGrabbed())
@@ -160,8 +171,6 @@ public class LocalPlayerGrab : MonoBehaviour
      */
     protected virtual void HandleShooting(ShootingTarget shootingTarget)
     {
-        isFirePressed = true;
-
         ITarget gun = GetGunInActiveHand();
         // if it doesn't have a gun, we return quickly
         if (gun == null)

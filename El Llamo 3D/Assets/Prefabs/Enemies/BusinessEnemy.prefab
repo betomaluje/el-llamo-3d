@@ -1399,7 +1399,10 @@ MonoBehaviour:
     type: 3}
   explodingCorpsePrefab: {fileID: 7958631859862739342, guid: 26b1e17958684af468bb6e176ae26320,
     type: 3}
+  corpsePrefab: {fileID: 6009763649638500326, guid: d7730ca93a6402940891336851b0b6a4,
+    type: 3}
   maxHealth: 30
+  probabilityOfExplode: 35
 --- !u!195 &8319172693054377148
 NavMeshAgent:
   m_ObjectHideFlags: 0

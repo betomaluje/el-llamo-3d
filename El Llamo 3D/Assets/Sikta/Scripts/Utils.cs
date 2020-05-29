@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BetoMaluje.Sikta
 {
@@ -10,10 +8,14 @@ namespace BetoMaluje.Sikta
         {
             T returnObject = null;
             GameObject currentObject = startObject;
-            while(!returnObject)
+            while (!returnObject)
             {
-                if (currentObject == currentObject.transform.root) return null;
-                currentObject = (GameObject) currentObject.transform.parent.gameObject;
+                if (currentObject == currentObject.transform.root)
+                {
+                    return null;
+                }
+
+                currentObject = currentObject.transform.parent.gameObject;
                 returnObject = currentObject.GetComponent<T>();
             }
             return returnObject;

@@ -4,14 +4,20 @@ public class LocalCorpseHealth : MonoBehaviour
 {
     [SerializeField] private GameObject bloodDamagePrefab;
     [SerializeField] private GameObject explodingCorpsePrefab;
+    [SerializeField] private GameObject corpsePrefab;
     [SerializeField] private int maxHealth = 30;
+    [Range(0, 100)]
+    [SerializeField] private int probabilityOfExplode = 30;
 
     protected int currentHealth;
+
+    protected float probOfExploding;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         currentHealth = maxHealth;
+        probOfExploding = probabilityOfExplode / 100f;
     }
 
     public virtual void PerformDamage(int damage, Vector3 impactPosition)
@@ -23,8 +29,8 @@ public class LocalCorpseHealth : MonoBehaviour
         {
             currentHealth = 0;
             Die();
-        } 
-        else 
+        }
+        else
         {
             if (currentHealth != maxHealth)
             {
@@ -33,7 +39,7 @@ public class LocalCorpseHealth : MonoBehaviour
         }
     }
 
-    protected void MakeBlood(Vector3 impactPosition) 
+    protected void MakeBlood(Vector3 impactPosition)
     {
         Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
     }
@@ -48,7 +54,17 @@ public class LocalCorpseHealth : MonoBehaviour
         // destroy corpse
         transform.parent = null;
 
-        ExplodeCorpse explodeScript = Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
+        float randomExploding = Random.value;
+
+        if (randomExploding <= probOfExploding)
+        {
+            ExplodeCorpse explodeScript = Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
+        }
+        else
+        {
+            Instantiate(corpsePrefab, transform.position, transform.rotation);
+        }
+
         Destroy(gameObject);
     }
 }
