@@ -1674,7 +1674,7 @@ MonoBehaviour:
     onReady:
       m_PersistentCalls:
         m_Calls: []
-  - Foldout: 1
+  - Foldout: 0
     name: health_changed
     type: 2
     conflictResolution: 2
