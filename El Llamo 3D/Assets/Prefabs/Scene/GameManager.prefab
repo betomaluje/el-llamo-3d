@@ -74,17 +74,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143cd3c3eac16c44ebd61acddac8f359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guns:
+  players:
     type: 0
     amountToSpawn: 4
-    positions:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  enemies:
-    type: 2
+    positions: []
+    spawnPrefab: {fileID: 0}
+  guns:
+    type: 1
     amountToSpawn: 4
     positions:
     - {fileID: 0}
@@ -92,12 +88,24 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-  healthItems:
+    spawnPrefab: {fileID: 0}
+  enemies:
     type: 3
+    amountToSpawn: 4
+    positions:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    spawnPrefab: {fileID: 0}
+  healthItems:
+    type: 4
     amountToSpawn: 2
     positions:
     - {fileID: 0}
     - {fileID: 0}
+    spawnPrefab: {fileID: 0}
   ragdoll: 111
   ragdollPosition: {fileID: 1227215336}
   ragdollCorpse: {fileID: 655316715928266925, guid: 2ff0b4dfa36644a4ab54d538dada2420,

@@ -36,8 +36,12 @@ public abstract class Grabable : LocalGrabable
         remoteEventAgent.Invoke(PICKUP, msg);
     }
 
-    private void LocalPickUp(Vector3 to)
+    public void RemotePickupObject(SWNetworkMessage msg)
     {
+        Vector3 to = msg.PopVector3();
+
+        Debug.Log("remote pickup " + gameObject.name + ": " + to);
+
         if (grabState.Equals(GrabState.Grabbed))
         {
             return;
@@ -55,15 +59,6 @@ public abstract class Grabable : LocalGrabable
         Pickup(to);
     }
 
-    public void RemotePickupObject(SWNetworkMessage msg)
-    {
-        Vector3 to = msg.PopVector3();
-
-        Debug.Log("remote pickup " + gameObject.name + ": " + to);
-
-        LocalPickUp(to);
-    }
-
     override public void StartThrow(float throwForce, Vector3 direction)
     {
         if (grabState.Equals(GrabState.Throwing))
@@ -76,11 +71,21 @@ public abstract class Grabable : LocalGrabable
         SWNetworkMessage msg = new SWNetworkMessage();
         msg.Push(direction);
         msg.Push(throwForce);
-        remoteEventAgent.Invoke(THROWING, msg);    
+        remoteEventAgent.Invoke(THROWING, msg);
     }
 
-    private void LocalThrowObject(Vector3 direction, float throwForce)
+    public void RemoteThrowObject(SWNetworkMessage msg)
     {
+        if (grabState.Equals(GrabState.Idle))
+        {
+            return;
+        }
+
+        Vector3 direction = msg.PopVector3();
+        float throwForce = msg.PopFloat();
+
+        Debug.Log("remote throw " + gameObject.name + ": " + direction + " force: " + throwForce);
+
         grabbed = false;
 
         if (transform.parent != null)
@@ -97,20 +102,5 @@ public abstract class Grabable : LocalGrabable
         Throw(throwForce, direction);
 
         grabState = GrabState.Idle;
-    }
-
-    public void RemoteThrowObject(SWNetworkMessage msg)
-    {
-        if (grabState.Equals(GrabState.Idle))
-        {
-            return;
-        }
-
-        Vector3 direction = msg.PopVector3();
-        float throwForce = msg.PopFloat();
-
-        Debug.Log("remote throw " + gameObject.name + ": " + direction + " force: " + throwForce);
-
-        LocalThrowObject(direction, throwForce);
     }
 }

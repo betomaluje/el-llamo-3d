@@ -42,7 +42,7 @@ public class LocalPlayerGrab : MonoBehaviour
 
     private PlayerAnimations playerAnimations;
 
-    private bool isFirePressed = false;
+    protected bool isFirePressed = false;
 
     private Camera sceneCamera;
 

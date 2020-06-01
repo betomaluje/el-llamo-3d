@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerGrab : LocalPlayerGrab
 {
     #region Network
-    private bool isFirePressed = false;
 
     // network property syncing
     private SyncPropertyAgent syncPropertyAgent;
@@ -64,7 +63,7 @@ public class PlayerGrab : LocalPlayerGrab
 
                 if (corpseHealth != null)
                 {
-                    Debug.Log("Impact on corpse: " + damage);
+                    Debug.Log("Impact on corpse damage: " + damage);
                     corpseHealth.PerformDamage(damage, shootHit.point);
                 }
 

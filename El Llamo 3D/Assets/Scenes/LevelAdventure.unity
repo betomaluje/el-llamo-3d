@@ -73989,6 +73989,11 @@ PrefabInstance:
       propertyPath: OnReady.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1331276808}
+    - target: {fileID: 3864951532622274057, guid: 7f6b04c0f0bcb2c428edfbbd7ce2d233,
+        type: 3}
+      propertyPath: playerPrefabsFoldout
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3864951532622274058, guid: 7f6b04c0f0bcb2c428edfbbd7ce2d233,
         type: 3}
       propertyPath: m_Name

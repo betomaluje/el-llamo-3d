@@ -22,6 +22,7 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
 
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+        grabState = GrabState.Idle;
     }
 
     private void OnTriggerEnter(Collider other)

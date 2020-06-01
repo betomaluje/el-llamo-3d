@@ -36,7 +36,7 @@ public class CorpseHealth : LocalCorpseHealth
     }
 
     /**
-     * Called from the SyncPropertyAgent on the editor
+     * Called from the RemoteEventAgent on the editor
      */
     public void OnHPChanged(SWNetworkMessage msg)
     {
@@ -60,6 +60,12 @@ public class CorpseHealth : LocalCorpseHealth
     {
         base.Die();
         networkID.Destroy();
+    }
+
+    protected override void SpawnShieldCorpse()
+    {
+        Debug.Log("Network Shield Corpse");
+        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, transform.position, transform.rotation);
     }
 }
 

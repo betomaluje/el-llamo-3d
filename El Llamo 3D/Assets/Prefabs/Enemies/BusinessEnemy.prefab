@@ -1247,7 +1247,7 @@ GameObject:
   - component: {fileID: 8319172693054377148}
   - component: {fileID: 8319172693054377092}
   - component: {fileID: 6675260359825024540}
-  - component: {fileID: 8319172693054377095}
+  - component: {fileID: 4885800376112498854}
   m_Layer: 9
   m_Name: BusinessEnemy
   m_TagString: Untagged
@@ -1397,7 +1397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodDamagePrefab: {fileID: 6239080137120610381, guid: 68aa36312bc8147f693459c23e01ad11,
     type: 3}
-  diePrefab: {fileID: 6239080137120610381, guid: c64c6ec7bd591384a9cbb4d1b9141506,
+  dieFXPrefab: {fileID: 6239080137120610381, guid: c64c6ec7bd591384a9cbb4d1b9141506,
     type: 3}
   explodingCorpsePrefab: {fileID: 7958631859862739342, guid: 26b1e17958684af468bb6e176ae26320,
     type: 3}
@@ -1558,7 +1558,7 @@ MonoBehaviour:
   syncTransFormFoldout: 1
   syncAnimatorFoldout: 0
   restoreState: 1
---- !u!114 &8319172693054377095
+--- !u!114 &4885800376112498854
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1571,31 +1571,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   remoteEvents_:
-  - eventName: Pickup
+  - eventName: Hp
     Foldout: 1
     target: 0
     remoteEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8319172693054377141}
-          m_MethodName: RemotePickupObject
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventName: Throwing
-    Foldout: 1
-    target: 0
-    remoteEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 8319172693054377141}
-          m_MethodName: RemoteThrowObject
+        - m_Target: {fileID: 8319172693054377093}
+          m_MethodName: OnHPChanged
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1614,23 +1597,6 @@ MonoBehaviour:
         - m_Target: {fileID: 8319172693054377093}
           m_MethodName: Die
           m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventName: Hp
-    Foldout: 1
-    target: 0
-    remoteEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 8319172693054377093}
-          m_MethodName: OnHPChanged
-          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
