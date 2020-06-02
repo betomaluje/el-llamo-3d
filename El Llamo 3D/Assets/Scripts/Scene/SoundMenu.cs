@@ -38,7 +38,7 @@ public class SoundMenu : MonoBehaviour
 
         if (currentScene == 0)
         {
-            exitButton.text = "Exit";
+            exitButton.text = "Back";
         }
         else
         {
@@ -65,7 +65,7 @@ public class SoundMenu : MonoBehaviour
         }
     }
 
-    private void RestoreValues()
+    public void RestoreValues()
     {
         float sfxSavedPrefs = PlayerPrefs.GetFloat(PREFS_SFX, SoundManager.instance.GetVolumeForType(SoundType.SFX));
         float songSavedPrefs = PlayerPrefs.GetFloat(PREFS_SONG, SoundManager.instance.GetVolumeForType(SoundType.SONG));
@@ -82,7 +82,7 @@ public class SoundMenu : MonoBehaviour
         return (Mathf.Round(value * 10f)).ToString();
     }
 
-    private void SaveSettings()
+    public void SaveSettings()
     {
         PlayerPrefs.SetFloat(PREFS_SFX, sfxSlider.value);
         PlayerPrefs.SetFloat(PREFS_SONG, soundsSlider.value);
@@ -113,12 +113,18 @@ public class SoundMenu : MonoBehaviour
         if (isPanelActive)
         {
             RestoreValues();
-            settingsButton.image.sprite = closeSprite;
+            if (settingsButton != null)
+            {
+                settingsButton.image.sprite = closeSprite;
+            }
         }
         else
         {
             SaveSettings();
-            settingsButton.image.sprite = settingsSprite;
+            if (settingsButton != null)
+            {
+                settingsButton.image.sprite = settingsSprite;
+            }
         }
 
         if (currentScene != 0)

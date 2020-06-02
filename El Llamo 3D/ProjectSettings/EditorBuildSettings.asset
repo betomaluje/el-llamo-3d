@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu/MultiplayerScene.unity
     guid: d31d59fea45914a0289f5eab75dab0a6
   - enabled: 1
-    path: Assets/Scenes/Menu/SinglePlayerScene.unity
-    guid: 8285cc554720ee9459f83203021d0a47
-  - enabled: 1
     path: Assets/Scenes/LevelAdventure.unity
     guid: 722129650970c4142be7de1d94823afc
   - enabled: 1

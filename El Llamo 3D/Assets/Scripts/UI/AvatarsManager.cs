@@ -14,7 +14,7 @@ public class AvatarsManager : MonoBehaviour
     private RoomRemoteEventAgent roomRemoteEventAgent;
     private const char SEPARATOR = '-';
 
-    private void Start()
+    private void Awake()
     {
         playersDict = new Dictionary<string, string>();
         roomRemoteEventAgent = GetComponent<RoomRemoteEventAgent>();

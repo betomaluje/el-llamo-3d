@@ -1,4 +1,3 @@
-using BetoMaluje.Sikta;
 using Cinemachine;
 using UnityEngine;
 
@@ -6,7 +5,7 @@ public class PlayerSetup : MonoBehaviour
 {
     private Crosshair crosshair;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         crosshair = FindObjectOfType<Crosshair>();
         SetupPlayer();

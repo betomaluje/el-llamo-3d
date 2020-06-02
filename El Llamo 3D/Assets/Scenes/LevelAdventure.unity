@@ -73994,6 +73994,21 @@ PrefabInstance:
       propertyPath: playerPrefabsFoldout
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3864951532622274057, guid: 7f6b04c0f0bcb2c428edfbbd7ce2d233,
+        type: 3}
+      propertyPath: spawnPointsFoldout
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864951532622274057, guid: 7f6b04c0f0bcb2c428edfbbd7ce2d233,
+        type: 3}
+      propertyPath: nonPlayerPrefabsFoldout
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864951532622274057, guid: 7f6b04c0f0bcb2c428edfbbd7ce2d233,
+        type: 3}
+      propertyPath: spawnerId
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3864951532622274058, guid: 7f6b04c0f0bcb2c428edfbbd7ce2d233,
         type: 3}
       propertyPath: m_Name
@@ -74063,10 +74078,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 65423309705300730, guid: 710ee2d508556c3429acc4795ba3eff9,
+        type: 3}
+      propertyPath: AgentId
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4495572800670078282, guid: 710ee2d508556c3429acc4795ba3eff9,
         type: 3}
       propertyPath: m_Name
       value: PlayersAvatars
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495572800670078282, guid: 710ee2d508556c3429acc4795ba3eff9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4495572800670078286, guid: 710ee2d508556c3429acc4795ba3eff9,
         type: 3}

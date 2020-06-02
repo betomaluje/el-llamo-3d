@@ -25,4 +25,10 @@ public class LevelLoader : MonoBehaviour
     {
         LoadLevel(level.levelNumber);
     }
+
+    public void ExitGame()
+    {
+        Debug.Log("Exiting game");
+        Application.Quit();
+    }
 }

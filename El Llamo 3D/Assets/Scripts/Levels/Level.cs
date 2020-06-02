@@ -5,12 +5,14 @@ public class Level : ScriptableObject
 {
     public LevelNumber levelNumber;
 
+    /**
+     * This Level Numbers should match with the Build Settings added Scenes
+     */
     [System.Serializable]
     public enum LevelNumber
     {
         Lobby,
         MultiPlayer,
-        SinglePlayer,
         Adventure,
         Viking,
         AdventureLocal

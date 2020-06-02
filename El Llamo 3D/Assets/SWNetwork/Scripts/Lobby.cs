@@ -34,7 +34,7 @@ public class Lobby : MonoBehaviour
 
     public Level.LevelNumber selectedLevel = Level.LevelNumber.Lobby;
 
-    void Start()
+    private void Start()
     {
         // Add an event handler for the OnRoomReadyEvent
         NetworkClient.Lobby.OnRoomReadyEvent += Lobby_OnRoomReadyEvent;
@@ -50,7 +50,7 @@ public class Lobby : MonoBehaviour
         playButton.gameObject.SetActive(false);
     }
 
-    void onDestroy()
+    private void onDestroy()
     {
         // remove the handlers
         NetworkClient.Lobby.OnRoomReadyEvent -= Lobby_OnRoomReadyEvent;
@@ -59,7 +59,7 @@ public class Lobby : MonoBehaviour
     }
 
     /* Lobby events handlers */
-    void Lobby_OnRoomReadyEvent(SWRoomReadyEventData eventData)
+    private void Lobby_OnRoomReadyEvent(SWRoomReadyEventData eventData)
     {
         Debug.Log("Room is ready: roomId= " + eventData.roomId);
         // Room is ready to join and its game servers have been assigned.
@@ -71,13 +71,13 @@ public class Lobby : MonoBehaviour
         errorLogText.text = error;
     }
 
-    void Lobby_OnFailedToStartRoomEvent(SWFailedToStartRoomEventData eventData)
+    private void Lobby_OnFailedToStartRoomEvent(SWFailedToStartRoomEventData eventData)
     {
         Debug.Log("Failed to start room: " + eventData);
         LogError("Failed to start room: " + eventData.roomId);
     }
 
-    void Lobby_OnLobbyConncetedEvent()
+    private void Lobby_OnLobbyConncetedEvent()
     {
         Debug.Log("Lobby connected");
         RegisterPlayer();
@@ -130,7 +130,7 @@ public class Lobby : MonoBehaviour
     /// <summary>
     /// Register the player to lobby
     /// </summary>
-    void RegisterPlayer()
+    private void RegisterPlayer()
     {
         NetworkClient.Lobby.Register((successful, reply, error) =>
         {
@@ -165,7 +165,7 @@ public class Lobby : MonoBehaviour
     /// <param name="successful">If set to <c>true</c> <paramref name="successful"/>, the player has joined or created a room.</param>
     /// <param name="reply">Reply.</param>
     /// <param name="error">Error.</param>
-    void HandleJoinOrCreatedRoom(bool successful, SWJoinRoomReply reply, SWLobbyError error)
+    private void HandleJoinOrCreatedRoom(bool successful, SWJoinRoomReply reply, SWLobbyError error)
     {
         if (successful)
         {
@@ -193,7 +193,7 @@ public class Lobby : MonoBehaviour
     /// <summary>
     /// Start local player's current room. Lobby server will ask SocketWeaver to assign suitable game servers for the room.
     /// </summary>
-    void StartRoom()
+    private void StartRoom()
     {
         NetworkClient.Lobby.StartRoom((okay, error) =>
         {
@@ -215,7 +215,7 @@ public class Lobby : MonoBehaviour
     /// <summary>
     /// Connect to the game servers of the room.
     /// </summary>
-    void ConnectToRoom()
+    private void ConnectToRoom()
     {
         NetworkClient.Instance.ConnectToRoom(HandleConnectedToRoom);
     }
@@ -224,7 +224,7 @@ public class Lobby : MonoBehaviour
     /// Callback method NetworkClient.Instance.ConnectToRoom();
     /// </summary>
     /// <param name="connected">If set to <c>true</c>, the client has connected to the game servers successfully.</param>
-    void HandleConnectedToRoom(bool connected)
+    private void HandleConnectedToRoom(bool connected)
     {
         if (connected)
         {
@@ -236,6 +236,11 @@ public class Lobby : MonoBehaviour
             Debug.Log("Failed to connect to room");
             LogError("Failed to connect to room");
         }
+    }
+
+    public void SetLevel(Level level)
+    {
+        selectedLevel = level.levelNumber;
     }
 
     private void OnEverythingReady()

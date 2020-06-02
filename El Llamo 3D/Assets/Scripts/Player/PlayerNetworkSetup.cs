@@ -5,9 +5,9 @@ public class PlayerNetworkSetup : PlayerSetup
     private NetworkID networkID;
     private SyncPropertyAgent syncPropertyAgent;
 
-    protected override void Start() 
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         networkID = GetComponent<NetworkID>();
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
 
@@ -24,6 +24,6 @@ public class PlayerNetworkSetup : PlayerSetup
     {
         base.SetupPlayer();
         string name = NetworkClient.Instance.PlayerId.Split('-')[1];
-        syncPropertyAgent?.Modify(PlayerName.NICKNAME_PROPERTY, name);    
+        syncPropertyAgent?.Modify(PlayerName.NICKNAME_PROPERTY, name);
     }
 }
