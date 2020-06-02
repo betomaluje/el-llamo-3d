@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20bda05ffa43345298188daca95a9da7, type: 3}
   m_Name: VikingNetwork
   m_EditorClassIdentifier: 
-  levelNumber: 2
+  levelNumber: 4
