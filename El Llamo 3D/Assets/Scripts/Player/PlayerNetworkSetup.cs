@@ -15,10 +15,6 @@ public class PlayerNetworkSetup : PlayerSetup
         {
             SetupPlayer();
         }
-        else
-        {
-            RemoveUnnecessaryContent();
-        }
     }
     protected override void SetupPlayer()
     {

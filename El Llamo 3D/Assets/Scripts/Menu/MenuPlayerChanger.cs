@@ -7,6 +7,7 @@ public class MenuPlayerChanger : MonoBehaviour
     [SerializeField] private GameObject singlePlayer;
     [SerializeField] private GameObject multiPlayer;
     [SerializeField] private GameObject optionsPlayer;
+    [SerializeField] private GameObject exitPlayer;
     [SerializeField] private Transform targetTransform;
     [SerializeField] private Transform hiddenTransform;
 
@@ -32,6 +33,11 @@ public class MenuPlayerChanger : MonoBehaviour
         BringToFront(optionsPlayer);
     }
 
+    public void SelectExit()
+    {
+        BringToFront(exitPlayer);
+    }
+
     private void BringToFront(GameObject target)
     {
         if (target == currentObject)
@@ -39,35 +45,15 @@ public class MenuPlayerChanger : MonoBehaviour
             return;
         }
 
+        target.SetActive(true);
         target.transform.DOMove(targetTransform.position, animationSpeed);
-        currentObject.transform.DOMove(hiddenTransform.position, animationSpeed);
 
-        currentObject = target;
+        Sequence s = DOTween.Sequence();
+        s.Append(currentObject.transform.DOMove(hiddenTransform.position, animationSpeed));
+        s.AppendCallback(() =>
+        {
+            currentObject.SetActive(false);
+            currentObject = target;
+        });
     }
-
-    /*
-     *
-     *
-    private float targetX, hiddenX;
-
-    private void Start()
-    {
-        targetX = targetTransform.position.x;
-        hiddenX = hiddenTransform.position.x;
-    }
-
-    public void SelectSinglePlayer()
-    {
-        singlePlayer.transform.DOMoveX(targetX, animationSpeed);
-        multiPlayer.transform.DOMoveX(hiddenX, animationSpeed);
-    }
-
-    public void SelectMultiPlayer()
-    {
-        multiPlayer.transform.DOMoveX(targetX, animationSpeed);
-        singlePlayer.transform.DOMoveX(hiddenX, animationSpeed);
-    }
-     * 
-     */
-
 }

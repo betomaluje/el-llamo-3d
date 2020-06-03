@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameSettings : MonoBehaviour
 {
@@ -21,5 +19,10 @@ public class GameSettings : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void SetUsingNetwork(bool useNetwork)
+    {
+        usingNetwork = useNetwork;
     }
 }
