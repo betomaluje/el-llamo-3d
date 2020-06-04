@@ -12,7 +12,6 @@ public class Level : ScriptableObject
     public enum LevelNumber
     {
         Lobby,
-        MultiPlayer,
         Adventure,
         Viking,
         AdventureLocal
