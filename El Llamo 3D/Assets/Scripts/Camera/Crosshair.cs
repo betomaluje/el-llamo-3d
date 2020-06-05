@@ -25,11 +25,11 @@ public class Crosshair : MonoBehaviour
         inputHandler.targetAquired -= HandleTargetAquired;
     }
 
-    private void HandleTargetAquired(RaycastHit targetHit, bool onTarget)
+    private void HandleTargetAquired(PointingTarget pointingTarget)
     {
-        if (onTarget)
+        if (pointingTarget.onTarget)
         {
-            if (targetHit.distance <= distanceForAnimation && !isZoomedIn)
+            if (pointingTarget.targetHit.distance <= distanceForAnimation && !isZoomedIn)
             {
                 MakeBig();
                 isZoomedIn = true;
@@ -39,7 +39,7 @@ public class Crosshair : MonoBehaviour
         {
             if (isZoomedIn)
             {
-                MakeNNormal();
+                MakeNormal();
                 isZoomedIn = false;
             }
         }
@@ -51,7 +51,7 @@ public class Crosshair : MonoBehaviour
         zoomedCrosshair.DOPunchRotation(new Vector3(0, 0, rotationAngle), zoomDuration, 1, 0.2f);
     }
 
-    public void MakeNNormal()
+    public void MakeNormal()
     {
         zoomedCrosshair.DOScale(1, zoomDuration);
 

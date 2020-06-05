@@ -123,7 +123,7 @@ public class LocalHealth : MonoBehaviour
         LocalGrabable gun = playerGrab.GetActiveHand().GetComponentInChildren<LocalGrabable>();
         if (gun != null)
         {
-            gun.StartThrow(10f, Camera.main.transform.forward);
+            gun.StartThrow(50f, Camera.main.transform.up);
         }
     }
 

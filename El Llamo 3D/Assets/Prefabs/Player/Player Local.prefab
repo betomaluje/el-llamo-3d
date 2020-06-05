@@ -1207,9 +1207,9 @@ GameObject:
   - component: {fileID: 5836814044747114709}
   - component: {fileID: 5836814044747114714}
   - component: {fileID: 540291086934204235}
-  - component: {fileID: 6006514389275516703}
+  - component: {fileID: 620535308613851495}
   - component: {fileID: 2918319333506141162}
-  - component: {fileID: 6126442387018458569}
+  - component: {fileID: 7708679839492750929}
   - component: {fileID: 3472993563486668078}
   - component: {fileID: 2616619627286967258}
   - component: {fileID: 8144690778494832452}
@@ -1271,7 +1271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42209f75cf63a462884c2b9c3c9a267a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6006514389275516703
+--- !u!114 &620535308613851495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1280,7 +1280,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5836814044747114715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea4a9363a4e907c439a8861d07d907a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 8671e2b6355de439ca703250da714362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetLayer:
@@ -1290,7 +1290,7 @@ MonoBehaviour:
   shootingLayer:
     serializedVersion: 2
     m_Bits: 4608
-  shootingDistance: 100
+  shootingDistance: 50
 --- !u!114 &2918319333506141162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1312,7 +1312,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
---- !u!114 &6126442387018458569
+--- !u!114 &7708679839492750929
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1321,10 +1321,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5836814044747114715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ef3fbcbfc9e9947b2700cdc157672c, type: 3}
+  m_Script: {fileID: 11500000, guid: 52cae97229dfd4565ad335ab2500ba1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputHandler: {fileID: 6006514389275516703}
+  inputHandler: {fileID: 620535308613851495}
   playerAnimationsTrigger: {fileID: 507657085110364343}
   throwForce: 1000
   timeResetTarget: 1
@@ -1335,7 +1335,7 @@ MonoBehaviour:
   playerHandsUI:
   - {fileID: 2984699707968819260}
   - {fileID: 7849789723291703089}
-  playerHandUIColor: {r: 1, g: 0.5294118, b: 0, a: 1}
+  playerHandUIColor: {r: 1, g: 0.63529414, b: 0, a: 1}
   weaponChanger: 101
   aimPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &3472993563486668078
@@ -1366,7 +1366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 350
   playerBody: {fileID: 5836814044747114709}
-  playerGrab: {fileID: 6126442387018458569}
+  playerGrab: {fileID: 7708679839492750929}
   zoomKey: 113
   finalZoom: 10
   aiming: {x: 0, y: 0}
@@ -1508,7 +1508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1683,7 +1683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

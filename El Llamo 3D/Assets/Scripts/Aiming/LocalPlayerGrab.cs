@@ -42,8 +42,6 @@ public class LocalPlayerGrab : MonoBehaviour
 
     private PlayerAnimations playerAnimations;
 
-    protected bool isFirePressed = false;
-
     private Camera sceneCamera;
 
     protected virtual void Start()
@@ -64,7 +62,7 @@ public class LocalPlayerGrab : MonoBehaviour
 
         inputHandler.fireReleaseCallback = () =>
         {
-            isFirePressed = false;
+
         };
 
         // handles when the player is throwing
@@ -93,7 +91,6 @@ public class LocalPlayerGrab : MonoBehaviour
         // handle shooting
         inputHandler.shootingTarget = (shootingTarget) =>
         {
-            isFirePressed = true;
             HandleShooting(shootingTarget);
         };
     }
@@ -103,11 +100,11 @@ public class LocalPlayerGrab : MonoBehaviour
         inputHandler.targetAquired -= HandleTargetAquired;
     }
 
-    private void HandleTargetAquired(RaycastHit targetHit, bool onTarget)
+    private void HandleTargetAquired(PointingTarget pointingTarget)
     {
-        if (onTarget)
+        if (pointingTarget.onTarget)
         {
-            lastObject = targetHit.transform.root.GetComponentInChildren<MaterialColorChanger>(true);
+            lastObject = pointingTarget.targetHit.transform.root.GetComponentInChildren<MaterialColorChanger>(true);
 
             if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
             {
@@ -115,7 +112,7 @@ public class LocalPlayerGrab : MonoBehaviour
                 lastObject.TargetOn();
             }
 
-            if (isFirePressed)
+            if (pointingTarget.isPressed)
             {
                 if (lastObject != null)
                 {
@@ -130,7 +127,7 @@ public class LocalPlayerGrab : MonoBehaviour
                     return;
                 }
 
-                LocalGrabable grabable = targetHit.transform.root.GetComponentInChildren<LocalGrabable>();
+                LocalGrabable grabable = pointingTarget.targetHit.transform.root.GetComponentInChildren<LocalGrabable>();
                 if (grabable != null && !grabable.isGrabbed())
                 {
                     PickupObject(grabable);
@@ -180,7 +177,7 @@ public class LocalPlayerGrab : MonoBehaviour
         gun.Shoot(aimPoint);
 
         // we mark the shooting point
-        RaycastHit shootHit = shootingTarget.shootingHit;
+        RaycastHit shootHit = shootingTarget.targetHit;
 
         // if it was on target we take damage
         if (shootingTarget.onTarget)
@@ -238,9 +235,6 @@ public class LocalPlayerGrab : MonoBehaviour
 
     private void Update()
     {
-        // we handle the animation
-        playerAnimations.ShootAnim(isFirePressed && HasGun());
-
         if (Input.GetKeyDown(weaponChanger))
         {
             ChangeHand();

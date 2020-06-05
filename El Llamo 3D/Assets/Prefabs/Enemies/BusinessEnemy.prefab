@@ -1463,7 +1463,7 @@ MonoBehaviour:
     interpolate: 20
     smoothLevel: 1
     snapDistance: 30
-    readFunction: 0
+    readFunction: 1
     bandwidth: 4
     padding: 0
     pos_x_setting:

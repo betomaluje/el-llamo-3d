@@ -16,7 +16,7 @@ public class LocalEnemyFollow : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius, attackLayer);
         if (colliders != null && colliders.Length > 0)
@@ -32,7 +32,7 @@ public class LocalEnemyFollow : MonoBehaviour
         {
             // follow the player
             agent.destination = transformToFollow.position;
-        }        
+        }
     }
 
     private void OnDrawGizmosSelected()

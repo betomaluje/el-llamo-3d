@@ -1206,10 +1206,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5836814044747114709}
   - component: {fileID: 5836814044747114714}
-  - component: {fileID: 7569482408358960920}
-  - component: {fileID: 5836814044747114708}
   - component: {fileID: 5112022199166895065}
   - component: {fileID: 4419335375198168097}
+  - component: {fileID: 7569482408358960920}
+  - component: {fileID: 5836814044747114708}
   - component: {fileID: 3472993563486668078}
   - component: {fileID: 9158683583669780992}
   - component: {fileID: 644223966757249534}
@@ -1264,47 +1264,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &7569482408358960920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5836814044747114715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ca5d573f7fa47f59f0ca377c98f9d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  grabDistance: 10
-  shootingLayer:
-    serializedVersion: 2
-    m_Bits: 4608
-  shootingDistance: 100
---- !u!114 &5836814044747114708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5836814044747114715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 794e23d6f5b2f874484621ffa24bdee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 5836814044747114714}
-  speed: 18
-  gravityMultiplier: 4
-  jumpSpeed: 4
-  groundCheck: {fileID: 5836814044622881642}
-  groundDistance: 1
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!114 &5112022199166895065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1326,10 +1285,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 5836814044747114715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0a95ef9b85d63b4bbb975c29266fa85, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b14193d859a94daaafa818b4a9a8338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputHandler: {fileID: 7569482408358960920}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  grabDistance: 10
+  shootingLayer:
+    serializedVersion: 2
+    m_Bits: 4608
+  shootingDistance: 50
+--- !u!114 &7569482408358960920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836814044747114715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8d1ad22bb4c4f1ca7aadcdfdff653c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 4419335375198168097}
   playerAnimationsTrigger: {fileID: 507657085110364343}
   throwForce: 1000
   timeResetTarget: 1
@@ -1340,9 +1319,30 @@ MonoBehaviour:
   playerHandsUI:
   - {fileID: 2984699707968819260}
   - {fileID: 7849789723291703089}
-  playerHandUIColor: {r: 1, g: 0.53020316, b: 0, a: 1}
+  playerHandUIColor: {r: 1, g: 0.6333333, b: 0, a: 1}
   weaponChanger: 101
   aimPoint: {x: 0, y: 0, z: 0}
+--- !u!114 &5836814044747114708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836814044747114715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 794e23d6f5b2f874484621ffa24bdee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 5836814044747114714}
+  speed: 18
+  gravityMultiplier: 4
+  jumpSpeed: 4
+  groundCheck: {fileID: 5836814044622881642}
+  groundDistance: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &3472993563486668078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,7 +1371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 350
   playerBody: {fileID: 5836814044747114709}
-  playerGrab: {fileID: 4419335375198168097}
+  playerGrab: {fileID: 7569482408358960920}
   zoomKey: 113
   finalZoom: 10
   aiming: {x: 0, y: 0}
@@ -1587,7 +1587,7 @@ MonoBehaviour:
     - enabled: 1
       min: 0
       max: 1
-      resolution: 3
+      resolution: 2
       valueType: 0
       minInt: -300
       maxInt: 300
@@ -1629,8 +1629,8 @@ MonoBehaviour:
       maxInt: 300
       fieldInfoName: Throw
       isProperty: 0
-    bandwidth: 2
-    padding: 5
+    bandwidth: 1
+    padding: 0
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
   syncTransFormFoldout: 1
@@ -1649,7 +1649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties_:
-  - Foldout: 0
+  - Foldout: 1
     name: Shooting
     type: 0
     conflictResolution: 0
@@ -1657,7 +1657,7 @@ MonoBehaviour:
     onValueChange:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4419335375198168097}
+        - m_Target: {fileID: 7569482408358960920}
           m_MethodName: OnShootingChanged
           m_Mode: 1
           m_Arguments:
@@ -1674,7 +1674,7 @@ MonoBehaviour:
     onReady:
       m_PersistentCalls:
         m_Calls: []
-  - Foldout: 0
+  - Foldout: 1
     name: health_changed
     type: 2
     conflictResolution: 2
@@ -1893,7 +1893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -2068,7 +2068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

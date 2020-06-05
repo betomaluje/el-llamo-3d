@@ -10,13 +10,13 @@ public class EnemyFollow : LocalEnemyFollow
         networkID = GetComponent<NetworkID>();
     }
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
         agent.enabled = networkID.IsMine;
 
         if (networkID.IsMine)
         {
-            base.Update();
+            base.FixedUpdate();
         }
     }
 }

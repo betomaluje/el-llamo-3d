@@ -21,12 +21,14 @@ public class LocalInputHandler : MonoBehaviour
     public Action secondaryReleaseCallback;
 
     [HideInInspector]
-    public Action<RaycastHit, bool> targetAquired;
+    public Action<PointingTarget> targetAquired;
 
     [HideInInspector]
     public Action<ShootingTarget> shootingTarget;
 
     private Camera sceneCamera;
+
+    protected bool isInputPressed = false;
 
     private void OnEnable()
     {
@@ -38,11 +40,13 @@ public class LocalInputHandler : MonoBehaviour
         // check if user is pressing the Fire button
         if (Input.GetMouseButtonDown(0))
         {
+            isInputPressed = true;
             HandleShootingPointer();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+            isInputPressed = false;
             fireReleaseCallback();
         }
 
@@ -77,7 +81,7 @@ public class LocalInputHandler : MonoBehaviour
         }
 
         // now we send the Action to all listeners
-        shootingTarget(new ShootingTarget(ray, hit, onTarget, shootingDistance));
+        shootingTarget(new ShootingTarget(ray, hit, onTarget, shootingDistance, isInputPressed));
     }
 
     private void HandleTargetPointer()
@@ -90,13 +94,13 @@ public class LocalInputHandler : MonoBehaviour
 
         if (onTarget)
         {
-            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.yellow);
+            Debug.DrawRay(ray.origin, ray.direction * grabDistance, Color.yellow);
         }
         else
         {
-            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.grey);
+            Debug.DrawRay(ray.origin, ray.direction * grabDistance, Color.grey);
         }
 
-        targetAquired(hit, onTarget);
+        targetAquired(new PointingTarget(hit, onTarget, isInputPressed));
     }
 }

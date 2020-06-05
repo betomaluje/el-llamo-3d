@@ -32,14 +32,14 @@ public class PlayerGrab : LocalPlayerGrab
         }
 
         // regardless if it is on target or not, we need to sync the shooting action
-        if (isFirePressed != lastShootingState)
+        if (shootingTarget.isPressed != lastShootingState)
         {
-            syncPropertyAgent.Modify(SHOOTING, isFirePressed);
-            lastShootingState = isFirePressed;
+            syncPropertyAgent.Modify(SHOOTING, shootingTarget.isPressed);
+            lastShootingState = shootingTarget.isPressed;
         }
 
         // we mark the shooting point
-        RaycastHit shootHit = shootingTarget.shootingHit;
+        RaycastHit shootHit = shootingTarget.targetHit;
 
         // if it was on target we take damage
         if (shootingTarget.onTarget)
