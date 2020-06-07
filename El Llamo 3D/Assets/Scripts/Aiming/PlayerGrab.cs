@@ -1,5 +1,4 @@
-﻿using BetoMaluje.Sikta;
-using SWNetwork;
+﻿using SWNetwork;
 using UnityEngine;
 
 public class PlayerGrab : LocalPlayerGrab
@@ -24,7 +23,7 @@ public class PlayerGrab : LocalPlayerGrab
     */
     protected override void HandleShooting(ShootingTarget shootingTarget)
     {
-        ITarget gun = GetGunInActiveHand();
+        IGun gun = GetGunInActiveHand();
         // if it doesn't have a gun, we return quickly
         if (gun == null)
         {
@@ -87,7 +86,7 @@ public class PlayerGrab : LocalPlayerGrab
          */
     public void OnShootingChanged()
     {
-        ITarget gun = GetGunInActiveHand();
+        IGun gun = GetGunInActiveHand();
 
         bool remoteShootingPressed = syncPropertyAgent.GetPropertyWithName(SHOOTING).GetBoolValue();
         bool playerHasGun = gun != null;

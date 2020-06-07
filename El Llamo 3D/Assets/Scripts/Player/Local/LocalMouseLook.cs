@@ -1,5 +1,4 @@
-﻿using BetoMaluje.Sikta;
-using Cinemachine;
+﻿using Cinemachine;
 using System.Collections;
 using UnityEngine;
 

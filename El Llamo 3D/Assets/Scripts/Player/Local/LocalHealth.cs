@@ -13,9 +13,6 @@ public class LocalHealth : MonoBehaviour
 
     public int currentHealth;
 
-    private const string HEALTH_CHANGED = "health_changed";
-    private const string KILLED_EVENT = "killed";
-
     public Action<float> OnHealthChanged = delegate { };
 
     protected CameraShake cameraShake;
@@ -123,7 +120,7 @@ public class LocalHealth : MonoBehaviour
         LocalGrabable gun = playerGrab.GetActiveHand().GetComponentInChildren<LocalGrabable>();
         if (gun != null)
         {
-            gun.StartThrow(50f, Camera.main.transform.up);
+            gun.StartThrow(100f, Vector3.up);
         }
     }
 

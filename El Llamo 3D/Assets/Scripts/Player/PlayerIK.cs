@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using BetoMaluje.Sikta;
 
 public class PlayerIK : MonoBehaviour
 {

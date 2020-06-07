@@ -1,10 +1,9 @@
-﻿using BetoMaluje.Sikta;
-using DG.Tweening;
+﻿using DG.Tweening;
 using SWNetwork;
 using System;
 using UnityEngine;
 
-public abstract class Gun : Grabable, ITarget
+public abstract class Gun : Grabable, IGun
 {
     [Header("Stats")]
     public Transform shootingPosition;
@@ -53,6 +52,11 @@ public abstract class Gun : Grabable, ITarget
     public int GetDamage()
     {
         return UnityEngine.Random.Range(1, maxDamage);
+    }
+
+    public float GetImpactForce()
+    {
+        return impactForce;
     }
 
     protected override Transform getParentTransform()

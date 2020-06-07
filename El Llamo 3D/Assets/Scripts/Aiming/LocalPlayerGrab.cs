@@ -1,5 +1,4 @@
-﻿using BetoMaluje.Sikta;
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -121,12 +120,6 @@ public class LocalPlayerGrab : MonoBehaviour
                 lastObject = null;
 
                 // if we already have something in the hand, we do nothing
-                ITarget handObject = GetGunInActiveHand();
-                if (handObject != null)
-                {
-                    return;
-                }
-
                 LocalGrabable grabable = pointingTarget.targetHit.transform.root.GetComponentInChildren<LocalGrabable>();
                 if (grabable != null && !grabable.isGrabbed())
                 {
@@ -166,7 +159,7 @@ public class LocalPlayerGrab : MonoBehaviour
      */
     protected virtual void HandleShooting(ShootingTarget shootingTarget)
     {
-        ITarget gun = GetGunInActiveHand();
+        IGun gun = GetGunInActiveHand();
         // if it doesn't have a gun, we return quickly
         if (gun == null)
         {
@@ -184,32 +177,33 @@ public class LocalPlayerGrab : MonoBehaviour
         {
             aimPoint = shootHit.point;
 
-            LocalGun gunTarget = GetActiveHand().GetComponentInChildren<LocalGun>();
+            int damage = gun.GetDamage();
 
-            if (gunTarget != null)
+            // now we checked if we hit another player
+
+            LocalHealth healthTarget = shootHit.transform.gameObject.GetComponent<LocalHealth>();
+
+            if (healthTarget != null)
             {
-                int damage = gunTarget.GetDamage();
+                healthTarget.PerformDamage(damage);
+            }
 
-                LocalHealth healthTarget = shootHit.transform.gameObject.GetComponent<LocalHealth>();
+            // now we checked if we hit an enemy
 
-                if (healthTarget != null)
-                {
-                    healthTarget.PerformDamage(damage);
-                }
+            LocalCorpseHealth corpseHealth = shootHit.transform.gameObject.GetComponentInParent<LocalCorpseHealth>();
 
-                LocalCorpseHealth corpseHealth = shootHit.transform.gameObject.GetComponentInParent<LocalCorpseHealth>();
+            if (corpseHealth != null)
+            {
+                Debug.Log("Impact on corpse");
+                corpseHealth.PerformDamage(damage, shootHit.point);
+            }
 
-                if (corpseHealth != null)
-                {
-                    Debug.Log("Impact on corpse");
-                    corpseHealth.PerformDamage(damage, shootHit.point);
-                }
+            // if the target has a rigidbody, we perform a impact force
 
-                if (shootHit.rigidbody != null)
-                {
-                    Debug.Log(shootHit.transform.gameObject.name + " -> impact force! " + gunTarget.impactForce);
-                    shootHit.rigidbody.AddForce(-shootHit.normal * gunTarget.impactForce);
-                }
+            if (shootHit.rigidbody != null)
+            {
+                Debug.Log(shootHit.transform.gameObject.name + " -> impact force! " + gun.GetImpactForce());
+                shootHit.rigidbody.AddForce(-shootHit.normal * gun.GetImpactForce());
             }
         }
         else
@@ -244,38 +238,9 @@ public class LocalPlayerGrab : MonoBehaviour
     /**
      * Gets the current [ITarget] on the active player's hand
      */
-    protected ITarget GetGunInActiveHand()
+    protected IGun GetGunInActiveHand()
     {
-        return GetActiveHand().GetComponentInChildren<ITarget>();
-    }
-
-    /**
-     * Checks if there's any [Grabbable] that is of type [TargetType.Shootable]
-     */
-    private bool HasGun()
-    {
-        foreach (Transform playerHand in playerHands)
-        {
-            LocalGrabable searched = playerHand.GetComponent<LocalGrabable>();
-            if (searched != null && searched.getTargetType().Equals(TargetType.Shootable))
-            {
-                return true;
-            }
-
-            LocalGrabable searched2 = playerHand.GetComponentInChildren<LocalGrabable>();
-            if (searched2 != null && searched2.getTargetType().Equals(TargetType.Shootable))
-            {
-                return true;
-            }
-
-            LocalGrabable searched3 = playerHand.GetComponentInParent<LocalGrabable>();
-            if (searched3 != null && searched3.getTargetType().Equals(TargetType.Shootable))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return GetActiveHand().GetComponentInChildren<IGun>();
     }
 
     private IEnumerator MakeTargetAvailable()
