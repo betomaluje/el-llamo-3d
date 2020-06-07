@@ -28,8 +28,6 @@ public class LocalPlayerGrab : MonoBehaviour
     public Vector3 aimPoint;
     [HideInInspector]
     public Action<Vector3> aimPointUpdate;
-    [HideInInspector]
-    public Action<Vector3> networkAimPointUpdate;
 
     private MaterialColorChanger lastObject;
     private bool hasPointedToObject = false;

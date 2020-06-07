@@ -1,8 +1,12 @@
 ﻿using SWNetwork;
+using System;
 using UnityEngine;
 
 public class PlayerGrab : LocalPlayerGrab
 {
+    [HideInInspector]
+    public Action<Vector3> networkAimPointUpdate;
+
     #region Network
 
     // network property syncing

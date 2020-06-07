@@ -13,12 +13,26 @@ public class LocalMouseLook : MonoBehaviour
     [SerializeField] private KeyCode zoomKey;
     [SerializeField] private float finalZoom = 10f;
 
+    [Space]
+    [Header("3rd person")]
+    [SerializeField] private KeyCode thirdPersonKey;
+    [SerializeField] private Vector3 finalThirdPosition;
+    [SerializeField] private GameObject[] objectsToHide;
+
+    [Space]
+    [Header("1st person")]
+    [SerializeField] private Vector3 finalFirstPosition = new Vector3(0, 2.4f, 1);
+
+    [HideInInspector]
+    public Vector2 aiming;
+
     private float verticleAngle = 0f;
 
     private CinemachineVirtualCamera vcam;
 
-    public Vector2 aiming;
     private float originalZoom;
+
+    private bool isFirstPerson = true;
 
     protected virtual void Start()
     {
@@ -44,6 +58,78 @@ public class LocalMouseLook : MonoBehaviour
         else if (Input.GetKeyUp(zoomKey))
         {
             StartCoroutine(CheckPressZoom(false));
+        }
+
+        if (Input.GetKeyDown(thirdPersonKey))
+        {
+            if (isFirstPerson)
+            {
+                // toggle to 3rd person
+                StartCoroutine(ChangeToThirdPersonCamera());
+            }
+            else
+            {
+                // toggle to 1st person
+                StartCoroutine(ChangeToFirstPersonCamera());
+            }
+        }
+    }
+
+    private IEnumerator ChangeToFirstPersonCamera()
+    {
+        if (!isFirstPerson)
+        {
+            ShowExtras();
+
+            isFirstPerson = true;
+
+            float updateSpeedSeconds = 0.2f;
+            float elapsed = 0f;
+            Vector3 currentPosition = vcam.transform.localPosition;
+
+            while (elapsed < updateSpeedSeconds)
+            {
+                elapsed += Time.deltaTime;
+                vcam.transform.localPosition = Vector3.Lerp(currentPosition, finalFirstPosition, elapsed / updateSpeedSeconds);
+                yield return null;
+            }
+        }
+    }
+
+    private IEnumerator ChangeToThirdPersonCamera()
+    {
+        if (isFirstPerson)
+        {
+            HideExtras();
+
+            isFirstPerson = false;
+
+            float updateSpeedSeconds = 0.2f;
+            float elapsed = 0f;
+            Vector3 currentPosition = vcam.transform.localPosition;
+
+            while (elapsed < updateSpeedSeconds)
+            {
+                elapsed += Time.deltaTime;
+                vcam.transform.localPosition = Vector3.Lerp(currentPosition, finalThirdPosition, elapsed / updateSpeedSeconds);
+                yield return null;
+            }
+        }
+    }
+
+    private void HideExtras()
+    {
+        foreach (var toHide in objectsToHide)
+        {
+            toHide.SetActive(false);
+        }
+    }
+
+    private void ShowExtras()
+    {
+        foreach (var toShow in objectsToHide)
+        {
+            toShow.SetActive(true);
         }
     }
 

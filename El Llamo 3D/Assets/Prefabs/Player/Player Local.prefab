@@ -1369,6 +1369,12 @@ MonoBehaviour:
   playerGrab: {fileID: 7708679839492750929}
   zoomKey: 113
   finalZoom: 10
+  thirdPersonKey: 9
+  finalThirdPosition: {x: 1.5, y: 3, z: -4}
+  objectsToHide:
+  - {fileID: 7227591154509228171}
+  - {fileID: 8309133792510165470}
+  finalFirstPosition: {x: 0, y: 2.4, z: 1}
   aiming: {x: 0, y: 0}
 --- !u!114 &8144690778494832452
 MonoBehaviour:
@@ -1387,7 +1393,7 @@ MonoBehaviour:
   bloodDamagePrefab: {fileID: 6239080137120610381, guid: 68aa36312bc8147f693459c23e01ad11,
     type: 3}
   maxHealth: 100
-  ragdollModel: {fileID: 655316715928266925, guid: 2ff0b4dfa36644a4ab54d538dada2420,
+  ragdollModel: {fileID: 655316715928266925, guid: 67e0f6eb2f7a447a292597fbbd191743,
     type: 3}
   currentHealth: 0
 --- !u!114 &1985788838408029732
@@ -1937,6 +1943,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 3820138591182244389, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2044,6 +2055,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0, type: 3}
+--- !u!1 &7227591154509228171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3820138591182244389, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5858712608427401902}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7227591154509228168 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3820138591182244390, guid: d0df2c2b3f40eca47b4d1c0b0a3f11d0,
@@ -2174,6 +2191,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b824dd072bfd1f48b7c007fb50204b3, type: 3}
+--- !u!1 &8309133792510165470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1069660099740806474, guid: 5b824dd072bfd1f48b7c007fb50204b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 9049925282826742932}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &341613107204017087 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8730909949589563179, guid: 5b824dd072bfd1f48b7c007fb50204b3,
