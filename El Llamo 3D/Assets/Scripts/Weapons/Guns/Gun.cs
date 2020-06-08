@@ -76,7 +76,7 @@ public abstract class Gun : Grabable, IGun
             SoundManager.instance.Play("Pickup");
 
             transform.localPosition = Vector3.zero;
-            transform.rotation = Quaternion.Euler(rotation);
+            transform.localRotation = Quaternion.Euler(rotation);
 
             sphereCollider.enabled = false;
 
