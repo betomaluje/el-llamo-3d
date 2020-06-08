@@ -1328,10 +1328,11 @@ MonoBehaviour:
   playerAnimationsTrigger: {fileID: 507657085110364343}
   throwForce: 1000
   timeResetTarget: 1
-  grabbables: []
-  playerHands:
-  - {fileID: 3876146945217145102}
-  - {fileID: 8046268901017405572}
+  grabPoints:
+  - grabPosition: {fileID: 3876146945217145102}
+    grabedObject: {fileID: 0}
+  - grabPosition: {fileID: 8046268901017405572}
+    grabedObject: {fileID: 0}
   playerHandsUI:
   - {fileID: 2984699707968819260}
   - {fileID: 7849789723291703089}

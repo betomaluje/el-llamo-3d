@@ -93,7 +93,7 @@ public abstract class Grabable : LocalGrabable
             PlayerGrab playerGrab = getParentTransform().GetComponentInParent<PlayerGrab>();
             if (playerGrab != null)
             {
-                playerGrab.RemoveGrabable(this);
+                playerGrab.RemoveGrabable();
             }
         }
 

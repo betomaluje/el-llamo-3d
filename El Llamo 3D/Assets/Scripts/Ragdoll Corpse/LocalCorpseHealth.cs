@@ -61,7 +61,7 @@ public class LocalCorpseHealth : MonoBehaviour
 
         if (randomExploding <= probOfExploding)
         {
-            ExplodeCorpse explodeScript = Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
+            Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
         }
         else
         {

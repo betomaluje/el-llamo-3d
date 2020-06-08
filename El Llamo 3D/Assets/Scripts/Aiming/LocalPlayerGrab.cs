@@ -1,12 +1,18 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LocalPlayerGrab : MonoBehaviour
 {
+    [Serializable]
+    public class GrabPoint
+    {
+        public Transform grabPosition;
+        public LocalGrabable grabedObject;
+    }
+
     [SerializeField] private LocalInputHandler inputHandler;
     [SerializeField] private PlayerAnimationTrigger playerAnimationsTrigger;
 
@@ -17,8 +23,7 @@ public class LocalPlayerGrab : MonoBehaviour
 
     [Space]
     [Header("Weapon")]
-    public List<LocalGrabable> grabbables;
-    [SerializeField] private Transform[] playerHands;
+    [SerializeField] private GrabPoint[] grabPoints;
     [SerializeField] private Image[] playerHandsUI;
     [SerializeField] private Color playerHandUIColor;
 
@@ -33,9 +38,9 @@ public class LocalPlayerGrab : MonoBehaviour
     private bool hasPointedToObject = false;
 
     // 0: right, 1 left
-    private int selectedGrabbable = 0;
+    private int selectedGrabPoint = 0;
 
-    private Transform playerHand;
+    private GrabPoint currentGrabPoint;
 
     private PlayerAnimations playerAnimations;
 
@@ -45,9 +50,8 @@ public class LocalPlayerGrab : MonoBehaviour
     {
         playerAnimations = GetComponent<PlayerAnimations>();
 
-        grabbables = new List<LocalGrabable>();
-        playerHand = playerHands[selectedGrabbable];
-        ChangeHandsUI(selectedGrabbable);
+        currentGrabPoint = grabPoints[selectedGrabPoint];
+        ChangeHandsUI(selectedGrabPoint);
     }
 
     /**
@@ -65,7 +69,9 @@ public class LocalPlayerGrab : MonoBehaviour
         // handles when the player is throwing
         inputHandler.secondaryClickCallback = () =>
         {
-            if (grabbables.Count > 0)
+            // we need to get the currents hand object to throw it
+            LocalGrabable currentGrabable = grabPoints[selectedGrabPoint].grabedObject;
+            if (currentGrabable != null)
             {
                 playerAnimations.Throw();
             }
@@ -79,7 +85,7 @@ public class LocalPlayerGrab : MonoBehaviour
         // handle actual object throwing
         playerAnimationsTrigger.throwTriggeredCallback = () =>
         {
-            ThrowObject(selectedGrabbable);
+            ThrowObject(selectedGrabPoint);
         };
 
         // handle target
@@ -147,7 +153,7 @@ public class LocalPlayerGrab : MonoBehaviour
         else
         {
             // maybe throw one?
-            Debug.Log("can't pickup! hands full!: " + selectedGrabbable);
+            Debug.Log("can't pickup! hands full!: " + selectedGrabPoint);
             //ThrowObject(selectedGrabbable);
         }
     }
@@ -218,7 +224,7 @@ public class LocalPlayerGrab : MonoBehaviour
     private void ThrowObject(int selectedGrabbable)
     {
         Debug.Log("trying to throw: " + selectedGrabbable);
-        LocalGrabable gun = GetActiveHand().GetComponentInChildren<LocalGrabable>();
+        LocalGrabable gun = grabPoints[selectedGrabbable].grabedObject;
         if (gun != null)
         {
             gun.StartThrow(throwForce, sceneCamera.transform.forward);
@@ -268,49 +274,52 @@ public class LocalPlayerGrab : MonoBehaviour
 
     public void ChangeHand()
     {
-        if (selectedGrabbable == 0)
+        if (selectedGrabPoint == 0)
         {
             // left hand
-            selectedGrabbable = 1;
+            selectedGrabPoint = 1;
         }
         else
         {
             // right hand
-            selectedGrabbable = 0;
+            selectedGrabPoint = 0;
         }
 
-        playerHand = playerHands[selectedGrabbable];
-        ChangeHandsUI(selectedGrabbable);
+        currentGrabPoint = grabPoints[selectedGrabPoint];
+        ChangeHandsUI(selectedGrabPoint);
 
-        Debug.Log("manual hand selected: " + selectedGrabbable);
+        Debug.Log("manual hand selected: " + selectedGrabPoint);
     }
 
     public Transform GetActiveHand()
     {
-        return playerHand;
+        return currentGrabPoint.grabPosition;
     }
 
-    public void AddGrabable(LocalGrabable grabable)
+    /**
+     * Gets a LocalGrabable object and add it as a child of the
+     * current grab point
+     */
+    public void AddGrabable(LocalGrabable grabable, Transform grabableTransform)
     {
-        // search if we already have it
-        LocalGrabable searched = grabbables.Find(obj => obj == grabable);
-        if (searched != null)
+        Transform hand = GetActiveHand();
+        if (hand != null && hand.childCount == 0)
         {
-            return;
+            currentGrabPoint.grabedObject = grabable;
+            grabableTransform.parent = currentGrabPoint.grabPosition;
         }
-
-        grabbables.Add(grabable);
     }
 
-    public void RemoveGrabable(LocalGrabable grabable)
+    public void RemoveGrabable()
     {
-        LocalGrabable searched = grabbables.Find(obj => obj == grabable);
+        LocalGrabable searched = grabPoints[selectedGrabPoint].grabedObject;
         if (searched != null)
         {
-            Debug.Log("thrown remove: " + selectedGrabbable);
-            grabbables.Remove(searched);
+            Debug.Log("thrown remove: " + selectedGrabPoint);
+            grabPoints[selectedGrabPoint].grabedObject = null;
+
             // only if we are not in the first hand, we change it
-            if (selectedGrabbable == 1)
+            if (selectedGrabPoint == 1)
             {
                 ChangeHand();
             }
