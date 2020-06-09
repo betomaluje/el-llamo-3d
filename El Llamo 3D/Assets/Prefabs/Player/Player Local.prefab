@@ -1209,6 +1209,7 @@ GameObject:
   - component: {fileID: 540291086934204235}
   - component: {fileID: 620535308613851495}
   - component: {fileID: 2918319333506141162}
+  - component: {fileID: 6793571608436636157}
   - component: {fileID: 7708679839492750929}
   - component: {fileID: 3472993563486668078}
   - component: {fileID: 2616619627286967258}
@@ -1312,6 +1313,26 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &6793571608436636157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836814044747114715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43831c65920ce4e5bade537866a8a0fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabPoints:
+  - grabPosition: {fileID: 3876146945217145102}
+    index: 0
+    grabedObject: {fileID: 0}
+  - grabPosition: {fileID: 8046268901017405572}
+    index: 0
+    grabedObject: {fileID: 0}
+  pointChanger: 101
 --- !u!114 &7708679839492750929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1328,16 +1349,10 @@ MonoBehaviour:
   playerAnimationsTrigger: {fileID: 507657085110364343}
   throwForce: 1000
   timeResetTarget: 1
-  grabPoints:
-  - grabPosition: {fileID: 3876146945217145102}
-    grabedObject: {fileID: 0}
-  - grabPosition: {fileID: 8046268901017405572}
-    grabedObject: {fileID: 0}
   playerHandsUI:
   - {fileID: 2984699707968819260}
   - {fileID: 7849789723291703089}
   playerHandUIColor: {r: 1, g: 0.63529414, b: 0, a: 1}
-  weaponChanger: 101
   aimPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &3472993563486668078
 MonoBehaviour:
@@ -1367,7 +1382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 350
   playerBody: {fileID: 5836814044747114709}
-  playerGrab: {fileID: 7708679839492750929}
+  grabController: {fileID: 6793571608436636157}
   zoomKey: 113
   finalZoom: 10
   thirdPersonKey: 9

@@ -116,8 +116,8 @@ public class LocalHealth : MonoBehaviour
     private void ThrowGun()
     {
         Debug.Log("die throw gun");
-        LocalPlayerGrab playerGrab = GetComponent<LocalPlayerGrab>();
-        LocalGrabable gun = playerGrab.GetActiveHand().GetComponentInChildren<LocalGrabable>();
+        GrabController grabController = GetComponent<GrabController>();
+        LocalGrabable gun = grabController.GetActiveHand().GetComponentInChildren<LocalGrabable>();
         if (gun != null)
         {
             gun.StartThrow(100f, Vector3.up);

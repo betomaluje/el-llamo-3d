@@ -7,7 +7,7 @@ public class LocalMouseLook : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 100f;
 
     [SerializeField] private Transform playerBody;
-    [SerializeField] private LocalPlayerGrab playerGrab;
+    [SerializeField] private GrabController grabController;
 
     [Header("Zoom")]
     [SerializeField] private KeyCode zoomKey;
@@ -146,7 +146,7 @@ public class LocalMouseLook : MonoBehaviour
         verticleAngle += -mouseY;
         verticleAngle = Mathf.Clamp(verticleAngle, -90f, 90f);
 
-        playerGrab.GetActiveHand().localRotation = Quaternion.Euler(verticleAngle, 0, 0);
+        grabController.GetActiveHand().localRotation = Quaternion.Euler(verticleAngle, 0, 0);
         playerBody.Rotate(Vector3.up * mouseX);
     }
 

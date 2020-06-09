@@ -29,10 +29,10 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
     {
         if (grabbed && other.gameObject.CompareTag("Player"))
         {
-            LocalPlayerGrab playerGrab = other.gameObject.GetComponent<LocalPlayerGrab>();
-            if (playerGrab != null)
+            GrabController grabController = other.gameObject.GetComponent<GrabController>();
+            if (grabController != null)
             {
-                playerGrab.AddGrabable(this, getParentTransform());
+                grabController.AddGrabable(this, getParentTransform());
                 sphereCollider.enabled = false;
             }
         }
@@ -103,6 +103,7 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
 
         Pickup(to);
     }
+
     public abstract void Pickup(Vector3 to);
 
     public virtual void StartThrow(float throwForce, Vector3 direction)
@@ -124,10 +125,10 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
 
         if (transform.parent != null)
         {
-            LocalPlayerGrab playerGrab = getParentTransform().GetComponentInParent<LocalPlayerGrab>();
-            if (playerGrab != null)
+            GrabController grabController = getParentTransform().GetComponentInParent<GrabController>();
+            if (grabController != null)
             {
-                playerGrab.RemoveGrabable();
+                grabController.RemoveGrabable();
             }
         }
 

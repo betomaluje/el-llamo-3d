@@ -16,10 +16,10 @@ public class PlayerGrab : LocalPlayerGrab
 
     #endregion
 
-    protected override void Start()
+    protected override void Awake()
     {
+        base.Awake();
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
-        base.Start();
     }
 
     /**
@@ -49,7 +49,7 @@ public class PlayerGrab : LocalPlayerGrab
         {
             aimPoint = shootHit.point;
 
-            Gun gunTarget = GetActiveHand().GetComponentInChildren<Gun>();
+            Gun gunTarget = grabController.GetActiveHand().GetComponentInChildren<Gun>();
 
             if (gunTarget != null)
             {
