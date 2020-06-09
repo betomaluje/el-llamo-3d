@@ -1,29 +1,24 @@
-﻿using System;
+﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrabController : MonoBehaviour
 {
     [Header("Grab Points")]
     [SerializeField] private GrabPoint[] grabPoints;
     [SerializeField] private KeyCode pointChanger = KeyCode.E;
-
-    [HideInInspector]
-    public Action<GrabPoint> grabPointUpdate = delegate { };
+    [Space]
+    [Header("UI")]
+    [SerializeField] private Image[] playerHandsUI;
+    [SerializeField] private Color playerHandUIColor;
 
     // 0: right, 1 left
     private int selectedGrabPoint = 0;
 
     private GrabPoint currentGrabPoint;
 
-    void Start()
+    private void Start()
     {
-        int i = 0;
-        foreach (var grabPoint in grabPoints)
-        {
-            grabPoint.index = i;
-            i++;
-        }
-
         UpdateCurrentGrabPoint();
     }
 
@@ -48,16 +43,35 @@ public class GrabController : MonoBehaviour
             selectedGrabPoint = 0;
         }
 
-        UpdateCurrentGrabPoint();
-
         Debug.Log("manual hand selected: " + selectedGrabPoint);
+
+        UpdateCurrentGrabPoint();
     }
 
     private void UpdateCurrentGrabPoint()
     {
         currentGrabPoint = grabPoints[selectedGrabPoint];
 
-        grabPointUpdate(currentGrabPoint);
+        ChangeHandsUI(selectedGrabPoint);
+    }
+
+    private void ChangeHandsUI(int selectedGrabbable)
+    {
+        int i = 0;
+        foreach (Image hand in playerHandsUI)
+        {
+            if (i == selectedGrabbable)
+            {
+                hand.color = playerHandUIColor;
+                hand.gameObject.transform.DOScale(1.3f, 0.25f);
+            }
+            else
+            {
+                hand.color = Color.white;
+                hand.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            }
+            i++;
+        }
     }
 
     /**

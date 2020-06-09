@@ -7,7 +7,5 @@ public class GrabPoint
 
     // Hidden public objects
     [HideInInspector]
-    public int index;
-    [HideInInspector]
     public LocalGrabable grabedObject;
 }

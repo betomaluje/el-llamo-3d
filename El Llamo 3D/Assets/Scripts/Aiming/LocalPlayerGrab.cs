@@ -1,8 +1,6 @@
-﻿using DG.Tweening;
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LocalPlayerGrab : MonoBehaviour
 {
@@ -13,11 +11,6 @@ public class LocalPlayerGrab : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private float throwForce = 20;
     [SerializeField] private float timeResetTarget = 1f;
-
-    [Space]
-    [Header("Weapon")]
-    [SerializeField] private Image[] playerHandsUI;
-    [SerializeField] private Color playerHandUIColor;
 
     [HideInInspector]
     public Vector3 aimPoint;
@@ -36,7 +29,6 @@ public class LocalPlayerGrab : MonoBehaviour
     protected virtual void Awake()
     {
         playerAnimations = GetComponent<PlayerAnimations>();
-
         grabController = GetComponent<GrabController>();
     }
 
@@ -84,20 +76,9 @@ public class LocalPlayerGrab : MonoBehaviour
         };
     }
 
-    private void OnEnable()
-    {
-        grabController.grabPointUpdate += OnGrabPointChanged;
-    }
-
     private void OnDisable()
     {
         inputHandler.targetAquired -= HandleTargetAquired;
-        grabController.grabPointUpdate -= OnGrabPointChanged;
-    }
-
-    private void OnGrabPointChanged(GrabPoint grabPoint)
-    {
-        ChangeHandsUI(grabPoint.index);
     }
 
     private void HandleTargetAquired(PointingTarget pointingTarget)
@@ -228,7 +209,7 @@ public class LocalPlayerGrab : MonoBehaviour
     }
 
     /**
-     * Gets the current [ITarget] on the active player's hand
+     * Gets the current [IGun] on the active player's hand
      */
     protected IGun GetGunInActiveHand()
     {
@@ -239,24 +220,5 @@ public class LocalPlayerGrab : MonoBehaviour
     {
         yield return new WaitForSeconds(timeResetTarget);
         hasPointedToObject = false;
-    }
-
-    private void ChangeHandsUI(int selectedGrabbable)
-    {
-        int i = 0;
-        foreach (Image hand in playerHandsUI)
-        {
-            if (i == selectedGrabbable)
-            {
-                hand.color = playerHandUIColor;
-                hand.gameObject.transform.DOScale(1.3f, 0.25f);
-            }
-            else
-            {
-                hand.color = Color.white;
-                hand.gameObject.transform.localScale = new Vector3(1, 1, 1);
-            }
-            i++;
-        }
     }
 }

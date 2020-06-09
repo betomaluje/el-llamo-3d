@@ -1327,12 +1327,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabPoints:
   - grabPosition: {fileID: 3876146945217145102}
-    index: 0
     grabedObject: {fileID: 0}
   - grabPosition: {fileID: 8046268901017405572}
-    index: 0
     grabedObject: {fileID: 0}
   pointChanger: 101
+  playerHandsUI:
+  - {fileID: 2984699707968819260}
+  - {fileID: 7849789723291703089}
+  playerHandUIColor: {r: 1, g: 0.54365414, b: 0, a: 1}
 --- !u!114 &7708679839492750929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1349,10 +1351,6 @@ MonoBehaviour:
   playerAnimationsTrigger: {fileID: 507657085110364343}
   throwForce: 1000
   timeResetTarget: 1
-  playerHandsUI:
-  - {fileID: 2984699707968819260}
-  - {fileID: 7849789723291703089}
-  playerHandUIColor: {r: 1, g: 0.63529414, b: 0, a: 1}
   aimPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &3472993563486668078
 MonoBehaviour:
