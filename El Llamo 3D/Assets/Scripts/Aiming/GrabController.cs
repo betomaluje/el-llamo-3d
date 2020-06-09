@@ -99,6 +99,7 @@ public class GrabController : MonoBehaviour
         Transform hand = currentGrabPoint.grabPosition;
         if (hand != null && hand.childCount == 0)
         {
+            Debug.Log("add grabable: " + grabable.gameObject);
             currentGrabPoint.grabedObject = grabable;
             grabableTransform.parent = currentGrabPoint.grabPosition;
         }
@@ -112,13 +113,25 @@ public class GrabController : MonoBehaviour
         LocalGrabable searched = currentGrabPoint.grabedObject;
         if (searched != null)
         {
-            Debug.Log("thrown remove: " + selectedGrabPoint);
             currentGrabPoint.grabedObject = null;
 
             // only if we are not in the first hand, we change it
             if (selectedGrabPoint == 1)
             {
                 ChangeHand();
+            }
+        }
+    }
+
+    public void RemoveAllGrabables()
+    {
+        foreach (GrabPoint grabPoint in grabPoints)
+        {
+            Debug.Log("thrown remove: " + grabPoint.grabedObject);
+            if (grabPoint.grabedObject != null)
+            {
+                //Debug.Log("thrown remove: " + grabPoint.grabedObject);
+                grabPoint.grabedObject.StartThrow(100f, Vector3.up);
             }
         }
     }

@@ -14,6 +14,7 @@ public class LocalEnemyFollow : MonoBehaviour
     protected virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
     }
 
     protected virtual void FixedUpdate()
@@ -30,6 +31,11 @@ public class LocalEnemyFollow : MonoBehaviour
 
         if (transformToFollow != null)
         {
+            if (agent.velocity.sqrMagnitude > Mathf.Epsilon)
+            {
+                transform.rotation = Quaternion.LookRotation(agent.velocity.normalized);
+            }
+
             // follow the player
             agent.destination = transformToFollow.position;
         }
