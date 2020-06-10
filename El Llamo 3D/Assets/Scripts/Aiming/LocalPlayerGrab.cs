@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 public class LocalPlayerGrab : MonoBehaviour
@@ -16,9 +15,6 @@ public class LocalPlayerGrab : MonoBehaviour
     public Vector3 aimPoint;
     [HideInInspector]
     public Action<Vector3> aimPointUpdate;
-
-    private MaterialColorChanger lastObject;
-    private bool hasPointedToObject = false;
 
     protected GrabController grabController;
 
@@ -83,41 +79,14 @@ public class LocalPlayerGrab : MonoBehaviour
 
     private void HandleTargetAquired(PointingTarget pointingTarget)
     {
-        if (pointingTarget.onTarget)
+        if (pointingTarget.onTarget && pointingTarget.isPressed)
         {
-            lastObject = pointingTarget.targetHit.transform.root.GetComponentInChildren<MaterialColorChanger>(true);
-
-            if (lastObject != null && lastObject.isEnabled && !hasPointedToObject)
+            // if we already have something in the hand, we do nothing
+            LocalGrabable grabable = pointingTarget.targetHit.transform.root.GetComponentInChildren<LocalGrabable>();
+            if (grabable != null && !grabable.isGrabbed())
             {
-                hasPointedToObject = true;
-                lastObject.TargetOn();
+                PickupObject(grabable);
             }
-
-            if (pointingTarget.isPressed)
-            {
-                if (lastObject != null)
-                {
-                    lastObject.TargetOff();
-                }
-                lastObject = null;
-
-                // if we already have something in the hand, we do nothing
-                LocalGrabable grabable = pointingTarget.targetHit.transform.root.GetComponentInChildren<LocalGrabable>();
-                if (grabable != null && !grabable.isGrabbed())
-                {
-                    PickupObject(grabable);
-                }
-            }
-        }
-        else
-        {
-            if (lastObject != null && hasPointedToObject)
-            {
-                StartCoroutine(MakeTargetAvailable());
-                lastObject.TargetOff();
-            }
-
-            lastObject = null;
         }
     }
 
@@ -214,11 +183,5 @@ public class LocalPlayerGrab : MonoBehaviour
     protected IGun GetGunInActiveHand()
     {
         return grabController.GetActiveHand().GetComponentInChildren<IGun>();
-    }
-
-    private IEnumerator MakeTargetAvailable()
-    {
-        yield return new WaitForSeconds(timeResetTarget);
-        hasPointedToObject = false;
     }
 }
