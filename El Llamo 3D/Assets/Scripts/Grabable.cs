@@ -93,7 +93,7 @@ public abstract class Grabable : LocalGrabable
             GrabController grabController = getParentTransform().GetComponentInParent<GrabController>();
             if (grabController != null)
             {
-                grabController.RemoveGrabable();
+                grabController.RemoveGrabable(this);
             }
         }
 

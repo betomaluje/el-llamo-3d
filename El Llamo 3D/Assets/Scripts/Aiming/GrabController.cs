@@ -1,11 +1,12 @@
 ﻿using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GrabController : MonoBehaviour
 {
     [Header("Grab Points")]
-    [SerializeField] private GrabPoint[] grabPoints;
+    [SerializeField] private List<GrabPoint> grabPoints;
     [SerializeField] private KeyCode pointChanger = KeyCode.E;
     [Space]
     [Header("UI")]
@@ -108,12 +109,17 @@ public class GrabController : MonoBehaviour
     /**
      * Removes the current LocalGrabable object
      */
-    public void RemoveGrabable()
+    public void RemoveGrabable(LocalGrabable grabable)
     {
-        LocalGrabable searched = currentGrabPoint.grabedObject;
+        GrabPoint searched = grabPoints.Find(obj => obj.grabedObject == grabable);
         if (searched != null)
         {
-            currentGrabPoint.grabedObject = null;
+            // if it's the same as the current one, we reset it
+            if (currentGrabPoint == searched)
+            {
+                currentGrabPoint.grabedObject = null;
+            }
+            searched.grabedObject = null;
 
             // only if we are not in the first hand, we change it
             if (selectedGrabPoint == 1)

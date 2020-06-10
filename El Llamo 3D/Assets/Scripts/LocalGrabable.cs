@@ -128,7 +128,7 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
             GrabController grabController = getParentTransform().GetComponentInParent<GrabController>();
             if (grabController != null)
             {
-                grabController.RemoveGrabable();
+                grabController.RemoveGrabable(this);
             }
         }
 
