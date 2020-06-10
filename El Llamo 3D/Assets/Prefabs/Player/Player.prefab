@@ -1244,6 +1244,7 @@ Transform:
   - {fileID: 5836814044622881642}
   - {fileID: 9004560328956049904}
   - {fileID: 4332467229373018174}
+  - {fileID: 809344870059572251}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1407,11 +1408,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c93df21b7c8cef4b96d2b99be367bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dieBloodPrefab: {fileID: 6239080137120610381, guid: c64c6ec7bd591384a9cbb4d1b9141506,
-    type: 3}
-  bloodDamagePrefab: {fileID: 6239080137120610381, guid: 68aa36312bc8147f693459c23e01ad11,
-    type: 3}
+  dieBloodPrefab: {fileID: 192166, guid: c6de9c3e430816d40aedcaaf84000975, type: 3}
+  bloodDamagePrefab: {fileID: 193062, guid: 01949c12a89de284792dc4b7b7128404, type: 3}
   maxHealth: 100
+  cameraParticleTransform: {fileID: 809344870059572251}
+  healParticles:
+  - {fileID: 172526, guid: 836a6e787e3b11941b38b8fff2af4e5b, type: 3}
+  - {fileID: 105942, guid: ff672eaca96d32c419d7a1f1b0346e8d, type: 3}
   ragdollModel: {fileID: 655316715928266925, guid: 2ff0b4dfa36644a4ab54d538dada2420,
     type: 3}
   currentHealth: 0
@@ -1940,6 +1943,36 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &7129919048536859390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 809344870059572251}
+  m_Layer: 0
+  m_Name: Particles Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &809344870059572251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7129919048536859390}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5836814044747114709}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7530510306564427171
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameSceneManager : LocalGameSceneManager
 {
+    private SceneSpawner sceneSpawner;
+
     protected override void AddRagdollCorpse()
     {
         NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, ragdollPosition.position, Quaternion.identity);
@@ -11,6 +13,8 @@ public class GameSceneManager : LocalGameSceneManager
     public void OnSpawnerReady(bool alreadySetup, SceneSpawner sceneSpawner)
     {
         Debug.Log("OnSpawnerReady " + alreadySetup);
+
+        this.sceneSpawner = sceneSpawner;
 
         // Check alreadySetup to see if the scene has been set up before. 
         // If it is true, it means the player disconnected and reconnected to the game. 
@@ -27,13 +31,13 @@ public class GameSceneManager : LocalGameSceneManager
             sceneSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
 
             // we spawn guns
-            PutObject(sceneSpawner, guns);
+            PutObject(sceneSpawner, guns, guns.amountToSpawn);
 
             // we spawn enemies
-            PutObject(sceneSpawner, enemies);
+            PutObject(sceneSpawner, enemies, enemies.amountToSpawn);
 
             // we spawn health items
-            PutObject(sceneSpawner, healthItems);
+            PutObject(sceneSpawner, healthItems, healthItems.amountToSpawn);
 
             // Tell the spawner that we have finished setting up the scene. 
             // alreadySetup will be true when SceneSpawn becomes ready next time.
@@ -41,9 +45,16 @@ public class GameSceneManager : LocalGameSceneManager
         }
     }
 
-    private void PutObject(SceneSpawner sceneSpawner, SpawnObject spawnObject)
+    public override void SpawnEnemy(int amount)
     {
-        int totalAmount = spawnObject.amountToSpawn;
+        if (sceneSpawner != null)
+        {
+            PutObject(sceneSpawner, enemies, enemies.amountToSpawn);
+        }
+    }
+
+    private void PutObject(SceneSpawner sceneSpawner, SpawnObject spawnObject, int totalAmount)
+    {
         Debug.Log("spawning " + spawnObject.type.ToString());
         for (int i = 0; i < totalAmount; i++)
         {

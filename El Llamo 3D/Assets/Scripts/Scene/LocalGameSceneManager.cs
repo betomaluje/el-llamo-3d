@@ -7,9 +7,20 @@ public class LocalGameSceneManager : MonoBehaviour
     public class SpawnObject
     {
         public NonPlayerIndexes type;
-        public int amountToSpawn = 4;
         public Transform[] positions;
+        public int amountToSpawn = 4;
         public GameObject spawnPrefab;
+        public GameObject spawnSFX;
+
+        public int AmountToSpawn()
+        {
+            if (amountToSpawn > positions.Length)
+            {
+                amountToSpawn = positions.Length;
+            }
+
+            return amountToSpawn;
+        }
     }
 
     [SerializeField] protected SpawnObject players;
@@ -33,17 +44,17 @@ public class LocalGameSceneManager : MonoBehaviour
     private void Start()
     {
         totalPlayerSpawnPoints = players.positions.Length;
-        int spawnPointIndex = GetRandomSpawnPoint(totalPlayerSpawnPoints);
-        PutObject(players);
+
+        PutObject(players, players.AmountToSpawn());
 
         // we spawn guns
-        PutObject(guns);
+        PutObject(guns, guns.AmountToSpawn());
 
         // we spawn enemies
-        PutObject(enemies);
+        PutObject(enemies, enemies.AmountToSpawn());
 
         // we spawn health items
-        PutObject(healthItems);
+        PutObject(healthItems, healthItems.AmountToSpawn());
     }
 
     private void Update()
@@ -64,37 +75,66 @@ public class LocalGameSceneManager : MonoBehaviour
         Instantiate(ragdollCorpse, ragdollPosition.position, Quaternion.identity);
     }
 
-    private void PutObject(SpawnObject spawnObject)
+    private void PutObject(SpawnObject spawnObject, int totalAmount)
+    {
+        PutObject(spawnObject, totalAmount, false);
+    }
+
+    private void PutObjectWithSFX(SpawnObject spawnObject, int totalAmount)
+    {
+        PutObject(spawnObject, totalAmount, true);
+    }
+
+    private void PutObject(SpawnObject spawnObject, int totalAmount, bool withSFX)
     {
         if (spawnObject.spawnPrefab == null)
         {
             return;
         }
 
-        int totalAmount = spawnObject.amountToSpawn;
-        Debug.Log("spawning " + spawnObject.type.ToString());
         for (int i = 0; i < totalAmount; i++)
         {
             // we get a random position index to use
-            int index = GetRandomSpawnPoint(totalAmount);
+            Transform index = GetRandomSpawnPoint(spawnObject.positions);
             // we use that index to get a random position from the array
-            Vector3 position = spawnObject.positions[index].position;
+            Vector3 position = index.position;
+
+            if (withSFX)
+            {
+                SpawnObjectSfx(spawnObject.spawnSFX, position);
+            }
+
             // we spawn the object using the Type of object to use
             Instantiate(spawnObject.spawnPrefab, position, Quaternion.identity);
         }
     }
 
+    private void SpawnObjectSfx(GameObject sfx, Vector3 position)
+    {
+        if (sfx != null)
+        {
+            Instantiate(sfx, position, Quaternion.identity);
+        }
+    }
+
+    public virtual void SpawnEnemy(int amount)
+    {
+        PutObjectWithSFX(enemies, amount);
+    }
+
+    protected Transform GetRandomSpawnPoint(Transform[] positions)
+    {
+        int index = Random.Range(0, positions.Length);
+        return positions[index];
+    }
+
     protected int GetRandomSpawnPoint(int totalPoints)
     {
-        if (totalPoints == 0)
-        {
-            return 0;
-        }
-
         if (totalPoints <= 0)
         {
-            totalPoints = 2;
+            totalPoints = 0;
         }
-        return Random.Range(0, totalPoints - 1);
+        return Random.Range(0, totalPoints);
+
     }
 }

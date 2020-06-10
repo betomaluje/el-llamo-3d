@@ -79,6 +79,14 @@ public class LocalPlayerGrab : MonoBehaviour
 
     private void HandleTargetAquired(PointingTarget pointingTarget)
     {
+        IGun gun = GetGunInActiveHand();
+
+        // if it does have a gun, we return quickly
+        if (gun != null)
+        {
+            return;
+        }
+
         if (pointingTarget.onTarget && pointingTarget.isPressed)
         {
             // if we already have something in the hand, we do nothing

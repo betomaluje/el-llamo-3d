@@ -9,8 +9,12 @@ public class LocalHealth : MonoBehaviour
     public GameObject bloodDamagePrefab;
     public int maxHealth = 100;
 
+    [SerializeField] private Transform cameraParticleTransform;
+    [SerializeField] private GameObject[] healParticles;
+
     [SerializeField] private GameObject ragdollModel;
 
+    [HideInInspector]
     public int currentHealth;
 
     public Action<float> OnHealthChanged = delegate { };
@@ -34,6 +38,13 @@ public class LocalHealth : MonoBehaviour
         if (newHealth > maxHealth)
         {
             newHealth = maxHealth;
+        }
+
+        SoundManager.instance.Play("Heal");
+
+        foreach (GameObject particle in healParticles)
+        {
+            Instantiate(particle, cameraParticleTransform.position, Quaternion.identity);
         }
 
         // Apply damage and modify the "heal" SyncProperty.
@@ -103,7 +114,7 @@ public class LocalHealth : MonoBehaviour
             isPlayerInmune = true;
 
             ThrowGun();
-            Instantiate(dieBloodPrefab, transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
+            Instantiate(dieBloodPrefab, transform.position, Quaternion.identity);
 
             CreateRagdoll();
 
@@ -118,7 +129,6 @@ public class LocalHealth : MonoBehaviour
         GrabController grabController = GetComponent<GrabController>();
         if (grabController != null)
         {
-            Debug.Log("die throw everything");
             grabController.RemoveAllGrabables();
         }
     }
