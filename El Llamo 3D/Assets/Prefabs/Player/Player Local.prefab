@@ -1317,11 +1317,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 8704
   grabDistance: 10
   shootingLayer:
     serializedVersion: 2
-    m_Bits: 4608
+    m_Bits: 12800
   shootingDistance: 50
 --- !u!114 &2918319333506141162
 MonoBehaviour:
@@ -2238,15 +2238,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b824dd072bfd1f48b7c007fb50204b3, type: 3}
---- !u!1 &8309133792510165470 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1069660099740806474, guid: 5b824dd072bfd1f48b7c007fb50204b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 9049925282826742932}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &341613107204017087 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8730909949589563179, guid: 5b824dd072bfd1f48b7c007fb50204b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 9049925282826742932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8309133792510165470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1069660099740806474, guid: 5b824dd072bfd1f48b7c007fb50204b3,
     type: 3}
   m_PrefabInstance: {fileID: 9049925282826742932}
   m_PrefabAsset: {fileID: 0}
