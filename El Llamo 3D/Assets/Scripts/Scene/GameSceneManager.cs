@@ -55,7 +55,6 @@ public class GameSceneManager : LocalGameSceneManager
 
     private void PutObject(SceneSpawner sceneSpawner, SpawnObject spawnObject, int totalAmount, bool withSFX)
     {
-        Debug.Log("spawning " + spawnObject.type.ToString());
         for (int i = 0; i < totalAmount; i++)
         {
             // we get a random position index to use

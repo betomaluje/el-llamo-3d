@@ -64,6 +64,8 @@ public class LocalCorpseHealth : MonoBehaviour
         transform.parent = null;
         Destroy(gameObject);
 
+        BroadcastEnemyDead();
+
         float randomExploding = UnityEngine.Random.value;
 
         if (randomExploding <= probOfExploding)
@@ -76,6 +78,11 @@ public class LocalCorpseHealth : MonoBehaviour
         }
 
         Instantiate(dieFXPrefab, transform.position, Quaternion.identity);
+    }
+
+    protected void BroadcastEnemyDead()
+    {
+        FindObjectOfType<LocalEnemySpawner>().DecreaseEnemyAmount();
     }
 
     protected virtual void SpawnShieldCorpse()
