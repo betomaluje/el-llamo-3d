@@ -42,8 +42,10 @@ public class CorpseHealth : LocalCorpseHealth
     {
         currentHealth = (int)msg.PopFloat();
 
-        if (currentHealth != GetMaxHealth())
+        if (currentHealth != maxHealth)
         {
+            CalculatePercentage();
+
             Vector3 impactPosition = msg.PopVector3();
 
             MakeBlood(impactPosition);

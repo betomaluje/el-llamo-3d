@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LocalCorpseHealth : MonoBehaviour
 {
@@ -7,9 +8,11 @@ public class LocalCorpseHealth : MonoBehaviour
     [SerializeField] private GameObject dieFXPrefab;
     [SerializeField] private GameObject explodingCorpsePrefab;
     [SerializeField] private GameObject corpsePrefab;
-    [SerializeField] private int maxHealth = 30;
+    [SerializeField] protected int maxHealth = 30;
     [Range(0, 100)]
     [SerializeField] private int probabilityOfExplode = 30;
+
+    public Action<float> OnHealthChanged = delegate { };
 
     protected int currentHealth;
 
@@ -20,6 +23,8 @@ public class LocalCorpseHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         probOfExploding = probabilityOfExplode / 100f;
+
+        CalculatePercentage();
     }
 
     public virtual void PerformDamage(int damage, Vector3 impactPosition)
@@ -36,19 +41,21 @@ public class LocalCorpseHealth : MonoBehaviour
         {
             if (currentHealth != maxHealth)
             {
+                CalculatePercentage();
                 MakeBlood(impactPosition);
             }
         }
     }
 
+    protected void CalculatePercentage()
+    {
+        float healthPercentage = currentHealth / (float)maxHealth;
+        OnHealthChanged(healthPercentage);
+    }
+
     protected void MakeBlood(Vector3 impactPosition)
     {
         Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
-    }
-
-    protected int GetMaxHealth()
-    {
-        return maxHealth;
     }
 
     public virtual void Die()
@@ -57,7 +64,7 @@ public class LocalCorpseHealth : MonoBehaviour
         transform.parent = null;
         Destroy(gameObject);
 
-        float randomExploding = Random.value;
+        float randomExploding = UnityEngine.Random.value;
 
         if (randomExploding <= probOfExploding)
         {
