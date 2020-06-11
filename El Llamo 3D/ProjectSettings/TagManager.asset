@@ -37,7 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Minimap
   - Foreground
   m_SortingLayers:
   - name: Default
