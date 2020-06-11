@@ -40,15 +40,20 @@ public class LocalHealth : MonoBehaviour
             newHealth = maxHealth;
         }
 
+        AddHealSFX();
+
+        // Apply damage and modify the "heal" SyncProperty.
+        HealthChanged(newHealth);
+    }
+
+    protected void AddHealSFX()
+    {
         SoundManager.instance.Play("Heal");
 
         foreach (GameObject particle in healParticles)
         {
             Instantiate(particle, cameraParticleTransform.position, Quaternion.identity);
         }
-
-        // Apply damage and modify the "heal" SyncProperty.
-        HealthChanged(newHealth);
     }
 
     public virtual void PerformDamage(int damage)
@@ -81,7 +86,7 @@ public class LocalHealth : MonoBehaviour
         if (wasPlayerDamaged)
         {
             // damaged performed
-            Instantiate(bloodDamagePrefab, transform.position, transform.rotation);
+            AddDamageSFX();
         }
 
         if (wasPlayerDamaged)
@@ -94,6 +99,11 @@ public class LocalHealth : MonoBehaviour
                 Die();
             }
         }
+    }
+
+    protected void AddDamageSFX()
+    {
+        Instantiate(bloodDamagePrefab, cameraParticleTransform.position, transform.rotation);
     }
 
     protected void CalculatePercentage()

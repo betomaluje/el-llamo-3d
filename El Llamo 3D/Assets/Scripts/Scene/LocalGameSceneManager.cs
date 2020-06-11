@@ -109,7 +109,7 @@ public class LocalGameSceneManager : MonoBehaviour
         }
     }
 
-    private void SpawnObjectSfx(GameObject sfx, Vector3 position)
+    protected void SpawnObjectSfx(GameObject sfx, Vector3 position)
     {
         if (sfx != null)
         {

@@ -30,6 +30,8 @@ public class Health : LocalHealth
             newHealth = maxHealth;
         }
 
+        AddHealSFX();
+
         // Apply damage and modify the "heal" SyncProperty.
         syncPropertyAgent?.Modify(HEALTH_CHANGED, newHealth);
     }
@@ -67,7 +69,7 @@ public class Health : LocalHealth
         if (wasPlayerDamaged)
         {
             // damaged performed
-            Instantiate(bloodDamagePrefab, transform.position, transform.rotation);
+            AddDamageSFX();
         }
 
         if (networkID.IsMine && wasPlayerDamaged)

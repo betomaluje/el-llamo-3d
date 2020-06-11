@@ -31,13 +31,13 @@ public class GameSceneManager : LocalGameSceneManager
             sceneSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
 
             // we spawn guns
-            PutObject(sceneSpawner, guns, guns.amountToSpawn);
+            PutObject(sceneSpawner, guns, guns.amountToSpawn, false);
 
             // we spawn enemies
-            PutObject(sceneSpawner, enemies, enemies.amountToSpawn);
+            PutObject(sceneSpawner, enemies, enemies.amountToSpawn, false);
 
             // we spawn health items
-            PutObject(sceneSpawner, healthItems, healthItems.amountToSpawn);
+            PutObject(sceneSpawner, healthItems, healthItems.amountToSpawn, false);
 
             // Tell the spawner that we have finished setting up the scene. 
             // alreadySetup will be true when SceneSpawn becomes ready next time.
@@ -49,11 +49,11 @@ public class GameSceneManager : LocalGameSceneManager
     {
         if (sceneSpawner != null)
         {
-            PutObject(sceneSpawner, enemies, enemies.amountToSpawn);
+            PutObject(sceneSpawner, enemies, enemies.amountToSpawn, true);
         }
     }
 
-    private void PutObject(SceneSpawner sceneSpawner, SpawnObject spawnObject, int totalAmount)
+    private void PutObject(SceneSpawner sceneSpawner, SpawnObject spawnObject, int totalAmount, bool withSFX)
     {
         Debug.Log("spawning " + spawnObject.type.ToString());
         for (int i = 0; i < totalAmount; i++)
@@ -62,6 +62,12 @@ public class GameSceneManager : LocalGameSceneManager
             int index = GetRandomSpawnPoint(totalAmount);
             // we use that index to get a random position from the array
             Vector3 position = spawnObject.positions[index].position;
+
+            if (withSFX)
+            {
+                SpawnObjectSfx(spawnObject.spawnSFX, position);
+            }
+
             // we spawn the object using the Type of object to use
             sceneSpawner.SpawnForNonPlayer((int)spawnObject.type, position, Quaternion.identity);
         }
