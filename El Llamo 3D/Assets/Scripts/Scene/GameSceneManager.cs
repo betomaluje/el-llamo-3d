@@ -45,7 +45,10 @@ public class GameSceneManager : LocalGameSceneManager
     {
         int index = GetRandomSpawnPoint(enemies.AmountToSpawn());
         Vector3 position = enemies.positions[index].position;
-        SpawnObjectSfx(enemies.spawnSFX, position);
+        if (enemies.spawnSFX != null)
+        {
+            SpawnObjectSfx(enemies.spawnSFX, position);
+        }
         NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Enemy_Business, position, Quaternion.identity);
     }
 
