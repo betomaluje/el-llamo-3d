@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class GameSceneManager : LocalGameSceneManager
 {
-    private SceneSpawner sceneSpawner;
-
     protected override void AddRagdollCorpse()
     {
         NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, ragdollPosition.position, Quaternion.identity);
@@ -13,8 +11,6 @@ public class GameSceneManager : LocalGameSceneManager
     public void OnSpawnerReady(bool alreadySetup, SceneSpawner sceneSpawner)
     {
         Debug.Log("OnSpawnerReady " + alreadySetup);
-
-        this.sceneSpawner = sceneSpawner;
 
         // Check alreadySetup to see if the scene has been set up before. 
         // If it is true, it means the player disconnected and reconnected to the game. 
@@ -47,10 +43,10 @@ public class GameSceneManager : LocalGameSceneManager
 
     public override void SpawnEnemy(int amount)
     {
-        if (sceneSpawner != null)
-        {
-            PutObject(sceneSpawner, enemies, enemies.amountToSpawn, true);
-        }
+        int index = GetRandomSpawnPoint(enemies.AmountToSpawn());
+        Vector3 position = enemies.positions[index].position;
+        SpawnObjectSfx(enemies.spawnSFX, position);
+        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Enemy_Business, position, Quaternion.identity);
     }
 
     private void PutObject(SceneSpawner sceneSpawner, SpawnObject spawnObject, int totalAmount, bool withSFX)
@@ -67,7 +63,7 @@ public class GameSceneManager : LocalGameSceneManager
                 SpawnObjectSfx(spawnObject.spawnSFX, position);
             }
 
-            // we spawn the object using the Type of object to use
+            // we spawn the object using the Type of object to use            
             sceneSpawner.SpawnForNonPlayer((int)spawnObject.type, position, Quaternion.identity);
         }
     }
