@@ -20,6 +20,7 @@ TagManager:
   - PostProccessing
   - Bullet
   - Player
+  - Level
   - Shield
   - 
   - 
@@ -36,8 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Minimap
   - Foreground
   m_SortingLayers:
   - name: Default

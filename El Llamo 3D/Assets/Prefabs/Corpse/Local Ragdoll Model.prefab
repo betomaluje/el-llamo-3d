@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7911005086472004360}
   - component: {fileID: 2771906415315881817}
   - component: {fileID: 8381697163441454925}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Forearm_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 2630620814846565120}
   - component: {fileID: 6275189692003922470}
   - component: {fileID: 2771888079721985173}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Forearm_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927770441}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Shoulder_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927798863}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Toe_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 7114551463324688801}
   - component: {fileID: 602719961837684731}
   - component: {fileID: 1412054633750041995}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Arm_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 655316715927793909}
   - component: {fileID: 655316715933523071}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: CH_Trucker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927837683}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Shoulder_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +532,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927831287}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Chest_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927807267}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Spine_jnt 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927769971}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Neck_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -627,7 +627,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927778543}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Hand_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,7 +660,7 @@ GameObject:
   - component: {fileID: 7465320087157093560}
   - component: {fileID: 388214610184924754}
   - component: {fileID: 2324845862656079615}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: UpperLeg_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -769,7 +769,7 @@ GameObject:
   - component: {fileID: 222903762012369473}
   - component: {fileID: 6613450263051534901}
   - component: {fileID: 4536422065628126069}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: LowerLeg_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,7 +875,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927778557}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Foot_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -909,7 +909,7 @@ GameObject:
   - component: {fileID: 998618629618705851}
   - component: {fileID: 5784131288428415817}
   - component: {fileID: 716862464965917216}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: UpperLeg_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1018,7 +1018,7 @@ GameObject:
   - component: {fileID: 6752224610024911611}
   - component: {fileID: 1567598786990108333}
   - component: {fileID: 7971315904905373011}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: LowerLeg_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1128,7 +1128,7 @@ GameObject:
   - component: {fileID: 5866242576774526777}
   - component: {fileID: 8282288603359594557}
   - component: {fileID: 7202087720915295243}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1220,7 +1220,7 @@ GameObject:
   - component: {fileID: 7899497004898742363}
   - component: {fileID: 4755214822609369032}
   - component: {fileID: 3658917570182499786}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Spine_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1328,7 +1328,7 @@ GameObject:
   - component: {fileID: 6437896619081115788}
   - component: {fileID: 1517452152407686402}
   - component: {fileID: 4961041843157143263}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Head_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1432,7 +1432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927778533}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Hand_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1463,7 +1463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 655316715927778445}
   - component: {fileID: -2205475664463468791}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Local Ragdoll Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1515,7 +1515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927778555}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Foot_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1546,7 +1546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 655316715927812377}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Toe_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1579,7 +1579,7 @@ GameObject:
   - component: {fileID: 4824281026359550007}
   - component: {fileID: 1515094273534986266}
   - component: {fileID: 4162545408902032492}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Arm_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
