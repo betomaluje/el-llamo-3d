@@ -23,21 +23,10 @@ public class LocalEnemyHit : MonoBehaviour
             foreach (Collider col in colliders)
             {
                 // we give priority to the shield
-                LocalCorpseHealth corpseHealth = col.transform.root.GetComponentInChildren<LocalCorpseHealth>(true);
+                IHealth corpseHealth = col.transform.root.GetComponentInChildren<IHealth>(true);
                 if (corpseHealth != null)
                 {
                     corpseHealth.PerformDamage(damage, col.transform.position);
-                    hitEnabled = false;
-
-                    StartCoroutine(ReEnableHit());
-                    return;
-                }
-
-                LocalHealth healthTarget = col.transform.root.GetComponentInChildren<LocalHealth>(true);
-                if (healthTarget != null)
-                {
-                    healthTarget.PerformDamage(damage);
-
                     hitEnabled = false;
 
                     StartCoroutine(ReEnableHit());

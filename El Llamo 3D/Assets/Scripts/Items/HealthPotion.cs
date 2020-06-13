@@ -17,10 +17,10 @@ public class HealthPotion : MonoBehaviour
 
     private void Heal(GameObject player)
     {
-        LocalHealth health = player.GetComponent<LocalHealth>();
+        IHealth health = player.GetComponent<IHealth>();
         if (health != null)
         {
-            health.GiveHealth(healthAmount);
+            health.GiveHealth(healthAmount, Vector3.zero);
         }
 
         Destroy(gameObject);

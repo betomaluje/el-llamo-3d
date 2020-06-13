@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackLayer:
     serializedVersion: 2
-    m_Bits: 12288
+    m_Bits: 20480
   radius: 0.3
   timeToReset: 0.5
   damage: 10
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackLayer:
     serializedVersion: 2
-    m_Bits: 12288
+    m_Bits: 20480
   radius: 0.3
   timeToReset: 0.5
   damage: 10

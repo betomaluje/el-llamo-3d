@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class LocalCorpseHealth : MonoBehaviour
+public class LocalCorpseHealth : MonoBehaviour, IHealth
 {
     [Header("FX")]
     [SerializeField] private GameObject bloodDamagePrefab;
@@ -27,35 +27,10 @@ public class LocalCorpseHealth : MonoBehaviour
         CalculatePercentage();
     }
 
-    public virtual void PerformDamage(int damage, Vector3 impactPosition)
-    {
-        currentHealth -= damage;
-
-        // if hp is lower than 0, set it to 0.
-        if (currentHealth < 0)
-        {
-            currentHealth = 0;
-            Die();
-        }
-        else
-        {
-            if (currentHealth != maxHealth)
-            {
-                CalculatePercentage();
-                MakeBlood(impactPosition);
-            }
-        }
-    }
-
     protected void CalculatePercentage()
     {
         float healthPercentage = currentHealth / (float)maxHealth;
         OnHealthChanged(healthPercentage);
-    }
-
-    protected void MakeBlood(Vector3 impactPosition)
-    {
-        Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
     }
 
     public virtual void Die()
@@ -90,5 +65,44 @@ public class LocalCorpseHealth : MonoBehaviour
         Debug.Log("Shield Corpse");
         Instantiate(corpsePrefab, transform.position, transform.rotation);
     }
+
+    #region IHealth
+
+    public virtual void PerformDamage(int damage, Vector3 impactPosition)
+    {
+        currentHealth -= damage;
+
+        // if hp is lower than 0, set it to 0.
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
+        else
+        {
+            if (currentHealth != maxHealth)
+            {
+                CalculatePercentage();
+                AddDamageSFX(impactPosition);
+            }
+        }
+    }
+
+    public void GiveHealth(int health, Vector3 impactPosition)
+    {
+        // do nothing
+    }
+
+    public void AddDamageSFX(Vector3 impactPosition)
+    {
+        Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
+    }
+
+    public void AddHealSFX(Vector3 impactPosition)
+    {
+        // do nothing
+    }
+
+    #endregion
 }
 

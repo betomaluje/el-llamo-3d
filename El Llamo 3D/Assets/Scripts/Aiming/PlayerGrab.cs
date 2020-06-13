@@ -55,19 +55,11 @@ public class PlayerGrab : LocalPlayerGrab
             {
                 int damage = gunTarget.GetDamage();
 
-                Health healthTarget = shootHit.transform.gameObject.GetComponent<Health>();
+                IHealth healthTarget = shootHit.transform.root.gameObject.GetComponentInChildren<IHealth>(true);
 
                 if (healthTarget != null)
                 {
-                    healthTarget.PerformDamage(damage);
-                }
-
-                CorpseHealth corpseHealth = shootHit.transform.gameObject.GetComponentInParent<CorpseHealth>();
-
-                if (corpseHealth != null)
-                {
-                    Debug.Log("Impact on corpse damage: " + damage);
-                    corpseHealth.PerformDamage(damage, shootHit.point);
+                    healthTarget.PerformDamage(damage, aimPoint);
                 }
 
                 if (shootHit.rigidbody != null)

@@ -22,10 +22,10 @@ public class EnemyHit : MonoBehaviour
         {
             foreach (Collider col in colliders)
             {
-                Health healthTarget = col.transform.root.GetComponentInChildren<Health>(true);
+                IHealth healthTarget = col.transform.root.GetComponentInChildren<IHealth>(true);
                 if (healthTarget != null)
                 {
-                    healthTarget.PerformDamage(damage);
+                    healthTarget.PerformDamage(damage, col.transform.position);
 
                     hitEnabled = false;
 

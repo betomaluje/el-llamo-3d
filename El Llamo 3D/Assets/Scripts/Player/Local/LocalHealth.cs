@@ -3,13 +3,13 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class LocalHealth : MonoBehaviour
+public class LocalHealth : MonoBehaviour, IHealth
 {
     [SerializeField] private GameObject dieBloodPrefab;
     public GameObject bloodDamagePrefab;
     public int maxHealth = 100;
 
-    [SerializeField] private Transform cameraParticleTransform;
+    [SerializeField] protected Transform cameraParticleTransform;
     [SerializeField] private GameObject[] healParticles;
 
     [SerializeField] private GameObject ragdollModel;
@@ -31,51 +31,6 @@ public class LocalHealth : MonoBehaviour
         CalculatePercentage();
     }
 
-    public virtual void GiveHealth(int amount)
-    {
-        int newHealth = currentHealth + amount;
-
-        if (newHealth > maxHealth)
-        {
-            newHealth = maxHealth;
-        }
-
-        AddHealSFX();
-
-        // Apply damage and modify the "heal" SyncProperty.
-        HealthChanged(newHealth);
-    }
-
-    protected void AddHealSFX()
-    {
-        SoundManager.instance.Play("Heal");
-
-        foreach (GameObject particle in healParticles)
-        {
-            Instantiate(particle, cameraParticleTransform.position, Quaternion.identity);
-        }
-    }
-
-    public virtual void PerformDamage(int damage)
-    {
-        if (isPlayerInmune)
-        {
-            return;
-        }
-
-        //currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).GetIntValue();
-        int newHealth = currentHealth - damage;
-
-        // if hp is lower than 0, set it to 0.
-        if (newHealth < 0)
-        {
-            newHealth = 0;
-        }
-
-        // Apply damage and modify the "damage" SyncProperty.
-        HealthChanged(newHealth);
-    }
-
     public void HealthChanged(int newHealth)
     {
         bool wasPlayerDamaged = newHealth < currentHealth;
@@ -86,7 +41,7 @@ public class LocalHealth : MonoBehaviour
         if (wasPlayerDamaged)
         {
             // damaged performed
-            AddDamageSFX();
+            AddDamageSFX(cameraParticleTransform.position);
         }
 
         if (wasPlayerDamaged)
@@ -99,11 +54,6 @@ public class LocalHealth : MonoBehaviour
                 Die();
             }
         }
-    }
-
-    protected void AddDamageSFX()
-    {
-        Instantiate(bloodDamagePrefab, cameraParticleTransform.position, transform.rotation);
     }
 
     protected void CalculatePercentage()
@@ -194,4 +144,58 @@ public class LocalHealth : MonoBehaviour
 
         Debug.Log("Player reset!");
     }
+
+    #region IHealth 
+
+    public virtual void GiveHealth(int amount, Vector3 impactPosition)
+    {
+        int newHealth = currentHealth + amount;
+
+        if (newHealth > maxHealth)
+        {
+            newHealth = maxHealth;
+        }
+
+        AddHealSFX(cameraParticleTransform.position);
+
+        // Apply damage and modify the "heal" SyncProperty.
+        HealthChanged(newHealth);
+    }
+
+    public virtual void PerformDamage(int damage, Vector3 impactPosition)
+    {
+        if (isPlayerInmune)
+        {
+            return;
+        }
+
+        //currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).GetIntValue();
+        int newHealth = currentHealth - damage;
+
+        // if hp is lower than 0, set it to 0.
+        if (newHealth < 0)
+        {
+            newHealth = 0;
+        }
+
+        // Apply damage and modify the "damage" SyncProperty.
+        HealthChanged(newHealth);
+    }
+
+    public void AddDamageSFX(Vector3 impactPosition)
+    {
+        Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
+    }
+
+    public void AddHealSFX(Vector3 impactPosition)
+    {
+        SoundManager.instance.Play("Heal");
+
+        foreach (GameObject particle in healParticles)
+        {
+            Instantiate(particle, impactPosition, Quaternion.identity);
+        }
+    }
+
+    #endregion
 }

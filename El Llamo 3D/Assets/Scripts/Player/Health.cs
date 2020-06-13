@@ -21,41 +21,6 @@ public class Health : LocalHealth
         base.Awake();
     }
 
-    public override void GiveHealth(int amount)
-    {
-        int newHealth = currentHealth + amount;
-
-        if (newHealth > maxHealth)
-        {
-            newHealth = maxHealth;
-        }
-
-        AddHealSFX();
-
-        // Apply damage and modify the "heal" SyncProperty.
-        syncPropertyAgent?.Modify(HEALTH_CHANGED, newHealth);
-    }
-
-    public override void PerformDamage(int damage)
-    {
-        if (isPlayerInmune)
-        {
-            return;
-        }
-
-        //currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).GetIntValue();
-        int newHealth = currentHealth - damage;
-
-        // if hp is lower than 0, set it to 0.
-        if (newHealth < 0)
-        {
-            newHealth = 0;
-        }
-
-        // Apply damage and modify the "damage" SyncProperty.
-        syncPropertyAgent?.Modify(HEALTH_CHANGED, newHealth);
-    }
-
     public void RemoteHealthChanged()
     {
         // Update the hpSlider when player hp changes
@@ -69,7 +34,7 @@ public class Health : LocalHealth
         if (wasPlayerDamaged)
         {
             // damaged performed
-            AddDamageSFX();
+            AddDamageSFX(cameraParticleTransform.position);
         }
 
         if (networkID.IsMine && wasPlayerDamaged)
@@ -139,10 +104,44 @@ public class Health : LocalHealth
     protected override void CreateRagdoll()
     {
         NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, transform.position, Quaternion.identity);
-        /*
-        SWNetworkMessage msg = new SWNetworkMessage();
-        msg.Push(transform.position);
-        remoteEventAgent.Invoke(DIE_EVENT, msg);
-        */
     }
+
+    #region IHealth
+
+    public override void GiveHealth(int amount, Vector3 impactPosition)
+    {
+        int newHealth = currentHealth + amount;
+
+        if (newHealth > maxHealth)
+        {
+            newHealth = maxHealth;
+        }
+
+        AddHealSFX(cameraParticleTransform.position);
+
+        // Apply damage and modify the "heal" SyncProperty.
+        syncPropertyAgent?.Modify(HEALTH_CHANGED, newHealth);
+    }
+
+    public override void PerformDamage(int damage, Vector3 impactPosition)
+    {
+        if (isPlayerInmune)
+        {
+            return;
+        }
+
+        //currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).GetIntValue();
+        int newHealth = currentHealth - damage;
+
+        // if hp is lower than 0, set it to 0.
+        if (newHealth < 0)
+        {
+            newHealth = 0;
+        }
+
+        // Apply damage and modify the "damage" SyncProperty.
+        syncPropertyAgent?.Modify(HEALTH_CHANGED, newHealth);
+    }
+
+    #endregion
 }

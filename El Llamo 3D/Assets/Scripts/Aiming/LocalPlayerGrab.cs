@@ -139,21 +139,11 @@ public class LocalPlayerGrab : MonoBehaviour
 
             // now we checked if we hit another player
 
-            LocalHealth healthTarget = shootHit.transform.gameObject.GetComponent<LocalHealth>();
+            IHealth healthTarget = shootHit.transform.root.gameObject.GetComponentInChildren<IHealth>(true);
 
             if (healthTarget != null)
             {
-                healthTarget.PerformDamage(damage);
-            }
-
-            // now we checked if we hit an enemy
-
-            LocalCorpseHealth corpseHealth = shootHit.transform.gameObject.GetComponentInParent<LocalCorpseHealth>();
-
-            if (corpseHealth != null)
-            {
-                Debug.Log("Impact on corpse");
-                corpseHealth.PerformDamage(damage, shootHit.point);
+                healthTarget.PerformDamage(damage, aimPoint);
             }
 
             // if the target has a rigidbody, we perform a impact force

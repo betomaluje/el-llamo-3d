@@ -48,7 +48,7 @@ public class CorpseHealth : LocalCorpseHealth
 
             Vector3 impactPosition = msg.PopVector3();
 
-            MakeBlood(impactPosition);
+            AddDamageSFX(impactPosition);
         }
 
         if (networkID.IsMine && currentHealth <= 0)
