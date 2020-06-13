@@ -1429,7 +1429,7 @@ MonoBehaviour:
   grabDistance: 10
   shootingLayer:
     serializedVersion: 2
-    m_Bits: 12800
+    m_Bits: 20992
   shootingDistance: 50
 --- !u!114 &2918319333506141162
 MonoBehaviour:
