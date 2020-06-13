@@ -7,22 +7,16 @@ public class LocalCorpseHealth : MonoBehaviour, IHealth
     [SerializeField] private GameObject bloodDamagePrefab;
     [SerializeField] private GameObject dieFXPrefab;
     [SerializeField] private GameObject explodingCorpsePrefab;
-    [SerializeField] private GameObject corpsePrefab;
     [SerializeField] protected int maxHealth = 30;
-    [Range(0, 100)]
-    [SerializeField] private int probabilityOfExplode = 30;
 
     public Action<float> OnHealthChanged = delegate { };
 
     protected int currentHealth;
 
-    protected float probOfExploding;
-
     // Start is called before the first frame update
     protected virtual void Start()
     {
         currentHealth = maxHealth;
-        probOfExploding = probabilityOfExplode / 100f;
 
         CalculatePercentage();
     }
@@ -39,31 +33,9 @@ public class LocalCorpseHealth : MonoBehaviour, IHealth
         transform.parent = null;
         Destroy(gameObject);
 
-        BroadcastEnemyDead();
-
-        float randomExploding = UnityEngine.Random.value;
-
-        if (randomExploding <= probOfExploding)
-        {
-            Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
-        }
-        else
-        {
-            SpawnShieldCorpse();
-        }
+        Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
 
         Instantiate(dieFXPrefab, transform.position, Quaternion.identity);
-    }
-
-    protected void BroadcastEnemyDead()
-    {
-        FindObjectOfType<LocalEnemySpawner>().DecreaseEnemyAmount();
-    }
-
-    protected virtual void SpawnShieldCorpse()
-    {
-        Debug.Log("Shield Corpse");
-        Instantiate(corpsePrefab, transform.position, transform.rotation);
     }
 
     #region IHealth

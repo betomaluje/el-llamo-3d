@@ -1,7 +1,7 @@
 ﻿using SWNetwork;
 using UnityEngine;
 
-public class CorpseHealth : LocalCorpseHealth
+public class EnemyHealth : LocalEnemyHealth
 {
     private NetworkID networkID;
     private RemoteEventAgent remoteEventAgent;
@@ -62,5 +62,11 @@ public class CorpseHealth : LocalCorpseHealth
     {
         base.Die();
         networkID.Destroy();
+    }
+
+    protected override void SpawnShieldCorpse()
+    {
+        Debug.Log("Network Shield Corpse");
+        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, transform.position, transform.rotation);
     }
 }

@@ -11,11 +11,11 @@ public class EnemyHealthBar : MonoBehaviour
 
     [SerializeField] private float updateSpeedSeconds = 0.2f;
 
-    private LocalCorpseHealth healthScript;
+    private LocalEnemyHealth healthScript;
 
     private void Awake()
     {
-        healthScript = GetComponentInParent<LocalCorpseHealth>();
+        healthScript = GetComponentInParent<LocalEnemyHealth>();
     }
 
     private void OnEnable()
