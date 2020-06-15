@@ -15,7 +15,6 @@ public abstract class Grabable : LocalGrabable
     protected override void Start()
     {
         remoteEventAgent = getRemoteEventAgent();
-        sphereCollider = GetComponent<SphereCollider>();
         base.Start();
     }
 
@@ -41,11 +40,6 @@ public abstract class Grabable : LocalGrabable
         Vector3 to = msg.PopVector3();
 
         Debug.Log("remote pickup " + gameObject.name + ": " + to);
-
-        if (grabState.Equals(GrabState.Grabbed))
-        {
-            return;
-        }
 
         grabState = GrabState.Grabbed;
 
@@ -76,11 +70,6 @@ public abstract class Grabable : LocalGrabable
 
     public void RemoteThrowObject(SWNetworkMessage msg)
     {
-        if (grabState.Equals(GrabState.Idle))
-        {
-            return;
-        }
-
         Vector3 direction = msg.PopVector3();
         float throwForce = msg.PopFloat();
 

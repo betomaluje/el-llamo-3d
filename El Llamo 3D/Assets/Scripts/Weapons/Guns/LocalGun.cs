@@ -32,7 +32,7 @@ public abstract class LocalGun : LocalGrabable, IGun
         if (Time.time >= nextTimeToFire)
         {
             // we can shoot here
-            DoRecoil(shootHit);
+            DoRecoil();
 
             DoShooting(shootHit);
             // we update the frequency of the shooting
@@ -42,7 +42,7 @@ public abstract class LocalGun : LocalGrabable, IGun
 
     protected abstract void DoShooting(Vector3 shootHit);
 
-    public void DoRecoil(Vector3 shootHit)
+    public void DoRecoil()
     {
         Vector3 direction = -shootingPosition.right * recoilAmount;
         transform.DOPunchPosition(direction, recoilDuration, 1, 0.05f);

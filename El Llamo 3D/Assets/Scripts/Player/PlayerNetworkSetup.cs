@@ -5,7 +5,7 @@ public class PlayerNetworkSetup : PlayerSetup
     private NetworkID networkID;
     private SyncPropertyAgent syncPropertyAgent;
 
-    protected override void Awake()
+    protected override void Start()
     {
         networkID = GetComponent<NetworkID>();
 

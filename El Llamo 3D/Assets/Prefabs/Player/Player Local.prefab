@@ -1345,9 +1345,9 @@ GameObject:
   - component: {fileID: 5836814044747114714}
   - component: {fileID: 540291086934204235}
   - component: {fileID: 620535308613851495}
-  - component: {fileID: 2918319333506141162}
   - component: {fileID: 6793571608436636157}
   - component: {fileID: 7708679839492750929}
+  - component: {fileID: 2918319333506141162}
   - component: {fileID: 3472993563486668078}
   - component: {fileID: 2616619627286967258}
   - component: {fileID: 8144690778494832452}
@@ -1431,27 +1431,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 53248
   shootingDistance: 50
---- !u!114 &2918319333506141162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5836814044747114715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92bee30c30d5edd4cae37702c7bc4030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 5836814044747114714}
-  speed: 18
-  gravityMultiplier: 4
-  jumpSpeed: 4
-  groundCheck: {fileID: 5836814044622881642}
-  groundDistance: 1
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 8448
 --- !u!114 &6793571608436636157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1491,6 +1470,27 @@ MonoBehaviour:
   throwForce: 1000
   timeResetTarget: 1
   aimPoint: {x: 0, y: 0, z: 0}
+--- !u!114 &2918319333506141162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836814044747114715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bee30c30d5edd4cae37702c7bc4030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 5836814044747114714}
+  speed: 18
+  gravityMultiplier: 4
+  jumpSpeed: 4
+  groundCheck: {fileID: 5836814044622881642}
+  groundDistance: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8448
 --- !u!114 &3472993563486668078
 MonoBehaviour:
   m_ObjectHideFlags: 0

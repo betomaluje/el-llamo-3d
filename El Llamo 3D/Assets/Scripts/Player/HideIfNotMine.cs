@@ -7,7 +7,7 @@ public class HideIfNotMine : MonoBehaviour
     [SerializeField] private NetworkID networkID;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         if (!networkID.IsMine)
         {

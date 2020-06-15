@@ -4,6 +4,12 @@ public class PlayerMovement : LocalPlayerMovement
 {
     private NetworkID networkID;
 
+    protected override void Start()
+    {
+        base.Start();
+        networkID = GetComponent<NetworkID>();
+    }
+
     protected override void Update()
     {
         if (networkID.IsMine)
@@ -11,11 +17,4 @@ public class PlayerMovement : LocalPlayerMovement
             base.Update();
         }
     }
-
-    protected override void Start()
-    {
-        base.Start();
-        networkID = GetComponent<NetworkID>();
-    }
-
 }

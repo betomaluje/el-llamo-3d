@@ -22,7 +22,7 @@ public class LocalPlayerGrab : MonoBehaviour
 
     private Camera sceneCamera;
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
         playerAnimations = GetComponent<PlayerAnimations>();
         grabController = GetComponent<GrabController>();

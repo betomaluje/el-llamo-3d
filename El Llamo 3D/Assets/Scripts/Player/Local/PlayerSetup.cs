@@ -4,7 +4,7 @@ public class PlayerSetup : MonoBehaviour
 {
     protected Crosshair crosshair;
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
         crosshair = FindObjectOfType<Crosshair>();
         SetupPlayer();

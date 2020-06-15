@@ -16,9 +16,9 @@ public class PlayerGrab : LocalPlayerGrab
 
     #endregion
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         syncPropertyAgent = GetComponent<SyncPropertyAgent>();
     }
 
