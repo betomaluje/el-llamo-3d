@@ -7,18 +7,23 @@ public class PlayerNetworkSetup : PlayerSetup
 
     protected override void Awake()
     {
-        base.Awake();
         networkID = GetComponent<NetworkID>();
-        syncPropertyAgent = GetComponent<SyncPropertyAgent>();
 
         if (networkID.IsMine)
         {
+            crosshair = FindObjectOfType<Crosshair>();
+            syncPropertyAgent = GetComponent<SyncPropertyAgent>();
+
             SetupPlayer();
         }
     }
     protected override void SetupPlayer()
     {
-        base.SetupPlayer();
+        LocalPlayerGrab playerGrab = GetComponentInChildren<LocalPlayerGrab>(true);
+        playerGrab.SetupPlayer();
+
+        crosshair.SetupPlayer(GetComponent<LocalInputHandler>());
+
         string name = NetworkClient.Instance.PlayerId.Split('-')[1];
         syncPropertyAgent?.Modify(PlayerName.NICKNAME_PROPERTY, name);
     }

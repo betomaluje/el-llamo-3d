@@ -13,18 +13,18 @@ public class LocalInputHandler : MonoBehaviour
     [SerializeField] private float shootingDistance = 100f;
 
     [HideInInspector]
-    public Action fireReleaseCallback;
+    public Action fireReleaseCallback = delegate { };
 
     [HideInInspector]
-    public Action secondaryClickCallback;
+    public Action secondaryClickCallback = delegate { };
     [HideInInspector]
-    public Action secondaryReleaseCallback;
+    public Action secondaryReleaseCallback = delegate { };
 
     [HideInInspector]
-    public Action<PointingTarget> targetAquired;
+    public Action<PointingTarget> targetAquired = delegate { };
 
     [HideInInspector]
-    public Action<ShootingTarget> shootingTarget;
+    public Action<ShootingTarget> shootingTarget = delegate { };
 
     private Camera sceneCamera;
 

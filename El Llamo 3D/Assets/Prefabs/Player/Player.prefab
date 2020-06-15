@@ -1555,6 +1555,7 @@ MonoBehaviour:
   gameObjects:
   - {fileID: 7530510307089449166}
   - {fileID: 6350869325238444130}
+  - {fileID: 5667411187555735356}
   networkID: {fileID: 8915490827300288987}
 --- !u!114 &8915490827300288987
 MonoBehaviour:
@@ -1590,46 +1591,14 @@ MonoBehaviour:
   syncedGenerics:
   - syncTarget: {fileID: 4419335375198168097}
     enabled: 1
-    foldout: 0
-    bandwidth: 6
-    padding: 3
+    foldout: 1
+    bandwidth: 0
+    padding: 0
     editorName: PlayerAim
     uncompressedSyncFields: []
     syncFields: []
     syncVector2Fields: []
-    syncVector3Fields:
-    - fieldInfoName: aimPoint
-      isProperty: 0
-      xSyncField:
-        enabled: 1
-        min: -250
-        max: 250
-        resolution: 3
-        valueType: 0
-        minInt: -300
-        maxInt: 300
-        fieldInfoName: 
-        isProperty: 0
-      ySyncField:
-        enabled: 1
-        min: 0.1
-        max: 50
-        resolution: 3
-        valueType: 0
-        minInt: -300
-        maxInt: 300
-        fieldInfoName: 
-        isProperty: 0
-      zSyncField:
-        enabled: 1
-        min: -250
-        max: 250
-        resolution: 3
-        valueType: 0
-        minInt: -300
-        maxInt: 300
-        fieldInfoName: 
-        isProperty: 0
+    syncVector3Fields: []
     syncQuaternionFields: []
     syncVector4Fields: []
   syncedTransform:
@@ -1764,7 +1733,7 @@ MonoBehaviour:
     padding: 0
   syncTransFormEnabled: 1
   syncAnimatorEnabled: 1
-  syncTransFormFoldout: 1
+  syncTransFormFoldout: 0
   syncAnimatorFoldout: 1
   restoreState: 1
 --- !u!114 &1540597783966594581
@@ -1780,7 +1749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties_:
-  - Foldout: 1
+  - Foldout: 0
     name: Shooting
     type: 0
     conflictResolution: 0
