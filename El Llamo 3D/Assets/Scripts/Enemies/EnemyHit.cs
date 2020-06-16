@@ -29,6 +29,8 @@ public class EnemyHit : MonoBehaviour
 
                     hitEnabled = false;
 
+                    SoundManager.instance.Play("Punch");
+
                     StartCoroutine(ReEnableHit());
                     return;
                 }

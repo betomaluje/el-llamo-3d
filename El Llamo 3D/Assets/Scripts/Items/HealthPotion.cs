@@ -23,6 +23,8 @@ public class HealthPotion : MonoBehaviour
             health.GiveHealth(healthAmount, Vector3.zero);
         }
 
+        SoundManager.instance.Play("Heal");
+
         Destroy(gameObject);
     }
 }
