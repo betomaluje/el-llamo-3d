@@ -46,7 +46,7 @@ MonoBehaviour:
   sounds:
   - name: Shoot
     soundType: 0
-    clip: {fileID: 8300000, guid: 2e686eaacc1f2a14cab472dc7dc9030c, type: 3}
+    clip: {fileID: 8300000, guid: a3d4c2062693e7e408c76565ebb1db50, type: 3}
     volume: 0.5
     pitch: 1
     spatialBlend: 0
@@ -111,6 +111,22 @@ MonoBehaviour:
   - name: Heal
     soundType: 0
     clip: {fileID: 8300000, guid: b2e11458a34507449aad836f078ecf72, type: 3}
+    volume: 0.4
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Portal
+    soundType: 0
+    clip: {fileID: 8300000, guid: c5b903c73be8fa34eb6eca654c99a39b, type: 3}
+    volume: 0.4
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Punch
+    soundType: 0
+    clip: {fileID: 8300000, guid: dcf81278eaea15744940abe3830ca6ba, type: 3}
     volume: 0.4
     pitch: 1
     spatialBlend: 0
