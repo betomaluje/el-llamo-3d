@@ -62,7 +62,6 @@ public class LocalEnemyHealth : MonoBehaviour, IHealth
 
     protected virtual void SpawnShieldCorpse()
     {
-        Debug.Log("Shield Corpse");
         Instantiate(corpsePrefab, transform.position, transform.rotation);
     }
 

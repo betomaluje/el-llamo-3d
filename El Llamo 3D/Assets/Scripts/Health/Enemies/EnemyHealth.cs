@@ -66,7 +66,6 @@ public class EnemyHealth : LocalEnemyHealth
 
     protected override void SpawnShieldCorpse()
     {
-        Debug.Log("Network Shield Corpse");
         NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, transform.position, transform.rotation);
     }
 }

@@ -147,7 +147,7 @@ public class LocalPlayerGrab : MonoBehaviour
 
             if (healthTarget != null)
             {
-                healthTarget.PerformDamage(damage, aimPoint);
+                healthTarget.PerformDamage(damage, shootHit.point);
             }
 
             // if the target has a rigidbody, we perform a impact force

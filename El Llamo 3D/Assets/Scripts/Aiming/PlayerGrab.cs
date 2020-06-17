@@ -59,7 +59,7 @@ public class PlayerGrab : LocalPlayerGrab
 
                 if (healthTarget != null)
                 {
-                    healthTarget.PerformDamage(damage, aimPoint);
+                    healthTarget.PerformDamage(damage, shootHit.point);
                 }
 
                 if (shootHit.rigidbody != null)
