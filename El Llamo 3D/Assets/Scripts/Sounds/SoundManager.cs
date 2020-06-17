@@ -26,6 +26,7 @@ public class SoundManager : MonoBehaviour
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
+            s.alternatives.Add(s.clip);
 
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
@@ -54,6 +55,32 @@ public class SoundManager : MonoBehaviour
             return;
         }
         s.source.Play();
+    }
+
+    public void PlayOrAlternative(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound " + name + " not found");
+            return;
+        }
+
+        if (s.alternatives != null && s.alternatives.Count > 0)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, s.alternatives.Count);
+
+            Debug.Log("Playing random " + randomIndex + " for " + name);
+
+            Sound copy = s;
+            copy.source.clip = s.alternatives[randomIndex];
+            copy.source.Play();
+            copy = null;
+        }
+        else
+        {
+            s.source.Play();
+        }
     }
 
     public void PlayReversed(string name)

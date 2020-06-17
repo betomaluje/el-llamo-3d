@@ -185,6 +185,7 @@ public class LocalHealth : MonoBehaviour, IHealth
     public void AddDamageSFX(Vector3 impactPosition)
     {
         Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
+        SoundManager.instance.PlayOrAlternative("Hurt");
     }
 
     public void AddHealSFX(Vector3 impactPosition)

@@ -47,6 +47,7 @@ MonoBehaviour:
   - name: Shoot
     soundType: 0
     clip: {fileID: 8300000, guid: a3d4c2062693e7e408c76565ebb1db50, type: 3}
+    alternatives: []
     volume: 0.5
     pitch: 1
     spatialBlend: 0
@@ -55,6 +56,7 @@ MonoBehaviour:
   - name: Jump
     soundType: 0
     clip: {fileID: 8300000, guid: 0b60434a932031547b6ad29c5bf00441, type: 3}
+    alternatives: []
     volume: 0.5
     pitch: 1
     spatialBlend: 0
@@ -63,6 +65,7 @@ MonoBehaviour:
   - name: Explosion
     soundType: 0
     clip: {fileID: 8300000, guid: 594adfe596e929342813aa24c36d5699, type: 3}
+    alternatives: []
     volume: 0.5
     pitch: 1
     spatialBlend: 0
@@ -71,6 +74,7 @@ MonoBehaviour:
   - name: Throw
     soundType: 0
     clip: {fileID: 8300000, guid: 0b79094ef773d0b478cc3667bfa12393, type: 3}
+    alternatives: []
     volume: 0.5
     pitch: 1
     spatialBlend: 0
@@ -79,6 +83,7 @@ MonoBehaviour:
   - name: Pickup
     soundType: 0
     clip: {fileID: 8300000, guid: 40909ae62fc4451418e4f7fad6c7e46e, type: 3}
+    alternatives: []
     volume: 0.5
     pitch: 1
     spatialBlend: 0
@@ -87,6 +92,7 @@ MonoBehaviour:
   - name: Theme_Menu
     soundType: 1
     clip: {fileID: 8300000, guid: 4c49560e24851434c80f05df924778ba, type: 3}
+    alternatives: []
     volume: 0.4
     pitch: 1
     spatialBlend: 0
@@ -95,6 +101,7 @@ MonoBehaviour:
   - name: Theme_Adventure
     soundType: 1
     clip: {fileID: 8300000, guid: 77d214b9f97df40babb729c2a059b05c, type: 3}
+    alternatives: []
     volume: 0.4
     pitch: 1
     spatialBlend: 0
@@ -103,6 +110,7 @@ MonoBehaviour:
   - name: Theme_Viking
     soundType: 1
     clip: {fileID: 8300000, guid: 7ec6a28ae08244083806cda345f57a53, type: 3}
+    alternatives: []
     volume: 0.4
     pitch: 1
     spatialBlend: 0
@@ -111,6 +119,7 @@ MonoBehaviour:
   - name: Heal
     soundType: 0
     clip: {fileID: 8300000, guid: b2e11458a34507449aad836f078ecf72, type: 3}
+    alternatives: []
     volume: 0.4
     pitch: 1
     spatialBlend: 0
@@ -119,6 +128,7 @@ MonoBehaviour:
   - name: Portal
     soundType: 0
     clip: {fileID: 8300000, guid: c5b903c73be8fa34eb6eca654c99a39b, type: 3}
+    alternatives: []
     volume: 0.4
     pitch: 1
     spatialBlend: 0
@@ -127,6 +137,18 @@ MonoBehaviour:
   - name: Punch
     soundType: 0
     clip: {fileID: 8300000, guid: dcf81278eaea15744940abe3830ca6ba, type: 3}
+    alternatives: []
+    volume: 0.4
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Hurt
+    soundType: 0
+    clip: {fileID: 8300000, guid: 9d34875fd0c2eb14c85490a7f35b48bc, type: 3}
+    alternatives:
+    - {fileID: 8300000, guid: a053777538c575342b7f9660533080b6, type: 3}
+    - {fileID: 8300000, guid: 5c04268a1e5a7a040b113cc21e3e5cd9, type: 3}
     volume: 0.4
     pitch: 1
     spatialBlend: 0
