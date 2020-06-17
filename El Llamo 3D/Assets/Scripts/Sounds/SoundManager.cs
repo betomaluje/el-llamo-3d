@@ -69,9 +69,6 @@ public class SoundManager : MonoBehaviour
         if (s.alternatives != null && s.alternatives.Count > 0)
         {
             int randomIndex = UnityEngine.Random.Range(0, s.alternatives.Count);
-
-            Debug.Log("Playing random " + randomIndex + " for " + name);
-
             Sound copy = s;
             copy.source.clip = s.alternatives[randomIndex];
             copy.source.Play();

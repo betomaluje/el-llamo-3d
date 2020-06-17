@@ -102,7 +102,6 @@ public class LocalGameSceneManager : MonoBehaviour
             if (withSFX)
             {
                 SpawnObjectSfx(spawnObject.spawnSFX, position);
-                SoundManager.instance.Play("Portal");
             }
 
             // we spawn the object using the Type of object to use
