@@ -78,8 +78,8 @@ public class PlayerGrab : LocalPlayerGrab
     }
 
     /**
-         * Called from the Sync Property Agent
-         */
+     * Called from the Sync Property Agent
+     */
     public void OnShootingChanged()
     {
         IGun gun = GetGunInActiveHand();

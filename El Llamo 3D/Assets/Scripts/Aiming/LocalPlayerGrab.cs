@@ -18,6 +18,7 @@ public class LocalPlayerGrab : MonoBehaviour
 
     protected GrabController grabController;
 
+    private Transform crosshair;
     private PlayerAnimations playerAnimations;
 
     private Camera sceneCamera;
@@ -26,6 +27,7 @@ public class LocalPlayerGrab : MonoBehaviour
     {
         playerAnimations = GetComponent<PlayerAnimations>();
         grabController = GetComponent<GrabController>();
+        crosshair = FindObjectOfType<Crosshair>().transform;
     }
 
     /**
@@ -124,16 +126,18 @@ public class LocalPlayerGrab : MonoBehaviour
             return;
         }
 
-        // regardless if it is on target or not, we need to trigger the shooting action
-        gun.Shoot(aimPoint);
-
         // we mark the shooting point
         RaycastHit shootHit = shootingTarget.targetHit;
+
+        // regardless if it is on target or not, we need to trigger the shooting action
+        gun.Shoot(shootHit.point);
 
         // if it was on target we take damage
         if (shootingTarget.onTarget)
         {
-            aimPoint = shootHit.point;
+            Vector3 direction = crosshair.position - shootHit.point;
+
+            aimPoint = direction;
 
             int damage = gun.GetDamage();
 

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class LocalInputHandler : MonoBehaviour
 {
+    [SerializeField] private Transform crosshair;
+    [Space]
     [Header("Target")]
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private float grabDistance = 10f;

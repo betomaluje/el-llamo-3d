@@ -286,6 +286,7 @@ MonoBehaviour:
   recoilAmount: 0.3
   recoilDuration: 0.3
   gunEffects: {fileID: 3382172989892372564}
+  displayLine: 0
 --- !u!1 &3382172991198357408
 GameObject:
   m_ObjectHideFlags: 0
