@@ -692,6 +692,7 @@ MonoBehaviour:
   - {fileID: 6009763649638500326, guid: d7730ca93a6402940891336851b0b6a4, type: 3}
   - {fileID: 8319172693054377143, guid: 3e4ef89126d1e694c8d5003a6f8bef1d, type: 3}
   - {fileID: 7315992782597608382, guid: ce31bc196a55bbb47aef50d5625e003d, type: 3}
+  - {fileID: 655316715928266925, guid: 2ff0b4dfa36644a4ab54d538dada2420, type: 3}
   spawnPoints:
   - {fileID: 5812602667857374040}
   - {fileID: 1228207622344529839}
@@ -701,7 +702,7 @@ MonoBehaviour:
   spawnPointsFoldout: 0
   playerPrefabsFoldout: 0
   nonPlayerPrefabsFoldout: 1
-  spawnerId: 1
+  spawnerId: 11
   AutoInitialization: 1
   OnReady:
     m_PersistentCalls:

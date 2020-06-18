@@ -11,7 +11,7 @@ public class LocalCorpseHealth : MonoBehaviour, IHealth
 
     public Action<float> OnHealthChanged = delegate { };
 
-    protected int currentHealth;
+    public int currentHealth;
 
     // Start is called before the first frame update
     protected virtual void Start()

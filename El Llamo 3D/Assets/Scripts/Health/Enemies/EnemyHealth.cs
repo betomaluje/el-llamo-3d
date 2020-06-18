@@ -64,8 +64,8 @@ public class EnemyHealth : LocalEnemyHealth
         networkID.Destroy();
     }
 
-    protected override void SpawnShieldCorpse()
+    protected override void CreateRagdoll()
     {
-        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, transform.position, transform.rotation);
+        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Enemy_Corpse, transform.position, transform.rotation);
     }
 }

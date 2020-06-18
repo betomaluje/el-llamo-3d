@@ -3,7 +3,8 @@ public enum NonPlayerIndexes
 {
     Player,
     Gun,
-    Ragdoll_Corpse,
+    Enemy_Corpse,
     Enemy_Business,
-    Health_Item
+    Health_Item,
+    Player_Corpse
 }

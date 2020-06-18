@@ -5,7 +5,7 @@ public class GameSceneManager : LocalGameSceneManager
 {
     protected override void AddRagdollCorpse()
     {
-        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, ragdollPosition.position, Quaternion.identity);
+        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Enemy_Corpse, ragdollPosition.position, Quaternion.identity);
     }
 
     public void OnSpawnerReady(bool alreadySetup, SceneSpawner sceneSpawner)

@@ -55,7 +55,7 @@ public class PlayerGrab : LocalPlayerGrab
             {
                 int damage = gunTarget.GetDamage();
 
-                IHealth healthTarget = shootHit.transform.root.gameObject.GetComponentInChildren<IHealth>(true);
+                IHealth healthTarget = shootHit.transform.gameObject.GetComponentInParent<IHealth>();
 
                 if (healthTarget != null)
                 {

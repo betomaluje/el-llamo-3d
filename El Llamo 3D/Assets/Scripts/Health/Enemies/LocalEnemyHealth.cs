@@ -49,7 +49,7 @@ public class LocalEnemyHealth : MonoBehaviour, IHealth
         }
         else
         {
-            SpawnShieldCorpse();
+            CreateRagdoll();
         }
 
         Instantiate(dieFXPrefab, transform.position, Quaternion.identity);
@@ -60,7 +60,7 @@ public class LocalEnemyHealth : MonoBehaviour, IHealth
         FindObjectOfType<LocalEnemySpawner>().DecreaseEnemyAmount();
     }
 
-    protected virtual void SpawnShieldCorpse()
+    protected virtual void CreateRagdoll()
     {
         Instantiate(corpsePrefab, transform.position, transform.rotation);
     }

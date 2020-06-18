@@ -103,7 +103,7 @@ public class Health : LocalHealth
 
     protected override void CreateRagdoll()
     {
-        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Ragdoll_Corpse, transform.position, Quaternion.identity);
+        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Player_Corpse, transform.position, Quaternion.identity);
     }
 
     #region IHealth
