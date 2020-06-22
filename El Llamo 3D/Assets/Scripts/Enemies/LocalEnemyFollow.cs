@@ -5,9 +5,7 @@ public class LocalEnemyFollow : MonoBehaviour
 {
     [SerializeField] private LayerMask attackLayer;
     [SerializeField] private float radius = 20f;
-
-    //Transform that NPC has to follow
-    private Transform transformToFollow;
+    [SerializeField] private float wonderingDistance = 5f;
 
     protected NavMeshAgent agent;
 
@@ -15,30 +13,53 @@ public class LocalEnemyFollow : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
+
+        // Disabling auto-braking allows for continuous movement
+        // between points (ie, the agent doesn't slow down as it
+        // approaches a destination point).
+        agent.autoBraking = false;
+
+        WonderAround();
     }
 
     protected virtual void FixedUpdate()
     {
+        if (agent.velocity.sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.rotation = Quaternion.LookRotation(agent.velocity.normalized);
+        }
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius, attackLayer);
         if (colliders != null && colliders.Length > 0)
         {
-            transformToFollow = colliders[0].transform.root;
+            // follow the player
+            agent.destination = colliders[0].transform.root.position;
         }
         else
         {
-            transformToFollow = null;
-        }
-
-        if (transformToFollow != null)
-        {
-            if (agent.velocity.sqrMagnitude > Mathf.Epsilon)
+            if (!agent.hasPath || agent.remainingDistance < 0.5f)
             {
-                transform.rotation = Quaternion.LookRotation(agent.velocity.normalized);
+                // here we need to make enemy wonder around
+                WonderAround();
             }
-
-            // follow the player
-            agent.destination = transformToFollow.position;
         }
+    }
+
+    private Vector3 GetRandomPoint()
+    {
+        float rangeX = Random.Range(-wonderingDistance, wonderingDistance);
+        float rangeZ = Random.Range(-wonderingDistance, wonderingDistance);
+        Vector3 newPosition = transform.position;
+        newPosition.x = newPosition.x + rangeX;
+        newPosition.z = newPosition.z + rangeZ;
+
+        return newPosition;
+    }
+
+    private void WonderAround()
+    {
+        // Set the agent to go to the currently selected destination.
+        agent.destination = GetRandomPoint();
     }
 
     private void OnDrawGizmosSelected()
