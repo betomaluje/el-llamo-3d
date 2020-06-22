@@ -26,6 +26,11 @@ public class CorpseHealth : LocalCorpseHealth
             currentHealth = 0;
         }
 
+        if (remoteEventAgent == null)
+        {
+            return;
+        }
+
         // Apply damage and modify the "hp" SyncProperty.
         SWNetworkMessage msg = new SWNetworkMessage();
         // current health
