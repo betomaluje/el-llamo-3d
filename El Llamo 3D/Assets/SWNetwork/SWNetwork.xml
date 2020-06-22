@@ -1027,6 +1027,11 @@
             This event is only delivered to the host player.
             </summary>
         </member>
+        <member name="P:SWNetwork.SceneSpawner.SpawnerId">
+            <summary>
+            Gets the SpawnerId assigned to the SceneSpawner
+            </summary>
+        </member>
         <member name="P:SWNetwork.SceneSpawner.IsReady">
             <summary>
             Gets a value indicating whether this <see cref="T:SWNetwork.SceneSpawner"/> is ready.
