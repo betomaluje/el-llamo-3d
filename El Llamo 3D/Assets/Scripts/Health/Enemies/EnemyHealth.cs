@@ -1,71 +1,74 @@
 ﻿using SWNetwork;
 using UnityEngine;
 
-public class EnemyHealth : LocalEnemyHealth
+namespace Llamo.Health
 {
-    private NetworkID networkID;
-    private RemoteEventAgent remoteEventAgent;
-
-    const string HEALTH = "Hp";
-    const string KILLED_EVENT = "killed";
-
-    protected override void Start()
+    public class EnemyHealth : LocalEnemyHealth
     {
-        networkID = GetComponent<NetworkID>();
-        remoteEventAgent = GetComponent<RemoteEventAgent>();
-        base.Start();
-    }
+        private NetworkID networkID;
+        private RemoteEventAgent remoteEventAgent;
 
-    public override void PerformDamage(int damage, Vector3 impactPosition)
-    {
-        currentHealth -= damage;
+        const string HEALTH = "Hp";
+        const string KILLED_EVENT = "killed";
 
-        // if hp is lower than 0, set it to 0.
-        if (currentHealth < 0)
+        protected override void Start()
         {
-            currentHealth = 0;
+            networkID = GetComponent<NetworkID>();
+            remoteEventAgent = GetComponent<RemoteEventAgent>();
+            base.Start();
         }
 
-        // Apply damage and modify the "hp" SyncProperty.
-        SWNetworkMessage msg = new SWNetworkMessage();
-        // current health
-        msg.Push((float)currentHealth);
-        // blood position
-        msg.Push(impactPosition);
-        remoteEventAgent.Invoke(HEALTH, msg);
-    }
-
-    /**
-     * Called from the RemoteEventAgent on the editor
-     */
-    public void OnHPChanged(SWNetworkMessage msg)
-    {
-        currentHealth = (int)msg.PopFloat();
-
-        if (currentHealth != maxHealth)
+        public override void PerformDamage(int damage, Vector3 impactPosition)
         {
-            CalculatePercentage();
+            currentHealth -= damage;
 
-            Vector3 impactPosition = msg.PopVector3();
+            // if hp is lower than 0, set it to 0.
+            if (currentHealth < 0)
+            {
+                currentHealth = 0;
+            }
 
-            AddDamageSFX(impactPosition);
+            // Apply damage and modify the "hp" SyncProperty.
+            SWNetworkMessage msg = new SWNetworkMessage();
+            // current health
+            msg.Push((float)currentHealth);
+            // blood position
+            msg.Push(impactPosition);
+            remoteEventAgent.Invoke(HEALTH, msg);
         }
 
-        if (networkID.IsMine && currentHealth <= 0)
+        /**
+         * Called from the RemoteEventAgent on the editor
+         */
+        public void OnHPChanged(SWNetworkMessage msg)
         {
-            // invoke the "killed" remote event when hp is 0. 
-            remoteEventAgent.Invoke(KILLED_EVENT);
+            currentHealth = (int)msg.PopFloat();
+
+            if (currentHealth != maxHealth)
+            {
+                CalculatePercentage();
+
+                Vector3 impactPosition = msg.PopVector3();
+
+                AddDamageSFX(impactPosition);
+            }
+
+            if (networkID.IsMine && currentHealth <= 0)
+            {
+                // invoke the "killed" remote event when hp is 0. 
+                remoteEventAgent.Invoke(KILLED_EVENT);
+            }
         }
-    }
 
-    public override void Die()
-    {
-        base.Die();
-        networkID.Destroy();
-    }
+        public override void Die()
+        {
+            base.Die();
+            networkID.Destroy();
+        }
 
-    protected override void CreateRagdoll()
-    {
-        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Enemy_Corpse, transform.position, transform.rotation);
+        protected override void CreateRagdoll()
+        {
+            NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Enemy_Corpse, transform.position, transform.rotation);
+        }
     }
 }

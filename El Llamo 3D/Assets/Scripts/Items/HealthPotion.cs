@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Llamo.Health;
 
 public class HealthPotion : MonoBehaviour
 {

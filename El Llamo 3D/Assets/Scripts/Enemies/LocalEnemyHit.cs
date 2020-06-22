@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Llamo.Health;
 
 public class LocalEnemyHit : MonoBehaviour
 {
