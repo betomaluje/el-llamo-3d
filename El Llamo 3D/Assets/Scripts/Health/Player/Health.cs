@@ -132,7 +132,7 @@ namespace Llamo.Health
                 return;
             }
 
-            //currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).GetIntValue();
+            OnDamagePerformed(damage);
             int newHealth = currentHealth - damage;
 
             // if hp is lower than 0, set it to 0.

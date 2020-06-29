@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerName : MonoBehaviour
 {
-    [SerializeField] private TextMeshPro nicknameText;
+    [SerializeField] private TextMeshProUGUI nicknameText;
 
     private SyncPropertyAgent syncPropertyAgent;
     public static string NICKNAME_PROPERTY = "Nickname";

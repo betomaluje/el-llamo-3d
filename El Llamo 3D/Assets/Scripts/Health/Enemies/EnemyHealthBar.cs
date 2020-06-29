@@ -22,15 +22,15 @@ namespace Llamo.Health
 
         private void OnEnable()
         {
-            healthScript.OnHealthChanged += HandleHealth;
+            healthScript.OnHealthChanged += HandleHealthChanged;
         }
 
         private void OnDisable()
         {
-            healthScript.OnHealthChanged -= HandleHealth;
+            healthScript.OnHealthChanged -= HandleHealthChanged;
         }
 
-        private void HandleHealth(float healthPercentage)
+        private void HandleHealthChanged(float healthPercentage)
         {
             StartCoroutine(ChangePercentage(healthPercentage));
         }

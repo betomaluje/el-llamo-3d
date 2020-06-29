@@ -20,6 +20,7 @@ namespace Llamo.Health
 
         public override void PerformDamage(int damage, Vector3 impactPosition)
         {
+            OnDamagePerformed(damage);
             currentHealth -= damage;
 
             // if hp is lower than 0, set it to 0.

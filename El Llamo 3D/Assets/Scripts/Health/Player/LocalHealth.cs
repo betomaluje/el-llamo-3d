@@ -20,6 +20,8 @@ namespace Llamo.Health
         public int currentHealth;
 
         public Action<float> OnHealthChanged = delegate { };
+        public Action<int> OnDamagePerformed = delegate { };
+        public Action<int, int> OnCurrentChange = delegate { };
 
         protected CameraShake cameraShake;
 
@@ -61,6 +63,7 @@ namespace Llamo.Health
         protected void CalculatePercentage()
         {
             float healthPercentage = currentHealth / (float)maxHealth;
+            OnCurrentChange(currentHealth, maxHealth);
             OnHealthChanged(healthPercentage);
         }
 
@@ -171,7 +174,8 @@ namespace Llamo.Health
                 return;
             }
 
-            //currentHealth = syncPropertyAgent.GetPropertyWithName(HEALTH_CHANGED).GetIntValue();
+            OnDamagePerformed(damage);
+
             int newHealth = currentHealth - damage;
 
             // if hp is lower than 0, set it to 0.

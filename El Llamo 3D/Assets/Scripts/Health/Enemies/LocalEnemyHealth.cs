@@ -15,6 +15,8 @@ namespace Llamo.Health
         [SerializeField] private int probabilityOfExplode = 30;
 
         public Action<float> OnHealthChanged = delegate { };
+        public Action<int> OnDamagePerformed = delegate { };
+        public Action<int, int> OnCurrentChange = delegate { };
 
         protected int currentHealth;
 
@@ -32,6 +34,7 @@ namespace Llamo.Health
         protected void CalculatePercentage()
         {
             float healthPercentage = currentHealth / (float)maxHealth;
+            OnCurrentChange(currentHealth, maxHealth);
             OnHealthChanged(healthPercentage);
         }
 
@@ -71,6 +74,7 @@ namespace Llamo.Health
 
         public virtual void PerformDamage(int damage, Vector3 impactPosition)
         {
+            OnDamagePerformed(damage);
             currentHealth -= damage;
 
             // if hp is lower than 0, set it to 0.
