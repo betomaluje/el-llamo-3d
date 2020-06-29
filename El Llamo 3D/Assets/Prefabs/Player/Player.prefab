@@ -1398,10 +1398,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b14193d859a94daaafa818b4a9a8338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshair: {fileID: 0}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 25088
+    m_Bits: 16896
   grabDistance: 10
   shootingLayer:
     serializedVersion: 2
