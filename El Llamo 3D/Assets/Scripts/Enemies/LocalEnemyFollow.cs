@@ -24,6 +24,11 @@ public class LocalEnemyFollow : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
+        if (agent == null)
+        {
+            return;
+        }
+
         if (agent.velocity.sqrMagnitude > Mathf.Epsilon)
         {
             transform.rotation = Quaternion.LookRotation(agent.velocity.normalized);
