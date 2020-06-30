@@ -532,7 +532,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8046268901017405572}
-  - component: {fileID: 4116168513865003527}
   m_Layer: 0
   m_Name: Left Hand
   m_TagString: Untagged
@@ -554,18 +553,6 @@ Transform:
   m_Father: {fileID: 5836814044747114709}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4116168513865003527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3802787215974443064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d07ff5a1fc2c454a9356b4e7cab7071, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3901926973922053837
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +657,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3876146945217145102}
-  - component: {fileID: 3058108615290122673}
   m_Layer: 0
   m_Name: Right Hand
   m_TagString: Untagged
@@ -692,18 +678,6 @@ Transform:
   m_Father: {fileID: 5836814044747114709}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3058108615290122673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4683422715555976025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d07ff5a1fc2c454a9356b4e7cab7071, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4721651851695565155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,7 +1118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1190022150939389251}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1282,7 +1256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5836814044622881642}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

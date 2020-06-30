@@ -3,6 +3,7 @@
 public class EnemyPortal : MonoBehaviour
 {
     [SerializeField] private float timeToTouchPlayer = 1f;
+    [SerializeField] private LayerMask warningLayer;
 
     private Collider collider;
 
@@ -30,7 +31,7 @@ public class EnemyPortal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!alreadyShaking && other.gameObject.CompareTag("Player"))
+        if (!alreadyShaking && LayerMaskUtils.LayerMatchesObject(warningLayer, other.gameObject))
         {
             alreadyShaking = true;
             ShakeCamera();

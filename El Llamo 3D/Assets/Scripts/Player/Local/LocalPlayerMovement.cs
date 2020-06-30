@@ -40,7 +40,7 @@ public class LocalPlayerMovement : MonoBehaviour
 
         Move(movement);
 
-        playerAnimations.WalkRunAnim(movement.magnitude);
+        playerAnimations?.WalkRunAnim(movement.magnitude);
 
         isJumping = Input.GetButtonDown("Jump");
 

@@ -176,6 +176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5865a11289c9549e98275387fac4430c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   pickupSpeed: 0.25
   shootingPosition: {fileID: 5861223688601465540}
   fireRate: 3
@@ -184,6 +187,7 @@ MonoBehaviour:
   recoilAmount: 0.3
   recoilDuration: 0.3
   gunEffects: {fileID: 7947835038188574580}
+  displayLine: 0
 --- !u!114 &4972513490003804687
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class HealthPotion : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (((1 << other.gameObject.layer) & healingLayer) != 0)
+        if (LayerMaskUtils.LayerMatchesObject(healingLayer, other.gameObject))
         {
             //It matched one
             Heal(other.gameObject);

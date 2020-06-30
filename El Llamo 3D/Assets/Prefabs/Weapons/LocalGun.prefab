@@ -278,6 +278,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61e6a785888804f3b827ae6ea323200c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   pickupSpeed: 0.25
   shootingPosition: {fileID: 3382172989892372566}
   fireRate: 3

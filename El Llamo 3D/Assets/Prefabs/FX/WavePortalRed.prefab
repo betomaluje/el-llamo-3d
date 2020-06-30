@@ -14135,6 +14135,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToTouchPlayer: 2
+  warningLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!135 &3078378330829257996
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -50,7 +50,14 @@ public class LocalPlayerGrab : MonoBehaviour
             LocalGrabable currentGrabable = grabController.GetCurrentGrabable();
             if (currentGrabable != null)
             {
-                playerAnimations.Throw();
+                if (playerAnimations != null)
+                {
+                    playerAnimations.Throw();
+                }
+                else
+                {
+                    ThrowObject();
+                }
             }
         };
 

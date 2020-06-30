@@ -6,6 +6,7 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
 {
     [Space]
     [Header("Pickup")]
+    [SerializeField] private LayerMask targetLayer;
     [SerializeField] protected float pickupSpeed = 0.25f;
 
     protected Rigidbody rb;
@@ -27,9 +28,9 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
 
     private void OnTriggerEnter(Collider other)
     {
-        if (grabbed && other.gameObject.CompareTag("Player"))
+        if (grabbed && LayerMaskUtils.LayerMatchesObject(targetLayer, other.gameObject))
         {
-            GrabController grabController = other.gameObject.GetComponent<GrabController>();
+            GrabController grabController = other.gameObject.transform.root.GetComponentInChildren<GrabController>(true);
             if (grabController != null)
             {
                 grabController.AddGrabable(this, getParentTransform());
