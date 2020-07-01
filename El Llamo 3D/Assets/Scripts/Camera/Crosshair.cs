@@ -22,7 +22,10 @@ public class Crosshair : MonoBehaviour
 
     private void OnDisable()
     {
-        inputHandler.targetAquired -= HandleTargetAquired;
+        if (inputHandler != null)
+        {
+            inputHandler.targetAquired -= HandleTargetAquired;
+        }
     }
 
     private void HandleTargetAquired(PointingTarget pointingTarget)

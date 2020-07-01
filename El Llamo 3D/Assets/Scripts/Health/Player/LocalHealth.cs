@@ -72,6 +72,13 @@ namespace Llamo.Health
             StartCoroutine(PerformDie());
         }
 
+        public void Posess()
+        {
+            ThrowGun();
+            CreateRagdoll();
+            Destroy(gameObject);
+        }
+
         private IEnumerator PerformDie()
         {
             if (!isPlayerInmune)

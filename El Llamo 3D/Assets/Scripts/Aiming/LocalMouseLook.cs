@@ -146,7 +146,12 @@ public class LocalMouseLook : MonoBehaviour
         verticleAngle += -mouseY;
         verticleAngle = Mathf.Clamp(verticleAngle, -90f, 90f);
 
-        grabController.GetActiveHand().localRotation = Quaternion.Euler(verticleAngle, 0, 0);
+        Transform hand = grabController?.GetActiveHand();
+        if (hand != null)
+        {
+            hand.localRotation = Quaternion.Euler(verticleAngle, 0, 0);
+        }
+
         playerBody.Rotate(Vector3.up * mouseX);
     }
 

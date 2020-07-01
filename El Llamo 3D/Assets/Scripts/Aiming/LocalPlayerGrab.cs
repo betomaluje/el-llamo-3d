@@ -44,22 +44,7 @@ public class LocalPlayerGrab : MonoBehaviour
         };
 
         // handles when the player is throwing
-        inputHandler.secondaryClickCallback = () =>
-        {
-            // we need to get the currents hand object to throw it
-            LocalGrabable currentGrabable = grabController.GetCurrentGrabable();
-            if (currentGrabable != null)
-            {
-                if (playerAnimations != null)
-                {
-                    playerAnimations.Throw();
-                }
-                else
-                {
-                    ThrowObject();
-                }
-            }
-        };
+        inputHandler.secondaryClickCallback += HandleSecondaryClick;
 
         inputHandler.secondaryReleaseCallback = () =>
         {
@@ -76,15 +61,31 @@ public class LocalPlayerGrab : MonoBehaviour
         inputHandler.targetAquired += HandleTargetAquired;
 
         // handle shooting
-        inputHandler.shootingTarget = (shootingTarget) =>
+        inputHandler.shootingTarget += HandleShooting;
+    }
+
+    private void HandleSecondaryClick()
+    {
+        // we need to get the currents hand object to throw it
+        LocalGrabable currentGrabable = grabController.GetCurrentGrabable();
+        if (currentGrabable != null)
         {
-            HandleShooting(shootingTarget);
-        };
+            if (playerAnimations != null)
+            {
+                playerAnimations.Throw();
+            }
+            else
+            {
+                ThrowObject();
+            }
+        }
     }
 
     private void OnDisable()
     {
         inputHandler.targetAquired -= HandleTargetAquired;
+        inputHandler.shootingTarget -= HandleShooting;
+        inputHandler.secondaryClickCallback -= HandleSecondaryClick;
     }
 
     private void HandleTargetAquired(PointingTarget pointingTarget)
@@ -104,6 +105,7 @@ public class LocalPlayerGrab : MonoBehaviour
             if (grabable != null && !grabable.isGrabbed())
             {
                 PickupObject(grabable);
+                return;
             }
         }
     }
