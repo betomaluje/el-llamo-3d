@@ -1400,12 +1400,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayer:
     serializedVersion: 2
-    m_Bits: 82432
+    m_Bits: 16896
   grabDistance: 10
   shootingLayer:
     serializedVersion: 2
     m_Bits: 53248
   shootingDistance: 50
+  posessLayer:
+    serializedVersion: 2
+    m_Bits: 65536
+  posessDistance: 10
 --- !u!114 &6793571608436636157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1501,7 +1505,7 @@ MonoBehaviour:
   finalThirdPosition: {x: 1.5, y: 3, z: -4}
   objectsToHide:
   - {fileID: 7227591154509228171}
-  - {fileID: 0}
+  - {fileID: 1343024225188795364}
   finalFirstPosition: {x: 0, y: 2.4, z: 1}
   aiming: {x: 0, y: 0}
 --- !u!114 &8144690778494832452
@@ -1553,6 +1557,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 620535308613851495}
+  posessTimeReset: 0.5
+  posessTimeDifficulty: 0.1
 --- !u!1 &6291175019369747958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1871,9 +1877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 261c03f680c9b364e876581edefe2868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alwaysFaceCamera: 1
   foregroundImage: {fileID: 7530510306564427169}
-  backgroundImage: {fileID: 7530510307504587162}
   updateSpeedSeconds: 0.2
 --- !u!1 &7530510307504587164
 GameObject:
@@ -2388,6 +2392,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3007edec579ac45489f1e768e3b72a85, type: 3}
+--- !u!1 &1343024225188795364 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9153330482015038693, guid: 3007edec579ac45489f1e768e3b72a85,
+    type: 3}
+  m_PrefabInstance: {fileID: 7900519882735599361}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7300685793719179653 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 645554015882634884, guid: 3007edec579ac45489f1e768e3b72a85,

@@ -119,17 +119,27 @@ public class LocalMouseLook : MonoBehaviour
 
     private void HideExtras()
     {
+        if (objectsToHide.Length <= 0)
+        {
+            return;
+        }
+
         foreach (var toHide in objectsToHide)
         {
-            toHide.SetActive(false);
+            toHide?.SetActive(false);
         }
     }
 
     private void ShowExtras()
     {
+        if (objectsToHide.Length <= 0)
+        {
+            return;
+        }
+
         foreach (var toShow in objectsToHide)
         {
-            toShow.SetActive(true);
+            toShow?.SetActive(true);
         }
     }
 

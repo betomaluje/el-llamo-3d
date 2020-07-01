@@ -12,6 +12,11 @@ public class LocalInputHandler : MonoBehaviour
     [SerializeField] private LayerMask shootingLayer;
     [SerializeField] private float shootingDistance = 100f;
 
+    [Space]
+    [Header("Posess")]
+    [SerializeField] private LayerMask posessLayer;
+    [SerializeField] private float posessDistance = 10f;
+
     [HideInInspector]
     public Action fireReleaseCallback = delegate { };
 
@@ -25,6 +30,9 @@ public class LocalInputHandler : MonoBehaviour
 
     [HideInInspector]
     public Action<ShootingTarget> shootingTarget = delegate { };
+
+    [HideInInspector]
+    public Action<PosessTarget> posessAquired = delegate { };
 
     private Camera sceneCamera;
 
@@ -60,6 +68,8 @@ public class LocalInputHandler : MonoBehaviour
         }
 
         HandleTargetPointer();
+
+        HandlePosessPointer();
     }
 
     private void HandleShootingPointer()
@@ -77,7 +87,7 @@ public class LocalInputHandler : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.grey);
+            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.black);
         }
 
         // now we send the Action to all listeners
@@ -102,5 +112,25 @@ public class LocalInputHandler : MonoBehaviour
         }
 
         targetAquired(new PointingTarget(hit, onTarget, isInputPressed));
+    }
+
+    private void HandlePosessPointer()
+    {
+        RaycastHit hit;
+        Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+
+        // this bool check if we hit something that is "target" according to the targetLayer layer mask
+        bool onTarget = Physics.Raycast(ray, out hit, posessDistance, posessLayer);
+
+        if (onTarget)
+        {
+            Debug.DrawRay(ray.origin, ray.direction * posessDistance, Color.blue);
+        }
+        else
+        {
+            Debug.DrawRay(ray.origin, ray.direction * posessDistance, Color.grey);
+        }
+
+        posessAquired(new PosessTarget(hit, onTarget, isInputPressed));
     }
 }

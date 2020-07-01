@@ -6,30 +6,85 @@ public class PosessHandler : MonoBehaviour
 {
     [SerializeField] private LocalInputHandler inputHandler;
     [SerializeField] private float posessTimeReset = 0.5f;
+    public float posessTimeDifficulty = 0.1f;
+
+    private PosessCrosshair crosshair;
+
+    private Collider lastTarget;
+
+    private bool wasPosessing = false;
+
+    private void Start()
+    {
+        crosshair = FindObjectOfType<PosessCrosshair>();
+        crosshair.posessReady += OnPosessReady;
+    }
 
     private void OnEnable()
     {
-        inputHandler.targetAquired += HandleTargetPosess;
-        inputHandler.secondaryClickCallback += HandleSecondaryClick;
+        inputHandler.posessAquired += HandleTargetPosess;
+        inputHandler.fireReleaseCallback += HandleClickReleased;
+        if (crosshair != null)
+        {
+            crosshair.posessReady += OnPosessReady;
+        }
     }
 
     private void OnDisable()
     {
-        inputHandler.targetAquired -= HandleTargetPosess;
-        inputHandler.secondaryClickCallback -= HandleSecondaryClick;
+        inputHandler.posessAquired -= HandleTargetPosess;
+        inputHandler.fireReleaseCallback -= HandleClickReleased;
+
+        crosshair.posessReady -= OnPosessReady;
     }
 
-    private void HandleSecondaryClick()
+    private void HandleClickReleased()
     {
-
+        ResetCrosshair();
     }
 
-    private void HandleTargetPosess(PointingTarget pointingTarget)
+    private void OnPosessReady()
+    {
+        if (lastTarget != null)
+        {
+            StartCoroutine(StartPosess(lastTarget));
+        }
+    }
+
+    private void HandleTargetPosess(PosessTarget pointingTarget)
     {
         if (pointingTarget.onTarget && pointingTarget.isPressed)
         {
-            StartCoroutine(StartPosess(pointingTarget.targetHit.collider));
+            if (!wasPosessing)
+            {
+                // tell crosshair to start loading
+                PosessHandler targetPosessHandler = pointingTarget.targetHit.collider.GetComponent<PosessHandler>();
+                if (targetPosessHandler != null)
+                {
+                    crosshair.StartPosessCrosshair(targetPosessHandler.posessTimeDifficulty);
+                    lastTarget = pointingTarget.targetHit.collider;
+                    wasPosessing = true;
+                }
+            }
         }
+        else
+        {
+            if (wasPosessing)
+            {
+                ResetCrosshair();
+            }
+        }
+    }
+
+    private void ResetCrosshair()
+    {
+        if (crosshair != null)
+        {
+            crosshair.Reset();
+        }
+
+        lastTarget = null;
+        wasPosessing = false;
     }
 
     private IEnumerator StartPosess(Collider target)
@@ -54,6 +109,8 @@ public class PosessHandler : MonoBehaviour
                 localHealth.Posess();
             }
         }
+
+        ResetCrosshair();
 
         yield return new WaitForSeconds(posessTimeReset);
     }

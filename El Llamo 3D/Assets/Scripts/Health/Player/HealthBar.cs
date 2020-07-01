@@ -6,10 +6,7 @@ namespace Llamo.Health
 {
     public class HealthBar : MonoBehaviour
     {
-        [SerializeField] private bool alwaysFaceCamera = true;
-
         [SerializeField] private Image foregroundImage;
-        [SerializeField] private Image backgroundImage;
 
         [SerializeField] private float updateSpeedSeconds = 0.2f;
 

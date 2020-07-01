@@ -140,12 +140,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayer:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 0
   grabDistance: 10
   shootingLayer:
     serializedVersion: 2
     m_Bits: 0
   shootingDistance: 100
+  posessLayer:
+    serializedVersion: 2
+    m_Bits: 65536
+  posessDistance: 10
 --- !u!114 &8893846016847417369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 6804861452767804101}
+  posessTimeReset: 0.5
 --- !u!65 &5735761645927774711
 BoxCollider:
   m_ObjectHideFlags: 0
