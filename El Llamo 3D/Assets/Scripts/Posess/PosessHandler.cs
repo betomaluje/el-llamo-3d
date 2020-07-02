@@ -13,6 +13,7 @@ public class PosessHandler : MonoBehaviour
     private Collider lastTarget;
 
     private bool wasPosessing = false;
+    private bool wasSuccessful = false;
 
     private void Start()
     {
@@ -40,13 +41,17 @@ public class PosessHandler : MonoBehaviour
 
     private void HandleClickReleased()
     {
-        ResetCrosshair();
+        if (wasPosessing)
+        {
+            ResetCrosshair(wasSuccessful);
+        }
     }
 
     private void OnPosessReady()
     {
         if (lastTarget != null)
         {
+            wasSuccessful = true;
             StartCoroutine(StartPosess(lastTarget));
         }
     }
@@ -63,6 +68,7 @@ public class PosessHandler : MonoBehaviour
                 {
                     crosshair.StartPosessCrosshair(targetPosessHandler.posessTimeDifficulty);
                     lastTarget = pointingTarget.targetHit.collider;
+                    wasSuccessful = false;
                     wasPosessing = true;
                 }
             }
@@ -71,16 +77,23 @@ public class PosessHandler : MonoBehaviour
         {
             if (wasPosessing)
             {
-                ResetCrosshair();
+                ResetCrosshair(wasSuccessful);
             }
         }
     }
 
-    private void ResetCrosshair()
+    private void ResetCrosshair(bool successful)
     {
         if (crosshair != null)
         {
-            crosshair.Reset();
+            if (successful)
+            {
+                crosshair.Reset();
+            }
+            else
+            {
+                crosshair.ResetCancelled();
+            }
         }
 
         lastTarget = null;
@@ -110,7 +123,7 @@ public class PosessHandler : MonoBehaviour
             }
         }
 
-        ResetCrosshair();
+        ResetCrosshair(wasSuccessful);
 
         yield return new WaitForSeconds(posessTimeReset);
     }

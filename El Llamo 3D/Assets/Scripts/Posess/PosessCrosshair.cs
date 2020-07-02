@@ -10,6 +10,12 @@ public class PosessCrosshair : MonoBehaviour
     [SerializeField] private Image backgroundImage;
     [SerializeField] private float updateSpeedSeconds = 0.2f;
 
+    [Space]
+    [Header("SFX")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private float incrementPitch = 0.1f;
+    [SerializeField] private float targetPitch = 8f;
+
     public Action posessReady = delegate { };
 
     private float difficultyTime;
@@ -24,6 +30,19 @@ public class PosessCrosshair : MonoBehaviour
         backgroundImage.DOFade(0, 0);
     }
 
+    private void Update()
+    {
+        if (isRunning)
+        {
+            audioSource.pitch = Mathf.Lerp(audioSource.pitch, targetPitch, incrementPitch * Time.deltaTime);
+        }
+        else
+        {
+            audioSource.pitch = 0;
+            audioSource.Stop();
+        }
+    }
+
     public void StartPosessCrosshair(float difficultyTime)
     {
         this.difficultyTime = difficultyTime;
@@ -36,6 +55,8 @@ public class PosessCrosshair : MonoBehaviour
         s.Join(t2);
         s.AppendCallback(() =>
         {
+            audioSource.Play();
+            audioSource.pitch = 0;
             isRunning = true;
             posessCoroutine = StartCoroutine(StartPosessing());
         });
@@ -43,7 +64,7 @@ public class PosessCrosshair : MonoBehaviour
 
     public void Reset()
     {
-        Debug.Log("Cancelling posessing");
+        Debug.Log("Resetting posessing");
         isRunning = false;
         foregroundImage.fillAmount = 0;
         foregroundImage.DOFade(0, updateSpeedSeconds);
@@ -51,6 +72,16 @@ public class PosessCrosshair : MonoBehaviour
         StopCoroutine(posessCoroutine);
     }
 
+    public void ResetCancelled()
+    {
+        Debug.Log("Cancelling posessing");
+        isRunning = false;
+        foregroundImage.fillAmount = 0;
+        foregroundImage.DOFade(0, updateSpeedSeconds);
+        backgroundImage.DOFade(0, updateSpeedSeconds);
+        StopCoroutine(posessCoroutine);
+        SoundManager.instance.Play("CancellPosess");
+    }
 
     private IEnumerator StartPosessing()
     {
@@ -72,6 +103,7 @@ public class PosessCrosshair : MonoBehaviour
         if (prePercentage >= 100)
         {
             posessReady();
+            SoundManager.instance.Play("Posess");
         }
 
         Reset();
