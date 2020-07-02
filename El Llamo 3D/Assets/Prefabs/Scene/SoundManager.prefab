@@ -154,3 +154,21 @@ MonoBehaviour:
     spatialBlend: 0
     loop: 0
     source: {fileID: 0}
+  - name: Posess
+    soundType: 0
+    clip: {fileID: 8300000, guid: 32f565ba94f200f49adb407cce64e873, type: 3}
+    alternatives: []
+    volume: 0.4
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: CancellPosess
+    soundType: 0
+    clip: {fileID: 8300000, guid: 0b79094ef773d0b478cc3667bfa12393, type: 3}
+    alternatives: []
+    volume: 0.4
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
