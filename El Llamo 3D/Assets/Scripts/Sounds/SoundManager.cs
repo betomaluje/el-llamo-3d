@@ -37,6 +37,11 @@ public class SoundManager : MonoBehaviour
         RestoreVolumes();
     }
 
+    public Sound GetSound(string name)
+    {
+        return Array.Find(sounds, sound => sound.name == name);
+    }
+
     private void RestoreVolumes()
     {
         float sfxSavedPrefs = PlayerPrefs.GetFloat(SoundMenu.PREFS_SFX, SoundManager.instance.GetVolumeForType(SoundType.SFX));

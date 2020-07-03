@@ -1,63 +1,66 @@
 ﻿using UnityEngine;
 
-public class PosessController : MonoBehaviour
+namespace Llamo.Posess
 {
-    [SerializeField] private GameObject[] toToggle;
-
-    private CharacterController controller;
-    private LocalMouseLook localMouseLook;
-    private LocalPlayerMovement localPlayerMovement;
-    private LocalInputHandler localInputHandler;
-    private PosessHandler posessHandler;
-
-    private BoxCollider col;
-
-    private void Start()
+    public class PosessController : MonoBehaviour
     {
-        localMouseLook = GetComponent<LocalMouseLook>();
-        localPlayerMovement = GetComponent<LocalPlayerMovement>();
-        localInputHandler = GetComponent<LocalInputHandler>();
-        posessHandler = GetComponent<PosessHandler>();
+        [SerializeField] private GameObject[] toToggle;
 
-        col = GetComponent<BoxCollider>();
-        controller = GetComponent<CharacterController>();
+        private CharacterController controller;
+        private LocalMouseLook localMouseLook;
+        private LocalPlayerMovement localPlayerMovement;
+        private LocalInputHandler localInputHandler;
+        private PosessHandler posessHandler;
 
-        DisableComponents();
-    }
+        private BoxCollider col;
 
-    public void EnableComponents()
-    {
-        ToggleGameObjects(true);
-
-        localMouseLook.enabled = true;
-        localPlayerMovement.enabled = true;
-        controller.enabled = true;
-        localInputHandler.enabled = true;
-        posessHandler.enabled = true;
-
-        col.enabled = false;
-
-        Debug.Log(gameObject.name + " posessed!");
-    }
-
-    public void DisableComponents()
-    {
-        ToggleGameObjects(false);
-
-        localMouseLook.enabled = false;
-        localPlayerMovement.enabled = false;
-        controller.enabled = false;
-        localInputHandler.enabled = false;
-        posessHandler.enabled = false;
-
-        col.enabled = true;
-    }
-
-    private void ToggleGameObjects(bool enabled)
-    {
-        foreach (var go in toToggle)
+        private void Start()
         {
-            go.SetActive(enabled);
+            localMouseLook = GetComponent<LocalMouseLook>();
+            localPlayerMovement = GetComponent<LocalPlayerMovement>();
+            localInputHandler = GetComponent<LocalInputHandler>();
+            posessHandler = GetComponent<PosessHandler>();
+
+            col = GetComponent<BoxCollider>();
+            controller = GetComponent<CharacterController>();
+
+            DisableComponents();
+        }
+
+        public void EnableComponents()
+        {
+            ToggleGameObjects(true);
+
+            localMouseLook.enabled = true;
+            localPlayerMovement.enabled = true;
+            controller.enabled = true;
+            localInputHandler.enabled = true;
+            posessHandler.enabled = true;
+
+            col.enabled = false;
+
+            Debug.Log(gameObject.name + " posessed!");
+        }
+
+        public void DisableComponents()
+        {
+            ToggleGameObjects(false);
+
+            localMouseLook.enabled = false;
+            localPlayerMovement.enabled = false;
+            controller.enabled = false;
+            localInputHandler.enabled = false;
+            posessHandler.enabled = false;
+
+            col.enabled = true;
+        }
+
+        private void ToggleGameObjects(bool enabled)
+        {
+            foreach (var go in toToggle)
+            {
+                go.SetActive(enabled);
+            }
         }
     }
 }
