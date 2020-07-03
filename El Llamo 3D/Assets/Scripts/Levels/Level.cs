@@ -14,6 +14,8 @@ public class Level : ScriptableObject
         Lobby,
         Adventure,
         Viking,
-        AdventureLocal
+        AdventureLocal,
+        TestScene,
+        TestNetwork
     }
 }

@@ -14,6 +14,11 @@ public class LocalGameSceneManager : MonoBehaviour
 
         public int AmountToSpawn()
         {
+            if (positions.Length == 0)
+            {
+                return 0;
+            }
+
             if (amountToSpawn > positions.Length)
             {
                 amountToSpawn = positions.Length;
@@ -30,6 +35,8 @@ public class LocalGameSceneManager : MonoBehaviour
     [SerializeField] protected SpawnObject enemies;
 
     [SerializeField] protected SpawnObject healthItems;
+
+    [SerializeField] protected SpawnObject posessObjects;
 
     [Space]
     [Header("Ragdoll Debug")]
@@ -55,6 +62,9 @@ public class LocalGameSceneManager : MonoBehaviour
 
         // we spawn health items
         PutObject(healthItems, healthItems.AmountToSpawn());
+
+        // we spawn posess Objects
+        PutObject(posessObjects, posessObjects.AmountToSpawn());
     }
 
     private void Update()

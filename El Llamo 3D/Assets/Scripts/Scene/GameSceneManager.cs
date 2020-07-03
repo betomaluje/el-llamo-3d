@@ -27,13 +27,16 @@ public class GameSceneManager : LocalGameSceneManager
             sceneSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
 
             // we spawn guns
-            PutObject(sceneSpawner, guns, guns.amountToSpawn, false);
+            PutObject(sceneSpawner, guns, guns.AmountToSpawn(), false);
 
             // we spawn enemies
-            PutObject(sceneSpawner, enemies, enemies.amountToSpawn, false);
+            PutObject(sceneSpawner, enemies, enemies.AmountToSpawn(), false);
 
             // we spawn health items
-            PutObject(sceneSpawner, healthItems, healthItems.amountToSpawn, false);
+            PutObject(sceneSpawner, healthItems, healthItems.AmountToSpawn(), false);
+
+            // we spawn posess Objects
+            PutObject(sceneSpawner, posessObjects, posessObjects.AmountToSpawn(), false);
 
             // Tell the spawner that we have finished setting up the scene. 
             // alreadySetup will be true when SceneSpawn becomes ready next time.

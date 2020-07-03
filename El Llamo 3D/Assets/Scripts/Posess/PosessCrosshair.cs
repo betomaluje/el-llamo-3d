@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ namespace Llamo.Posess
     public class PosessCrosshair : MonoBehaviour
     {
         [Header("UI")]
+        [SerializeField] private TextMeshProUGUI percentageText;
         [SerializeField] private Image foregroundImage;
         [SerializeField] private Image backgroundImage;
         [SerializeField] private float updateSpeedSeconds = 0.2f;
@@ -32,6 +34,7 @@ namespace Llamo.Posess
             foregroundImage.fillAmount = 0;
             foregroundImage.DOFade(0, 0);
             backgroundImage.DOFade(0, 0);
+            percentageText.DOFade(0, 0);
             audioSource = SoundManager.instance.GetSound("OngoingPosess").source;
             audioSource.pitch = 0;
             audioSource.loop = true;
@@ -56,10 +59,12 @@ namespace Llamo.Posess
 
             Tween t1 = foregroundImage.DOFade(1, updateSpeedSeconds);
             Tween t2 = backgroundImage.DOFade(1, updateSpeedSeconds);
+            Tween t3 = percentageText.DOFade(1, updateSpeedSeconds);
 
             Sequence s = DOTween.Sequence();
             s.Join(t1);
             s.Join(t2);
+            s.Join(t3);
             s.AppendCallback(() =>
             {
                 audioSource.Play();
@@ -76,17 +81,19 @@ namespace Llamo.Posess
             foregroundImage.fillAmount = 0;
             foregroundImage.DOFade(0, updateSpeedSeconds);
             backgroundImage.DOFade(0, updateSpeedSeconds);
-            StopCoroutine(posessCoroutine);
+            percentageText.DOFade(0, updateSpeedSeconds);
+            if (posessCoroutine != null)
+            {
+                StopCoroutine(posessCoroutine);
+            }
+
+            percentageText.SetText("0%");
         }
 
         public void ResetCancelled()
         {
             Debug.Log("Cancelling posessing");
-            isRunning = false;
-            foregroundImage.fillAmount = 0;
-            foregroundImage.DOFade(0, updateSpeedSeconds);
-            backgroundImage.DOFade(0, updateSpeedSeconds);
-            StopCoroutine(posessCoroutine);
+            Reset();
             SoundManager.instance.Play("CancellPosess");
         }
 
@@ -99,6 +106,8 @@ namespace Llamo.Posess
 
             while (prePercentage <= 100 && isRunning)
             {
+                percentageText.SetText(prePercentage + "%");
+
                 prePercentage++;
                 foregroundImage.fillAmount = prePercentage / 100f;
 

@@ -57,7 +57,7 @@ namespace Llamo.Posess
 
         private void ToggleGameObjects(bool enabled)
         {
-            foreach (var go in toToggle)
+            foreach (GameObject go in toToggle)
             {
                 go.SetActive(enabled);
             }

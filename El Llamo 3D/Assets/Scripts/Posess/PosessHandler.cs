@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using Llamo.Health;
+using System.Collections;
 using UnityEngine;
-using Llamo.Health;
 
 namespace Llamo.Posess
 {
@@ -38,7 +38,10 @@ namespace Llamo.Posess
             inputHandler.posessAquired -= HandleTargetPosess;
             inputHandler.fireReleaseCallback -= HandleClickReleased;
 
-            crosshair.posessReady -= OnPosessReady;
+            if (crosshair != null)
+            {
+                crosshair.posessReady -= OnPosessReady;
+            }
         }
 
         private void HandleClickReleased()

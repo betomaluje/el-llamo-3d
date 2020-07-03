@@ -1297,6 +1297,7 @@ GameObject:
   - component: {fileID: 644223966757249534}
   - component: {fileID: 1985788838408029732}
   - component: {fileID: 3069559720017572393}
+  - component: {fileID: 6752503426820089416}
   - component: {fileID: 8915490827300288987}
   - component: {fileID: 3337313840973512057}
   - component: {fileID: 1540597783966594581}
@@ -1382,7 +1383,7 @@ MonoBehaviour:
   shootingDistance: 50
   posessLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65536
   posessDistance: 10
 --- !u!114 &4961014990701522434
 MonoBehaviour:
@@ -1535,6 +1536,21 @@ MonoBehaviour:
   - {fileID: 6350869325238444130}
   - {fileID: 5667411187555735356}
   networkID: {fileID: 8915490827300288987}
+--- !u!114 &6752503426820089416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836814044747114715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c40594a58cb94c65bc3e3d533da99be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 4419335375198168097}
+  posessTimeReset: 0.5
+  posessTimeDifficulty: 0.1
 --- !u!114 &8915490827300288987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2215,9 +2231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 261c03f680c9b364e876581edefe2868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alwaysFaceCamera: 1
   foregroundImage: {fileID: 7530510306564427169}
-  backgroundImage: {fileID: 7530510307504587162}
   updateSpeedSeconds: 0.2
 --- !u!1 &7530510307504587164
 GameObject:
