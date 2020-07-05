@@ -1373,6 +1373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b14193d859a94daaafa818b4a9a8338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyShoot: 323
+  keyThrow: 101
   targetLayer:
     serializedVersion: 2
     m_Bits: 16896
@@ -1402,7 +1404,7 @@ MonoBehaviour:
     grabedObject: {fileID: 0}
   - grabPosition: {fileID: 8046268901017405572}
     grabedObject: {fileID: 0}
-  pointChanger: 101
+  pointChanger: 114
   playerHandsUI:
   - {fileID: 2984699707968819260}
   - {fileID: 7849789723291703089}
@@ -1474,7 +1476,7 @@ MonoBehaviour:
   mouseSensitivity: 350
   playerBody: {fileID: 5836814044747114709}
   grabController: {fileID: 4961014990701522434}
-  zoomKey: 113
+  zoomKey: 324
   finalZoom: 10
   thirdPersonKey: 9
   finalThirdPosition: {x: 1.5, y: 3, z: -4}
@@ -1815,7 +1817,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - Foldout: 1
+  - Foldout: 0
     name: Nickname
     type: 3
     conflictResolution: 0

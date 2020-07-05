@@ -108,6 +108,12 @@ namespace Llamo.Health
             NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Player_Corpse, transform.position, Quaternion.identity);
         }
 
+        public override void Posess()
+        {
+            base.Posess();
+            networkID.Destroy();
+        }
+
         #region IHealth
 
         public override void GiveHealth(int amount, Vector3 impactPosition)

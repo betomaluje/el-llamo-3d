@@ -28,9 +28,15 @@ namespace Llamo.Posess
         private Coroutine posessCoroutine;
 
         private AudioSource audioSource;
+        private int prePercentage = 0;
 
         private void Start()
         {
+            if (!GameSettings.instance.gameType.Equals(GameSettings.GameType.POSESS_MODE))
+            {
+                Destroy(gameObject);
+            }
+
             foregroundImage.fillAmount = 0;
             foregroundImage.DOFade(0, 0);
             backgroundImage.DOFade(0, 0);
@@ -44,7 +50,7 @@ namespace Llamo.Posess
         {
             if (isRunning)
             {
-                audioSource.pitch = Mathf.Lerp(audioSource.pitch, targetPitch, incrementPitch * Time.deltaTime);
+                audioSource.pitch = Mathf.Lerp(audioSource.pitch, targetPitch, (prePercentage / 100f) * Time.deltaTime);
             }
             else
             {
@@ -102,7 +108,7 @@ namespace Llamo.Posess
             WaitForSeconds secondsToWait = new WaitForSeconds(difficultyTime);
 
             Debug.Log("crosshair StartPosessing");
-            int prePercentage = 0;
+            prePercentage = 0;
 
             while (prePercentage <= 100 && isRunning)
             {

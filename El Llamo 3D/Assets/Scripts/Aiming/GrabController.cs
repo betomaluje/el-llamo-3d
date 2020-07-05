@@ -7,6 +7,7 @@ public class GrabController : MonoBehaviour
 {
     [Header("Grab Points")]
     [SerializeField] private List<GrabPoint> grabPoints;
+    [Tooltip("[DEPRECATED] Key for changing a grab point (aka Hand)")]
     [SerializeField] private KeyCode pointChanger = KeyCode.E;
     [Space]
     [Header("UI")]
@@ -25,7 +26,8 @@ public class GrabController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(pointChanger))
+        float d = Input.GetAxis("Mouse ScrollWheel");
+        if (d != 0f)
         {
             ChangeHand();
         }

@@ -72,7 +72,7 @@ namespace Llamo.Health
             StartCoroutine(PerformDie());
         }
 
-        public void Posess()
+        public virtual void Posess()
         {
             ThrowGun();
             CreateRagdoll();

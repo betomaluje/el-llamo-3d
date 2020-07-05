@@ -16,6 +16,11 @@ namespace Llamo.Posess
 
         private void Start()
         {
+            if (!GameSettings.instance.gameType.Equals(GameSettings.GameType.POSESS_MODE))
+            {
+                Destroy(this);
+            }
+
             localMouseLook = GetComponent<LocalMouseLook>();
             localPlayerMovement = GetComponent<LocalPlayerMovement>();
             localInputHandler = GetComponent<LocalInputHandler>();

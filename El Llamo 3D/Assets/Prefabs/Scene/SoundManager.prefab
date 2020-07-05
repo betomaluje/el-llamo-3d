@@ -156,7 +156,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Posess
     soundType: 0
-    clip: {fileID: 8300000, guid: 32f565ba94f200f49adb407cce64e873, type: 3}
+    clip: {fileID: 8300000, guid: f35ae34c759aeec4087703d322e91af8, type: 3}
     alternatives: []
     volume: 0.8
     pitch: 1
@@ -174,7 +174,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: OngoingPosess
     soundType: 0
-    clip: {fileID: 8300000, guid: 0b60434a932031547b6ad29c5bf00441, type: 3}
+    clip: {fileID: 8300000, guid: 5c6253ccbf741d6469939601f6514f67, type: 3}
     alternatives: []
     volume: 0.3
     pitch: 1

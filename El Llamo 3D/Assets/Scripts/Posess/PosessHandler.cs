@@ -19,8 +19,16 @@ namespace Llamo.Posess
 
         private void Start()
         {
+            if (!GameSettings.instance.gameType.Equals(GameSettings.GameType.POSESS_MODE))
+            {
+                Destroy(this);
+            }
+
             crosshair = FindObjectOfType<PosessCrosshair>();
-            crosshair.posessReady += OnPosessReady;
+            if (crosshair != null)
+            {
+                crosshair.posessReady += OnPosessReady;
+            }
         }
 
         private void OnEnable()

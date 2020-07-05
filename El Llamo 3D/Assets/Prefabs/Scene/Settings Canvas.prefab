@@ -1382,7 +1382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129f36816d04c7348a14fa97950de718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showMenu: 112
+  showMenu: 27
   settingsPanel: {fileID: 7669369058859907227}
   settingsButton: {fileID: 7669369057812038783}
   settingsSprite: {fileID: 21300000, guid: c2e387a5cc9162c41a6ab11ad3f4967a, type: 3}

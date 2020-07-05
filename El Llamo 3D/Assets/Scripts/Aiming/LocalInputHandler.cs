@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class LocalInputHandler : MonoBehaviour
 {
+    [Header("Key Codes")]
+    [SerializeField] private KeyCode keyShoot = KeyCode.Mouse0;
+    [SerializeField] private KeyCode keyThrow = KeyCode.R;
+
+    [Space]
     [Header("Target")]
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private float grabDistance = 10f;
@@ -46,23 +51,23 @@ public class LocalInputHandler : MonoBehaviour
     protected virtual void Update()
     {
         // check if user is pressing the Fire button
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(keyShoot))
         {
             isInputPressed = true;
             HandleShootingPointer();
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetKeyUp(keyShoot))
         {
             isInputPressed = false;
             fireReleaseCallback();
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(keyThrow))
         {
             secondaryClickCallback();
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetKeyUp(keyThrow))
         {
             secondaryReleaseCallback();
         }
