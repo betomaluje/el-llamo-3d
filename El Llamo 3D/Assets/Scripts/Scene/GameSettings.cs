@@ -8,6 +8,8 @@ public class GameSettings : MonoBehaviour
 
     public GameType gameType;
 
+    public int numberOfPlayers = 2;
+
     [System.Serializable]
     public enum GameType
     {

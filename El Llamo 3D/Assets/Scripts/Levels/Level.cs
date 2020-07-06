@@ -10,6 +10,8 @@ public class Level : ScriptableObject
 
     public GameSettings.GameType gameType;
 
+    public int numberOfPlayers = 2;
+
     /**
      * This Level Numbers should match with the Build Settings added Scenes
      */

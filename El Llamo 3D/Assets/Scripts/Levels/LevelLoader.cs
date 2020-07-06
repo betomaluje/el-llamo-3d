@@ -26,6 +26,7 @@ public class LevelLoader : MonoBehaviour
         // we save the game settings
         GameSettings.instance.gameType = level.gameType;
         GameSettings.instance.usingNetwork = level.usesNetwork;
+        GameSettings.instance.numberOfPlayers = level.numberOfPlayers;
 
         LoadLevel(level.levelNumber);
     }
