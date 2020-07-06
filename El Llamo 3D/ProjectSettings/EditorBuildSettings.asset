@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/AdventureLocal.unity
     guid: ab1935fc1bcb5194ea6b852eb8a24474
   - enabled: 1
+    path: Assets/Scenes/VikingLocal.unity
+    guid: 3bbeea0ef4fd34ab3b6072aaa78e85f0
+  - enabled: 1
     path: Assets/Scenes/TestScene.unity
     guid: 00fc35c09d826419bbe45697e1543848
   - enabled: 1

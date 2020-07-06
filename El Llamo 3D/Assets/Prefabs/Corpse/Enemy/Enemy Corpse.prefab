@@ -714,6 +714,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1addfc5272e40f1854b7bd8b429d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   pickupSpeed: 0.25
   parentTransform: {fileID: 6009763649638734790}
 --- !u!65 &6009763649638500324

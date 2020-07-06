@@ -1164,6 +1164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd0576aa4dab481aa9029a6334def9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   pickupSpeed: 0.25
   parentTransform: {fileID: 655316715927778445}
 --- !u!65 &5866242576774526777
@@ -1464,7 +1467,7 @@ GameObject:
   - component: {fileID: 655316715927778445}
   - component: {fileID: -2205475664463468791}
   m_Layer: 14
-  m_Name: Local Ragdoll Model
+  m_Name: Local Player Corpse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1502,10 +1505,8 @@ MonoBehaviour:
   dieFXPrefab: {fileID: 192166, guid: c6de9c3e430816d40aedcaaf84000975, type: 3}
   explodingCorpsePrefab: {fileID: 7958631859862739342, guid: b75985f17479a6649a7da8db3726189a,
     type: 3}
-  corpsePrefab: {fileID: 7958631859862739342, guid: b75985f17479a6649a7da8db3726189a,
-    type: 3}
   maxHealth: 30
-  probabilityOfExplode: 100
+  currentHealth: 0
 --- !u!1 &655316715928266993
 GameObject:
   m_ObjectHideFlags: 0

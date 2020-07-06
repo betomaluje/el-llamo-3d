@@ -20,6 +20,7 @@ public class Level : ScriptableObject
         Adventure,
         Viking,
         AdventureLocal,
+        VikingLocal,
         TestScene,
         TestNetwork
     }
