@@ -3,7 +3,12 @@
 [CreateAssetMenu(fileName = "New Level", menuName = "Level Data", order = 51)]
 public class Level : ScriptableObject
 {
+    [Tooltip("This Level Numbers should match with the Build Settings added Scenes")]
     public LevelNumber levelNumber;
+
+    public bool usesNetwork = true;
+
+    public GameSettings.GameType gameType;
 
     /**
      * This Level Numbers should match with the Build Settings added Scenes

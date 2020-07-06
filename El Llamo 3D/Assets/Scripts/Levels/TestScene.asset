@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: TestScene
   m_EditorClassIdentifier: 
   levelNumber: 4
+  usesNetwork: 0
+  gameType: 1

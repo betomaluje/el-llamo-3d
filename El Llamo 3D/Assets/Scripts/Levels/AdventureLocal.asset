@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: AdventureLocal
   m_EditorClassIdentifier: 
   levelNumber: 3
+  usesNetwork: 0
+  gameType: 0

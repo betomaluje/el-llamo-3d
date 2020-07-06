@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: AdventureNetwork
   m_EditorClassIdentifier: 
   levelNumber: 1
+  usesNetwork: 1
+  gameType: 0

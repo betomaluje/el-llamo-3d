@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: VikingNetwork
   m_EditorClassIdentifier: 
   levelNumber: 2
+  usesNetwork: 1
+  gameType: 0

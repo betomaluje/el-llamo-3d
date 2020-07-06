@@ -29,25 +29,4 @@ public class GameSettings : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-
-    public void SetUsingNetwork(bool useNetwork)
-    {
-        usingNetwork = useNetwork;
-    }
-
-    public void SetGameType(int type)
-    {
-        switch (type)
-        {
-            case 0:
-                gameType = GameType.VS_MODE;
-                break;
-            case 1:
-                gameType = GameType.POSESS_MODE;
-                break;
-            default:
-                gameType = GameType.VS_MODE;
-                break;
-        }
-    }
 }

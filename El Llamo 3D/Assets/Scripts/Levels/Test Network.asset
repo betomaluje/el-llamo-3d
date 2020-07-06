@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Test Network
   m_EditorClassIdentifier: 
   levelNumber: 5
+  usesNetwork: 1
+  gameType: 1
