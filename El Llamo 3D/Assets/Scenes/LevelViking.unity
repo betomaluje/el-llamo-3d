@@ -2246,7 +2246,7 @@ PrefabInstance:
     - target: {fileID: 3800410151266224921, guid: d1eadf0337d694949a33ed8aa56ce06d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3800410151266224921, guid: d1eadf0337d694949a33ed8aa56ce06d,
         type: 3}
@@ -18347,7 +18347,7 @@ PrefabInstance:
     - target: {fileID: 4213100857443661240, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.3153962
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4213100857443661240, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
@@ -18362,12 +18362,12 @@ PrefabInstance:
     - target: {fileID: 4213100857443661240, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.94896007
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4213100857443661240, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4213100857443661240, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
@@ -26400,7 +26400,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2147499831
+    m_Bits: 2147614519
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0

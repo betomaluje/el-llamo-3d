@@ -55195,7 +55195,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 4
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -55232,7 +55232,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2147548983
+    m_Bits: 2147614519
   m_RenderingLayerMask: 1
   m_Lightmapping: 1
   m_LightShadowCasterMode: 0
@@ -62240,7 +62240,7 @@ PrefabInstance:
     - target: {fileID: 4213100857443661240, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.3153962
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4213100857443661240, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
@@ -62255,7 +62255,7 @@ PrefabInstance:
     - target: {fileID: 4213100857443661240, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.94896007
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4213100857443661240, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
@@ -62277,20 +62277,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4213100857443661241, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 2147548983
-      objectReference: {fileID: 0}
     - target: {fileID: 4213100857443661244, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
         type: 3}
       propertyPath: m_Name
       value: Main Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 4213100857443661247, guid: 7dbdb082a2a7f0b4e8b710829186b9eb,
-        type: 3}
-      propertyPath: m_RenderShadows
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dbdb082a2a7f0b4e8b710829186b9eb, type: 3}
