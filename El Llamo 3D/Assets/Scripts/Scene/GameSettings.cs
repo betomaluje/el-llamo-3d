@@ -31,4 +31,12 @@ public class GameSettings : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+
+    public void SetLevel(Level level)
+    {
+        // we save the game settings
+        gameType = level.gameType;
+        usingNetwork = level.usesNetwork;
+        numberOfPlayers = level.numberOfPlayers;
+    }
 }

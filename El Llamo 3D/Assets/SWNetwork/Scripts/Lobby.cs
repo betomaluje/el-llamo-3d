@@ -241,6 +241,7 @@ public class Lobby : MonoBehaviour
     public void SetLevel(Level level)
     {
         selectedLevel = level.levelNumber;
+        GameSettings.instance.SetLevel(level);
     }
 
     private void OnEverythingReady()
