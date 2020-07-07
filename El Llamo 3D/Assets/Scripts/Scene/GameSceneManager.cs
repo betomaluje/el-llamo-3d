@@ -30,7 +30,7 @@ public class GameSceneManager : LocalGameSceneManager
             PutObject(sceneSpawner, guns, guns.AmountToSpawn(), false);
 
             // we spawn enemies
-            PutObject(sceneSpawner, enemies, enemies.AmountToSpawn(), false);
+            //PutObject(sceneSpawner, enemies, enemies.AmountToSpawn(), false);
 
             // we spawn health items
             PutObject(sceneSpawner, healthItems, healthItems.AmountToSpawn(), false);

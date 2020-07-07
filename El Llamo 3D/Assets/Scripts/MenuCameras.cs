@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using Llamo.Level;
 using UnityEngine;
 
 public class MenuCameras : MonoBehaviour
@@ -15,18 +16,18 @@ public class MenuCameras : MonoBehaviour
     void Start()
     {
         UpdateUIElements();
-        UpdateCameras();        
+        UpdateCameras();
     }
 
     public void ChangeCamera(Level level)
     {
         currentCamera = (int)level.levelNumber;
-        lobbyScript.selectedLevel = (Level.LevelNumber) level.levelNumber;    
+        lobbyScript.selectedLevel = level.levelNumber;
         UpdateCameras();
         UpdateUIElements();
     }
 
-    private void UpdateUIElements() 
+    private void UpdateUIElements()
     {
         uiCanvas.SetActive(currentCamera != 0);
     }
@@ -56,9 +57,9 @@ public class MenuCameras : MonoBehaviour
         uiCanvas.SetActive(false);
 
         lobbyCanvas.SetActive(true);
-        foreach(var canvas in mapCanvas) 
+        foreach (GameObject canvas in mapCanvas)
         {
             canvas.SetActive(false);
-        }        
+        }
     }
 }

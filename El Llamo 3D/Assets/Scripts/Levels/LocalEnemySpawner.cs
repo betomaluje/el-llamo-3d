@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Llamo.Level;
+using UnityEngine;
 
 public class LocalEnemySpawner : MonoBehaviour
 {
@@ -11,13 +12,37 @@ public class LocalEnemySpawner : MonoBehaviour
     private int currentAmount = 0;
     private float timeout = 2;
 
-    private void Start()
+    private bool hasRoundStarted = false;
+    private LevelStateManager levelStateManager;
+
+    private void Awake()
     {
+        levelStateManager = FindObjectOfType<LevelStateManager>();
         sceneManager = GetComponent<LocalGameSceneManager>();
+    }
+
+    private void OnEnable()
+    {
+        levelStateManager.OnLevelStateChange += OnRoundStarted;
+    }
+
+    private void OnDisable()
+    {
+        levelStateManager.OnLevelStateChange -= OnRoundStarted;
+    }
+
+    private void OnRoundStarted(LevelStateManager.GameState gameState)
+    {
+        hasRoundStarted = true;
     }
 
     private void Update()
     {
+        if (!hasRoundStarted)
+        {
+            return;
+        }
+
         if (timeout > 0)
         {
             // Reduces the timeout by the time passed since the last frame

@@ -2,36 +2,39 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelLoader : MonoBehaviour
+namespace Llamo.Level
 {
-    public void LoadLevel(Level.LevelNumber levelNumber)
+    public class LevelLoader : MonoBehaviour
     {
-        StartCoroutine(LoadScene((int)levelNumber));
-    }
-
-    private IEnumerator LoadScene(int sceneIndex)
-    {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-
-        while (!operation.isDone)
+        public void LoadLevel(Level.LevelNumber levelNumber)
         {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-
-            yield return null;
+            StartCoroutine(LoadScene((int)levelNumber));
         }
-    }
 
-    public void LoadLevel(Level level)
-    {
-        // we save the game settings
-        GameSettings.instance.SetLevel(level);
+        private IEnumerator LoadScene(int sceneIndex)
+        {
+            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
 
-        LoadLevel(level.levelNumber);
-    }
+            while (!operation.isDone)
+            {
+                float progress = Mathf.Clamp01(operation.progress / 0.9f);
 
-    public void ExitGame()
-    {
-        Debug.Log("Exiting game");
-        Application.Quit();
+                yield return null;
+            }
+        }
+
+        public void LoadLevel(Level level)
+        {
+            // we save the game settings
+            GameSettings.instance.SetLevel(level);
+
+            LoadLevel(level.levelNumber);
+        }
+
+        public void ExitGame()
+        {
+            Debug.Log("Exiting game");
+            Application.Quit();
+        }
     }
 }

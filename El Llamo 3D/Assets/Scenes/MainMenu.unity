@@ -5252,7 +5252,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: d3485034532a64971a388bfeab3c4404,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: Level, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Llamo.Level.Level, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5464,7 +5464,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: ad11dcb12c9254be285dadd14133f7d1,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: Level, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Llamo.Level.Level, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5682,7 +5682,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: d7d3fb7c025ac4611b0d37444f540791,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: Level, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Llamo.Level.Level, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10678,7 +10678,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: d46b560964eb8e145a17c40c9c13215c,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: Level, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Llamo.Level.Level, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12510,7 +12510,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 55a81f8bfc10bb245ab13d8ac6f85323,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: Level, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Llamo.Level.Level, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13653,7 +13653,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 37b5700a405114531b84e11b302a3799,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: Level, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Llamo.Level.Level, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
