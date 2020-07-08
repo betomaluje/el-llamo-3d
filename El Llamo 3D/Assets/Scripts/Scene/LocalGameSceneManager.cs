@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Llamo.Level;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class LocalGameSceneManager : MonoBehaviour
@@ -48,6 +49,31 @@ public class LocalGameSceneManager : MonoBehaviour
 
     private bool spawningRagdoll = false;
 
+    private ILevelStateManager levelStateManager;
+
+    private void Awake()
+    {
+        levelStateManager = FindObjectOfType<ILevelStateManager>();
+    }
+
+    private void OnEnable()
+    {
+        levelStateManager.OnLevelStateChange += OnRoundStarted;
+    }
+
+    private void OnDisable()
+    {
+        levelStateManager.OnLevelStateChange -= OnRoundStarted;
+    }
+
+    protected virtual void OnRoundStarted(GameState gameState)
+    {
+        if (gameState == GameState.started)
+        {
+            PutObject(enemies, enemies.AmountToSpawn());
+        }
+    }
+
     private void Start()
     {
         totalPlayerSpawnPoints = players.positions.Length;
@@ -58,7 +84,7 @@ public class LocalGameSceneManager : MonoBehaviour
         PutObject(guns, guns.AmountToSpawn());
 
         // we spawn enemies
-        PutObject(enemies, enemies.AmountToSpawn());
+        //PutObject(enemies, enemies.AmountToSpawn());
 
         // we spawn health items
         PutObject(healthItems, healthItems.AmountToSpawn());

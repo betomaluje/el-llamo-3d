@@ -1,36 +1,14 @@
 ﻿using SWNetwork;
-using System;
-using System.Collections;
-using TMPro;
 using UnityEngine;
 
 namespace Llamo.Level
 {
-    public class LevelStateManager : MonoBehaviour
+    public class LevelStateManager : ILevelStateManager
     {
-        [SerializeField] private TextMeshProUGUI countdownText;
-        [SerializeField] private int countdown = 5;
-
-        [Header("Round Countdown")]
-        [SerializeField] private TextMeshProUGUI roundCountdownText;
-        [SerializeField] private int roundTime = 45;
-
         #region first countdown
         private RoomPropertyAgent roomPropertyAgent;
         private const string PLAYER_PRESSED_ENTER = "PlayersPressedEnter";
-
-        [Serializable]
-        public enum GameState { waiting, starting, started, finished };
-        public GameState State { get; private set; }
-
-        public Action<GameState> OnLevelStateChange = delegate { };
-
-        private int currentCountdown;
-
-        private bool isGamePaused = true;
         #endregion
-
-        private int roundCountdown;
 
         private void Start()
         {
@@ -69,32 +47,6 @@ namespace Llamo.Level
                         FindObjectOfType<SoundMenu>().OnExitClicked();
                     }
                     break;
-            }
-        }
-
-        private void Countdown()
-        {
-            if (State == GameState.starting)
-            {
-                if (currentCountdown == 0)
-                {
-                    // countdown is 0, start the game
-                    countdownText.text = "Go!";
-                    State = GameState.started;
-                    Debug.Log("Started");
-                    OnLevelStateChange(State);
-                }
-                else
-                {
-                    countdownText.text = currentCountdown.ToString();
-                    currentCountdown = currentCountdown - 1;
-                }
-            }
-            else
-            {
-                // clear main text and stop timer
-                countdownText.text = "";
-                CancelInvoke("Countdown");
             }
         }
 
@@ -138,35 +90,6 @@ namespace Llamo.Level
             int resolvedPlayerPressed = remotePlayerPressed + 1;
 
             property.Resolve(resolvedPlayerPressed);
-        }
-
-        private void PauseGame()
-        {
-            //Time.timeScale = 0;
-            Debug.Log("Game Paused");
-            isGamePaused = true;
-        }
-
-        private void ResumeGame()
-        {
-            //Time.timeScale = 1;
-            Debug.Log("Game Resumed");
-            isGamePaused = false;
-        }
-
-        public IEnumerator StartCountdown(int countdownValue = 10)
-        {
-            roundCountdown = countdownValue;
-            while (roundCountdown > 0)
-            {
-                roundCountdownText.SetText(roundCountdown.ToString());
-                yield return new WaitForSeconds(1.0f);
-                roundCountdown--;
-            }
-
-            State = GameState.finished;
-            roundCountdownText.SetText("0");
-            countdownText.SetText("Round ended! Press Enter");
         }
     }
 }

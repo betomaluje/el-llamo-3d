@@ -13,12 +13,15 @@ public class LocalEnemySpawner : MonoBehaviour
     private float timeout = 2;
 
     private bool hasRoundStarted = false;
-    private LevelStateManager levelStateManager;
+    private ILevelStateManager levelStateManager;
 
     private void Awake()
     {
-        levelStateManager = FindObjectOfType<LevelStateManager>();
+        levelStateManager = FindObjectOfType<ILevelStateManager>();
         sceneManager = GetComponent<LocalGameSceneManager>();
+
+        // if we don't have a levelStateManager it means that we can spawn enemies
+        hasRoundStarted = levelStateManager == null;
     }
 
     private void OnEnable()
@@ -31,7 +34,7 @@ public class LocalEnemySpawner : MonoBehaviour
         levelStateManager.OnLevelStateChange -= OnRoundStarted;
     }
 
-    private void OnRoundStarted(LevelStateManager.GameState gameState)
+    private void OnRoundStarted(GameState gameState)
     {
         hasRoundStarted = true;
     }

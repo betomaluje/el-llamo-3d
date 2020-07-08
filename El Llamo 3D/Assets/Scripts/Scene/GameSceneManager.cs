@@ -1,8 +1,11 @@
-﻿using SWNetwork;
+﻿using Llamo.Level;
+using SWNetwork;
 using UnityEngine;
 
 public class GameSceneManager : LocalGameSceneManager
 {
+    private SceneSpawner sceneSpawner;
+
     protected override void AddRagdollCorpse()
     {
         NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Enemy_Corpse, ragdollPosition.position, Quaternion.identity);
@@ -17,6 +20,8 @@ public class GameSceneManager : LocalGameSceneManager
         // In this case, we should not spawn a new Player GameObject for the player.
         if (!alreadySetup)
         {
+            this.sceneSpawner = sceneSpawner;
+
             // If alreadySetup is false, it means the player just started the game. 
             // We randomly select a SpawnPoint and ask the SceneSpawner to spawn a Player GameObject. 
             // we have 1 playerPrefabs so playerPrefabIndex is 0.
@@ -41,6 +46,14 @@ public class GameSceneManager : LocalGameSceneManager
             // Tell the spawner that we have finished setting up the scene. 
             // alreadySetup will be true when SceneSpawn becomes ready next time.
             sceneSpawner.PlayerFinishedSceneSetup();
+        }
+    }
+
+    protected override void OnRoundStarted(GameState gameState)
+    {
+        if (gameState == GameState.started && sceneSpawner != null)
+        {
+            PutObject(sceneSpawner, enemies, enemies.AmountToSpawn(), false);
         }
     }
 
