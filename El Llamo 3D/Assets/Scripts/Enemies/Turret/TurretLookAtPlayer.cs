@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Llamo.Turret
 {
@@ -9,38 +10,39 @@ namespace Llamo.Turret
 
         private Transform playerPosition;
 
-        private bool isPlayerClose = false;
+        public Action<bool> playerNear = delegate { };
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!isPlayerClose && LayerMaskUtils.LayerMatchesObject(attackLayer, other.gameObject))
+            if (playerPosition == null && LayerMaskUtils.LayerMatchesObject(attackLayer, other.gameObject))
             {
-                isPlayerClose = true;
                 playerPosition = other.transform;
+                playerNear(true);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            playerPosition = null;
-            isPlayerClose = false;
+            if (LayerMaskUtils.LayerMatchesObject(attackLayer, other.gameObject))
+            {
+                playerPosition = null;
+                playerNear(false);
+            }
         }
 
         private void Update()
         {
-            if (!isPlayerClose || playerPosition == null)
+            if (playerPosition != null)
             {
-                return;
+                RotateTowards(playerPosition.position);
             }
-
-            RotateTowards(playerPosition.position);
         }
 
         private void RotateTowards(Vector3 to)
         {
             Vector3 pos = to - transform.position;
             Quaternion newRot = Quaternion.LookRotation(pos);
-            transform.rotation = Quaternion.Lerp(transform.rotation, newRot, Time.deltaTime * turnSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, newRot, Time.deltaTime * turnSpeed);
         }
     }
 }

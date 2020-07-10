@@ -13,6 +13,8 @@ public class LocalGameSceneManager : MonoBehaviour
         public GameObject spawnPrefab;
         public GameObject spawnSFX;
 
+        private Randomizer randomizer;
+
         public int AmountToSpawn()
         {
             if (positions.Length == 0)
@@ -25,7 +27,22 @@ public class LocalGameSceneManager : MonoBehaviour
                 amountToSpawn = positions.Length;
             }
 
+            if (randomizer == null)
+            {
+                randomizer = new Randomizer(amountToSpawn);
+            }
+
             return amountToSpawn;
+        }
+
+        public Transform GetRandomSpawnPoint()
+        {
+            return positions[randomizer.SelectNoRepeat()];
+        }
+
+        public void ResetSpawnPositions()
+        {
+            randomizer.ClearBanned();
         }
     }
 
@@ -35,19 +52,13 @@ public class LocalGameSceneManager : MonoBehaviour
 
     [SerializeField] protected SpawnObject enemies;
 
+    [SerializeField] protected SpawnObject turrets;
+
     [SerializeField] protected SpawnObject healthItems;
 
     [SerializeField] protected SpawnObject posessObjects;
 
-    [Space]
-    [Header("Ragdoll Debug")]
-    [SerializeField] private KeyCode ragdoll;
-    [SerializeField] protected Transform ragdollPosition;
-    [SerializeField] private GameObject ragdollCorpse;
-
     protected int totalPlayerSpawnPoints;
-
-    private bool spawningRagdoll = false;
 
     private ILevelStateManager levelStateManager;
 
@@ -70,7 +81,18 @@ public class LocalGameSceneManager : MonoBehaviour
     {
         if (gameState == GameState.started)
         {
+            // we spawn guns
+            PutObject(guns, guns.AmountToSpawn());
+
+            // we spawn enemies
             PutObject(enemies, enemies.AmountToSpawn());
+
+            PutObject(turrets, turrets.AmountToSpawn());
+
+            // we clear all banned positions
+            enemies.ResetSpawnPositions();
+            turrets.ResetSpawnPositions();
+            guns.ResetSpawnPositions();
         }
     }
 
@@ -80,35 +102,11 @@ public class LocalGameSceneManager : MonoBehaviour
 
         PutObject(players, players.AmountToSpawn());
 
-        // we spawn guns
-        PutObject(guns, guns.AmountToSpawn());
-
-        // we spawn enemies
-        //PutObject(enemies, enemies.AmountToSpawn());
-
         // we spawn health items
         PutObject(healthItems, healthItems.AmountToSpawn());
 
         // we spawn posess Objects
         PutObject(posessObjects, posessObjects.AmountToSpawn());
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(ragdoll))
-        {
-            spawningRagdoll = !spawningRagdoll;
-
-            if (spawningRagdoll)
-            {
-                AddRagdollCorpse();
-            }
-        }
-    }
-
-    protected virtual void AddRagdollCorpse()
-    {
-        Instantiate(ragdollCorpse, ragdollPosition.position, Quaternion.identity);
     }
 
     private void PutObject(SpawnObject spawnObject, int totalAmount)
@@ -125,13 +123,14 @@ public class LocalGameSceneManager : MonoBehaviour
     {
         if (spawnObject.spawnPrefab == null)
         {
+            Debug.LogWarning("Trying to spawn " + spawnObject.type.ToString() + " with a null game object");
             return;
         }
 
         for (int i = 0; i < totalAmount; i++)
         {
             // we get a random position index to use
-            Transform index = GetRandomSpawnPoint(spawnObject.positions);
+            Transform index = GetRandomSpawnPoint(spawnObject);
             // we use that index to get a random position from the array
             Vector3 position = index.position;
 
@@ -158,10 +157,9 @@ public class LocalGameSceneManager : MonoBehaviour
         PutObjectWithSFX(enemies, amount);
     }
 
-    protected Transform GetRandomSpawnPoint(Transform[] positions)
+    protected Transform GetRandomSpawnPoint(SpawnObject spawnObject)
     {
-        int index = Random.Range(0, positions.Length);
-        return positions[index];
+        return spawnObject.GetRandomSpawnPoint();
     }
 
     protected int GetRandomSpawnPoint(int totalPoints)

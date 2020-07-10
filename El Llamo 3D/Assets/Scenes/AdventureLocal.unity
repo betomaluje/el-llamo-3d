@@ -78388,6 +78388,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
         type: 3}
+      propertyPath: players.spawnPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: guns.spawnPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: players.spawnPrefab.prefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: guns.spawnPrefab.prefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: turrets.positions.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
       propertyPath: players.positions.Array.data[0]
       value: 
       objectReference: {fileID: 2016986127}
@@ -78476,6 +78501,81 @@ PrefabInstance:
       propertyPath: enemies.spawnSFX
       value: 
       objectReference: {fileID: 1947331358871186, guid: ce74cb252be734929b37115bd1e9a37c,
+        type: 3}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: posessObjects.amountToSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: players.spawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 5836814044747114715, guid: 9072254b9e22cd24e96ac655dc752c85,
+        type: 3}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: guns.spawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 3382172991157653014, guid: 053eaf7b197f640039461fe45fdb1825,
+        type: 3}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: players.spawnPrefab.type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: players.spawnPrefab.prefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 5836814044747114715, guid: 9072254b9e22cd24e96ac655dc752c85,
+        type: 3}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: guns.spawnPrefab.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: guns.spawnPrefab.prefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 3382172991157653014, guid: 053eaf7b197f640039461fe45fdb1825,
+        type: 3}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: turrets.type
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[0]
+      value: 
+      objectReference: {fileID: 876809411}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[1]
+      value: 
+      objectReference: {fileID: 2021637046}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[2]
+      value: 
+      objectReference: {fileID: 298469376}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[3]
+      value: 
+      objectReference: {fileID: 1211577828}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[4]
+      value: 
+      objectReference: {fileID: 1168369527}
+    - target: {fileID: 7647803758952637785, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
+        type: 3}
+      propertyPath: turrets.spawnPrefab
+      value: 
+      objectReference: {fileID: 4048934742221473039, guid: 7e85ce2f69a8f403a9dbd5a0230c7bcf,
         type: 3}
     - target: {fileID: 7703681150556198538, guid: 8263ea76581fb4c4c98fd3f9ac22c176,
         type: 3}

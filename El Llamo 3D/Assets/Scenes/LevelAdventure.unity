@@ -48287,11 +48287,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
         type: 3}
-      propertyPath: players.positions.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
-        type: 3}
       propertyPath: guns.positions.Array.data[0]
       value: 
       objectReference: {fileID: 370960757}
@@ -48352,12 +48347,6 @@ PrefabInstance:
       objectReference: {fileID: 1349761515}
     - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
         type: 3}
-      propertyPath: enemies.spawnSFX
-      value: 
-      objectReference: {fileID: 1947331358871186, guid: ce74cb252be734929b37115bd1e9a37c,
-        type: 3}
-    - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
-        type: 3}
       propertyPath: players.positions.Array.data[0]
       value: 
       objectReference: {fileID: 2200215496032156263}
@@ -48381,6 +48370,31 @@ PrefabInstance:
       propertyPath: players.positions.Array.data[4]
       value: 
       objectReference: {fileID: 2200215496032156259}
+    - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[0]
+      value: 
+      objectReference: {fileID: 726728530}
+    - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[1]
+      value: 
+      objectReference: {fileID: 1837234815}
+    - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[2]
+      value: 
+      objectReference: {fileID: 1872668720}
+    - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[3]
+      value: 
+      objectReference: {fileID: 251410269}
+    - target: {fileID: 8585499597034534577, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
+        type: 3}
+      propertyPath: turrets.positions.Array.data[4]
+      value: 
+      objectReference: {fileID: 83256312}
     - target: {fileID: 8585499597034534582, guid: 6c7deb3b5650bdf4a8192788fd2f97db,
         type: 3}
       propertyPath: m_LocalPosition.x

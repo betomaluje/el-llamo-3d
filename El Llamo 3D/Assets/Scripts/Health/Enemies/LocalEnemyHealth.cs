@@ -50,14 +50,20 @@ namespace Llamo.Health
 
             if (randomExploding <= probOfExploding)
             {
-                Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
+                if (explodingCorpsePrefab != null)
+                {
+                    Instantiate(explodingCorpsePrefab, transform.position, transform.rotation).GetComponent<ExplodeCorpse>();
+                }
             }
             else
             {
                 CreateRagdoll();
             }
 
-            Instantiate(dieFXPrefab, transform.position, Quaternion.identity);
+            if (dieFXPrefab != null)
+            {
+                Instantiate(dieFXPrefab, transform.position, Quaternion.identity);
+            }
         }
 
         protected void BroadcastEnemyDead()
@@ -67,7 +73,10 @@ namespace Llamo.Health
 
         protected virtual void CreateRagdoll()
         {
-            Instantiate(corpsePrefab, transform.position, transform.rotation);
+            if (corpsePrefab != null)
+            {
+                Instantiate(corpsePrefab, transform.position, transform.rotation);
+            }
         }
 
         #region IHealth
@@ -100,7 +109,10 @@ namespace Llamo.Health
 
         public void AddDamageSFX(Vector3 impactPosition)
         {
-            Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
+            if (bloodDamagePrefab != null)
+            {
+                Instantiate(bloodDamagePrefab, impactPosition, transform.rotation);
+            }
         }
 
         public void AddHealSFX(Vector3 impactPosition)

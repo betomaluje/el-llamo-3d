@@ -6,11 +6,6 @@ public class GameSceneManager : LocalGameSceneManager
 {
     private SceneSpawner sceneSpawner;
 
-    protected override void AddRagdollCorpse()
-    {
-        NetworkClient.Instance.LastSpawner.SpawnForNonPlayer((int)NonPlayerIndexes.Enemy_Corpse, ragdollPosition.position, Quaternion.identity);
-    }
-
     public void OnSpawnerReady(bool alreadySetup, SceneSpawner sceneSpawner)
     {
         Debug.Log("OnSpawnerReady " + alreadySetup);
@@ -31,12 +26,6 @@ public class GameSceneManager : LocalGameSceneManager
             int spawnPointIndex = GetRandomSpawnPoint(totalPlayerSpawnPoints);
             sceneSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
 
-            // we spawn guns
-            PutObject(sceneSpawner, guns, guns.AmountToSpawn(), false);
-
-            // we spawn enemies
-            //PutObject(sceneSpawner, enemies, enemies.AmountToSpawn(), false);
-
             // we spawn health items
             PutObject(sceneSpawner, healthItems, healthItems.AmountToSpawn(), false);
 
@@ -53,14 +42,17 @@ public class GameSceneManager : LocalGameSceneManager
     {
         if (gameState == GameState.started && sceneSpawner != null)
         {
+            PutObject(sceneSpawner, turrets, turrets.AmountToSpawn(), false);
+
             PutObject(sceneSpawner, enemies, enemies.AmountToSpawn(), false);
+
+            PutObject(sceneSpawner, guns, guns.AmountToSpawn(), false);
         }
     }
 
     public override void SpawnEnemy(int amount)
     {
-        int index = GetRandomSpawnPoint(enemies.AmountToSpawn());
-        Vector3 position = enemies.positions[index].position;
+        Vector3 position = GetRandomSpawnPoint(enemies).position;
         if (enemies.spawnSFX != null)
         {
             SpawnObjectSfx(enemies.spawnSFX, position);
@@ -72,10 +64,8 @@ public class GameSceneManager : LocalGameSceneManager
     {
         for (int i = 0; i < totalAmount; i++)
         {
-            // we get a random position index to use
-            int index = GetRandomSpawnPoint(totalAmount);
-            // we use that index to get a random position from the array
-            Vector3 position = spawnObject.positions[index].position;
+            // we get a random position of that specific spawn object
+            Vector3 position = GetRandomSpawnPoint(spawnObject).position;
 
             if (withSFX)
             {

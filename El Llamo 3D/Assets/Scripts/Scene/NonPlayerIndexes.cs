@@ -7,5 +7,6 @@ public enum NonPlayerIndexes
     Enemy_Business,
     Health_Item,
     Player_Corpse,
-    Posess_Llama
+    Posess_Llama,
+    Turret_1
 }

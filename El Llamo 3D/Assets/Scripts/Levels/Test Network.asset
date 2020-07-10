@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20bda05ffa43345298188daca95a9da7, type: 3}
   m_Name: Test Network
   m_EditorClassIdentifier: 
-  levelNumber: 5
+  levelNumber: 6
   usesNetwork: 1
   gameType: 1
+  numberOfPlayers: 1

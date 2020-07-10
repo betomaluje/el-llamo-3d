@@ -153,7 +153,7 @@ public class LocalPlayerGrab : MonoBehaviour
 
             // now we checked if we hit another player
 
-            IHealth healthTarget = shootHit.transform.root.gameObject.GetComponentInChildren<IHealth>(true);
+            IHealth healthTarget = shootHit.transform.root.GetComponentInChildren<IHealth>(true);
 
             if (healthTarget != null)
             {

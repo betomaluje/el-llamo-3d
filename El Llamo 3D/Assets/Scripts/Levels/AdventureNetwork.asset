@@ -15,4 +15,4 @@ MonoBehaviour:
   levelNumber: 1
   usesNetwork: 1
   gameType: 0
-  numberOfPlayers: 1
+  numberOfPlayers: 2

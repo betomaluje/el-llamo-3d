@@ -13,6 +13,7 @@ namespace Llamo.Level
                     {
                         // start the countdown
                         Debug.Log("Starting...");
+                        countdownText.text = "Waiting for players";
                         State = GameState.starting;
 
                         // start the countdown
