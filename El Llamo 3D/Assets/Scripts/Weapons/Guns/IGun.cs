@@ -3,7 +3,10 @@
 [SerializeField]
 public interface IGun
 {
-    void Shoot(Vector3 shootHit);
+    /**
+     * return True if successful shooting (aka had ammo), False otherwise
+     */
+    bool Shoot(Vector3 shootHit);
 
     int GetDamage();
 

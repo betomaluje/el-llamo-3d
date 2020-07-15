@@ -1,7 +1,6 @@
 ﻿using SWNetwork;
 using System;
 using UnityEngine;
-using Llamo.Health;
 
 public class PlayerGrab : LocalPlayerGrab
 {
@@ -42,40 +41,7 @@ public class PlayerGrab : LocalPlayerGrab
             lastShootingState = shootingTarget.isPressed;
         }
 
-        // we mark the shooting point
-        RaycastHit shootHit = shootingTarget.targetHit;
-
-        // if it was on target we take damage
-        if (shootingTarget.onTarget)
-        {
-            aimPoint = shootHit.point;
-
-            Gun gunTarget = grabController.GetActiveHand().GetComponentInChildren<Gun>();
-
-            if (gunTarget != null)
-            {
-                int damage = gunTarget.GetDamage();
-
-                IHealth healthTarget = shootHit.transform.gameObject.GetComponentInParent<IHealth>();
-
-                if (healthTarget != null)
-                {
-                    healthTarget.PerformDamage(damage, shootHit.point);
-                }
-
-                if (shootHit.rigidbody != null)
-                {
-                    Debug.Log(shootHit.transform.gameObject.name + " -> impact force! " + gunTarget.impactForce);
-                    shootHit.rigidbody.AddForce(-shootHit.normal * gunTarget.impactForce);
-                }
-            }
-        }
-        else
-        {
-            aimPoint = shootingTarget.ray.origin + shootingTarget.ray.direction * shootingTarget.shootingDistance;
-        }
-
-        aimPointUpdate?.Invoke(aimPoint);
+        HandleShootingDetection(gun, shootingTarget);
     }
 
     /**
@@ -90,7 +56,7 @@ public class PlayerGrab : LocalPlayerGrab
 
         if (remoteShootingPressed && playerHasGun)
         {
-            gun.Shoot(aimPoint);
+            bool gunShotSuccessful = gun.Shoot(aimPoint);
 
             networkAimPointUpdate?.Invoke(aimPoint);
 

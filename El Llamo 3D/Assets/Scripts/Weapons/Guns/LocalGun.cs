@@ -6,18 +6,22 @@ public abstract class LocalGun : LocalGrabable, IGun
 {
     [Header("Stats")]
     public Transform shootingPosition;
-    [SerializeField] private float fireRate = 3f;
-    [SerializeField] private int maxDamage = 30;
-    public float impactForce = 100f;
-
-    [Space]
-    [Header("Recoil")]
-    [SerializeField] private float recoilAmount = 0.3f;
-    [SerializeField] private float recoilDuration = 0.3f;
+    [SerializeField] private GunSO gun;
 
     private float nextTimeToFire = 0f;
 
-    public Action OnPickedUp;
+    public Action<bool> OnPickedStateChanged = delegate { };
+
+    public Action<int, int> OnAmmoChanged = delegate { };
+
+    private int currentAmmo = 0;
+
+    protected override void Start()
+    {
+        base.Start();
+        currentAmmo = gun.ammo;
+        OnAmmoChanged(gun.ammo, currentAmmo);
+    }
 
     private void FixedUpdate()
     {
@@ -27,35 +31,48 @@ public abstract class LocalGun : LocalGrabable, IGun
         }
     }
 
-    public void Shoot(Vector3 shootHit)
+    public bool Shoot(Vector3 shootHit)
     {
+        bool successful = false;
+
         if (Time.time >= nextTimeToFire)
         {
             // we can shoot here
             DoRecoil();
 
-            DoShooting(shootHit);
+            if (currentAmmo > 0)
+            {
+                currentAmmo--;
+
+                OnAmmoChanged(gun.ammo, currentAmmo);
+
+                successful = true;
+                DoShooting(shootHit);
+            }
+
             // we update the frequency of the shooting
-            nextTimeToFire = Time.time + 1f / fireRate;
+            nextTimeToFire = Time.time + 1f / gun.fireRate;
         }
+
+        return successful;
     }
 
     protected abstract void DoShooting(Vector3 shootHit);
 
     public void DoRecoil()
     {
-        Vector3 direction = -shootingPosition.right * recoilAmount;
-        transform.DOPunchPosition(direction, recoilDuration, 1, 0.05f);
+        Vector3 direction = -shootingPosition.right * gun.recoilAmount;
+        transform.DOPunchPosition(direction, gun.recoilDuration, 1, 0.05f);
     }
 
     public int GetDamage()
     {
-        return UnityEngine.Random.Range(1, maxDamage);
+        return UnityEngine.Random.Range(gun.minDamage, gun.maxDamage);
     }
 
     public float GetImpactForce()
     {
-        return impactForce;
+        return gun.impactForce;
     }
 
     protected override Transform getParentTransform()
@@ -79,6 +96,10 @@ public abstract class LocalGun : LocalGrabable, IGun
 
             sphereCollider.enabled = false;
 
+            OnPickedStateChanged(true);
+
+            OnAmmoChanged(gun.ammo, currentAmmo);
+
             Debug.Log("finish pickup " + gameObject.name);
         });
     }
@@ -93,6 +114,8 @@ public abstract class LocalGun : LocalGrabable, IGun
         s.AppendCallback(() => rb.AddTorque(transform.transform.right + transform.transform.up * throwForce, ForceMode.Impulse));
 
         Debug.Log("finish throwing " + gameObject.name);
+
+        OnPickedStateChanged(false);
     }
 
     public override TargetType getTargetType()

@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20bda05ffa43345298188daca95a9da7, type: 3}
-  m_Name: AdventureNetwork
+  m_Script: {fileID: 11500000, guid: f321b4faff54a43e4aad55b71a471b7a, type: 3}
+  m_Name: NormalGun
   m_EditorClassIdentifier: 
-  levelNumber: 1
-  usesNetwork: 1
-  gameType: 0
-  numberOfPlayers: 1
+  fireRate: 3
+  minDamage: 10
+  maxDamage: 30
+  impactForce: 600
+  recoilAmount: 0.3
+  recoilDuration: 0.3

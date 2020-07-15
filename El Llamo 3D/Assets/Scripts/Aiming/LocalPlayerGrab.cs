@@ -136,14 +136,19 @@ public class LocalPlayerGrab : MonoBehaviour
             return;
         }
 
+        HandleShootingDetection(gun, shootingTarget);
+    }
+
+    protected virtual void HandleShootingDetection(IGun gun, ShootingTarget shootingTarget)
+    {
         // we mark the shooting point
         RaycastHit shootHit = shootingTarget.targetHit;
 
         // regardless if it is on target or not, we need to trigger the shooting action
-        gun.Shoot(shootHit.point);
+        bool gunShotSuccessful = gun.Shoot(shootHit.point);
 
         // if it was on target we take damage
-        if (shootingTarget.onTarget)
+        if (shootingTarget.onTarget && gunShotSuccessful)
         {
             Vector3 direction = crosshair.position - shootHit.point;
 
@@ -181,11 +186,11 @@ public class LocalPlayerGrab : MonoBehaviour
      */
     private void ThrowObject()
     {
-        LocalGrabable gun = grabController.GetCurrentGrabable();
-        Debug.Log("trying to throw: " + gun);
-        if (gun != null)
+        LocalGrabable grabable = grabController.GetCurrentGrabable();
+        Debug.Log("trying to throw: " + grabable);
+        if (grabable != null)
         {
-            gun.StartThrow(throwForce, sceneCamera.transform.forward);
+            grabable.StartThrow(throwForce, sceneCamera.transform.forward);
         }
     }
 

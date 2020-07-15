@@ -36,7 +36,7 @@ public class MaterialColorChanger : MonoBehaviour
         Gun gunScript = GetComponent<Gun>();
         if (gunScript != null)
         {
-            gunScript.OnPickedUp = () =>
+            gunScript.OnPickedStateChanged = (grabbed) =>
             {
                 this.enabled = false;
             };
