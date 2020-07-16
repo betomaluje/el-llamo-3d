@@ -17,7 +17,9 @@ namespace Llamo.Level
 
             while (!operation.isDone)
             {
-                float progress = Mathf.Clamp01(operation.progress / 0.9f);
+                float progress = Mathf.Clamp01(operation.progress / 0.99f);
+
+                Debug.Log("Scene progress: " + progress.ToString("#0.##%"));
 
                 yield return null;
             }

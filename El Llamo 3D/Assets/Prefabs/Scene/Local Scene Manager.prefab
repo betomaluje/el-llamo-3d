@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1453315138436696690
+--- !u!1 &3175377184395857258
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1453315138436696692}
-  - component: {fileID: 7647803758952637785}
-  - component: {fileID: 7703681150556198538}
+  - component: {fileID: 3175377184395857260}
+  - component: {fileID: 5915608046443749953}
+  - component: {fileID: 5968109406367928722}
   m_Layer: 0
-  m_Name: LocalGameManager
+  m_Name: Local Scene Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1453315138436696692
+--- !u!4 &3175377184395857260
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453315138436696690}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 3175377184395857258}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7647803758952637785
+--- !u!114 &5915608046443749953
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453315138436696690}
+  m_GameObject: {fileID: 3175377184395857258}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec6ddaf5f7c8db14ba4dd2d267fdb1ea, type: 3}
@@ -79,12 +79,18 @@ MonoBehaviour:
     amountToSpawn: 4
     spawnPrefab: {fileID: 7948278302577729846, guid: 3791782b1a1266a44b1a8881cb42dfc8,
       type: 3}
-    spawnSFX: {fileID: 0}
+    spawnSFX: {fileID: 1947331358871186, guid: ce74cb252be734929b37115bd1e9a37c, type: 3}
   turrets:
-    type: 0
-    positions: []
+    type: 7
+    positions:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     amountToSpawn: 4
-    spawnPrefab: {fileID: 0}
+    spawnPrefab: {fileID: 4048934742221473039, guid: 7e85ce2f69a8f403a9dbd5a0230c7bcf,
+      type: 3}
     spawnSFX: {fileID: 0}
   healthItems:
     type: 4
@@ -98,16 +104,16 @@ MonoBehaviour:
   posessObjects:
     type: 0
     positions: []
-    amountToSpawn: 4
+    amountToSpawn: 0
     spawnPrefab: {fileID: 0}
     spawnSFX: {fileID: 0}
---- !u!114 &7703681150556198538
+--- !u!114 &5968109406367928722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453315138436696690}
+  m_GameObject: {fileID: 3175377184395857258}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d81d616af2454468b96b262e62273d53, type: 3}
@@ -115,4 +121,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenSpawns: 10
   amountToSpawn: 1
-  maxExtraPerTime: 10
+  maxExtraPerTime: 3
