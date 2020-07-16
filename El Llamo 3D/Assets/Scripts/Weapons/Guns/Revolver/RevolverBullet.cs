@@ -11,7 +11,7 @@ public class RevolverBullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        rb.velocity = transform.forward * bullet.shootingSpeed;
+        rb.AddForce(transform.forward * bullet.shootingSpeed, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)

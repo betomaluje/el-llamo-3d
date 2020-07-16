@@ -31,7 +31,14 @@ public class GunEffects : MonoBehaviour
         // despite if it's a target or not, we try and instantiate an impact effect
         if (impactEffect != null)
         {
-            Instantiate(impactEffect, shootHit, Quaternion.LookRotation(shootHit));
+            if (shootHit != Vector3.zero)
+            {
+                Instantiate(impactEffect, shootHit, Quaternion.LookRotation(shootHit));
+            }
+            else
+            {
+                Instantiate(impactEffect, shootHit, Quaternion.identity);
+            }
         }
     }
 

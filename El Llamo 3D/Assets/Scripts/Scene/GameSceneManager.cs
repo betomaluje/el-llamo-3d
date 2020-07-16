@@ -6,6 +6,37 @@ public class GameSceneManager : LocalGameSceneManager
 {
     private SceneSpawner sceneSpawner;
 
+    protected override void SpawnFirstObjects()
+    {
+        foreach (InspectorSpawnObject spawnObject in spawnObjects)
+        {
+            if (!spawnObject.shouldWaitForReady)
+            {
+                SpawnObject spawn = spawnObject.spawnObject;
+                // we spawn health items
+                PutObject(sceneSpawner, spawn, spawn.AmountToSpawn(), false);
+            }
+        }
+    }
+
+    protected override void SpawnLevelReadyObjects()
+    {
+        foreach (InspectorSpawnObject spawnObject in spawnObjects)
+        {
+            if (spawnObject.shouldWaitForReady)
+            {
+                SpawnObject spawn = spawnObject.spawnObject;
+                PutObject(sceneSpawner, spawn, spawn.AmountToSpawn(), false);
+                spawn.ResetSpawnPositions();
+            }
+        }
+    }
+
+    public override void Start()
+    {
+        // do nothing since it's handled by OnSpawnerReady
+    }
+
     public void OnSpawnerReady(bool alreadySetup, SceneSpawner sceneSpawner)
     {
         Debug.Log("OnSpawnerReady " + alreadySetup);
@@ -21,13 +52,12 @@ public class GameSceneManager : LocalGameSceneManager
             // We randomly select a SpawnPoint and ask the SceneSpawner to spawn a Player GameObject. 
             // we have 1 playerPrefabs so playerPrefabIndex is 0.
             // We have 2 spawnPoints so we generated a random int between 0 to 1.
-            totalPlayerSpawnPoints = sceneSpawner.NumberOfSpawnPoints;
+            int totalPlayerSpawnPoints = sceneSpawner.NumberOfSpawnPoints;
 
             int spawnPointIndex = GetRandomSpawnPoint(totalPlayerSpawnPoints);
             sceneSpawner.SpawnForPlayer(PlayerIndexes.Player_1, spawnPointIndex);
 
-            // we spawn health items
-            PutObject(sceneSpawner, healthItems, healthItems.AmountToSpawn(), false);
+            SpawnFirstObjects();
 
             // Tell the spawner that we have finished setting up the scene. 
             // alreadySetup will be true when SceneSpawn becomes ready next time.
@@ -39,19 +69,14 @@ public class GameSceneManager : LocalGameSceneManager
     {
         if (gameState == GameState.started && sceneSpawner != null)
         {
-            PutObject(sceneSpawner, turrets, turrets.AmountToSpawn(), false);
-
-            PutObject(sceneSpawner, enemies, enemies.AmountToSpawn(), false);
-
-            PutObject(sceneSpawner, guns, guns.AmountToSpawn(), false);
-
-            // we spawn posess Objects
-            PutObject(sceneSpawner, posessObjects, posessObjects.AmountToSpawn(), false);
+            SpawnLevelReadyObjects();
         }
     }
 
     public override void SpawnEnemy(int amount)
     {
+        SpawnObject enemies = FindRandomEnemy();
+
         Vector3 position = GetRandomSpawnPoint(enemies).position;
         if (enemies.spawnSFX != null)
         {

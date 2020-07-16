@@ -35,7 +35,6 @@ public class LocalAmmoHandler : MonoBehaviour
 
     private void HandleAmmoChanged(int maxAmmo, int currentAmmo)
     {
-        Debug.Log("current ammo: " + currentAmmo);
         ammoText.SetText(currentAmmo + "/" + maxAmmo);
         StartCoroutine(ChangePercentage((float)currentAmmo / (float)maxAmmo));
     }

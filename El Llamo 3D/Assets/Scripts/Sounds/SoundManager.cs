@@ -44,8 +44,8 @@ public class SoundManager : MonoBehaviour
 
     private void RestoreVolumes()
     {
-        float sfxSavedPrefs = PlayerPrefs.GetFloat(SoundMenu.PREFS_SFX, SoundManager.instance.GetVolumeForType(SoundType.SFX));
-        float songSavedPrefs = PlayerPrefs.GetFloat(SoundMenu.PREFS_SONG, SoundManager.instance.GetVolumeForType(SoundType.SONG));
+        float sfxSavedPrefs = PlayerPrefs.GetFloat(SoundMenu.PREFS_SFX, instance.GetVolumeForType(SoundType.SFX));
+        float songSavedPrefs = PlayerPrefs.GetFloat(SoundMenu.PREFS_SONG, instance.GetVolumeForType(SoundType.SONG));
 
         SetVolumeForType(SoundType.SFX, sfxSavedPrefs);
         SetVolumeForType(SoundType.SONG, songSavedPrefs);

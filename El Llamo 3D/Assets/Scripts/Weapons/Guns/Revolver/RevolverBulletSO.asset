@@ -18,5 +18,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 53248
   maxDamage: 20
-  shootingSpeed: 200
+  shootingSpeed: 25
   impactForce: 1000

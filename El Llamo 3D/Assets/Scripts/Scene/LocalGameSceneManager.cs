@@ -1,10 +1,11 @@
 ﻿using Llamo.Level;
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class LocalGameSceneManager : MonoBehaviour
 {
-    [System.Serializable]
+    [Serializable]
     public class SpawnObject
     {
         public NonPlayerIndexes type;
@@ -46,19 +47,26 @@ public class LocalGameSceneManager : MonoBehaviour
         }
     }
 
-    [SerializeField] protected SpawnObject players;
+    [Serializable]
+    public enum SpawnObjectKeys
+    {
+        Player,
+        Gun,
+        Enemies,
+        Turrets,
+        HealthItems,
+        PosessObjects,
+    }
 
-    [SerializeField] protected SpawnObject guns;
+    [Serializable]
+    public class InspectorSpawnObject
+    {
+        public SpawnObjectKeys key;
+        public bool shouldWaitForReady = false;
+        public SpawnObject spawnObject;
+    }
 
-    [SerializeField] protected SpawnObject enemies;
-
-    [SerializeField] protected SpawnObject turrets;
-
-    [SerializeField] protected SpawnObject healthItems;
-
-    [SerializeField] protected SpawnObject posessObjects;
-
-    protected int totalPlayerSpawnPoints;
+    [SerializeField] protected InspectorSpawnObject[] spawnObjects;
 
     private ILevelStateManager levelStateManager;
 
@@ -77,36 +85,42 @@ public class LocalGameSceneManager : MonoBehaviour
         levelStateManager.OnLevelStateChange -= OnRoundStarted;
     }
 
+    protected virtual void SpawnFirstObjects()
+    {
+        foreach (InspectorSpawnObject spawnObject in spawnObjects)
+        {
+            if (!spawnObject.shouldWaitForReady)
+            {
+                SpawnObject spawn = spawnObject.spawnObject;
+                PutObject(spawn, spawn.AmountToSpawn());
+            }
+        }
+    }
+
+    protected virtual void SpawnLevelReadyObjects()
+    {
+        foreach (InspectorSpawnObject spawnObject in spawnObjects)
+        {
+            if (spawnObject.shouldWaitForReady)
+            {
+                SpawnObject spawn = spawnObject.spawnObject;
+                PutObject(spawn, spawn.AmountToSpawn());
+                spawn.ResetSpawnPositions();
+            }
+        }
+    }
+
     protected virtual void OnRoundStarted(GameState gameState)
     {
         if (gameState == GameState.started)
         {
-            // we spawn guns
-            PutObject(guns, guns.AmountToSpawn());
-
-            // we spawn enemies
-            PutObject(enemies, enemies.AmountToSpawn());
-
-            PutObject(turrets, turrets.AmountToSpawn());
-
-            // we clear all banned positions
-            enemies.ResetSpawnPositions();
-            turrets.ResetSpawnPositions();
-            guns.ResetSpawnPositions();
+            SpawnLevelReadyObjects();
         }
     }
 
-    private void Start()
+    public virtual void Start()
     {
-        totalPlayerSpawnPoints = players.positions.Length;
-
-        PutObject(players, players.AmountToSpawn());
-
-        // we spawn health items
-        PutObject(healthItems, healthItems.AmountToSpawn());
-
-        // we spawn posess Objects
-        PutObject(posessObjects, posessObjects.AmountToSpawn());
+        SpawnFirstObjects();
     }
 
     private void PutObject(SpawnObject spawnObject, int totalAmount)
@@ -126,6 +140,8 @@ public class LocalGameSceneManager : MonoBehaviour
             Debug.LogWarning("Trying to spawn " + spawnObject.type.ToString() + " with a null game object");
             return;
         }
+
+        Debug.Log("Spawning " + spawnObject.type.ToString() + " for " + totalAmount);
 
         for (int i = 0; i < totalAmount; i++)
         {
@@ -154,7 +170,36 @@ public class LocalGameSceneManager : MonoBehaviour
 
     public virtual void SpawnEnemy(int amount)
     {
-        PutObjectWithSFX(enemies, amount);
+        PutObjectWithSFX(FindRandomEnemy(), amount);
+    }
+
+    private InspectorSpawnObject[] GetAllSpawnObjectForKey(SpawnObjectKeys key)
+    {
+        InspectorSpawnObject[] spawnObjectsOfType = Array.FindAll(spawnObjects, inspectorSpawnObject =>
+            inspectorSpawnObject.key == key && inspectorSpawnObject.spawnObject != null
+        );
+
+        return spawnObjectsOfType;
+    }
+
+    protected SpawnObject FindRandomEnemy()
+    {
+        return FindRandomSpawnObject(SpawnObjectKeys.Enemies);
+    }
+
+    protected SpawnObject FindRandomSpawnObject(SpawnObjectKeys key)
+    {
+        InspectorSpawnObject[] allSpawnObjects = GetAllSpawnObjectForKey(key);
+
+        if (allSpawnObjects == null || allSpawnObjects.Length <= 0)
+        {
+            Debug.LogWarning("SpawnObjects of type " + key.ToString() + " not found");
+            return null;
+        }
+
+        int index = Random.Range(0, allSpawnObjects.Length);
+
+        return allSpawnObjects[index].spawnObject;
     }
 
     protected Transform GetRandomSpawnPoint(SpawnObject spawnObject)

@@ -8,5 +8,6 @@ public enum NonPlayerIndexes
     Health_Item,
     Player_Corpse,
     Posess_Llama,
-    Turret_1
+    Turret_1,
+    Revolver
 }
