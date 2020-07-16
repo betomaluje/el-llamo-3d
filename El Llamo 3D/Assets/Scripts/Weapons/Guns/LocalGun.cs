@@ -47,7 +47,7 @@ public abstract class LocalGun : LocalGrabable, IGun
                 OnAmmoChanged(gun.ammo, currentAmmo);
 
                 successful = true;
-                DoShooting(shootHit);
+                DoShooting(shootHit, shootingPosition);
             }
 
             // we update the frequency of the shooting
@@ -57,7 +57,7 @@ public abstract class LocalGun : LocalGrabable, IGun
         return successful;
     }
 
-    protected abstract void DoShooting(Vector3 shootHit);
+    protected abstract void DoShooting(Vector3 shootHit, Transform shootingPosition);
 
     public void DoRecoil()
     {

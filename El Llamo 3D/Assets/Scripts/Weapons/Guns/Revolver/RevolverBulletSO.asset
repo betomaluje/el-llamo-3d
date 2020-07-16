@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73283101f02f740adafcab5cfbc6f8cc, type: 3}
-  m_Name: NormalBullet
+  m_Name: RevolverBulletSO
   m_EditorClassIdentifier: 
   explosionParticles: {fileID: 6042133881555360809, guid: a36bb5f3415e43247a0b57b1e6a1e835,
     type: 3}
   attackLayer:
     serializedVersion: 2
     m_Bits: 53248
-  maxDamage: 10
-  shootingSpeed: 1000
+  maxDamage: 20
+  shootingSpeed: 200
   impactForce: 1000
