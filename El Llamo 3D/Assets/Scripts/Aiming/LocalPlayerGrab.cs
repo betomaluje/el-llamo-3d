@@ -175,7 +175,7 @@ public class LocalPlayerGrab : MonoBehaviour
         }
         else
         {
-            aimPoint = shootingTarget.ray.origin + shootingTarget.ray.direction * shootingTarget.shootingDistance;
+            aimPoint = sceneCamera.transform.position + sceneCamera.transform.forward * shootingTarget.shootingDistance;
         }
 
         aimPointUpdate?.Invoke(aimPoint);

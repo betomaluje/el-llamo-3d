@@ -43,6 +43,8 @@ public class LocalInputHandler : MonoBehaviour
 
     protected bool isInputPressed = false;
 
+    private Vector3 centerOfScreen = new Vector3(0.5f, 0.5f, 0.0f);
+
     private void OnEnable()
     {
         sceneCamera = Camera.main;
@@ -79,62 +81,41 @@ public class LocalInputHandler : MonoBehaviour
 
     private void HandleShootingPointer()
     {
+        Vector3 rayOrigin = sceneCamera.ViewportToWorldPoint(centerOfScreen);
         // check if a target has been clicked on
         RaycastHit hit;
-        Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 
         // this bool check if we hit something that is "shootable" according to the shootingLayer layer mask
-        bool onTarget = Physics.Raycast(ray, out hit, shootingDistance, shootingLayer);
+        bool onTarget = Physics.Raycast(rayOrigin, sceneCamera.transform.forward, out hit, shootingDistance, shootingLayer);
 
-        if (onTarget)
-        {
-            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.red);
-        }
-        else
-        {
-            Debug.DrawRay(ray.origin, ray.direction * shootingDistance, Color.black);
-        }
+        Debug.DrawRay(rayOrigin, sceneCamera.transform.forward * shootingDistance, onTarget ? Color.red : Color.black);
 
         // now we send the Action to all listeners
-        shootingTarget(new ShootingTarget(ray, hit, onTarget, shootingDistance, isInputPressed));
+        shootingTarget(new ShootingTarget(hit, onTarget, shootingDistance, isInputPressed));
     }
 
     private void HandleTargetPointer()
     {
+        Vector3 rayOrigin = sceneCamera.ViewportToWorldPoint(centerOfScreen);
         RaycastHit hit;
-        Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 
         // this bool check if we hit something that is "target" according to the targetLayer layer mask
-        bool onTarget = Physics.Raycast(ray, out hit, grabDistance, targetLayer);
+        bool onTarget = Physics.Raycast(rayOrigin, sceneCamera.transform.forward, out hit, grabDistance, targetLayer);
 
-        if (onTarget)
-        {
-            Debug.DrawRay(ray.origin, ray.direction * grabDistance, Color.yellow);
-        }
-        else
-        {
-            Debug.DrawRay(ray.origin, ray.direction * grabDistance, Color.grey);
-        }
+        Debug.DrawRay(rayOrigin, sceneCamera.transform.forward * shootingDistance, onTarget ? Color.yellow : Color.grey);
 
         targetAquired(new PointingTarget(hit, onTarget, isInputPressed));
     }
 
     private void HandlePosessPointer()
     {
+        Vector3 rayOrigin = sceneCamera.ViewportToWorldPoint(centerOfScreen);
         RaycastHit hit;
-        Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
 
         // this bool check if we hit something that is "target" according to the targetLayer layer mask
-        bool onTarget = Physics.Raycast(ray, out hit, posessDistance, posessLayer);
+        bool onTarget = Physics.Raycast(rayOrigin, sceneCamera.transform.forward, out hit, posessDistance, posessLayer);
 
-        if (onTarget)
-        {
-            Debug.DrawRay(ray.origin, ray.direction * posessDistance, Color.blue);
-        }
-        else
-        {
-            Debug.DrawRay(ray.origin, ray.direction * posessDistance, Color.grey);
-        }
+        Debug.DrawRay(rayOrigin, sceneCamera.transform.forward * shootingDistance, onTarget ? Color.blue : Color.grey);
 
         posessAquired(new PosessTarget(hit, onTarget, isInputPressed));
     }
