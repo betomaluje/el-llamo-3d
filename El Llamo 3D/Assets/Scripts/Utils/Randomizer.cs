@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine.Assertions;
 using Random = UnityEngine.Random;
-
 
 public class Randomizer
 {
     private int _amount;
-    private int _lastSelected;
     List<int> bannedIndexes = new List<int>();
 
     public int Amount { get => _amount; }

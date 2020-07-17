@@ -41,7 +41,7 @@ public class LocalEnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (!hasRoundStarted)
+        if (!hasRoundStarted || amountToSpawn == 0)
         {
             return;
         }
@@ -57,8 +57,8 @@ public class LocalEnemySpawner : MonoBehaviour
         if (currentAmount < maxExtraPerTime)
         {
             // Spawn object once
-            sceneManager.SpawnEnemy(1);
-            currentAmount++;
+            sceneManager.SpawnEnemy(amountToSpawn);
+            currentAmount += amountToSpawn;
         }
 
         // Reset timer
