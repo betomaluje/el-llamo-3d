@@ -6,6 +6,7 @@ public class MenuPlayerChanger : MonoBehaviour
     [SerializeField] private float animationSpeed = 0.5f;
     [SerializeField] private GameObject singlePlayer;
     [SerializeField] private GameObject multiPlayer;
+    [SerializeField] private GameObject tutorialPlayer;
     [SerializeField] private GameObject optionsPlayer;
     [SerializeField] private GameObject exitPlayer;
     [SerializeField] private Transform targetTransform;
@@ -26,6 +27,11 @@ public class MenuPlayerChanger : MonoBehaviour
     public void SelectMultiPlayer()
     {
         BringToFront(multiPlayer);
+    }
+
+    public void SelectTutorial()
+    {
+        BringToFront(tutorialPlayer);
     }
 
     public void SelectOptions()
