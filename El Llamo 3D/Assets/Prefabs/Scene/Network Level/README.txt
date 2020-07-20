@@ -9,9 +9,10 @@
 7. Change the level settings in the "Scene Manager" prefab, such as Spawn Points
 8. Create or drag and drop a "Level" prefab containing all the level data such as ground, trees, water, etc
 9. Mark this new "Level" game object as a static -> Navigation static
-10. Under Window -> AI -> Navigation, open that window and adjust the settings. Click on "Bake" button
-11. Under Window -> Rendering -> Lightning Settings, open the window
-12. In there, change the Skybox and Directional Light in the Environment tab
-13. Click the "Generate Lightning" button on the bottom of that window
+10. Change the "Level" game object LayerMask to either "Level" or "Ground"
+11. Under Window -> AI -> Navigation, open that window and adjust the settings. Click on "Bake" button
+12. Under Window -> Rendering -> Lightning Settings, open the window
+13. In there, change the Skybox and Directional Light in the Environment tab
+14. Click the "Generate Lightning" button on the bottom of that window
 
 Enjoy!

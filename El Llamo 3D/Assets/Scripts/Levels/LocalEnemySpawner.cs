@@ -26,12 +26,18 @@ public class LocalEnemySpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        levelStateManager.OnLevelStateChange += OnRoundStarted;
+        if (levelStateManager != null)
+        {
+            levelStateManager.OnLevelStateChange += OnRoundStarted;
+        }
     }
 
     private void OnDisable()
     {
-        levelStateManager.OnLevelStateChange -= OnRoundStarted;
+        if (levelStateManager != null)
+        {
+            levelStateManager.OnLevelStateChange -= OnRoundStarted;
+        }
     }
 
     private void OnRoundStarted(GameState gameState)

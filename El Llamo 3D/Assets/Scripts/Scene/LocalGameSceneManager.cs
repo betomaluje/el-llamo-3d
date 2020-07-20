@@ -77,12 +77,18 @@ public class LocalGameSceneManager : MonoBehaviour
 
     private void OnEnable()
     {
-        levelStateManager.OnLevelStateChange += OnRoundStarted;
+        if (levelStateManager != null)
+        {
+            levelStateManager.OnLevelStateChange += OnRoundStarted;
+        }
     }
 
     private void OnDisable()
     {
-        levelStateManager.OnLevelStateChange -= OnRoundStarted;
+        if (levelStateManager != null)
+        {
+            levelStateManager.OnLevelStateChange -= OnRoundStarted;
+        }
     }
 
     protected virtual void SpawnFirstObjects()

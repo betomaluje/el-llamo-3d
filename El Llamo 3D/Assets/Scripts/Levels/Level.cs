@@ -26,7 +26,8 @@ namespace Llamo.Level
             AdventureLocal,
             VikingLocal,
             TestScene,
-            TestNetwork
+            TestNetwork,
+            Tutorial
         }
     }
 }
