@@ -40,7 +40,12 @@ public class LocalPlayerGrab : MonoBehaviour
 
         inputHandler.fireReleaseCallback = () =>
         {
-
+            IGun gun = GetGunInActiveHand();
+            // if it doesn't have a gun, we return quickly
+            if (gun != null && playerAnimations != null)
+            {
+                playerAnimations.ShootAnim(false);
+            }
         };
 
         // handles when the player is throwing
@@ -146,6 +151,11 @@ public class LocalPlayerGrab : MonoBehaviour
 
         // regardless if it is on target or not, we need to trigger the shooting action
         bool gunShotSuccessful = gun.Shoot(shootHit.point);
+
+        if (playerAnimations != null)
+        {
+            playerAnimations.ShootAnim(shootingTarget.isPressed);
+        }
 
         // if it was on target we take damage
         if (shootingTarget.onTarget && gunShotSuccessful)
