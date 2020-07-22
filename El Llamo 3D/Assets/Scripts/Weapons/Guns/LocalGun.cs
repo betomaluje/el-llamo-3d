@@ -122,4 +122,9 @@ public abstract class LocalGun : LocalGrabable, IGun
     {
         return TargetType.Shootable;
     }
+
+    public bool CanShoot()
+    {
+        return isGrabbed() && currentAmmo > 0;
+    }
 }

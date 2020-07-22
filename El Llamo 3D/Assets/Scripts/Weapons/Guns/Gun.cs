@@ -128,4 +128,14 @@ public abstract class Gun : Grabable, IGun
     {
         return GetComponent<RemoteEventAgent>();
     }
+
+    public GunSO GetGun()
+    {
+        return gun;
+    }
+
+    public bool CanShoot()
+    {
+        return isGrabbed() && currentAmmo > 0;
+    }
 }

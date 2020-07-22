@@ -17,7 +17,7 @@ public class LocalAmmoHandler : MonoBehaviour
         localGun = GetComponentInParent<LocalGun>();
         localGun.OnAmmoChanged += HandleAmmoChanged;
 
-        localGun.OnPickedStateChanged += OnWeaponPickerUp;
+        localGun.OnPickedStateChanged += OnWeaponPickedUp;
 
         container.SetActive(false);
     }
@@ -25,10 +25,10 @@ public class LocalAmmoHandler : MonoBehaviour
     private void OnDisable()
     {
         localGun.OnAmmoChanged -= HandleAmmoChanged;
-        localGun.OnPickedStateChanged -= OnWeaponPickerUp;
+        localGun.OnPickedStateChanged -= OnWeaponPickedUp;
     }
 
-    private void OnWeaponPickerUp(bool grabbed)
+    private void OnWeaponPickedUp(bool grabbed)
     {
         container.SetActive(grabbed);
     }

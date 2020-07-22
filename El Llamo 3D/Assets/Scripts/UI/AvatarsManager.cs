@@ -19,7 +19,7 @@ public class AvatarsManager : MonoBehaviour
         playersDict = new Dictionary<string, string>();
         roomRemoteEventAgent = GetComponent<RoomRemoteEventAgent>();
 
-        isShown = contentPanel.active;
+        isShown = contentPanel.activeInHierarchy;
 
         foreach (PlayerAvatar playerAvatar in playerAvatars)
         {

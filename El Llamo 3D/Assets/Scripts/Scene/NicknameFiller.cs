@@ -13,7 +13,7 @@ public class NicknameFiller : MonoBehaviour
 
     public void GenerateRandomNickName()
     {
-        string nickname = nicknameGenerator.Generate(Random.Range(3, 12));
+        string nickname = nicknameGenerator.Generate(Random.Range(2, 8));
         nicknameText.text = nickname;
     }
 

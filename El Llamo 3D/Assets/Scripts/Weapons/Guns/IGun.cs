@@ -11,5 +11,7 @@ public interface IGun
     int GetDamage();
 
     float GetImpactForce();
+
+    bool CanShoot();
 }
 

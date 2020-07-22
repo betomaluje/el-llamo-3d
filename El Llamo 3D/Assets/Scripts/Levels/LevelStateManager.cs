@@ -24,14 +24,16 @@ namespace Llamo.Level
                 case GameState.waiting:
                     if (Input.GetKeyUp(KeyCode.Return))
                     {
-                        // start the countdown
-                        Debug.Log("Starting...");
+                        // start the countdown                        
                         countdownText.text = "Waiting for players";
                         State = GameState.starting;
 
                         // Modify the PlayersPressedEnter sync property.
                         int playerPressedEnter = roomPropertyAgent.GetPropertyWithName(PLAYER_PRESSED_ENTER).GetIntValue();
-                        roomPropertyAgent.Modify(PLAYER_PRESSED_ENTER, playerPressedEnter + 1);
+                        playerPressedEnter += 1;
+                        roomPropertyAgent.Modify(PLAYER_PRESSED_ENTER, playerPressedEnter);
+
+                        Debug.Log("Starting... " + playerPressedEnter);
                     }
                     break;
                 case GameState.started:
@@ -56,6 +58,8 @@ namespace Llamo.Level
         {
             int playerPressedEnter = roomPropertyAgent.GetPropertyWithName(PLAYER_PRESSED_ENTER).GetIntValue();
 
+            Debug.Log("enter changed... " + playerPressedEnter);
+
             // check if all players has pressed Enter
             if (playerPressedEnter >= GameSettings.instance.numberOfPlayers)
             {
@@ -68,6 +72,8 @@ namespace Llamo.Level
         public void OnPlayersPressedEnterValueReady()
         {
             int playerPressedEnter = roomPropertyAgent.GetPropertyWithName(PLAYER_PRESSED_ENTER).GetIntValue();
+
+            Debug.Log("enter ready... " + playerPressedEnter);
 
             // check if all players has pressed Enter
             if (playerPressedEnter >= GameSettings.instance.numberOfPlayers)

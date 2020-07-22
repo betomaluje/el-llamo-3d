@@ -35,6 +35,7 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
             {
                 grabController.AddGrabable(this, getParentTransform());
                 sphereCollider.enabled = false;
+                col.isTrigger = false;
             }
         }
     }
@@ -144,7 +145,7 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
 
     public bool isGrabbed()
     {
-        return grabbed;
+        return grabbed && (grabState == GrabState.Grabbing || grabState == GrabState.Grabbed);
     }
 
     public abstract TargetType getTargetType();

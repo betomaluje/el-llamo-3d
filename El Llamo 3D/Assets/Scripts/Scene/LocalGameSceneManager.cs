@@ -18,7 +18,7 @@ public class LocalGameSceneManager : MonoBehaviour
 
         public int AmountToSpawn()
         {
-            if (positions.Length == 0)
+            if (positions.Length == 0 || amountToSpawn == 0)
             {
                 return 0;
             }

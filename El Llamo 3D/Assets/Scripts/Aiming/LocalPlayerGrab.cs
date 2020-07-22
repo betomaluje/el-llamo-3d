@@ -158,7 +158,7 @@ public class LocalPlayerGrab : MonoBehaviour
         }
 
         // if it was on target we take damage
-        if (shootingTarget.onTarget && gunShotSuccessful)
+        if (shootingTarget.onTarget && gunShotSuccessful && !gun.CanShoot())
         {
             Vector3 direction = crosshair.position - shootHit.point;
 

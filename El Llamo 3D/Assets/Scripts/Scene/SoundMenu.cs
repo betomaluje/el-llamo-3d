@@ -49,7 +49,7 @@ public class SoundMenu : MonoBehaviour
 
     void Start()
     {
-        isPanelActive = settingsPanel.active;
+        isPanelActive = settingsPanel.activeInHierarchy;
 
         sfxSlider.minValue = 0;
         sfxSlider.maxValue = 1f;
