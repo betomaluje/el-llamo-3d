@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    PrimaryRendererScale: 1
-    InfoBufferScale: 1
+    PrimaryRendererScale: 0.6
+    InfoBufferScale: 0.05
     BlurIterations: 2
     DilateIterations: 2
     BlurShift: 3
-    DilateShift: 3
-    UsingInfoBuffer: 0
+    DilateShift: 2
+    UsingInfoBuffer: 1
     SustainedPerformanceMode: 1
 --- !u!114 &11400000
 MonoBehaviour:

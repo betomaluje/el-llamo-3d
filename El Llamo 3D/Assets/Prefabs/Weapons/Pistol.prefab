@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 9221246813437098942}
   - component: {fileID: 2590497203851349476}
   - component: {fileID: 1421573247}
+  - component: {fileID: 7747152277438833120}
   - component: {fileID: 4972513490003804687}
   - component: {fileID: 7872112886917653143}
   - component: {fileID: 335292826}
@@ -260,6 +261,25 @@ MonoBehaviour:
   gun: {fileID: 11400000, guid: b8f77bca7fa244477a52d99ce36e6cd0, type: 2}
   gunEffects: {fileID: 7947835038188574580}
   displayLine: 0
+--- !u!114 &7747152277438833120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639007037605429063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6355d2d83aea34bafac709ac74bd9a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer: 0
+  mask: 0
+  outlineColor: {r: 0, g: 0.8235294, b: 1, a: 1}
+  dilateShift: 0
+  blurShift: 0
+  renderers:
+  - {fileID: 6232156196547333019}
 --- !u!114 &4972513490003804687
 MonoBehaviour:
   m_ObjectHideFlags: 0

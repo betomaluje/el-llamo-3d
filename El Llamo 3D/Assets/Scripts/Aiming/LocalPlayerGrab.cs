@@ -18,6 +18,7 @@ public class LocalPlayerGrab : MonoBehaviour
     public Action<Vector3> aimPointUpdate;
 
     protected GrabController grabController;
+    private OutlinePointer outlinePointer;
 
     private Transform crosshair;
     private PlayerAnimations playerAnimations;
@@ -29,6 +30,8 @@ public class LocalPlayerGrab : MonoBehaviour
         playerAnimations = GetComponent<PlayerAnimations>();
         grabController = GetComponent<GrabController>();
         crosshair = FindObjectOfType<Crosshair>().transform;
+
+        outlinePointer = new OutlinePointer();
     }
 
     /**
@@ -103,15 +106,31 @@ public class LocalPlayerGrab : MonoBehaviour
             return;
         }
 
-        if (pointingTarget.onTarget && pointingTarget.isPressed)
+        if (pointingTarget.onTarget)
         {
-            // if we already have something in the hand, we do nothing
             LocalGrabable grabable = pointingTarget.targetHit.transform.root.GetComponentInChildren<LocalGrabable>();
-            if (grabable != null && !grabable.isGrabbed())
+
+            if (pointingTarget.isPressed)
             {
-                PickupObject(grabable);
-                return;
+                // if we already have something in the hand, we do nothing                
+                if (grabable != null && !grabable.IsGrabbed())
+                {
+                    PickupObject(grabable);
+
+                    outlinePointer.UnPointToTarget();
+                }
             }
+            else
+            {
+                if (grabable != null && grabable.ShouldChangeOutline())
+                {
+                    outlinePointer.PointToTarget(pointingTarget.targetHit.transform.root.gameObject);
+                }
+            }
+        }
+        else
+        {
+            outlinePointer.UnPointToTarget();
         }
     }
 
@@ -158,7 +177,7 @@ public class LocalPlayerGrab : MonoBehaviour
         }
 
         // if it was on target we take damage
-        if (shootingTarget.onTarget && gunShotSuccessful && !gun.CanShoot())
+        if (shootingTarget.onTarget && gunShotSuccessful && gun.CanShoot())
         {
             Vector3 direction = crosshair.position - shootHit.point;
 

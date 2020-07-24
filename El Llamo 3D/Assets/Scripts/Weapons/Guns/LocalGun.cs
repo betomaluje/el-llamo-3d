@@ -125,6 +125,11 @@ public abstract class LocalGun : LocalGrabable, IGun
 
     public bool CanShoot()
     {
-        return isGrabbed() && currentAmmo > 0;
+        return IsGrabbed() && currentAmmo > 0;
+    }
+
+    public override bool ShouldChangeOutline()
+    {
+        return true;
     }
 }

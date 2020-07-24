@@ -1062,6 +1062,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd0576aa4dab481aa9029a6334def9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   pickupSpeed: 0.25
   parentTransform: {fileID: 7948278302577310998}
 --- !u!65 &7948278302577729845
@@ -1122,6 +1125,7 @@ GameObject:
   - component: {fileID: 7948278302577729792}
   - component: {fileID: 7948278302577729860}
   - component: {fileID: 2606373635863218008}
+  - component: {fileID: 5124676127211074941}
   - component: {fileID: 7948278302577729853}
   m_Layer: 15
   m_Name: LocalBusinessEnemy
@@ -1263,6 +1267,25 @@ MonoBehaviour:
     type: 3}
   maxHealth: 30
   probabilityOfExplode: 35
+--- !u!114 &5124676127211074941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7948278302577729846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6355d2d83aea34bafac709ac74bd9a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer: 0
+  mask: 0
+  outlineColor: {r: 1, g: 0.08701129, b: 0, a: 1}
+  dilateShift: 1
+  blurShift: 1
+  renderers:
+  - {fileID: 7948278302589303330}
 --- !u!195 &7948278302577729853
 NavMeshAgent:
   m_ObjectHideFlags: 0

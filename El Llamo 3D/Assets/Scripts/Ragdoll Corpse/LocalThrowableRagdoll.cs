@@ -55,4 +55,9 @@ public class LocalThrowableRagdoll : LocalGrabable
     {
         return parentTransform;
     }
+
+    public override bool ShouldChangeOutline()
+    {
+        return false;
+    }
 }

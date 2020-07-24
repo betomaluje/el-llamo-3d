@@ -61,4 +61,9 @@ public class ThrowableRagdoll : Grabable
     {
         return GetComponentInParent<RemoteEventAgent>();
     }
+
+    public override bool ShouldChangeOutline()
+    {
+        return false;
+    }
 }

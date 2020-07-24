@@ -143,12 +143,14 @@ public abstract class LocalGrabable : MonoBehaviour, IGrab
 
     public abstract void Throw(float throwForce, Vector3 direction);
 
-    public bool isGrabbed()
+    public bool IsGrabbed()
     {
         return grabbed && (grabState == GrabState.Grabbing || grabState == GrabState.Grabbed);
     }
 
     public abstract TargetType getTargetType();
+
+    public abstract bool ShouldChangeOutline();
 }
 
 [SerializeField]
@@ -164,7 +166,7 @@ public interface IGrab
 
     void Throw(float throwForce, Vector3 direction);
 
-    bool isGrabbed();
+    bool IsGrabbed();
 }
 
 [SerializeField]

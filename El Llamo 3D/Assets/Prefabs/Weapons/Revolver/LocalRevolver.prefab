@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 5391184924748353508}
   - component: {fileID: 5391184924748353509}
   - component: {fileID: 5391184924748353530}
+  - component: {fileID: 769820803746997722}
   m_Layer: 9
   m_Name: LocalRevolver
   m_TagString: Untagged
@@ -289,6 +290,25 @@ MonoBehaviour:
   gunEffects: {fileID: 5391184926066450821}
   bulletPrefab: {fileID: 6111925643873329397, guid: d68e6a1dad06c438584266c735fbb055,
     type: 3}
+--- !u!114 &769820803746997722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391184924748353531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6355d2d83aea34bafac709ac74bd9a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer: 0
+  mask: 0
+  outlineColor: {r: 0, g: 0.8235294, b: 1, a: 1}
+  dilateShift: 0
+  blurShift: 0
+  renderers:
+  - {fileID: 2435441596601291194}
 --- !u!1 &5391184924825540141
 GameObject:
   m_ObjectHideFlags: 0
@@ -5760,6 +5780,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82400f7a8db5fe149b750c0764fbeff1, type: 3}
+--- !u!23 &2435441596601291194 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 82400f7a8db5fe149b750c0764fbeff1,
+    type: 3}
+  m_PrefabInstance: {fileID: 5391184925975919727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1129245647151929205 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 82400f7a8db5fe149b750c0764fbeff1,
