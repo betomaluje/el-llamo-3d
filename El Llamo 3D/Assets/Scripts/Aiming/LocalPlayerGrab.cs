@@ -116,9 +116,9 @@ public class LocalPlayerGrab : MonoBehaviour
                 if (grabable != null && !grabable.IsGrabbed())
                 {
                     PickupObject(grabable);
-
-                    outlinePointer.UnPointToTarget();
                 }
+
+                outlinePointer.UnPointToTarget();
             }
             else
             {

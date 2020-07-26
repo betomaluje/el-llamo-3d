@@ -130,6 +130,6 @@ public abstract class LocalGun : LocalGrabable, IGun
 
     public override bool ShouldChangeOutline()
     {
-        return true;
+        return !IsGrabbed();
     }
 }

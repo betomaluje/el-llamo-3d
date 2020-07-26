@@ -141,6 +141,6 @@ public abstract class Gun : Grabable, IGun
 
     public override bool ShouldChangeOutline()
     {
-        return true;
+        return !IsGrabbed();
     }
 }

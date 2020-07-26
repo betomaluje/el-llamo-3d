@@ -377,6 +377,7 @@ GameObject:
   - component: {fileID: 7287407477370734503}
   - component: {fileID: 4048934742221473040}
   - component: {fileID: 1851460091}
+  - component: {fileID: 2595637243259433539}
   - component: {fileID: 3983716665835723581}
   - component: {fileID: 6621111687584847288}
   - component: {fileID: 3020740812778915713}
@@ -454,6 +455,27 @@ MonoBehaviour:
   corpsePrefab: {fileID: 0}
   maxHealth: 40
   probabilityOfExplode: 100
+--- !u!114 &2595637243259433539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4048934742221473039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6355d2d83aea34bafac709ac74bd9a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer: 0
+  mask: 0
+  outlineColor: {r: 1, g: 0.08627451, b: 0, a: 1}
+  dilateShift: 1
+  blurShift: 1
+  renderers:
+  - {fileID: 3264834666390041755}
+  - {fileID: 5034374895084456669}
+  - {fileID: 6352615569666479326}
 --- !u!114 &3983716665835723581
 MonoBehaviour:
   m_ObjectHideFlags: 0

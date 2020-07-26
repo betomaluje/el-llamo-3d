@@ -13,6 +13,12 @@ public class OutlinePointer
         Outlinable outlinable = gameObject.GetComponentInChildren<Outlinable>(true);
         if (outlinable != null)
         {
+            // if the object is different, we first unpoint the previous object
+            if (lastTarget != outlinable)
+            {
+                UnPointToTarget();
+            }
+
             lastTarget = outlinable;
 
             ChangeValues(0f, 2f);
@@ -36,12 +42,11 @@ public class OutlinePointer
             float prePercentage = from;
             float elapsed = 0f;
             float targetValue = to;
-            float value = 0;
 
             while (elapsed < updateSpeedSeconds)
             {
                 elapsed += Time.deltaTime;
-                value = Mathf.Lerp(prePercentage, targetValue, elapsed / updateSpeedSeconds);
+                float value = Mathf.Lerp(prePercentage, targetValue, elapsed / updateSpeedSeconds);
                 lastTarget.DilateShift = value;
                 lastTarget.BlurShift = value;
             }
