@@ -7,8 +7,6 @@ public class GrabController : MonoBehaviour
 {
     [Header("Grab Points")]
     [SerializeField] private List<GrabPoint> grabPoints;
-    [Tooltip("[DEPRECATED] Key for changing a grab point (aka Hand)")]
-    [SerializeField] private KeyCode pointChanger = KeyCode.E;
     [Space]
     [Header("UI")]
     [SerializeField] private Image[] playerHandsUI;
@@ -30,6 +28,26 @@ public class GrabController : MonoBehaviour
         if (d != 0f)
         {
             ChangeHand();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        CheckHandWeights();
+    }
+
+    private void CheckHandWeights()
+    {
+        foreach (var grabPoint in grabPoints)
+        {
+            float weight = 0f;
+
+            if (grabPoint.grabedObject != null)
+            {
+                weight = 1f;
+            }
+
+            grabPoint.UpdateWeight(weight);
         }
     }
 
