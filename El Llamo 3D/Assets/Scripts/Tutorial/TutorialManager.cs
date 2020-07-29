@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Cinemachine;
 
@@ -9,6 +10,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private float textAnimationTime = 0.5f;
     [SerializeField] private float restTime = 0.5f;
     [SerializeField] private TextMeshProUGUI stepText;
+    [SerializeField] private Image stepPanel;
     [SerializeField] private CinemachineVirtualCamera enemyCamera;
 
     private bool enemyCameraShown = false;
@@ -67,8 +69,13 @@ public class TutorialManager : MonoBehaviour
     {
         Sequence s = DOTween.Sequence();
         s.Append(stepText.DOFade(0, textAnimationTime));
+        s.AppendCallback(() => stepPanel.DOFade(0, textAnimationTime));
         s.AppendCallback(() => stepText.SetText(text));
-        s.AppendCallback(() => stepText.DOFade(1, textAnimationTime));
+        s.AppendCallback(() =>
+        {
+            stepPanel.DOFade(0.4f, textAnimationTime);
+            stepText.DOFade(1, textAnimationTime);
+        });
     }
 
     public void ShowEnemy()
@@ -83,7 +90,7 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator ChangeToEnemyCamera()
     {
         enemyCamera.Priority = 11;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         enemyCamera.Priority = 9;
     }
 }
