@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203f2736dd0257749ac5ed62d5809e6f, type: 3}
   m_Name: NewSRPOutlineFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     PrimaryRendererScale: 0.6
     InfoBufferScale: 0.05

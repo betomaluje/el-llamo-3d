@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7876235444900932641}
   - component: {fileID: 7876235444900932640}
+  - component: {fileID: 1503921972}
   m_Layer: 0
   m_Name: GameSettings
   m_TagString: Untagged
@@ -44,3 +45,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usingNetwork: 1
+  gameType: 0
+  numberOfPlayers: 2
+--- !u!114 &1503921972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7876235444900932647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06963605bccac471188c416396361cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startRect:
+    serializedVersion: 2
+    x: 10
+    y: 10
+    width: 220
+    height: 90
+  updateColor: 1
+  allowDrag: 1
+  frequency: 0.2
+  nbDecimal: 1
+  padding: 10
+  fontSize: 22
