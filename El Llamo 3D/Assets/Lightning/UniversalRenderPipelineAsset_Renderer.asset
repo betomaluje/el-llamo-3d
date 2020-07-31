@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 0
   settings:
-    PrimaryRendererScale: 0.6
+    PrimaryRendererScale: 0.05
     InfoBufferScale: 0.05
     BlurIterations: 2
     DilateIterations: 2

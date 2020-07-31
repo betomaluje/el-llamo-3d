@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using EPOOutline;
+﻿using EPOOutline;
 using UnityEngine;
 
 public class OutlinePointer
 {
+    private float finalValue = 2f;
+    private bool shouldBlur = false;
     private Outlinable lastTarget = null;
     private float updateSpeedSeconds = 0.2f;
 
@@ -21,7 +21,7 @@ public class OutlinePointer
 
             lastTarget = outlinable;
 
-            ChangeValues(0f, 2f);
+            ChangeValues(0f, finalValue);
         }
     }
 
@@ -29,7 +29,7 @@ public class OutlinePointer
     {
         if (lastTarget != null)
         {
-            ChangeValues(2f, 0f);
+            ChangeValues(finalValue, 0f);
 
             lastTarget = null;
         }
@@ -48,11 +48,14 @@ public class OutlinePointer
                 elapsed += Time.deltaTime;
                 float value = Mathf.Lerp(prePercentage, targetValue, elapsed / updateSpeedSeconds);
                 lastTarget.DilateShift = value;
-                lastTarget.BlurShift = value;
+                if (shouldBlur)
+                    lastTarget.BlurShift = value;
             }
 
             lastTarget.DilateShift = to;
-            lastTarget.BlurShift = to;
+
+            if (shouldBlur)
+                lastTarget.BlurShift = to;
         }
     }
 

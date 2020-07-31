@@ -39,7 +39,11 @@ public class HUDFPS : MonoBehaviour
 
     void Start()
     {
+#if UNITY_EDITOR
         StartCoroutine(FPS());
+#else
+        Destroy(this);
+#endif
     }
 
     void Update()

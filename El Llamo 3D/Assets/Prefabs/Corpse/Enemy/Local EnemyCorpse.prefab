@@ -794,8 +794,8 @@ MonoBehaviour:
   layer: 0
   mask: 0
   outlineColor: {r: 0, g: 1, b: 0, a: 1}
-  dilateShift: 0.8
-  blurShift: 0.8
+  dilateShift: 2
+  blurShift: 0
   renderers:
   - {fileID: 2603184581772963876}
 --- !u!1 &2603184581776075572
